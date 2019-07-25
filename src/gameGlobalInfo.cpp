@@ -36,6 +36,7 @@ GameGlobalInfo::GameGlobalInfo()
     hacking_games = HG_All;
     use_beam_shield_frequencies = true;
     use_system_damage = true;
+    use_complex_radar_signatures = true;
     allow_main_screen_tactical_radar = true;
     allow_main_screen_long_range_radar = true;
     gm_control_code = "";
@@ -52,6 +53,7 @@ GameGlobalInfo::GameGlobalInfo()
     registerMemberReplication(&victory_faction);
     registerMemberReplication(&use_beam_shield_frequencies);
     registerMemberReplication(&use_system_damage);
+    registerMemberReplication(&use_complex_radar_signatures);
     registerMemberReplication(&allow_main_screen_tactical_radar);
     registerMemberReplication(&allow_main_screen_long_range_radar);
     registerMemberReplication(&gm_control_code);
