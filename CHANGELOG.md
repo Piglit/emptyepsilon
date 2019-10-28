@@ -12,7 +12,8 @@
 
 ### Changed
 
-- Nothing
+- multiple GM stations
+- GM can control factions status
 
 ## [2018-02-15]
 

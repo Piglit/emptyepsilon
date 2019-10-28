@@ -99,8 +99,6 @@ set(SOURCES
 	src/mesh.cpp
 	src/scenarioInfo.cpp
 	src/repairCrew.cpp
-	src/GMScriptCallback.cpp
-	src/GMMessage.cpp
 	src/tutorialGame.cpp
 	src/menus/joinServerMenu.cpp
 	src/menus/serverBrowseMenu.cpp
@@ -133,6 +131,7 @@ set(SOURCES
 	src/screens/gm/globalMessageEntryView.cpp
 	src/screens/gm/chatDialog.cpp
 	src/screens/gm/tweak.cpp
+	src/screens/gm/factions.cpp
 	src/screenComponents/aimLock.cpp
 	src/screenComponents/alertOverlay.cpp
 	src/screenComponents/helpOverlay.cpp
