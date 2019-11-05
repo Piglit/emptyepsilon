@@ -8,6 +8,11 @@
 gametimeleft = 20 * 60 -- Maximum game time in seconds.
 timewarning = 10 * 60 -- Used for checking when to give a warning, and to update it so the warning happens once.
 
+Faction_Player = "Freunde"
+Faction_Enemy = "P-Rats"
+Faction_Independent = "Fraktionslos"
+Faction_Exercise_Target = "P-Rats"
+
 ship_names = {
     "SS Epsilon",
     "Ironic Gentleman",
@@ -148,16 +153,16 @@ function init()
 	friendlyList = {}
 
 	if getScenarioVariation() == "Advanced" then
-        player = PlayerSpaceship():setFaction("Human Navy"):setTemplate("Atlantis")
+        player = PlayerSpaceship():setFaction(Player_Faction):setTemplate("Atlantis")
     else
-        player = PlayerSpaceship():setFaction("Human Navy"):setTemplate("Phobos M3P")
+        player = PlayerSpaceship():setFaction(Player_Faction):setTemplate("Phobos M3P")
     end
     player:setPosition(random(-2000, 2000), random(-2000, 2000)):setCallSign(ship_names[math.random(1,#ship_names)])
     player:setJumpDrive(true)
     player:setWarpDrive(false)
 
 	-- Put a single small station here, which needs to be defended.
-	table.insert(friendlyList, SpaceStation():setTemplate('Small Station'):setCallSign("DS-1"):setRotation(random(0, 360)):setFaction("Human Navy"):setPosition(random(-2000, 2000), random(-2000, 2000)))
+	table.insert(friendlyList, SpaceStation():setTemplate('Small Station'):setCallSign("DS-1"):setRotation(random(0, 360)):setFaction(Player_Faction):setPosition(random(-2000, 2000), random(-2000, 2000)))
 
 	-- Start the players with 300 reputation.
 	player:addReputationPoints(300.0)
@@ -171,12 +176,12 @@ function init()
 
 	-- Let the GM declare the Humans (players) victorious.
 	addGMFunction("Win", function()
-		victory("Human Navy");
+		victory(Player_Faction);
 	end)
 
 	-- Let the GM declare the Humans (players) defeated.
 	addGMFunction("Defeat", function()
-		victory("Kraylor");
+		victory("P-Rats");
 	end)
 
 	-- Let the GM create more enemies if the players are having a too easy time.
@@ -224,7 +229,7 @@ function init()
 
     --Create a bunch of neutral stations
 	for n=1, 6 do
-		setCirclePos(SpaceStation():setTemplate("Small Station"):setFaction("Independent"), 0, 0, random(0, 360), random(15000, 30000))
+		setCirclePos(SpaceStation():setTemplate("Small Station"):setFaction(Independent_Faction), 0, 0, random(0, 360), random(15000, 30000))
 	end
 	-- Spawn random neutral transports.
 	Script():run("util_random_transports.lua")
@@ -232,8 +237,8 @@ function init()
     --If we have a GM started scenario.
     scenario_started = false
     if getScenarioVariation() == "GM Start" then
-        target_practice_drone = CpuShip():setFaction("Ghosts"):setTemplate("MT52 Hornet"):setTypeName("Target practice")
-        target_practice_drone:setScannedByFaction("Human Navy", true)
+        target_practice_drone = CpuShip():setFaction(Faction_Exercise_Target):setTemplate("MT52 Hornet"):setTypeName("Target practice")
+        target_practice_drone:setScannedByFaction(Player_Faction, true)
         target_practice_drone:setImpulseMaxSpeed(60)
         target_practice_drone:setBeamWeapon(0, 0, 0, 0.0, 0, 0)
         x, y = 2500, 3500
@@ -281,7 +286,7 @@ function update(delta)
     if scenario_started then
         gametimeleft = gametimeleft - delta
         if gametimeleft < 0 then
-            victory("Kraylor")
+            victory("P-Rats")
             setBanner("Mission: FAILED")
             return
         end
@@ -316,14 +321,14 @@ function update(delta)
         -- Declare victory for the Humans (players) once all enemies are destroyed.
         -- Note that players can win even if they destroy the enemies by blowing themselves up.
         if enemy_count == 0 then
-            victory("Human Navy")
+            victory(Player_Faction)
             setBanner("Mission: SUCCESS")
             return
         end
 
         -- If all allies are destroyed, the Humans (players) lose.
         if friendly_count == 0 or not player:isValid() then
-            victory("Kraylor")
+            victory("P-Rats")
             setBanner("Mission: FAILED")
             return
         else
@@ -346,7 +351,7 @@ function update(delta)
         end
     else
         if not player:isValid() then
-            victory("Kraylor")
+            victory("P-Rats")
             setBanner("Mission: FAILED")
             return
         end

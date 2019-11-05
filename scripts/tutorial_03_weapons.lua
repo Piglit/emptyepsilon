@@ -35,7 +35,7 @@
 require("utils.lua")
 function init()
     --Create the player ship
-    player = PlayerSpaceship():setFaction("Human Navy"):setTemplate("Phobos M3P")
+    player = PlayerSpaceship():setFaction("Freunde"):setTemplate("Phobos M3P")
     tutorial:setPlayerShip(player)
 
     tutorial:showMessage([[Welcome to the EmptyEpsilon tutorial.
@@ -147,7 +147,7 @@ end)
 
 addToSequence(weaponsTutorial, [[This is the weapons screen.
 As the weapons officer, you are responsible for targeting beam weapons, loading and firing missile weapons, and controlling your shields.]])
-addToSequence(weaponsTutorial, function() prev_object = CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setPosition(700, 0):setRotation(0):orderIdle():setScanned(true) end)
+addToSequence(weaponsTutorial, function() prev_object = CpuShip():setFaction("P-Rats"):setTemplate("MT52 Hornet"):setPosition(700, 0):setRotation(0):orderIdle():setScanned(true) end)
 addToSequence(weaponsTutorial, [[Your most fundamental task is to target your ship's weapons.
 Your beam weapons only fire at your selected target, and homing missiles travel toward your selected target.
 
@@ -156,7 +156,7 @@ addToSequence(weaponsTutorial, [[Good! Notice that your beam weapons did not fir
 
 Next up: shield controls.]])
 addToSequence(weaponsTutorial, function() prev_object:destroy() end)
-addToSequence(weaponsTutorial, function() prev_object = CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setPosition(-700, 0):setRotation(0):orderAttack(player):setScanned(true) end)
+addToSequence(weaponsTutorial, function() prev_object = CpuShip():setFaction("P-Rats"):setTemplate("MT52 Hornet"):setPosition(-700, 0):setRotation(0):orderAttack(player):setScanned(true) end)
 addToSequence(weaponsTutorial, [[As you might notice, you are being shot at. Do not worry, you cannot die right now.
 
 You are taking damage, however, so enable your shields to protect yourself.]], function()
@@ -184,7 +184,7 @@ addToSequence(weaponsTutorial, function()
     player:setWeaponStorageMax("homing", 1)
     player:setWeaponStorage("homing", 1)
     player:setWeaponTubeCount(1)
-    prev_object = CpuShip():setFaction("Kraylor"):setTemplate("Flavia"):setPosition(3000, 0):setRotation(0):orderIdle():setScanned(true)
+    prev_object = CpuShip():setFaction("P-Rats"):setTemplate("Flavia"):setPosition(3000, 0):setRotation(0):orderIdle():setScanned(true)
     prev_object:setHull(1):setShieldsMax(1) -- Make it die in 1 shot.
 end)
 addToSequence(weaponsTutorial, [[You have 1 homing missile in your missile storage now, and 1 weapon tube.
@@ -194,7 +194,7 @@ Load this homing missile into the weapon tube by selecting the homing missile, a
     function() return player:getWeaponTubeLoadType(0) == "homing" end)
 addToSequence(weaponsTutorial, [[Great! Now fire this missile by clicking on the tube.]], function() return player:getWeaponTubeLoadType(0) == nil end)
 addToSequence(weaponsTutorial, [[Missile away!]], function() return not prev_object:isValid() end)
-addToSequence(weaponsTutorial, function() prev_object = CpuShip():setFaction("Kraylor"):setTemplate("Flavia"):setPosition(2000, -2000):setRotation(0):orderIdle():setScanned(true):setHull(1):setShieldsMax(1) end)
+addToSequence(weaponsTutorial, function() prev_object = CpuShip():setFaction("P-Rats"):setTemplate("Flavia"):setPosition(2000, -2000):setRotation(0):orderIdle():setScanned(true):setHull(1):setShieldsMax(1) end)
 addToSequence(weaponsTutorial, function() tutorial:setMessageToBottomPosition() end)
 addToSequence(weaponsTutorial, [[BOOM! That was just firing straight ahead, but you can also aim missiles.
 
@@ -206,7 +206,7 @@ Point the aiming dial at the next ship, load a missile, and fire.]], function()
     end
     return not prev_object:isValid()
 end)
-addToSequence(weaponsTutorial, function() prev_object = CpuShip():setFaction("Kraylor"):setTemplate("Flavia"):setPosition(-1550, -1900):setRotation(0):orderIdle():setScanned(true):setHull(1):setShieldsMax(1) end)
+addToSequence(weaponsTutorial, function() prev_object = CpuShip():setFaction("P-Rats"):setTemplate("Flavia"):setPosition(-1550, -1900):setRotation(0):orderIdle():setScanned(true):setHull(1):setShieldsMax(1) end)
 addToSequence(weaponsTutorial, [[Perfect aim!
 
 The next ship is behind you. Target the ship by pressing it to guide your homing missiles toward your selected target.

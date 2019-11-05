@@ -1092,10 +1092,10 @@ function placeInner()
 	end
 end
 function placeOuter()
-	if stationFaction ~= "Kraylor" then
+	if stationFaction ~= "P-Rats then
 		fb = gp									--set faction boundary
 	end
-	stationFaction = "Kraylor"
+	stationFaction = "P-Rats
 	if #placeEnemyStation > 0 then
 		si = math.random(1,#placeEnemyStation)		--station index
 		pStation = placeEnemyStation[si]()			--place selected station
@@ -3290,7 +3290,7 @@ function setFleets()
 end
 function spawnEnemyFleet(xOrigin, yOrigin, power, danger, enemyFaction)
 	if enemyFaction == nil then
-		enemyFaction = "Kraylor"
+		enemyFaction = "P-Rats
 	end
 	if danger == nil then 
 		danger = 1
@@ -3308,7 +3308,7 @@ function spawnEnemyFleet(xOrigin, yOrigin, power, danger, enemyFaction)
 		end
 		fleetPower = fleetPower + stsl[shipTemplateType]
 		ship = CpuShip():setFaction(enemyFaction):setTemplate(stnl[shipTemplateType]):orderRoaming()
-		if enemyFaction == "Kraylor" then
+		if enemyFaction == "P-Rats then
 			rawKraylorShipStrength = rawKraylorShipStrength + stsl[shipTemplateType]
 			ship:onDestruction(enemyVesselDestroyed)
 		elseif enemyFaction == "Human Navy" then
@@ -5803,7 +5803,7 @@ function enemyComms(comms_data)
 		local taunt_option = "We will see to your destruction!"
 		local taunt_success_reply = "Your bloodline will end here!"
 		local taunt_failed_reply = "Your feeble threats are meaningless."
-		if faction == "Kraylor" then
+		if faction == "P-Rats" then
 			setCommsMessage("Ktzzzsss.\nYou will DIEEee weaklingsss!");
 			local kraylorTauntChoice = math.random(1,3)
 			if kraylorTauntChoice == 1 then
@@ -6148,7 +6148,7 @@ function nearStations(nobj, compareStationList)
 end
 function spawnEnemies(xOrigin, yOrigin, danger, enemyFaction)
 	if enemyFaction == nil then
-		enemyFaction = "Kraylor"
+		enemyFaction = "P-Rats"
 	end
 	if danger == nil then 
 		danger = 1
@@ -6165,7 +6165,7 @@ function spawnEnemies(xOrigin, yOrigin, danger, enemyFaction)
 			shipTemplateType = irandom(1,#stsl)
 		end		
 		local ship = CpuShip():setFaction(enemyFaction):setTemplate(stnl[shipTemplateType]):orderRoaming()
-		if enemyFaction == "Kraylor" then
+		if enemyFaction == "P-Rats" then
 			rawKraylorShipStrength = rawKraylorShipStrength + stsl[shipTemplateType]
 			ship:onDestruction(enemyVesselDestroyed)
 		elseif enemyFaction == "Human Navy" then
@@ -7337,7 +7337,7 @@ end
 -----------------------------------------------------------------]]--
 function initialAttack(delta)
 	if plot3diagnostic then print("initial attack") end
-	local enemyInitialFleet = spawnEnemies(kraylorCentroidX, kraylorCentroidY, 1.3, "Kraylor")
+	local enemyInitialFleet = spawnEnemies(kraylorCentroidX, kraylorCentroidY, 1.3, "P-Rats")
 	for _, enemy in ipairs(enemyInitialFleet) do
 		enemy:orderFlyTowards(humanCentroidX, humanCentroidY)
 		enemy.initialFleetMember = true
@@ -7386,12 +7386,12 @@ function pincerAttack(delta)
 		end
 		rightPincerX, rightPincerY = vectorFromAngle(rightPincerAngle,pincerSize)
 		if plot3diagnostic then print(string.format("Angles: Pincer: %.1f, Left: %.1f, Right: %.1f",pincerAngle,leftPincerAngle,rightPincerAngle)) end
-		local enemyLeftPincerFleet = spawnEnemies(referenceStartX+leftPincerX,referenceStartY+leftPincerY,1.5,"Kraylor")
+		local enemyLeftPincerFleet = spawnEnemies(referenceStartX+leftPincerX,referenceStartY+leftPincerY,1.5,"P-Rats")
 		for _, enemy in ipairs(enemyLeftPincerFleet) do
 			enemy:orderRoaming()
 		end
 		table.insert(enemyFleetList,enemyLeftPincerFleet)
-		local enemyRightPincerFleet = spawnEnemies(referenceStartX+rightPincerX,referenceStartY+rightPincerY,1.5,"Kraylor")
+		local enemyRightPincerFleet = spawnEnemies(referenceStartX+rightPincerX,referenceStartY+rightPincerY,1.5,"P-Rats")
 		for _, enemy in ipairs(enemyRightPincerFleet) do
 			enemy:orderRoaming()
 		end
@@ -7525,7 +7525,7 @@ function enemyDefenseCheck(delta)
 					if distToEnemyStation < enemyStation.defenseTriggerDistance then
 						if enemyStation.defenseType == "fighterFleet" then
 							esx, esy = enemyStation:getPosition()
-							local ef, efp = spawnFighterFleet(esx, esy, difficulty*4, "Kraylor")
+							local ef, efp = spawnFighterFleet(esx, esy, difficulty*4, "P-Rats")
 							for _, enemy in ipairs(ef) do
 								enemy:orderDefendTarget(enemyStation)
 							end
@@ -7538,21 +7538,21 @@ function enemyDefenseCheck(delta)
 							esx, esy = enemyStation:getPosition()
 							tpx, tpy = p:getPosition()
 							attackAngle = p:getRotation() + 180
-							tj = WarpJammer():setPosition(esx,esy):setRange(5000):setFaction("Kraylor")
+							tj = WarpJammer():setPosition(esx,esy):setRange(5000):setFaction("P-Rats")
 							tj.travelAngle = attackAngle
 							tj.triggerDistance = distToEnemyStation
 							tj.originX = esx
 							tj.originY = esy
 							tj.orbit = false
 							table.insert(jammerList,tj)
-							tj = WarpJammer():setPosition(esx,esy):setRange(5000):setFaction("Kraylor")
+							tj = WarpJammer():setPosition(esx,esy):setRange(5000):setFaction("P-Rats")
 							tj.travelAngle = attackAngle + 120
 							tj.triggerDistance = distToEnemyStation
 							tj.originX = esx
 							tj.originY = esy
 							tj.orbit = false
 							table.insert(jammerList,tj)
-							tj = WarpJammer():setPosition(esx,esy):setRange(5000):setFaction("Kraylor")
+							tj = WarpJammer():setPosition(esx,esy):setRange(5000):setFaction("P-Rats")
 							tj.travelAngle = attackAngle + 240
 							tj.triggerDistance = distToEnemyStation
 							tj.originX = esx
@@ -7587,7 +7587,7 @@ function enemyDefenseCheck(delta)
 						elseif enemyStation.defenseType == "callInHelp" then
 							local nearestStation, rest = nearStations(enemyStation, kraylorStationList)
 							esx, esy = nearestStation:getPosition()
-							local ef, efp = spawnEnemies(esx, esy, 1, "Kraylor")
+							local ef, efp = spawnEnemies(esx, esy, 1, "P-Rats")
 							for _, enemy in ipairs(ef) do
 								enemy:orderAttack(p)
 							end
@@ -7667,7 +7667,7 @@ function enemyDefenseCheck(delta)
 							plotWP = artifactToPlatform
 						elseif enemyStation.defenseType == "droneFleet" then
 							esx, esy = enemyStation:getPosition()
-							local ef, efp = spawnDroneFleet(esx, esy, difficulty*6, "Kraylor")
+							local ef, efp = spawnDroneFleet(esx, esy, difficulty*6, "P-Rats")
 							for _, enemy in ipairs(ef) do
 								enemy:orderDefendLocation(esx, esy)
 							end
@@ -7688,7 +7688,7 @@ function artifactToPlatform(delta)
 			if enemyDefensePlatformList == nil then
 				enemyDefensePlatformList = {}
 			end
-			twp = CpuShip():setTemplate("Defense platform"):setFaction("Kraylor"):setPosition(apx,apy):orderRoaming()
+			twp = CpuShip():setTemplate("Defense platform"):setFaction("P-Rats"):setPosition(apx,apy):orderRoaming()
 			twp.distance = tap.triggerDistance
 			twp.originX = tap.originX
 			twp.originY = tap.originY
@@ -7855,14 +7855,14 @@ function enemyDefenseZoneCheck(delta)
 end
 function spawnDroneFleet(originX, originY, droneCount, faction)
 	if faction == nil then
-		faction = "Kraylor"
+		faction = "P-Rats"
 	end
 	local fleetList = {}
 	local deploySpacing = random(300,800)
 	local deployConfig = random(1,100)
 	for i=1,droneCount do
 		ship = CpuShip():setFaction(faction):setTemplate("Ktlitan Drone"):orderRoaming():setCommsScript(""):setCommsFunction(commsShip)
-		if faction == "Kraylor" then
+		if faction == "P-Rats" then
 			rawKraylorShipStrength = rawKraylorShipStrength + 4
 			ship:onDestruction(enemyVesselDestroyed)
 		elseif faction == "Human Navy" then
@@ -7880,7 +7880,7 @@ function spawnDroneFleet(originX, originY, droneCount, faction)
 end
 function spawnFighterFleet(originX, originY, fighterCount, faction)
 	if faction == nil then
-		faction = "Kraylor"
+		faction = "P-Rats"
 	end
 	--Ship Template Name List
 	local fighterNames  = {"MT52 Hornet","MU52 Hornet","WX-Lindworm","Fighter","Ktlitan Fighter"}
@@ -7894,7 +7894,7 @@ function spawnFighterFleet(originX, originY, fighterCount, faction)
 		local shipTemplateType = math.random(1,#fighterNames)
 		fleetPower = fleetPower + fighterScores[shipTemplateType]
 		ship = CpuShip():setFaction(faction):setTemplate(fighterNames[shipTemplateType]):orderRoaming():setCommsScript(""):setCommsFunction(commsShip)
-		if faction == "Kraylor" then
+		if faction == "P-Rats" then
 			rawKraylorShipStrength = rawKraylorShipStrength + fighterScores[shipTemplateType]
 			ship:onDestruction(enemyVesselDestroyed)
 		elseif faction == "Human Navy" then
@@ -7911,7 +7911,7 @@ function spawnFighterFleet(originX, originY, fighterCount, faction)
 	return fleetList, fleetPower
 end
 function spawnJammerFleet(originX, originY)
-	faction = "Kraylor"
+	faction = "P-Rats"
 	local shipSpawnCount = 2
 	if difficulty < 1 then
 		shipSpawnCount = 1
@@ -7999,7 +7999,7 @@ function personalAmbushDestructCheck(delta)
 				plotPA = personalAmbushTimeCheck
 				if candidate ~= nil then
 					local efx, efy = candidate:getPosition()
-					enemyAmbushFleet = spawnEnemies(efx,efy,1,"Kraylor")
+					enemyAmbushFleet = spawnEnemies(efx,efy,1,"P-Rats")
 					for _, enemy in ipairs(enemyAmbushFleet) do
 						enemy:orderAttack(p)
 					end
@@ -8039,7 +8039,7 @@ function personalAmbushTimeCheck(delta)
 		paTriggerTime = gameTimeLimit - random(30,90)
 		if candidate ~= nil then
 			efx, efy = candidate:getPosition()
-			enemyAmbushFleet = spawnEnemies(efx,efy,1,"Kraylor")
+			enemyAmbushFleet = spawnEnemies(efx,efy,1,"P-Rats")
 			for _, enemy in ipairs(enemyAmbushFleet) do
 				enemy:orderAttack(p)
 			end
@@ -8110,7 +8110,7 @@ function displayDefeatResults(delta)
 	if finalTimer < 0 then
 		missionCompleteReason = "Player violated treaty terms by crossing neutral border zone"
 		endStatistics()
-		victory("Kraylor")
+		victory("P-Rats")
 	end
 end
 function playerWarCrimeCheck(delta)
@@ -8123,7 +8123,7 @@ function playerWarCrimeCheck(delta)
 			missionVictory = false
 			missionCompleteReason = "Player committed war crimes by destroying civilians aboard Kraylor station"
 			endStatistics()
-			victory("Kraylor")
+			victory("P-Rats")
 		end
 	end
 end
@@ -8252,13 +8252,13 @@ function endWar(delta)
 			missionVictory = false
 			missionCompleteReason = string.format("Human Navy reduced to less than %i%% strength",friendlyDestructionDefeatCondition)
 			endStatistics()
-			victory("Kraylor")
+			victory("P-Rats")
 		end
 		if evalEnemy - evalFriendly > destructionDifferenceEndCondition then
 			missionVictory = false
 			missionCompleteReason = string.format("Enemy strength exceeded ours by %i percentage points",destructionDifferenceEndCondition)
 			endStatistics()
-			victory("Kraylor")
+			victory("P-Rats")
 		end
 		if evalFriendly - evalEnemy > destructionDifferenceEndCondition then
 			missionVictory = true

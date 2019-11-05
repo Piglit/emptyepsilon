@@ -13,7 +13,7 @@ function mainMenu()
 		--Edge of space additions
 		if comms_target:getCallSign() == "Central Command" and not player:isDocked(comms_target) then
 			if comms_target.mission_state == 1 then
-				setCommsMessage("The E.O.S Scope is in sector H8, right on the edge of Kraylor territory.\n \nBe careful out there");
+				setCommsMessage("The E.O.S Relay is in sector H8, right on the edge of P-Rats territory.\n \nBe careful out there");
 				return true
 			end
 			
@@ -23,7 +23,7 @@ function mainMenu()
 			end
 			
 			if comms_target.mission_state == 3 then
-				setCommsMessage("The Arlenian science station Galileo is in sector C5. Lay in a course bearing 356 from Central Command and deliver the E.O.S Scope data there.")
+				setCommsMessage("The My.S.T science station Galileo is in sector C5. Lay in a course bearing 356 from Central Command and deliver the E.O.S Relay data there.")
 				return true
 			end
 			
@@ -33,32 +33,32 @@ function mainMenu()
 			end
 			
 			if comms_target.mission_state == 5 then
-				setCommsMessage("Dock with Galileo in sector C5 and deliver the E.O.S Scope data.")
+				setCommsMessage("Dock with Galileo in sector C5 and deliver the E.O.S Relay data.")
 				return true
 			end
 			
 			if comms_target.mission_state == 6 then
-				setCommsMessage("Kraylor ships are attacking E.O.S Scope directly! Get down there quick as possible and help it!\n \nIf you need more assistance request it from Midspace Support.")
+				setCommsMessage("P-Rats ships are attacking E.O.S Relay directly! Get down there quick as possible and help it!\n \nIf you need more assistance request it from Midspace Support.")
 				return true
 			end
 			
 			if comms_target.mission_state == 7 then
-				setCommsMessage("We've declared war on the Kraylor. Retaliate on their defenseless Endline station!")
+				setCommsMessage("We've declared war on the P-Rats. Retaliate on their defenseless Endline station!")
 				return true
 			end
 			
 			if comms_target.mission_state == 8 then
-				setCommsMessage("Destroy the remaining Kraylor ships threatening our E.O.S Scope!")
+				setCommsMessage("Destroy the remaining P-Rats ships threatening our E.O.S Relay!")
 				return true
 			end
 			
 			if comms_target.mission_state == 9 then
-				setCommsMessage("Dock at the E.O.S Scope to be refitted for war and standby for orders.")
+				setCommsMessage("Dock at the E.O.S Relay to be refitted for war and standby for orders.")
 				return true
 			end
 			
 			if comms_target.mission_state == 10 then
-				setCommsMessage("The Kraylor Super-nebula is hiding a wormhole which we believe is going to be used in an attack on Human space. There is an entrance into the nebula in sector F10, but be careful of traps!")
+				setCommsMessage("The P-Rats Super-nebula is hiding a wormhole which we believe is going to be used in an attack on our space. There is an entrance into the nebula in sector F10, but be careful of traps!")
 				return true
 			end
 		end

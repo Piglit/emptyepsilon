@@ -7,7 +7,7 @@ function setCirclePos(obj, angle, distance)
 end
 
 function init()
-    SpaceStation():setTemplate("Small Station"):setPosition(0, -500):setRotation(random(0, 360)):setFaction("Independent")
+    SpaceStation():setTemplate("Small Station"):setPosition(0, -500):setRotation(random(0, 360)):setFaction("Fraktionslos")
     
     for n=1,5 do
         ship = CpuShip():setTemplate("Phobos T3"):orderRoaming()

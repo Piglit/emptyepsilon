@@ -30,10 +30,10 @@ function init()
 	enemyList = {}
 	friendlyList = {}
 	
-	PlayerSpaceship():setFaction("Human Navy"):setTemplate("Atlantis")
+	PlayerSpaceship():setFaction("Freunde"):setTemplate("Atlantis")
 
 	for n=1, 2 do
-		table.insert(friendlyList, SpaceStation():setTemplate(randomStationTemplate()):setFaction("Human Navy"):setPosition(random(-5000, 5000), random(-5000, 5000)))
+		table.insert(friendlyList, SpaceStation():setTemplate(randomStationTemplate()):setFaction("Freunde"):setPosition(random(-5000, 5000), random(-5000, 5000)))
 	end
 	friendlyList[1]:addReputationPoints(150.0)
 
@@ -63,7 +63,7 @@ function init()
 	spawnWave()
 
 	for n=1, 6 do
-		setCirclePos(SpaceStation():setTemplate(randomStationTemplate()):setFaction("Independent"), 0, 0, random(0, 360), random(15000, 30000))
+		setCirclePos(SpaceStation():setTemplate(randomStationTemplate()):setFaction("Fraktionslos"), 0, 0, random(0, 360), random(15000, 30000))
 	end
 	Script():run("util_random_transports.lua")
 end
@@ -109,7 +109,7 @@ function spawnWave()
 	spawnPointLeader = nil
 	spawn_x, spawn_y, spawn_range_x, spawn_range_y = randomSpawnPointInfo(spawnDistance)
 	while totalScoreRequirement > 0 do
-		ship = CpuShip():setFaction("Ghosts");
+		ship = CpuShip():setFaction("P-Rats");
 		ship:setPosition(random(-spawn_range_x, spawn_range_x) + spawn_x, random(-spawn_range_y, spawn_range_y) + spawn_y);
 		if spawnPointLeader == nil then
 			ship:orderRoaming()

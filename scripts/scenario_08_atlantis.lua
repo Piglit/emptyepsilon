@@ -48,10 +48,14 @@ Rundown of the mission:
 ==Phase 5:...
 --]]
 
+Enemy_Faction = "P-Rats"
+Player_Faction = "Freunde"
+Target_Faction = "P-Rats"
+
 -- Init is run when the scenario is started. Create your initial world
 function init()
     -- Create the main ship for the players.
-    player = PlayerSpaceship():setFaction("Human Navy"):setTemplate("Atlantis")
+    player = PlayerSpaceship():setFaction(Player_Faction):setTemplate("Atlantis")
 	player:setPosition(25276, 133850):setCallSign("Atlantis-1"):setRotation(-90):commandTargetRotation(-90)
     for _, system in ipairs({"reactor", "beamweapons", "missilesystem", "maneuver", "impulse", "warp", "jumpdrive", "frontshield", "rearshield"}) do
         player:setSystemPower(system, 0.0)
@@ -64,11 +68,11 @@ function init()
     player:setWeaponStorage("HVLI", 0)
 
     --Starting area
-    shipyard_gamma = SpaceStation():setTemplate("Medium Station"):setFaction("Human Navy"):setCallSign("Shipyard-Gamma"):setPosition(25276, 134550)
+    shipyard_gamma = SpaceStation():setTemplate("Medium Station"):setFaction(Player_Faction):setCallSign("Shipyard-Gamma"):setPosition(25276, 134550)
     shipyard_gamma:setCommsFunction(shipyardGammaComms)
     player:commandDock(shipyard_gamma)
 	player:addReputationPoints(5)	--initial reputation
-    supply_station_6 = SpaceStation():setTemplate("Small Station"):setFaction("Human Navy"):setCallSign("Supply-6"):setPosition(14491, 126412)
+    supply_station_6 = SpaceStation():setTemplate("Small Station"):setFaction(Player_Faction):setCallSign("Supply-6"):setPosition(14491, 126412)
     supply_station_6.comms_data = { --Do not allow supply drops or reinforcements from the supply station.
         services = {
             supplydrop = "none",
@@ -78,8 +82,8 @@ function init()
     Nebula():setPosition(32953, 146374)
     Nebula():setPosition(4211, 129108)
     createObjectsOnLine(37351, 125310, 39870, 137224, 1000, Mine, 2, 90)
-    CpuShip():setFaction("Human Navy"):setTemplate("Phobos T3"):setCallSign("D-2"):setScanned(true):setPosition(12419, 124184):orderDefendTarget(supply_station_6):setCommsScript("")
-    CpuShip():setFaction("Human Navy"):setTemplate("Phobos T3"):setCallSign("D-3"):setScanned(true):setPosition(16104, 127943):orderDefendTarget(supply_station_6):setCommsScript("")
+    CpuShip():setFaction(Player_Faction):setTemplate("Phobos T3"):setCallSign("D-2"):setScanned(true):setPosition(12419, 124184):orderDefendTarget(supply_station_6):setCommsScript("")
+    CpuShip():setFaction(Player_Faction):setTemplate("Phobos T3"):setCallSign("D-3"):setScanned(true):setPosition(16104, 127943):orderDefendTarget(supply_station_6):setCommsScript("")
 
     createObjectsOnLine(6333, 135054, 12390, 148498, 700, Asteroid, 5, 100, 2000)
     createObjectsOnLine(12390, 148498, 27607, 149902, 700, Asteroid, 5, 100, 2000)
@@ -89,21 +93,21 @@ function init()
     Nebula():setPosition(13314, 108306)
     Nebula():setPosition(30851, 94744)
     Nebula():setPosition(37574, 112457)
-    transport_f1 = CpuShip():setFaction("Human Navy"):setTemplate("Flavia"):setCallSign("F-1"):setScanned(true):setPosition(28521, 114945):orderIdle()
+    transport_f1 = CpuShip():setFaction(Player_Faction):setTemplate("Flavia"):setCallSign("F-1"):setScanned(true):setPosition(28521, 114945):orderIdle()
     transport_f1:setCommsScript("")
 
-    target_dummy_1 = CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setCallSign("Dummy-1"):setPosition(29269, 109499):orderIdle():setRotation(random(0, 360))
-    target_dummy_2 = CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setCallSign("Dummy-2"):setPosition(31032, 109822):orderIdle():setRotation(random(0, 360))
+    target_dummy_1 = CpuShip():setFaction(Enemy_Faction):setTemplate("MT52 Hornet"):setCallSign("Dummy-1"):setPosition(29269, 109499):orderIdle():setRotation(random(0, 360))
+    target_dummy_2 = CpuShip():setFaction(Enemy_Faction):setTemplate("MT52 Hornet"):setCallSign("Dummy-2"):setPosition(31032, 109822):orderIdle():setRotation(random(0, 360))
     target_dummy_1:setHullMax(1):setHull(1):setShieldsMax(300):setScanningParameters(1, 1):setCommsScript("")
     target_dummy_2:setHullMax(1):setHull(1):setShieldsMax(300):setScanningParameters(1, 1):setCommsScript("")
 
-    jc88 = CpuShip():setFaction("Human Navy"):setTemplate("Jump Carrier"):setCallSign("JC-88"):setScanned(true):setPosition(18972, 135882):orderIdle()
+    jc88 = CpuShip():setFaction(Player_Faction):setTemplate("Jump Carrier"):setCallSign("JC-88"):setScanned(true):setPosition(18972, 135882):orderIdle()
     jc88:setCommsFunction(jc88Comms)
 
     --Sector B20
-    CpuShip():setFaction("Kraylor"):setTemplate("WX-Lindworm"):setCallSign("S11"):setPosition(304666, -75558):orderDefendLocation(304666, -75558):setWeaponStorage("Homing", 0):setWeaponStorage("HVLI", 4)
-    CpuShip():setFaction("Kraylor"):setTemplate("MU52 Hornet"):setCallSign("S10"):setPosition(306010, -74718):orderDefendLocation(306010, -74718)
-    CpuShip():setFaction("Kraylor"):setTemplate("Adder MK5"):setCallSign("CCN8"):setPosition(304364, -74222):orderDefendLocation(304364, -74222):setWeaponStorage("HVLI", 3)
+    CpuShip():setFaction(Enemy_Faction):setTemplate("WX-Lindworm"):setCallSign("S11"):setPosition(304666, -75558):orderDefendLocation(304666, -75558):setWeaponStorage("Homing", 0):setWeaponStorage("HVLI", 4)
+    CpuShip():setFaction(Enemy_Faction):setTemplate("MU52 Hornet"):setCallSign("S10"):setPosition(306010, -74718):orderDefendLocation(306010, -74718)
+    CpuShip():setFaction(Enemy_Faction):setTemplate("Adder MK5"):setCallSign("CCN8"):setPosition(304364, -74222):orderDefendLocation(304364, -74222):setWeaponStorage("HVLI", 3)
     b20_nebula_list = {}
     table.insert(b20_nebula_list, Nebula():setPosition(319259, -78069))
     table.insert(b20_nebula_list, Nebula():setPosition(321469, -70621))
@@ -139,44 +143,44 @@ Doppler instability: %i]], b20_artifact.beta_radiation, b20_artifact.gravity_dis
     b20_dummy_artifact_2:setScanningParameters(3, 1)
 
     x, y = table.remove(b20_nebula_list, math.random(#b20_nebula_list)):getPosition()
-    CpuShip():setFaction("Ghosts"):setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):setTemplate("Phobos T3"):orderDefendLocation(x, y)
+    CpuShip():setFaction(Target_Faction):setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):setTemplate("Phobos T3"):orderDefendLocation(x, y)
 
     x, y = table.remove(b20_nebula_list, math.random(#b20_nebula_list)):getPosition()
-    CpuShip():setFaction("Ghosts"):setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):setTemplate("Piranha F12"):orderDefendLocation(x, y)
+    CpuShip():setFaction(Target_Faction):setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):setTemplate("Piranha F12"):orderDefendLocation(x, y)
 
     x, y = table.remove(b20_nebula_list, math.random(#b20_nebula_list)):getPosition()
-    CpuShip():setFaction("Ghosts"):setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):setTemplate("Starhammer II"):orderDefendLocation(x, y)
+    CpuShip():setFaction(Target_Faction):setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):setTemplate("Starhammer II"):orderDefendLocation(x, y)
     
     --kraylor defense line.
     kraylor_defense_line = {
-        WarpJammer():setFaction("Kraylor"):setRange(18000):setPosition(7657, -264940),
-        WarpJammer():setFaction("Kraylor"):setRange(18000):setPosition(9915, -289620),
-        WarpJammer():setFaction("Kraylor"):setRange(18000):setPosition(1822, -287037),
-        WarpJammer():setFaction("Kraylor"):setRange(18000):setPosition(-6615, -285401),
-        WarpJammer():setFaction("Kraylor"):setRange(18000):setPosition(-18324, -283593),
-        WarpJammer():setFaction("Kraylor"):setRange(18000):setPosition(-24522, -276878),
-        WarpJammer():setFaction("Kraylor"):setRange(18000):setPosition(-28138, -268613),
-        WarpJammer():setFaction("Kraylor"):setRange(18000):setPosition(-23403, -256302),
-        WarpJammer():setFaction("Kraylor"):setRange(18000):setPosition(-11608, -254149),
-        WarpJammer():setFaction("Kraylor"):setRange(18000):setPosition(46849, -260262),
-        WarpJammer():setFaction("Kraylor"):setRange(18000):setPosition(35571, -254924),
-        WarpJammer():setFaction("Kraylor"):setRange(18000):setPosition(22312, -254063),
-        WarpJammer():setFaction("Kraylor"):setRange(18000):setPosition(10842, -255239),
-        WarpJammer():setFaction("Kraylor"):setRange(18000):setPosition(65015, -272745),
-        WarpJammer():setFaction("Kraylor"):setRange(18000):setPosition(60452, -263189),
-        WarpJammer():setFaction("Kraylor"):setRange(18000):setPosition(56664, -280494),
-        WarpJammer():setFaction("Kraylor"):setRange(18000):setPosition(48829, -284454),
-        WarpJammer():setFaction("Kraylor"):setRange(18000):setPosition(22915, -287381),
-        WarpJammer():setFaction("Kraylor"):setRange(18000):setPosition(36690, -287554),
-        WarpJammer():setFaction("Kraylor"):setRange(18000):setPosition(-34202, -259093),
-        WarpJammer():setFaction("Kraylor"):setRange(18000):setPosition(29547, -294816),
-        WarpJammer():setFaction("Kraylor"):setRange(18000):setPosition(54372, -255958)
+        WarpJammer():setFaction(Enemy_Faction):setRange(18000):setPosition(7657, -264940),
+        WarpJammer():setFaction(Enemy_Faction):setRange(18000):setPosition(9915, -289620),
+        WarpJammer():setFaction(Enemy_Faction):setRange(18000):setPosition(1822, -287037),
+        WarpJammer():setFaction(Enemy_Faction):setRange(18000):setPosition(-6615, -285401),
+        WarpJammer():setFaction(Enemy_Faction):setRange(18000):setPosition(-18324, -283593),
+        WarpJammer():setFaction(Enemy_Faction):setRange(18000):setPosition(-24522, -276878),
+        WarpJammer():setFaction(Enemy_Faction):setRange(18000):setPosition(-28138, -268613),
+        WarpJammer():setFaction(Enemy_Faction):setRange(18000):setPosition(-23403, -256302),
+        WarpJammer():setFaction(Enemy_Faction):setRange(18000):setPosition(-11608, -254149),
+        WarpJammer():setFaction(Enemy_Faction):setRange(18000):setPosition(46849, -260262),
+        WarpJammer():setFaction(Enemy_Faction):setRange(18000):setPosition(35571, -254924),
+        WarpJammer():setFaction(Enemy_Faction):setRange(18000):setPosition(22312, -254063),
+        WarpJammer():setFaction(Enemy_Faction):setRange(18000):setPosition(10842, -255239),
+        WarpJammer():setFaction(Enemy_Faction):setRange(18000):setPosition(65015, -272745),
+        WarpJammer():setFaction(Enemy_Faction):setRange(18000):setPosition(60452, -263189),
+        WarpJammer():setFaction(Enemy_Faction):setRange(18000):setPosition(56664, -280494),
+        WarpJammer():setFaction(Enemy_Faction):setRange(18000):setPosition(48829, -284454),
+        WarpJammer():setFaction(Enemy_Faction):setRange(18000):setPosition(22915, -287381),
+        WarpJammer():setFaction(Enemy_Faction):setRange(18000):setPosition(36690, -287554),
+        WarpJammer():setFaction(Enemy_Faction):setRange(18000):setPosition(-34202, -259093),
+        WarpJammer():setFaction(Enemy_Faction):setRange(18000):setPosition(29547, -294816),
+        WarpJammer():setFaction(Enemy_Faction):setRange(18000):setPosition(54372, -255958)
     }
     kraylor_defense_line_ships = {}
     kraylor_defense_line_engaged = false
     for _, warp_jammer in ipairs(kraylor_defense_line) do
         x, y = warp_jammer:getPosition()
-        ship = CpuShip():setFaction("Kraylor"):setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):orderDefendLocation(x, y)
+        ship = CpuShip():setFaction(Enemy_Faction):setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):orderDefendLocation(x, y)
         if random(0, 100) < 20 then
             ship:setTemplate("Defense platform")
         elseif random(0, 100) < 50 then
@@ -186,7 +190,7 @@ Doppler instability: %i]], b20_artifact.beta_radiation, b20_artifact.gravity_dis
         end
         table.insert(kraylor_defense_line_ships, ship)
         for n=1,3 do
-            ship2 = CpuShip():setFaction("Kraylor"):setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):orderDefendTarget(ship)
+            ship2 = CpuShip():setFaction(Enemy_Faction):setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):orderDefendTarget(ship)
             if random(0, 100) < 50 then
                 ship2:setTemplate("Phobos T3")
             elseif random(0, 100) < 20 then
@@ -198,20 +202,20 @@ Doppler instability: %i]], b20_artifact.beta_radiation, b20_artifact.gravity_dis
         end
     end
 
-    SpaceStation():setTemplate("Huge Station"):setFaction("Kraylor"):setPosition(32099, -291152)
-    SpaceStation():setTemplate("Huge Station"):setFaction("Kraylor"):setPosition(-4252, -297462)
-    SpaceStation():setTemplate("Huge Station"):setFaction("Kraylor"):setPosition(-27984, -262071)
+    SpaceStation():setTemplate("Huge Station"):setFaction(Enemy_Faction):setPosition(32099, -291152)
+    SpaceStation():setTemplate("Huge Station"):setFaction(Enemy_Faction):setPosition(-4252, -297462)
+    SpaceStation():setTemplate("Huge Station"):setFaction(Enemy_Faction):setPosition(-27984, -262071)
 
     kraylor_forward_line = {
-        SpaceStation():setTemplate("Small Station"):setFaction("Kraylor"):setPosition(-7278, -197898),
-        SpaceStation():setTemplate("Large Station"):setFaction("Kraylor"):setPosition(-13839, -233328),
-        SpaceStation():setTemplate("Large Station"):setFaction("Kraylor"):setPosition(29333, -240151),
-        SpaceStation():setTemplate("Small Station"):setFaction("Kraylor"):setPosition(36681, -200260)
+        SpaceStation():setTemplate("Small Station"):setFaction(Enemy_Faction):setPosition(-7278, -197898),
+        SpaceStation():setTemplate("Large Station"):setFaction(Enemy_Faction):setPosition(-13839, -233328),
+        SpaceStation():setTemplate("Large Station"):setFaction(Enemy_Faction):setPosition(29333, -240151),
+        SpaceStation():setTemplate("Small Station"):setFaction(Enemy_Faction):setPosition(36681, -200260)
     }
     kraylor_transport = nil
     for _, station in ipairs(kraylor_forward_line) do
         x, y = station:getPosition()
-        ship = CpuShip():setFaction("Kraylor"):setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):orderDefendLocation(x, y)
+        ship = CpuShip():setFaction(Enemy_Faction):setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):orderDefendLocation(x, y)
         if random(0, 100) < 20 then
             ship:setTemplate("Defense platform")
         elseif random(0, 100) < 50 then
@@ -221,7 +225,7 @@ Doppler instability: %i]], b20_artifact.beta_radiation, b20_artifact.gravity_dis
         end
         table.insert(kraylor_defense_line_ships, ship)
         for n=1,3 do
-            ship2 = CpuShip():setFaction("Kraylor"):setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):orderDefendTarget(ship)
+            ship2 = CpuShip():setFaction(Enemy_Faction):setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):orderDefendTarget(ship)
             if random(0, 100) < 50 then
                 ship2:setTemplate("Phobos T3")
             elseif random(0, 100) < 20 then
@@ -287,7 +291,7 @@ function phase1WaitForPowerup(delta)
     shipyard_gamma:sendCommsMessage(player, [[Atlantis-1,
 Good, we read all systems are go. You can safely undock now.
 Head to sector K6, there is a supply drop there dropped by F-1. Pick this up to stock up on missile weapons.]])
-    supply_drop = SupplyDrop():setFaction("Human Navy"):setPosition(29021, 114945):setEnergy(500):setWeaponStorage("Homing", 12):setWeaponStorage("Nuke", 4):setWeaponStorage("Mine", 8):setWeaponStorage("EMP", 6):setWeaponStorage("HVLI", 20)
+    supply_drop = SupplyDrop():setFaction(Player_Faction):setPosition(29021, 114945):setEnergy(500):setWeaponStorage("Homing", 12):setWeaponStorage("Nuke", 4):setWeaponStorage("Mine", 8):setWeaponStorage("EMP", 6):setWeaponStorage("HVLI", 20)
     transport_f1:orderDock(supply_station_6)
 	player:addReputationPoints(5)
     mission_state = phase1WaitForSupplyPickup
@@ -460,7 +464,7 @@ Recently there has been a spike in Kraylor transports near the Kraylor defense l
 We are tasking you to head back out to the Kraylor defense line, and destroy one of these transports. Take any cargo that might stay behind. It could provide valuable intel.
 
 However, do NOT engage any of the Kraylor bases directly. You are not equipped to handle a full on assault.]])
-        kraylor_transport = CpuShip():setFaction("Kraylor"):setTemplate("Flavia"):setCallSign("KHVT"):orderIdle()
+        kraylor_transport = CpuShip():setFaction(Enemy_Faction):setTemplate("Flavia"):setCallSign("KHVT"):orderIdle()
         kraylor_transport:setCommsScript(""):setImpulseMaxSpeed(60)
         kraylor_transport.current_station = kraylor_forward_line[irandom(1, #kraylor_forward_line)]
         local x, y = kraylor_transport.current_station:getPosition()
@@ -496,7 +500,7 @@ function phase4DestroyTheTransport(delta)
     elseif kraylor_transport.drop == nil then
         --Transport is destroyed, go on the full offense. (could be destroyed in 1 hit, so we do not see shield damage then)
         putKraylorDefenseLineOnFullOffense()
-        kraylor_transport.drop = SupplyDrop():setFaction("Human Navy"):setPosition(kraylor_transport.x, kraylor_transport.y)
+        kraylor_transport.drop = SupplyDrop():setFaction(Player_Faction):setPosition(kraylor_transport.x, kraylor_transport.y)
     elseif not kraylor_transport.drop:isValid() then
         jc88:sendCommsMessage(player, [[Get back here NOW. The whole Kraylor fleet is after you. Whatever you have, it is valuable.]])
         mission_state = phase4JumpBackToShipyard
@@ -600,7 +604,7 @@ function phase5CrackingDone(delta)
         shipyard_gamma:sendCommsMessage(player, [[Just detected a power surge.\nI T ' S   T H E   B A T T L E S T A T I O N ! !
 
 All hands on deck. Man all stations, evacuate! Save what you can!]])
-        odin = CpuShip():setFaction("Kraylor"):setTemplate("Odin"):setCallSign("Odin"):setScanned(true):setPosition(26900, 132872):orderAttack(shipyard_gamma)
+        odin = CpuShip():setFaction(Enemy_Faction):setTemplate("Odin"):setCallSign("Odin"):setScanned(true):setPosition(26900, 132872):orderAttack(shipyard_gamma)
         odin.target = shipyard_gamma
         WormHole():setPosition(23984, 126258):setTargetPosition(0, 0)
         mission_state = phase5OdinAttack
@@ -610,11 +614,11 @@ end
 function phase5OdinAttack(delta)
     if not odin:isValid() then  --WTF man, you get bonus points for this.
 		globalMessage("Bonus points for actually destroying the battlestation")
-        victory("Human Navy")
+        victory(Player_Faction)
         return
     end
     if distance(player, odin) > 30000 then
-        victory("Human Navy")
+        victory(Player_Faction)
     end
     
     if not odin.target:isValid() then
@@ -802,7 +806,7 @@ function update(delta)
     if not player:isValid() or (not jc88:isValid() and mission_state ~= phase5OdinAttack) then
         defeat_timeout = defeat_timeout - delta
         if defeat_timeout < 0.0 then
-            victory("Kraylor")
+            victory(Enemy_Faction)
             return
         end
     end

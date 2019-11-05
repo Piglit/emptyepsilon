@@ -6,28 +6,31 @@
 ---             The Human Navy's HNS Gallipoli and Kraylor's Crusader Naa'Tvek face off in an all-out battle for Shangri-La.
 -- Type: PvP
 
+Faction_1 = "Freunde"
+Faction_2 = "P-Rats"
+
 function init()
 	humanTroops = {}
 	kraylorTroops = {}
 
 	-- Stations
-	shangri_la = SpaceStation():setPosition(10000, 10000):setTemplate('Large Station'):setFaction("Independent"):setRotation(random(0, 360)):setCallSign("Shangri-La"):setCommsFunction(shangrilaComms)
+	shangri_la = SpaceStation():setPosition(10000, 10000):setTemplate('Large Station'):setFaction("Fraktionslos"):setRotation(random(0, 360)):setCallSign("Shangri-La"):setCommsFunction(shangrilaComms)
 
-	human_shipyard = SpaceStation():setPosition(-7500, 15000):setTemplate('Small Station'):setFaction("Human Navy"):setRotation(random(0, 360)):setCallSign("Mobile Shipyard"):setCommsFunction(stationComms)
-	CpuShip():setTemplate('Phobos T3'):setFaction("Human Navy"):setPosition(-8000, 16500):orderDefendTarget(human_shipyard):setScannedByFaction("Human Navy", true)
-	CpuShip():setTemplate('Phobos T3'):setFaction("Human Navy"):setPosition(-6000, 13500):orderDefendTarget(human_shipyard):setScannedByFaction("Human Navy", true)
-	CpuShip():setTemplate('Phobos T3'):setFaction("Human Navy"):setPosition(-7000, 14000):orderDefendTarget(human_shipyard):setScannedByFaction("Human Navy", true)
-	CpuShip():setTemplate('Nirvana R5'):setFaction("Human Navy"):setPosition(-8000, 14000):orderDefendTarget(human_shipyard):setScannedByFaction("Human Navy", true)
+	human_shipyard = SpaceStation():setPosition(-7500, 15000):setTemplate('Small Station'):setFaction(Faction_1):setRotation(random(0, 360)):setCallSign("Mobile Shipyard"):setCommsFunction(stationComms)
+	CpuShip():setTemplate('Phobos T3'):setFaction(Faction_1):setPosition(-8000, 16500):orderDefendTarget(human_shipyard):setScannedByFaction(Faction_1, true)
+	CpuShip():setTemplate('Phobos T3'):setFaction(Faction_1):setPosition(-6000, 13500):orderDefendTarget(human_shipyard):setScannedByFaction(Faction_1, true)
+	CpuShip():setTemplate('Phobos T3'):setFaction(Faction_1):setPosition(-7000, 14000):orderDefendTarget(human_shipyard):setScannedByFaction(Faction_1, true)
+	CpuShip():setTemplate('Nirvana R5'):setFaction(Faction_1):setPosition(-8000, 14000):orderDefendTarget(human_shipyard):setScannedByFaction(Faction_1, true)
 
-	kraylor_shipyard = SpaceStation():setPosition(27500, 5000):setTemplate('Small Station'):setFaction("Kraylor"):setRotation(random(0, 360)):setCallSign("Forward Command"):setCommsFunction(stationComms)
-	CpuShip():setTemplate('Phobos T3'):setFaction("Kraylor"):setPosition(29000, 5000):orderDefendTarget(kraylor_shipyard):setScannedByFaction("Kraylor", true)
-	CpuShip():setTemplate('Phobos T3'):setFaction("Kraylor"):setPosition(25000, 5000):orderDefendTarget(kraylor_shipyard):setScannedByFaction("Kraylor", true)
-	CpuShip():setTemplate('Phobos T3'):setFaction("Kraylor"):setPosition(27500, 6000):orderDefendTarget(kraylor_shipyard):setScannedByFaction("Kraylor", true)
-	CpuShip():setTemplate('Nirvana R5'):setFaction("Kraylor"):setPosition(27000, 5000):orderDefendTarget(kraylor_shipyard):setScannedByFaction("Kraylor", true)
+	kraylor_shipyard = SpaceStation():setPosition(27500, 5000):setTemplate('Small Station'):setFaction(Faction_2):setRotation(random(0, 360)):setCallSign("Forward Command"):setCommsFunction(stationComms)
+	CpuShip():setTemplate('Phobos T3'):setFaction(Faction_2):setPosition(29000, 5000):orderDefendTarget(kraylor_shipyard):setScannedByFaction(Faction_2, true)
+	CpuShip():setTemplate('Phobos T3'):setFaction(Faction_2):setPosition(25000, 5000):orderDefendTarget(kraylor_shipyard):setScannedByFaction(Faction_2, true)
+	CpuShip():setTemplate('Phobos T3'):setFaction(Faction_2):setPosition(27500, 6000):orderDefendTarget(kraylor_shipyard):setScannedByFaction(Faction_2, true)
+	CpuShip():setTemplate('Nirvana R5'):setFaction(Faction_2):setPosition(27000, 5000):orderDefendTarget(kraylor_shipyard):setScannedByFaction(Faction_2, true)
 
 	-- Spawn players
-	gallipoli = PlayerSpaceship():setFaction("Human Navy"):setTemplate("Atlantis"):setPosition(-8500, 15000):setCallSign("HNS Gallipoli"):setScannedByFaction("Kraylor", false)
-	crusader = PlayerSpaceship():setFaction("Kraylor"):setTemplate("Atlantis"):setPosition(26500, 5000):setCallSign("Crusader Naa'Tvek"):setScannedByFaction("Human Navy", false)
+	gallipoli = PlayerSpaceship():setFaction(Faction_1):setTemplate("Atlantis"):setPosition(-8500, 15000):setCallSign("HNS Gallipoli"):setScannedByFaction(Faction_2, false)
+	crusader = PlayerSpaceship():setFaction(Faction_2):setTemplate("Atlantis"):setPosition(26500, 5000):setCallSign("Crusader Naa'Tvek"):setScannedByFaction(Faction_1, false)
 
 	-- Initialize timers
 	time = 0
@@ -45,7 +48,7 @@ function init()
 	create(Mine, 10, 5000, 10000, 10000, 10000)
 	
 	-- Brief the players
-	human_shipyard:sendCommsMessage(gallipoli, [[Captain, it seems that the Kraylor are moving to take the Shangri-La station in sector F5!
+	human_shipyard:sendCommsMessage(gallipoli, [[Captain, it seems that the ]] .. Faction_2 .. [[ are moving to take the Shangri-La station in sector F5!
 
 Provide a spatial cover for while our troop transports board the station to reclaim it.
 
@@ -53,27 +56,27 @@ Good luck, and stay safe.]])
 
 	kraylor_shipyard:sendCommsMessage(crusader, [[Greetings, Crusader.
 
-Your mission is to secure the Shangri-La station in sector F5, as the feeble humans think it's theirs for the taking.
+Your mission is to secure the Shangri-La station in sector F5, as the feeble ]] .. Faction_1 .. [[ think it's theirs for the taking.
 
 Support our glorious soldiers by preventing the heretics from harming our transports, and cleanse all enemy opposition!]])
 	
 	-- Spawn the first wave
-	human_transport = spawnTransport():setFaction("Human Navy"):setPosition(-7000, 15000):orderDock(shangri_la):setScannedByFaction("Human Navy", true)
+	human_transport = spawnTransport():setFaction(Faction_1):setPosition(-7000, 15000):orderDock(shangri_la):setScannedByFaction(Faction_1, true)
 	table.insert(humanTroops, human_transport)
-	CpuShip():setTemplate('MT52 Hornet'):setFaction("Human Navy"):setPosition(-7000, 15500):orderDefendTarget(human_transport):setScannedByFaction("Human Navy", true)
-	CpuShip():setTemplate('MT52 Hornet'):setFaction("Human Navy"):setPosition(-7000, 14500):orderDefendTarget(human_transport):setScannedByFaction("Human Navy", true)
+	CpuShip():setTemplate('MT52 Hornet'):setFaction(Faction_1):setPosition(-7000, 15500):orderDefendTarget(human_transport):setScannedByFaction(Faction_1, true)
+	CpuShip():setTemplate('MT52 Hornet'):setFaction(Faction_1):setPosition(-7000, 14500):orderDefendTarget(human_transport):setScannedByFaction(Faction_1, true)
 	
-	kraylor_transport = spawnTransport():setFaction("Kraylor"):setPosition(26500, 5000):orderDock(shangri_la):setScannedByFaction("Kraylor", true)
+	kraylor_transport = spawnTransport():setFaction(Faction_2):setPosition(26500, 5000):orderDock(shangri_la):setScannedByFaction(Faction_2, true)
 	table.insert(kraylorTroops, kraylor_transport)
-	CpuShip():setTemplate('MT52 Hornet'):setFaction("Kraylor"):setPosition(26500, 5500):orderDefendTarget(kraylor_transport):setScannedByFaction("Kraylor", true)
-	CpuShip():setTemplate('MT52 Hornet'):setFaction("Kraylor"):setPosition(26500, 4500):orderDefendTarget(kraylor_transport):setScannedByFaction("Kraylor", true)
+	CpuShip():setTemplate('MT52 Hornet'):setFaction(Faction_2):setPosition(26500, 5500):orderDefendTarget(kraylor_transport):setScannedByFaction(Faction_2, true)
+	CpuShip():setTemplate('MT52 Hornet'):setFaction(Faction_2):setPosition(26500, 4500):orderDefendTarget(kraylor_transport):setScannedByFaction(Faction_2, true)
 end
 
 function shangrilaComms()
 	-- If players call Shangri-La, provide a status report
 	setCommsMessage("Your faction's militia commander picks up:\nWhat can we do for you, Captain?")
 	addCommsReply("Give us a status report.", function()
-        	setCommsMessage("Here's the latest news from the front.\nHuman dominance: ".. human_points .. "\nKraylor dominance: ".. kraylor_points .. "\nTime elapsed: ".. time)			
+        	setCommsMessage("Here's the latest news from the front.\n" .. Faction_1.. "dominance: ".. human_points .. "\n" .. Faction_2 .. "dominance: ".. kraylor_points .. "\nTime elapsed: ".. time)			
 	end)
 end
 
@@ -88,18 +91,18 @@ function stationComms()
 		end
 		
 		addCommsReply("I need a status report.", function()
-			setCommsMessage("Here's the latest news from the front.\nHuman dominance: ".. human_points .. "\nKraylor dominance: ".. kraylor_points .. "\nTime elapsed: ".. time)			
+			setCommsMessage("Here's the latest news from the front.\n" .. Faction_1.. "dominance: ".. human_points .. "\n" .. Faction_2 .. "dominance: ".. kraylor_points .. "\nTime elapsed: ".. time)			
 		end)
 
 		addCommsReply("Send in more troops. (100 reputation)", function()
 			if not comms_source:takeReputationPoints(100) then setCommsMessage("Not enough reputation."); return end
 			setCommsMessage("Aye, captain. We've deployed a squad with fighter escort to support the assault on Shangri-La.")
-			if comms_target:getFaction() == "Kraylor" then
-			  kraylor_transport = spawnTransport():setFaction("Kraylor"):setPosition(comms_target:getPosition()):orderDock(shangri_la):setScannedByFaction("Kraylor", true)
+			if comms_target:getFaction() == Faction_2 then
+			  kraylor_transport = spawnTransport():setFaction(Faction_2):setPosition(comms_target:getPosition()):orderDock(shangri_la):setScannedByFaction(Faction_2, true)
 				table.insert(kraylorTroops, kraylor_transport)
 				CpuShip():setTemplate('MT52 Hornet'):setFaction(comms_target:getFaction()):setPosition(comms_target:getPosition()):orderDefendTarget(kraylor_transport):setScannedByFaction(comms_source:getFaction(), true)
 			else
-				human_transport = spawnTransport():setFaction("Human Navy"):setPosition(comms_target:getPosition()):orderDock(shangri_la):setScannedByFaction("Human Navy", true)
+				human_transport = spawnTransport():setFaction(Faction_1):setPosition(comms_target:getPosition()):orderDock(shangri_la):setScannedByFaction(Faction_1, true)
 				table.insert(humanTroops, human_transport)
 				CpuShip():setTemplate('MT52 Hornet'):setFaction(comms_target:getFaction()):setPosition(comms_target:getPosition()):orderDefendTarget(human_transport):setScannedByFaction(comms_source:getFaction(), true)
 			end
@@ -189,7 +192,7 @@ function update(delta)
 	if (not gallipoli:isValid()) then
 		-- ... and 20 seconds have passed, spawn the Heinlein.
 		if human_respawn > 20 then
-			gallipoli = PlayerSpaceship():setFaction("Human Navy"):setTemplate("Atlantis"):setPosition(-8500, 15000):setCallSign("HNS Heinlein"):setScannedByFaction("Kraylor", false)
+			gallipoli = PlayerSpaceship():setFaction(Faction_1):setTemplate("Atlantis"):setPosition(-8500, 15000):setCallSign("HNS Heinlein"):setScannedByFaction(Faction_2, false)
 		-- Otherwise, increment the respawn timer.
 		else
 			human_respawn = human_respawn + delta
@@ -199,7 +202,7 @@ function update(delta)
 	-- Ditto for the Crusader.
 	if (not crusader:isValid()) then
 		if kraylor_respawn > 20 then
-			crusader = PlayerSpaceship():setFaction("Kraylor"):setTemplate("Atlantis"):setPosition(19000, -14500):setCallSign("Crusader Elak'raan"):setScannedByFaction("Human Navy", false)
+			crusader = PlayerSpaceship():setFaction(Faction_2):setTemplate("Atlantis"):setPosition(19000, -14500):setCallSign("Crusader Elak'raan"):setScannedByFaction(Faction_1, false)
 		else
 			kraylor_respawn = kraylor_respawn + delta
 		end
@@ -212,11 +215,11 @@ function update(delta)
 	-- If a faction has no station or flagship, it loses.
 	-- If a faction scores 50 points, it wins.
 	if ((not gallipoli:isValid()) and (not human_shipyard:isValid())) or kraylor_points > 50 then
-		victory("Kraylor")
+		victory(Faction_2)
 	end
 	
 	if ((not crusader:isValid()) and (not kraylor_shipyard:isValid())) or human_points > 50 then
-		victory("Human Navy")
+		victory(Faction_1)
 	end	
 	
 	-- If either flagship is destroyed, its opponent gains a reputation bonus, and
@@ -224,7 +227,7 @@ function update(delta)
 	if (not gallipoli:isValid()) then
 		kraylor_shipyard:sendCommsMessage(crusader, [[Well done, Crusader!
 
-The pathetic Human flagship has been disabled. Go for the victory!]])
+The pathetic ]] .. Faction_1 .. [[ flagship has been disabled. Go for the victory!]])
 		crusader:addReputationPoints(50)
 		kraylor_points = kraylor_points + 5
 		human_respawn = 0
@@ -233,7 +236,7 @@ The pathetic Human flagship has been disabled. Go for the victory!]])
 	if (not crusader:isValid()) then
 		human_shipyard:sendCommsMessage(gallipoli, [[Good job, Captain!
 
-With the Kraylor flagship out of the way, we can land the final blow!]])
+With the ]] .. Faction_2 .. [[ flagship out of the way, we can land the final blow!]])
 		gallipoli:addReputationPoints(50)
 		human_points = human_points + 5
 		krayor_respawn =  0
@@ -243,16 +246,16 @@ With the Kraylor flagship out of the way, we can land the final blow!]])
 	-- each faction.
 	if wave_timer > 150 and (human_shipyard:isValid()) then
 		line = random(0, 20) * 500
-		human_transport = spawnTransport():setFaction("Human Navy"):setPosition(-7000, 5000 + line):orderDock(shangri_la):setScannedByFaction("Human Navy", true)
+		human_transport = spawnTransport():setFaction(Faction_1):setPosition(-7000, 5000 + line):orderDock(shangri_la):setScannedByFaction(Faction_1, true)
 		table.insert(humanTroops, human_transport)
-		CpuShip():setTemplate('MT52 Hornet'):setFaction("Human Navy"):setPosition(-7000, 5500 + line):orderDefendTarget(human_transport):setScannedByFaction("Human Navy", true)
-		CpuShip():setTemplate('MT52 Hornet'):setFaction("Human Navy"):setPosition(-7000, 4500 + line):orderDefendTarget(human_transport):setScannedByFaction("Human Navy", true)
+		CpuShip():setTemplate('MT52 Hornet'):setFaction(Faction_1):setPosition(-7000, 5500 + line):orderDefendTarget(human_transport):setScannedByFaction(Faction_1, true)
+		CpuShip():setTemplate('MT52 Hornet'):setFaction(Faction_1):setPosition(-7000, 4500 + line):orderDefendTarget(human_transport):setScannedByFaction(Faction_1, true)
 	
 		line = random(0, 20) * 500
-		kraylor_transport = spawnTransport():setFaction("Kraylor"):setPosition(27000, -5000 + line):orderDock(shangri_la):setScannedByFaction("Kraylor", true)
+		kraylor_transport = spawnTransport():setFaction(Faction_2):setPosition(27000, -5000 + line):orderDock(shangri_la):setScannedByFaction(Faction_2, true)
 		table.insert(kraylorTroops, kraylor_transport)
-		CpuShip():setTemplate('MT52 Hornet'):setFaction("Kraylor"):setPosition(27000, -5500 + line):orderDefendTarget(kraylor_transport):setScannedByFaction("Kraylor", true)
-		CpuShip():setTemplate('MT52 Hornet'):setFaction("Kraylor"):setPosition(27000, -4500 + line):orderDefendTarget(kraylor_transport):setScannedByFaction("Kraylor", true)
+		CpuShip():setTemplate('MT52 Hornet'):setFaction(Faction_2):setPosition(27000, -5500 + line):orderDefendTarget(kraylor_transport):setScannedByFaction(Faction_2, true)
+		CpuShip():setTemplate('MT52 Hornet'):setFaction(Faction_2):setPosition(27000, -4500 + line):orderDefendTarget(kraylor_transport):setScannedByFaction(Faction_2, true)
 		
 		wave_timer = 0
 	end

@@ -1,14 +1,10 @@
-neutral = FactionInfo():setName("Independent")
+neutral = FactionInfo():setName("Fraktionslos")
 neutral:setGMColor(128, 128, 128)
-neutral:setDescription([[Despite appearing as a faction, independents are distinguished primarily by having no strong affiliation with any faction at all. Most traders consider themselves independent, though certain voices have started to speak up about creating a merchant faction.]])
+neutral:setDescription([[Fraktionslose Schiffe sind meist Haendler oder zivile Reisende.]])
 
-human = FactionInfo():setName("Human Navy")
+human = FactionInfo():setName("Freunde")
 human:setGMColor(255, 255, 255)
-human:setDescription([[The remnants of the human navy.
-
-While all other races were driven to the stars out of greed or scientific research, humans where the only race to start exploring the galaxy because their homeworld could no longer sustain their population. Some other races view humans as a sort of virus or plague due to the rate at which they can breed and spread.
-
-Due to human regulations on spaceships, naval ships are the only ones permitted in deep space. However, this hasn't completely prevented humans outside of the navy from spacefaring, as quite a few humans sign up on alien trading vessels or pirate raiders.]])
+human:setDescription([[Diese meist fraktionslosen Schiffe sind mit euch verbuendet.]])
 
 kraylor = FactionInfo():setName("P-Rats")
 kraylor:setGMColor(255, 0, 0)

@@ -696,7 +696,7 @@ function setStations()
 	end
 	ganaldaAngle = random(0,360)
 	xGanalda, yGanalda = vectorFromAngle(ganaldaAngle,random(120000,150000))
-	stationGanalda = SpaceStation():setTemplate("Medium Station"):setFaction("Kraylor")
+	stationGanalda = SpaceStation():setTemplate("Medium Station"):setFaction("P-Rats)
 	stationGanalda:setPosition(xGanalda,yGanalda):setCallSign("Ganalda")
 	empokAngle = ganaldaAngle + random(60,180)
 	xEmpok, yEmpok = vectorFromAngle(empokAngle,random(120000,150000))
@@ -704,7 +704,7 @@ function setStations()
 	stationEmpok:setPosition(xEmpok,yEmpok):setCallSign("Empok Nor")
 	ticAngle = empokAngle + random(60,120)
 	xTic, yTic = vectorFromAngle(ticAngle,random(120000,150000))
-	stationTic = SpaceStation():setTemplate("Medium Station"):setFaction("Kraylor")
+	stationTic = SpaceStation():setTemplate("Medium Station"):setFaction("P-Rats)
 	stationTic:setPosition(xTic,yTic):setCallSign("Ticonderoga")
 	createRandomAlongArc(Nebula, 15, 100000, -100000, 140000, 100, 170, 25000)
 	Nebula():setPosition(xGanalda,yGanalda)
@@ -1879,7 +1879,7 @@ function enemyComms(comms_data)
 		taunt_option = "We will see to your destruction!"
 		taunt_success_reply = "Your bloodline will end here!"
 		taunt_failed_reply = "Your feeble threats are meaningless."
-		if faction == "Kraylor" then
+		if faction == "P-Rats then
 			setCommsMessage("Ktzzzsss.\nYou will DIEEee weaklingsss!");
 		elseif faction == "Arlenians" then
 			setCommsMessage("We wish you no harm, but will harm you if we must.\nEnd of transmission.");
@@ -2445,7 +2445,7 @@ end
 -----------------------------------------------------------------]]--
 function spawnEnemies(xOrigin, yOrigin, danger, enemyFaction)
 	if enemyFaction == nil then
-		enemyFaction = "Kraylor"
+		enemyFaction = "P-Rats"
 	end
 	if danger == nil then 
 		danger = 1
@@ -3730,7 +3730,7 @@ function update(delta)
 			if requiredMissionCount > 0 and plotR == nil then
 				victory("Human Navy")
 			else
-				victory("Kraylor")
+				victory("P-Rats")
 			end
 		end
 		-- select required mission

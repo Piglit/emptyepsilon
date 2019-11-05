@@ -70,7 +70,7 @@ function update(delta)
                     name = name .. " Freighter " .. irandom(1, 5)
                 end
                 
-				obj = CpuShip():setTemplate(name):setFaction('Independent')
+				obj = CpuShip():setTemplate(name):setFaction('Fraktionslos')
 				obj.target = target
 				obj.undock_delay = random(5, 30)
 				obj:orderDock(obj.target)

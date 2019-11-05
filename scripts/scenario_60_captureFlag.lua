@@ -541,7 +541,7 @@ function marauderWaves(delta)
 end
 function spawnEnemies(xOrigin, yOrigin, danger, enemyFaction)
 	if enemyFaction == nil then
-		enemyFaction = "Kraylor"
+		enemyFaction = "P-Rats"
 	end
 	if danger == nil then 
 		danger = 1
@@ -2130,7 +2130,7 @@ function randomSymmetric()
 	end
 	psx = -psx
 	psy = -psy
-	stationFaction = "Kraylor"
+	stationFaction = "P-Rats"
 	si = math.random(1,#placeGenericStation)
 	pStation = placeGenericStation[si]()
 	table.remove(placeGenericStation,si)
@@ -2179,13 +2179,13 @@ function randomSymmetric()
 		psx = -psx
 		psy = -psy
 		if stationFaction ~= "Independent" then
-			stationFaction = "Kraylor"
+			stationFaction = "P-Rats"
 		end
 		si = math.random(1,#placeGenericStation)
 		pStation = placeGenericStation[si]()
 		table.remove(placeGenericStation,si)
 		table.insert(stationList,pStation)
-		if stationFaction == "Kraylor" then
+		if stationFaction == "P-Rats" then
 			table.insert(kraylorStationList,pStation)
 		end
 		if mirrorKrik then
@@ -2277,7 +2277,7 @@ function defaultTerrain()
 		if psx < -1*neutralZoneDistance then		--left stations
 			stationFaction = "Human Navy"			--human
 		elseif psx > neutralZoneDistance then		--right stations
-			stationFaction = "Kraylor"				--kraylor
+			stationFaction = "P-Rats"				--kraylor
 		else										--near the middle
 			stationFaction = "Independent"			--independent
 		end
@@ -4844,7 +4844,7 @@ function update(delta)
 			p2 = getPlayerShip(2)
 			if p2 == nil then
 				tempPlayerType = p1:getTypeName()
-				p2 = PlayerSpaceship():setFaction("Kraylor"):setTemplate(tempPlayerType):setPosition(playerStartX[2],playerStartY[2]):setRotation(p1:getRotation()+180)
+				p2 = PlayerSpaceship():setFaction("P-Rats"):setTemplate(tempPlayerType):setPosition(playerStartX[2],playerStartY[2]):setRotation(p1:getRotation()+180)
 				setPlayer(p2)
 			end
 			if not p1.nameAssigned then
@@ -4861,7 +4861,7 @@ function update(delta)
 			p4 = getPlayerShip(4)
 			if p4 == nil then
 				tempPlayerType = p3:getTypeName()
-				p4 = PlayerSpaceship():setFaction("Kraylor"):setTemplate(tempPlayerType):setPosition(playerStartX[4],playerStartY[4]):setRotation(p3:getRotation()+180)
+				p4 = PlayerSpaceship():setFaction("P-Rats"):setTemplate(tempPlayerType):setPosition(playerStartX[4],playerStartY[4]):setRotation(p3:getRotation()+180)
 				setPlayer(p4)
 			end
 			if not p3.nameAssigned then
@@ -4878,7 +4878,7 @@ function update(delta)
 			p6 = getPlayerShip(6)
 			if p6 == nil then
 				tempPlayerType = p5:getTypeName()
-				p6 = PlayerSpaceship():setFaction("Kraylor"):setTemplate(tempPlayerType):setPosition(playerStartX[6],playerStartY[6]):setRotation(p5:getRotation()+180)
+				p6 = PlayerSpaceship():setFaction("P-Rats"):setTemplate(tempPlayerType):setPosition(playerStartX[6],playerStartY[6]):setRotation(p5:getRotation()+180)
 				setPlayer(p6)
 			end
 			if not p5.nameAssigned then
@@ -4895,7 +4895,7 @@ function update(delta)
 			p8 = getPlayerShip(8)
 			if p8 == nil then
 				tempPlayerType = p7:getTypeName()
-				p8 = PlayerSpaceship():setFaction("Kraylor"):setTemplate(tempPlayerType):setPosition(playerStartX[8],playerStartY[8]):setRotation(p7:getRotation()+180)
+				p8 = PlayerSpaceship():setFaction("P-Rats"):setTemplate(tempPlayerType):setPosition(playerStartX[8],playerStartY[8]):setRotation(p7:getRotation()+180)
 				setPlayer(p8)
 			end
 			if not p7.nameAssigned then
@@ -4918,7 +4918,7 @@ function update(delta)
 			p10 = getPlayerShip(10)
 			if p10 == nil then
 				tempPlayerType = p9:getTypeName()
-				p10 = PlayerSpaceship():setFaction("Kraylor"):setTemplate(tempPlayerType):setPosition(playerStartX[10],playerStartY[10]):setRotation(p9:getRotation()+180)
+				p10 = PlayerSpaceship():setFaction("P-Rats"):setTemplate(tempPlayerType):setPosition(playerStartX[10],playerStartY[10]):setRotation(p9:getRotation()+180)
 				setPlayer(p10)
 			end
 			if not p9.nameAssigned then
@@ -4935,7 +4935,7 @@ function update(delta)
 			p12 = getPlayerShip(12)
 			if p12 == nil then
 				tempPlayerType = p11:getTypeName()
-				p12 = PlayerSpaceship():setFaction("Kraylor"):setTemplate(tempPlayerType):setPosition(playerStartX[12],playerStartY[12]):setRotation(p11:getRotation()+180)
+				p12 = PlayerSpaceship():setFaction("P-Rats"):setTemplate(tempPlayerType):setPosition(playerStartX[12],playerStartY[12]):setRotation(p11:getRotation()+180)
 				setPlayer(p12)
 			end
 			if not p11.nameAssigned then
@@ -4976,10 +4976,10 @@ function update(delta)
 					if pidx % 2 == 0 then	--process Kraylor player ship
 						kraylorShipsRemaining = kraylorShipsRemaining + 1
 						if p.flag and px > 0 then
-							victory("Kraylor")
+							victory("P-Rats")
 						end
 						if p1Flag:isValid() then
-							if distance(p,p1Flag) < 500 and p1Flag:isScannedByFaction("Kraylor") then
+							if distance(p,p1Flag) < 500 and p1Flag:isScannedByFaction("P-Rats") then
 								p.flag = true
 								p1Flag:destroy()
 								p:addToShipLog("You picked up the Human Navy flag","Green")
@@ -5019,7 +5019,7 @@ function update(delta)
 											p1Flag = Artifact():setPosition(px,py):setModel("artifact5"):allowPickup(false)
 											p1Flag:setDescriptions("Flag","Human Navy Flag"):setRadarSignatureInfo(15,10,5):setScanningParameters(flagScanComplexity,flagScanDepth)
 											if difficulty < 2 then
-												p1Flag:setScannedByFaction("Kraylor",true)
+												p1Flag:setScannedByFaction("P-Rats",true)
 											end
 										end
 									end
@@ -5087,7 +5087,7 @@ function update(delta)
 							p1Flag = Artifact():setPosition(px,py):setModel("artifact5"):allowPickup(false)
 							p1Flag:setDescriptions("Flag","Human Navy Flag"):setRadarSignatureInfo(15,10,5):setScanningParameters(flagScanComplexity,flagScanDepth)
 							if difficulty < 2 then
-								p1Flag:setScannedByFaction("Kraylor",true)
+								p1Flag:setScannedByFaction("P-Rats",true)
 							end
 						else					--Human destroyed, reinstate Kraylor flag
 							p2Flag = Artifact():setPosition(px,py):setModel("artifact5"):allowPickup(false)
@@ -5104,7 +5104,7 @@ function update(delta)
 			victory("Human Navy")
 		end
 		if humanShipsRemaining == 0 then
-			victory("Kraylor")
+			victory("P-Rats")
 		end
 	elseif gameTimeLimit < (maxGameTime - hideFlagTime) then		--1500
 		--transition from preparation to hunt
@@ -5127,7 +5127,7 @@ function update(delta)
 			end
 			p1Flag = Artifact():setPosition(p1Flagx,p1Flagy):setModel("artifact5"):allowPickup(false):setDescriptions("Flag","Human Navy Flag"):setRadarSignatureInfo(15,10,5):setScanningParameters(flagScanComplexity,flagScanDepth)
 			if difficulty < 1 then
-				p1Flag:setScannedByFaction("Kraylor")
+				p1Flag:setScannedByFaction("P-Rats")
 			end
 		end
 		if p2Flag == nil then
