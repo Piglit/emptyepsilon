@@ -444,7 +444,7 @@ function setPlayers()
 						pobj.healthyMissile = 1.0
 						pobj.prevMissile = 1.0
 					end
-					if pobj:hasWarp() then
+					if pobj:hasWarpDrive() then
 						pobj.healthyWarp = 1.0
 						pobj.prevWarp = 1.0
 					end
@@ -969,6 +969,8 @@ function placeAnderson()
 	stationAnderson = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationAnderson:setFaction("Headless")
+	else
+		stationAnderson:setFaction(stationFaction)
 	end
 	stationAnderson:setPosition(psx,psy):setCallSign("Anderson"):setDescription("Battery and software engineering")
 	goods[stationAnderson] = {{"battery",5,65},{"software",5,115}}
@@ -983,6 +985,8 @@ function placeArchimedes()
 	stationArchimedes = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationArchimedes:setFaction("Objekon")
+	else
+		stationArchimedes:setFaction(stationFaction)
 	end
 	stationArchimedes:setPosition(psx,psy):setCallSign("Archimedes"):setDescription("Energy and particle beam components")
 	goods[stationArchimedes] = {{"beam",5,80}}
@@ -998,6 +1002,8 @@ function placeArmstrong()
 	stationArmstrong = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationArmstrong:setFaction("Eraz")
+	else
+		stationArmstrong:setFaction(stationFaction)
 	end
 	stationArmstrong:setPosition(psx,psy):setCallSign("Armstrong"):setDescription("Warp and Impulse engine manufacturing")
 	goods[stationArmstrong] = {{"food",math.random(5,10),1},{"medicine",5,5},{"impulse",5,62},{"warp",5,77}}	
@@ -1011,6 +1017,8 @@ function placeAsimov()
 	stationAsimov = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationAsimov:setFaction("Eraz")
+	else
+		stationAsimov:setFaction(stationFaction)
 	end
 	stationAsimov:setCallSign("Asimov"):setDescription("Training and Coordination"):setPosition(psx,psy)
 	goods[stationAsimov] = {{"food",10,1}}
@@ -1024,6 +1032,8 @@ function placeBarclay()
 	stationBarclay = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationBarclay:setFaction("Eraz")
+	else
+		stationBarclay:setFaction(stationFaction)
 	end
 	stationBarclay:setPosition(psx,psy):setCallSign("Barclay"):setDescription("Communication components")
 	goods[stationBarclay] = {{"communication",5,58}}
@@ -1038,6 +1048,8 @@ function placeBethesda()
 	stationBethesda = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationBethesda:setFaction("Headless")
+	else
+		stationBethesda:setFaction(stationFaction)
 	end
 	stationBethesda:setPosition(psx,psy):setCallSign("Bethesda"):setDescription("Medical research")
 	goods[stationBethesda] = {{"food",math.random(5,10),1},{"medicine",5,5},{"autodoc",5,36}}
@@ -1051,6 +1063,8 @@ function placeBroeck()
 	stationBroeck = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationBroeck:setFaction("Eraz")
+	else
+		stationBroeck:setFaction(stationFaction)
 	end
 	stationBroeck:setPosition(psx,psy):setCallSign("Broeck"):setDescription("Warp drive components")
 	goods[stationBroeck] = {{"warp",5,130}}
@@ -1067,6 +1081,8 @@ function placeCalvin()
 	stationCalvin = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationCalvin:setFaction("Dust")
+	else
+		stationCalvin:setFaction(stationFaction)
 	end
 	stationCalvin:setPosition(psx,psy):setCallSign("Calvin"):setDescription("Robotic research")
 	goods[stationCalvin] = {{"robotic",5,87}}
@@ -1082,6 +1098,8 @@ function placeChatuchak()
 	stationChatuchak = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationChatuchak:setFaction("NetMaxx")
+	else
+		stationChatuchak:setFaction(stationFaction)
 	end
 	stationChatuchak:setPosition(psx,psy):setCallSign("Chatuchak"):setDescription("Trading station")
 	goods[stationChatuchak] = {{"luxury",5,60}}		
@@ -1095,6 +1113,8 @@ function placeCoulomb()
 	stationCoulomb = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationCoulomb:setFaction("Headless")
+	else
+		stationCoulomb:setFaction(stationFaction)
 	end
 	stationCoulomb:setPosition(psx,psy):setCallSign("Coulomb"):setDescription("Shielded circuitry fabrication")
 	goods[stationCoulomb] = {{"circuit",5,50}}
@@ -1111,6 +1131,8 @@ function placeCyrus()
 	stationCyrus = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationCyrus:setFaction("Eraz")
+	else
+		stationCyrus:setFaction(stationFaction)
 	end
 	stationCyrus:setPosition(psx,psy):setCallSign("Cyrus"):setDescription("Impulse engine components")
 	goods[stationCyrus] = {{"impulse",5,124}}		
@@ -1127,6 +1149,8 @@ function placeErickson()
 	stationErickson = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationErickson:setFaction("My.S.T")
+	else
+		stationErickson:setFaction(stationFaction)
 	end
 	stationErickson:setPosition(psx,psy):setCallSign("Erickson"):setDescription("Transporter components")
 	goods[stationErickson] = {{"transporter",5,63}}		
@@ -1143,6 +1167,8 @@ function placeEvondos()
 	stationEvondos = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationEvondos:setFaction("Headless")
+	else
+		stationEvondos:setFaction(stationFaction)
 	end
 	stationEvondos:setPosition(psx,psy):setCallSign("Evondos"):setDescription("Autodoc components")
 	goods[stationEvondos] = {{"autodoc",5,56}}		
@@ -1158,6 +1184,8 @@ function placeFeynman()
 	stationFeynman = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationFeynman:setFaction("Headless")
+	else
+		stationFeynman:setFaction(stationFaction)
 	end
 	stationFeynman:setPosition(psx,psy):setCallSign("Feynman"):setDescription("Nanotechnology research")
 	goods[stationFeynman] = {{"nanites",5,79},{"software",5,115}}
@@ -1174,6 +1202,8 @@ function placeGrasberg()
 	stationGrasberg = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationGrasberg:setFaction("Eraz")
+	else
+		stationGrasberg:setFaction(stationFaction)
 	end
 	stationGrasberg:setPosition(psx,psy):setCallSign("Grasberg"):setDescription("Mining")
 	stationGrasberg.publicRelations = true
@@ -1187,6 +1217,8 @@ function placeHayden()
 	stationHayden = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationHayden:setFaction("Eraz")
+	else
+		stationHayden:setFaction(stationFaction)
 	end
 	stationHayden:setPosition(psx,psy):setCallSign("Hayden"):setDescription("Observatory and stellar mapping")
 	goods[stationHayden] = {{"nanites",5,65}}		
@@ -1199,6 +1231,8 @@ function placeHeyes()
 	stationHeyes = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationHeyes:setFaction("Dust")
+	else
+		stationHeyes:setFaction(stationFaction)
 	end
 	stationHeyes:setPosition(psx,psy):setCallSign("Heyes"):setDescription("Sensor components")
 	goods[stationHeyes] = {{"sensor",5,72}}		
@@ -1213,6 +1247,8 @@ function placeHossam()
 	stationHossam = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationHossam:setFaction("Headless")
+	else
+		stationHossam:setFaction(stationFaction)
 	end
 	stationHossam:setPosition(psx,psy):setCallSign("Hossam"):setDescription("Nanite supplier")
 	goods[stationHossam] = {{"nanites",5,48}}		
@@ -1230,6 +1266,8 @@ function placeImpala()
 	stationImpala = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationImpala:setFaction("Eraz")
+	else
+		stationImpala:setFaction(stationFaction)
 	end
 	stationImpala:setPosition(psx,psy):setCallSign("Impala"):setDescription("Mining")
 	tradeFood[stationImpala] = true
@@ -1243,6 +1281,8 @@ function placeJabba()
 	stationJabba = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationJabba:setFaction("NetMaxx")
+	else
+		stationJabba:setFaction(stationFaction)
 	end
 	stationJabba:setPosition(psx,psy):setCallSign("Jabba"):setDescription("Commerce and gambling")
 	goods[stationJabba] = {{"luxury",5,72}}		
@@ -1255,6 +1295,8 @@ function placeKrak()
 	stationKrak = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationKrak:setFaction("Eraz")
+	else
+		stationKrak:setFaction(stationFaction)
 	end
 	stationKrak:setPosition(psx,psy):setCallSign("Krak"):setDescription("Mining station")
 	posAxisKrak = random(0,360)
@@ -1278,6 +1320,8 @@ function placeKrik()
 	stationKrik = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationKrik:setFaction("Dust")
+	else
+		stationKrik:setFaction(stationFaction)
 	end
 	stationKrik:setPosition(psx,psy):setCallSign("Krik"):setDescription("Mining station")
 	posAxisKrik = random(0,360)
@@ -1301,6 +1345,8 @@ function placeKruk()
 	stationKruk = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationKruk:setFaction("Eraz")
+	else
+		stationKruk:setFaction(stationFaction)
 	end
 	stationKruk:setPosition(psx,psy):setCallSign("Kruk"):setDescription("Mining station")
 	posAxisKruk = random(0,360)
@@ -1324,6 +1370,8 @@ function placeLipkin()
 	stationLipkin = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationLipkin:setFaction("Dust")
+	else
+		stationLipkin:setFaction(stationFaction)
 	end
 	stationLipkin:setPosition(psx,psy):setCallSign("Lipkin"):setDescription("Autodoc components")
 	goods[stationLipkin] = {{"autodoc",5,76}}		
@@ -1339,6 +1387,8 @@ function placeMadison()
 	stationMadison = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationMadison:setFaction("Trouge")
+	else
+		stationMadison:setFaction(stationFaction)
 	end
 	stationMadison:setPosition(psx,psy):setCallSign("Madison"):setDescription("Zero gravity sports and entertainment")
 	goods[stationMadison] = {{"luxury",5,70}}		
@@ -1352,6 +1402,8 @@ function placeMaiman()
 	stationMaiman = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationMaiman:setFaction("Objekon")
+	else
+		stationMaiman:setFaction(stationFaction)
 	end
 	stationMaiman:setPosition(psx,psy):setCallSign("Maiman"):setDescription("Energy beam components")
 	goods[stationMaiman] = {{"beam",5,70}}		
@@ -1366,6 +1418,8 @@ function placeMaverick()
 	stationMaverick = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationMaverick:setFaction("Trouge")
+	else
+		stationMaverick:setFaction(stationFaction)
 	end
 	stationMaverick:setPosition(psx,psy):setCallSign("Maverick"):setDescription("Gambling and resupply")
 	stationMaverick.publicRelations = true
@@ -1377,6 +1431,8 @@ function placeMiller()
 	stationMiller = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationMiller:setFaction("Trouge")
+	else
+		stationMiller:setFaction(stationFaction)
 	end
 	stationMiller:setPosition(psx,psy):setCallSign("Miller"):setDescription("Exobiology research")
 	goods[stationMiller] = {{"luxury",10,91}}		
@@ -1390,6 +1446,8 @@ function placeNexus6()
 	stationNexus6 = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationNexus6:setFaction("Dust")
+	else
+		stationNexus6:setFaction(stationFaction)
 	end
 	stationNexus6:setPosition(psx,psy):setCallSign("Nexus-6"):setDescription("Android components")
 	goods[stationNexus6] = {{"android",5,93}}		
@@ -1404,6 +1462,8 @@ function placeOBrien()
 	stationOBrien = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationOBrien:setFaction("My.S.T")
+	else
+		stationOBrien:setFaction(stationFaction)
 	end
 	stationOBrien:setPosition(psx,psy):setCallSign("O'Brien"):setDescription("Transporter components")
 	goods[stationOBrien] = {{"transporter",5,76}}
@@ -1420,6 +1480,8 @@ function placeOkun()
 	stationOkun = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationOkun:setFaction("My.S.T")
+	else
+		stationOkun:setFaction(stationFaction)
 	end
 	stationOkun:setPosition(psx,psy):setCallSign("Okun"):setDescription("Xenopsychology research")
 	return stationOkun
@@ -1429,6 +1491,8 @@ function placeOlympus()
 	stationOlympus = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationOlympus:setFaction("Headless")
+	else
+		stationOlympus:setFaction(stationFaction)
 	end
 	stationOlympus:setPosition(psx,psy):setCallSign("Olympus"):setDescription("Optical components")
 	goods[stationOlympus] = {{"optic",5,66}}		
@@ -1444,6 +1508,8 @@ function placeOwen()
 	stationOwen = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationOwen:setFaction("Eraz")
+	else
+		stationOwen:setFaction(stationFaction)
 	end
 	stationOwen:setPosition(psx,psy):setCallSign("Owen"):setDescription("Load lifters and components")
 	goods[stationOwen] = {{"lifter",5,61}}		
@@ -1459,6 +1525,8 @@ function placePanduit()
 	stationPanduit = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationPanduit:setFaction("Dust")
+	else
+		stationPanduit:setFaction(stationFaction)
 	end
 	stationPanduit:setPosition(psx,psy):setCallSign("Panduit"):setDescription("Optic components")
 	goods[stationPanduit] = {{"optic",5,79}}		
@@ -1475,6 +1543,8 @@ function placePrada()
 	stationPrada = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationPrada:setFaction("NetMaxx")
+	else
+		stationPrada:setFaction(stationFaction)
 	end
 	stationPrada:setPosition(psx,psy):setCallSign("Prada"):setDescription("Textiles and fashion")
 	return stationPrada
@@ -1484,6 +1554,8 @@ function placeResearch19()
 	stationResearch19 = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationResearch19:setFaction("Eraz")
+	else
+		stationResearch19:setFaction(stationFaction)
 	end
 	stationResearch19:setPosition(psx,psy):setCallSign("Research-19"):setDescription("Low gravity research")
 	return stationResearch19
@@ -1493,6 +1565,8 @@ function placeRipley()
 	stationRipley = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationRipley:setFaction("Dust")
+	else
+		stationRipley:setFaction(stationFaction)
 	end
 	stationRipley:setPosition(psx,psy):setCallSign("Ripley"):setDescription("Load lifters and components")
 	goods[stationRipley] = {{"lifter",5,82}}		
@@ -1509,6 +1583,8 @@ function placeRubis()
 	stationRubis = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationRubis:setFaction("Trouge")
+	else
+		stationRubis:setFaction(stationFaction)
 	end
 	stationRubis:setPosition(psx,psy):setCallSign("Rubis"):setDescription("Resupply")
 	goods[stationRubis] = {{"luxury",5,76}}
@@ -1521,6 +1597,8 @@ function placeRutherford()
 	stationRutherford = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationRutherford:setFaction("Objekon")
+	else
+		stationRutherford:setFaction(stationFaction)
 	end
 	stationRutherford:setPosition(psx,psy):setCallSign("Rutherford"):setDescription("Shield components and research")
 	goods[stationRutherford] = {{"shield",5,90}}		
@@ -1536,6 +1614,8 @@ function placeShawyer()
 	stationShawyer = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationShawyer:setFaction("Eraz")
+	else
+		stationShawyer:setFaction(stationFaction)
 	end
 	stationShawyer:setPosition(psx,psy):setCallSign("Shawyer"):setDescription("Impulse engine components")
 	goods[stationShawyer] = {{"impulse",5,100}}		
@@ -1551,6 +1631,8 @@ function placeShree()
 	stationShree = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationShree:setFaction("Eraz")
+	else
+		stationShree:setFaction(stationFaction)
 	end
 	stationShree:setPosition(psx,psy):setCallSign("Shree"):setDescription("Repulsor and tractor beam components")
 	goods[stationShree] = {{"tractor",5,90},{"repulsor",5,95}}
@@ -1567,6 +1649,8 @@ function placeSkandar()
 	stationSkandar = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationSkandar:setFaction("Trouge")
+	else
+		stationSkandar:setFaction(stationFaction)
 	end
 	stationSkandar:setPosition(psx,psy):setCallSign("Skandar"):setDescription("Routine maintenance and entertainment")
 	goods[stationSkandar] = {{"luxury",5,87}}
@@ -1580,6 +1664,8 @@ function placeSoong()
 	stationSoong = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationSoong:setFaction("Headless")
+	else
+		stationSoong:setFaction(stationFaction)
 	end
 	stationSoong:setPosition(psx,psy):setCallSign("Soong"):setDescription("Android components")
 	goods[stationSoong] = {{"android",5,73}}		
@@ -1595,6 +1681,8 @@ function placeSpot()
 	stationSpot = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationSpot:setFaction("My.S.T")
+	else
+		stationSpot:setFaction(stationFaction)
 	end
 	stationSpot:setPosition(psx,psy):setCallSign("Spot"):setDescription("Observatory")
 	return stationSpot
@@ -1604,6 +1692,8 @@ function placeStarnet()
 	stationStarnet = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationStarnet:setFaction("Objekon")
+	else
+		stationStarnet:setFaction(stationFaction)
 	end
 	stationStarnet:setPosition(psx,psy):setCallSign("Starnet"):setDescription("Automated weapons systems")
 	stationStarnet.publicRelations = true
@@ -1615,6 +1705,8 @@ function placeTandon()
 	stationTandon = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationTandon:setFaction("Headless")
+	else
+		stationTandon:setFaction(stationFaction)
 	end
 	stationTandon:setPosition(psx,psy):setCallSign("Tandon"):setDescription("Biotechnology research")
 	return stationTandon
@@ -1624,6 +1716,8 @@ function placeTokra()
 	stationTokra = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationTokra:setFaction("Headless")
+	else
+		stationTokra:setFaction(stationFaction)
 	end
 	stationTokra:setPosition(psx,psy):setCallSign("Tokra"):setDescription("Advanced material components")
 	whatTrade = random(1,100)
@@ -1645,6 +1739,8 @@ function placeToohie()
 	stationToohie = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationToohie:setFaction("Objekon")
+	else
+		stationToohie:setFaction(stationFaction)
 	end
 	stationToohie:setPosition(psx,psy):setCallSign("Toohie"):setDescription("Shield and armor components and research")
 	goods[stationToohie] = {{"shield",5,90}}		
@@ -1660,6 +1756,8 @@ function placeUtopiaPlanitia()
 	stationUtopiaPlanitia = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationUtopiaPlanitia:setFaction("Eraz")
+	else
+		stationUtopiaPlanitia:setFaction(stationFaction)
 	end
 	stationUtopiaPlanitia:setPosition(psx,psy):setCallSign("Utopia Planitia"):setDescription("Ship building and maintenance facility")
 	goods[stationUtopiaPlanitia] = {{"food",10,1},{"medicine",5,5}}
@@ -1672,6 +1770,8 @@ function placeVeloquan()
 	stationVeloquan = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationVeloquan:setFaction("Eraz")
+	else
+		stationVeloquan:setFaction(stationFaction)
 	end
 	stationVeloquan:setPosition(psx,psy):setCallSign("Veloquan"):setDescription("Sensor components")
 	goods[stationVeloquan] = {{"sensor",5,68}}
@@ -1687,6 +1787,8 @@ function placeZefram()
 	stationZefram = SpaceStation():setTemplate(szt()):setCommsScript(""):setCommsFunction(commsStation)
 	if stationFaction == Faction_Independent then
 		stationZefram:setFaction("My.S.T")
+	else
+		stationZefram:setFaction(stationFaction)
 	end
 	stationZefram:setPosition(psx,psy):setCallSign("Zefram"):setDescription("Warp engine components")
 	goods[stationZefram] = {{"warp",5,140},{"food",5,1}}
