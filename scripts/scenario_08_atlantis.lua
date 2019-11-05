@@ -50,7 +50,7 @@ Rundown of the mission:
 
 Enemy_Faction = "P-Rats"
 Player_Faction = "Freunde"
-Target_Faction = "P-Rats"
+Target_Faction = "Black-Ops"
 
 -- Init is run when the scenario is started. Create your initial world
 function init()

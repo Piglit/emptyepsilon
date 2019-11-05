@@ -29,6 +29,12 @@
 
 require("utils.lua")
 
+
+Faction_Enemy = "P-Rats"
+Faction_Timed_Enemy = "Black-Ops"
+Faction_Player = "Freunde"
+Faction_Independent = "Fraktionslos"
+
 -- Create amount of objects of type object_type along arc
 -- Center defined by x and y
 -- Radius defined by distance
@@ -496,7 +502,7 @@ function generateStaticWorld()
 --	artTube = Artifact():setPosition(random(-50000,-20500),random(100000,199500)):setScanningParameters(1,4):setRadarSignatureInfo(random(30,100),random(5,25),random(40,60))
 --	artTube:setModeel("artifact6"):allowPickup(false):setDescriptions("Strange looking object","Object with unusual subatomic characteristics")
 
-	stationFaction = "Human Navy"
+	stationFaction = Faction_Player
 	stationSize = "Medium Station"
 
 	--Asimov
@@ -543,7 +549,7 @@ function generateStaticWorld()
 	friendlyStations = friendlyStations + 1
 	
 	stationSize = "Small Station"
-	stationFaction = "Independent"
+	stationFaction = Faction_Independent
 	--Feynman (second of three around larger secondary circle of stations)
 	feynmanAngle = bethesdaAngle + random(60,180)
 	xFeynman, yFeynman = vectorFromAngle(feynmanAngle, random(35000,40000))
@@ -574,7 +580,7 @@ function generateStaticWorld()
 	table.insert(stationList,stationZefram)
 	friendlyStations = friendlyStations + 1
 	
-	stationFaction = "Independent"
+	stationFaction = Faction_Independent
 	--Coulomb (second of four around the zero-centered circle of stations)
 	coulombAngle = zeframAngle + random(60,120)
 	xCoulomb, yCoulomb = vectorFromAngle(coulombAngle,random(42000,50000))
@@ -600,7 +606,7 @@ function generateStaticWorld()
 	table.insert(stationList,stationVeloquan)
 	neutralStations = neutralStations + 1
 
-	stationFaction = "Human Navy"
+	stationFaction = Faction_Player
 	
 	--Soong (first of three around smaller secondary circle of stations)
 	soongAngle = random(0,360)
@@ -611,7 +617,7 @@ function generateStaticWorld()
 	table.insert(stationList,stationSoong)
 	friendlyStations = friendlyStations + 1
 	
-	stationFaction = "Independent"
+	stationFaction = Faction_Independent
 	--Starnet (second of three around smaller secondary circle of stations)
 	starnetAngle = soongAngle + random(60,180)
 	xStarnet, yStarnet = vectorFromAngle(starnetAngle, random(30000,35000))
@@ -629,7 +635,7 @@ function generateStaticWorld()
 	table.insert(stationList,stationAnderson)
 	neutralStations = neutralStations + 1
 	
-	stationFaction = "Independent"
+	stationFaction = Faction_Independent
 	stationSize = "Small Station"
 	
 	--Spot
@@ -3340,11 +3346,11 @@ function enemyComms(comms_data)
 		taunt_option = "We will see to your destruction!"
 		taunt_success_reply = "Your bloodline will end here!"
 		taunt_failed_reply = "Your feeble threats are meaningless."
-		if faction == "P-Rats then
+		if faction == Faction_Enemy then
 			setCommsMessage("Ktzzzsss.\nYou will DIEEee weaklingsss!");
 		elseif faction == "Arlenians" then
 			setCommsMessage("We wish you no harm, but will harm you if we must.\nEnd of transmission.");
-		elseif faction == "Exuari" then
+		elseif faction == Faction_Timed_Enemy then
 			setCommsMessage("Stay out of our way, or your death will amuse us extremely!");
 		elseif faction == "Ghosts" then
 			setCommsMessage("One zero one.\nNo binary communication detected.\nSwitching to universal speech.\nGenerating appropriate response for target from human language archives.\n:Do not cross us:\nCommunication halted.");
@@ -3746,7 +3752,7 @@ function patrolAsimovUtopiaPlanitiaArmstrong(delta)
 		end
 	end
 	if playerCount == 0 and highestConcurrentPlayerCount > 0 then
-		victory("P-Rats)
+		victory(Faction_Enemy)
 	end
 	sporadicHarassTimer = sporadicHarassTimer - delta
 	if sporadicHarassTimer < 0 then
@@ -3853,7 +3859,7 @@ function afterPatrol(delta)
 			removeGMFunction(GMSkipToDefend)
 		else
 			playSoundFile("sa_54_AuthMBVictory.wav")
-			victory("Human Navy")
+			victory(Faction_Player)
 		end
 	end
 end
@@ -3874,7 +3880,7 @@ function defendUtopia(delta)
 	waveDelayTimer = waveDelayTimer - delta
 	if longWave == 0 then
 		if waveDelayTimer < 0 then
-			longWave1List = spawnEnemies(utopiaPlanitiax+irandom(30000,40000),utopiaPlanitiay+irandom(-5000,5000),.5,"P-Rats)
+			longWave1List = spawnEnemies(utopiaPlanitiax+irandom(30000,40000),utopiaPlanitiay+irandom(-5000,5000),.5,Faction_Enemy)
 			for _, enemy in ipairs(longWave1List) do
 				enemy:orderFlyTowards(utopiaPlanitiax, utopiaPlanitiay)
 			end
@@ -3884,7 +3890,7 @@ function defendUtopia(delta)
 	end
 	if longWave == 1 then
 		if waveDelayTimer < 0 then
-			longWave2List = spawnEnemies(utopiaPlanitiax+irandom(-40000,-30000),utopiaPlanitiay+irandom(-5000,5000),.5,"P-Rats)
+			longWave2List = spawnEnemies(utopiaPlanitiax+irandom(-40000,-30000),utopiaPlanitiay+irandom(-5000,5000),.5,Faction_Enemy)
 			for _, enemy in ipairs(longWave2List) do
 				enemy:orderFlyTowards(utopiaPlanitiax, utopiaPlanitiay)
 			end
@@ -3931,7 +3937,7 @@ function defendUtopia(delta)
 	end
 	if longWave == 3 then
 		if waveDelayTimer < 0 then
-			longWave3List = spawnEnemies(utopiaPlanitiax+irandom(-10000,10000),utopiaPlanitiay+irandom(30000,40000),1,"P-Rats)
+			longWave3List = spawnEnemies(utopiaPlanitiax+irandom(-10000,10000),utopiaPlanitiay+irandom(30000,40000),1,Faction_Enemy)
 			for _, enemy in ipairs(longWave3List) do
 				enemy:orderFlyTowards(utopiaPlanitiax, utopiaPlanitiay)
 			end
@@ -3941,7 +3947,7 @@ function defendUtopia(delta)
 	end
 	if longWave == 4 then
 		if waveDelayTimer < 0 then
-			longWave4List = spawnEnemies(utopiaPlanitiax+irandom(-10000,10000),utopiaPlanitiay+irandom(30000,40000),2,"P-Rats)
+			longWave4List = spawnEnemies(utopiaPlanitiax+irandom(-10000,10000),utopiaPlanitiay+irandom(30000,40000),2,Faction_Enemy)
 			for _, enemy in ipairs(longWave4List) do
 				enemy:orderFlyTowards(utopiaPlanitiax, utopiaPlanitiay)
 			end
@@ -3951,7 +3957,7 @@ function defendUtopia(delta)
 	end
 	if longWave == 5 then
 		if waveDelayTimer < 0 then
-			longWave5List = spawnEnemies(utopiaPlanitiax+irandom(-10000,10000),utopiaPlanitiay+irandom(30000,40000),1,"P-Rats)
+			longWave5List = spawnEnemies(utopiaPlanitiax+irandom(-10000,10000),utopiaPlanitiay+irandom(30000,40000),1,Faction_Enemy)
 			for _, enemy in ipairs(longWave5List) do
 				enemy:orderFlyTowards(utopiaPlanitiax, utopiaPlanitiay)
 			end
@@ -3984,7 +3990,7 @@ function defendUtopia(delta)
 					plot1 = destroyEnemyStronghold
 					removeGMFunction(GMSkipToDestroy)
 				else
-					victory("Human Navy")
+					victory(Faction_Player)
 				end
 			end
 		end
@@ -3994,7 +4000,7 @@ end
 function defeated(delta)
 	defeatTimer = defeatTimer - delta
 	if defeatTimer < 0 then
-		victory("P-Rats)
+		victory(Faction_Enemy)
 	end
 end
 
@@ -4003,32 +4009,32 @@ function destroyEnemyStronghold(delta)
 		lateEnemies = "placed"
 		scarletx = random(120000,200000)
 		scarlety = random(120000,200000)
-		stationScarletCitadel = SpaceStation():setTemplate("Medium Station"):setFaction("P-Rats):setCommsScript(""):setCommsFunction(commsStation)
+		stationScarletCitadel = SpaceStation():setTemplate("Medium Station"):setFaction(Faction_Enemy):setCommsScript(""):setCommsFunction(commsStation)
 		stationScarletCitadel:setPosition(scarletx,scarlety):setCallSign("Scarlet Citadel")
 		wpRadius = 3000
 		x, y = vectorFromAngle(0,wpRadius)
-		wp13 = CpuShip():setFaction("P-Rats):setposition(scarletx+x,scarlety+y):setTemplate("Defense platform"):setCallSign("WP-13")
+		wp13 = CpuShip():setFaction(Faction_Enemy):setposition(scarletx+x,scarlety+y):setTemplate("Defense platform"):setCallSign("WP-13")
 		x, y = vectorFromAngle(90,wpRadius)
-		wp45 = CpuShip():setFaction("P-Rats):setposition(scarletx+x,scarlety+y):setTemplate("Defense platform"):setCallSign("WP-45")
+		wp45 = CpuShip():setFaction(Faction_Enemy):setposition(scarletx+x,scarlety+y):setTemplate("Defense platform"):setCallSign("WP-45")
 		x, y = vectorFromAngle(180,wpRadius)
-		wp33 = CpuShip():setFaction("P-Rats):setposition(scarletx+x,scarlety+y):setTemplate("Defense platform"):setCallSign("WP-33")
+		wp33 = CpuShip():setFaction(Faction_Enemy):setposition(scarletx+x,scarlety+y):setTemplate("Defense platform"):setCallSign("WP-33")
 		x, y = vectorFromAngle(270,wpRadius)
-		wp57 = CpuShip():setFaction("P-Rats):setposition(scarletx+x,scarlety+y):setTemplate("Defense platform"):setCallSign("WP-57")
+		wp57 = CpuShip():setFaction(Faction_Enemy):setposition(scarletx+x,scarlety+y):setTemplate("Defense platform"):setCallSign("WP-57")
 		if difficulty > 2 then
 			x, y = vectorFromAngle(45,wpRadius)
-			wp62 = CpuShip():setFaction("P-Rats):setposition(scarletx+x,scarlety+y):setTemplate("Defense platform"):setCallSign("WP-62")			
+			wp62 = CpuShip():setFaction(Faction_Enemy):setposition(scarletx+x,scarlety+y):setTemplate("Defense platform"):setCallSign("WP-62")			
 			x, y = vectorFromAngle(135,wpRadius)
-			wp78 = CpuShip():setFaction("P-Rats):setposition(scarletx+x,scarlety+y):setTemplate("Defense platform"):setCallSign("WP-78")			
+			wp78 = CpuShip():setFaction(Faction_Enemy):setposition(scarletx+x,scarlety+y):setTemplate("Defense platform"):setCallSign("WP-78")			
 			x, y = vectorFromAngle(225,wpRadius)
-			wp25 = CpuShip():setFaction("P-Rats):setposition(scarletx+x,scarlety+y):setTemplate("Defense platform"):setCallSign("WP-25")			
+			wp25 = CpuShip():setFaction(Faction_Enemy):setposition(scarletx+x,scarlety+y):setTemplate("Defense platform"):setCallSign("WP-25")			
 			x, y = vectorFromAngle(315,wpRadius)
-			wp27 = CpuShip():setFaction("P-Rats):setposition(scarletx+x,scarlety+y):setTemplate("Defense platform"):setCallSign("WP-27")			
+			wp27 = CpuShip():setFaction(Faction_Enemy):setposition(scarletx+x,scarlety+y):setTemplate("Defense platform"):setCallSign("WP-27")			
 		end
-		strongholdDefense = spawnEnemies(scarletx-5000,scarlety-5000,1,"P-Rats)
+		strongholdDefense = spawnEnemies(scarletx-5000,scarlety-5000,1,Faction_Enemy)
 		for _, enemy in ipairs(strongholdDefense) do
 			enemy:orderDefendTarget(stationScarletCitadel)
 		end
-		strongholdOffense = spawnEnemies(scarletx-8000,scarlety-8000,1,"P-Rats)
+		strongholdOffense = spawnEnemies(scarletx-8000,scarlety-8000,1,Faction_Enemy)
 		targetPlayer = closestPlayerTo(stationScarletCitadel)
 		if targetPlayer:isValid() then
 			for _, enemy in ipairs(strongholdOffense) do
@@ -4036,7 +4042,7 @@ function destroyEnemyStronghold(delta)
 			end
 			targetPlayer:addToShipLog(string.format("Enemy base nearby located in secctor %s. Fleet assembled near Utopia Planitia to assist if needed. Destroy base.",stationScarletCitadel:getSectorName()),"Magenta")
 		end
-		posse = spawnEnemies(utopiaPlanitiaX,utopiaPlanitiaY+8000,2,"Human Navy")
+		posse = spawnEnemies(utopiaPlanitiaX,utopiaPlanitiaY+8000,2,Faction_Player)
 		primaryOrders = string.format("Destroy enemy base in sector %s",stationScarletCitadel:getSectorName())
 		for _, friend in ipairs(posse) do
 			friend:orderStandGround()
@@ -4054,11 +4060,11 @@ function destroyEnemyStronghold(delta)
 		if scarletTimer < 0 then
 			if scarletDanger > 0 then
 				scarletTimer = delta + 300
-				strongholdDefense = spawnEnemies(scarletx-5000,scarlety-5000,scarletDanger,"P-Rats)
+				strongholdDefense = spawnEnemies(scarletx-5000,scarlety-5000,scarletDanger,Faction_Enemy)
 				for _, enemy in ipairs(strongholdDefense) do
 					enemy:orderDefendTarget(stationScarletCitadel)
 				end
-				strongholdOffense = spawnEnemies(scarletx-8000,scarlety-8000,scarletDanger,"P-Rats)
+				strongholdOffense = spawnEnemies(scarletx-8000,scarlety-8000,scarletDanger,Faction_Enemy)
 				targetPlayer = closestPlayerTo(stationScarletCitadel)
 				if targetPlayer:isValid() then
 					for _, enemy in ipairs(strongholdOffense) do
@@ -4069,7 +4075,7 @@ function destroyEnemyStronghold(delta)
 			end
 		end
 	else
-		victory("Human Navy")
+		victory(Faction_Player)
 	end
 end
 --[[-----------------------------------------------------------------
@@ -4089,7 +4095,7 @@ function nuisance(delta)
 	if nuisanceSpawned == "ready" then
 		nuisanceSpawned = "done"
 		asimovx, asimovy = stationAsimov:getPosition()
-		nuisanceList = spawnEnemies(asimovx+irandom(20000,30000),asimovx+irandom(20000,30000),.4,"P-Rats)
+		nuisanceList = spawnEnemies(asimovx+irandom(20000,30000),asimovx+irandom(20000,30000),.4,Faction_Enemy)
 		for _, enemy in ipairs(nuisanceList) do
 			enemy:orderFlyTowards(asimovx, asimovy)
 		end
@@ -4510,7 +4516,7 @@ function attack1(delta)
 	plot4name = "attack1"
 	if attack1spawned == "ready" then
 		attack1spawned = "done"
-		attack1list = spawnEnemies(armstrongx+irandom(-5000,5000),armstrongy+irandom(-45000,-40000),1.3,"Exuari")
+		attack1list = spawnEnemies(armstrongx+irandom(-5000,5000),armstrongy+irandom(-45000,-40000),1.3,Faction_Timed_Enemy)
 		for _, enemy in ipairs(attack1list) do
 			enemy:orderFlyTowards(armstrongx, armstrongy)
 		end
@@ -4626,7 +4632,7 @@ end
 function attack2(delta)
 	plot5name = "atack2"
 	if attack2spawned == "ready" then
-		attack2list = spawnEnemies(asimovx+irandom(-45000,-40000),asimovy+irandom(-5000,5000),1.6,"P-Rats")
+		attack2list = spawnEnemies(asimovx+irandom(-45000,-40000),asimovy+irandom(-5000,5000),1.6,Faction_Enemy)
 		attack2spawned = "done"
 		for _, enemy in ipairs(attack2list) do
 			enemy:orderFlyTowards(asimovx, asimovy)
@@ -4700,7 +4706,7 @@ function attack5(delta)
 		attack5Timer = random(20,50)
 	end
 	if attack5spawned == "ready" then
-		attack5list = spawnEnemies(neb2x,neb2y,1.8,"P-Rats")
+		attack5list = spawnEnemies(neb2x,neb2y,1.8,Faction_Enemy)
 		attack5spawned = "done"
 		for _, enemy in ipairs(attack5list) do
 			enemy:orderStandGround()
@@ -4758,7 +4764,7 @@ function attack4(delta)
 		attack4Timer = random(20,50)
 	end
 	if attack4spawned == "ready" then
-		attack4list = spawnEnemies(neb1x,neb1y,1.6,"P-Rats")
+		attack4list = spawnEnemies(neb1x,neb1y,1.6,Faction_Enemy)
 		attack4spawned = "done"
 		for _, enemy in ipairs(attack4list) do
 			enemy:orderStandGround()
@@ -4817,7 +4823,7 @@ function attack3(delta)
 		asimovx, asimovy = stationAsimov:getPosition()
 		asimovDistance = random(20000,30000)
 		avx, avy = vectorFromAngle(random(0,360),asimovDistance)
-		attack3list = spawnEnemies(asimovx+avx,asimovy+avy,1,"P-Rats")
+		attack3list = spawnEnemies(asimovx+avx,asimovy+avy,1,Faction_Enemy)
 		attack3spawned = "done"
 		for _, enemy in ipairs(attack3list) do
 			enemy:orderFlyTowards(asimovx, asimovy)
@@ -5019,7 +5025,7 @@ function duringAmbush(delta)
 		closestToAsimov = getPlayerShip(-1)
 	end
 	px, py = closestToAsimov:getPosition()
-	ambushList = spawnEnemies(px-irandom(1000,7000),py-irandom(1000,7000),1.5,"Exuari")
+	ambushList = spawnEnemies(px-irandom(1000,7000),py-irandom(1000,7000),1.5,Faction_Timed_Enemy)
 	for _, enemy in ipairs(ambushList) do
 		enemy:orderAttack(closestToAsimov)
 	end
@@ -5030,7 +5036,7 @@ function afterAmbush(delta)
 	gameTimeLimit = gameTimeLimit - delta
 	if gameTimeLimit < 0 then
 		playSoundFile("sa_54_AuthMBVictory.wav")
-		victory("Human Navy")	
+		victory(Faction_Player)	
 	end
 end
 --[[-----------------------------------------------------------------
@@ -5038,7 +5044,7 @@ end
 -----------------------------------------------------------------]]--
 function unscannedAnchors(delta)
 	plotArtName = "unscannedAnchors"
-	if artAnchor1:isScannedByFaction("Human Navy") and artAnchor2:isScannedByFaction("Human Navy") then
+	if artAnchor1:isScannedByFaction(Faction_Player) and artAnchor2:isScannedByFaction(Faction_Player) then
 		artAnchor1:allowPickup(true)
 		artAnchor2:allowPickup(true)		
 		plotArt = scannedAnchors
@@ -5225,7 +5231,7 @@ end
 -----------------------------------------------------------------]]--
 function spawnEnemies(xOrigin, yOrigin, danger, enemyFaction)
 	if enemyFaction == nil then
-		enemyFaction = "P-Rats"
+		enemyFaction = Faction_Enemy
 	end
 	if danger == nil then 
 		danger = 1

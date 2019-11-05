@@ -25,7 +25,7 @@ function init()
     outpost26:setPosition(-42400, -32150):setCallSign("Outpost-26")
     outpost13 = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
 	outpost13:setPosition(12600, 27554):setCallSign("Outpost-13"):setDescription("Gathering point for asteroid miners")
-    outpost57 = SpaceStation():setTemplate("Small Station"):setFaction("P-Rats")
+    outpost57 = SpaceStation():setTemplate("Small Station"):setFaction("Kraylor")
 	outpost57:setPosition(63630, 47554):setCallSign("Outpost-57")
     science22 = SpaceStation():setTemplate("Small Station"):setFaction("Independent")
 	science22:setPosition(11200, 67554):setCallSign("Science-22")
@@ -39,7 +39,7 @@ function init()
 	stationOrdinkal:setPosition(-14600, 47554):setCallSign("Ordinkal"):setDescription("Trading Post")
     stationNakor = SpaceStation():setTemplate("Medium Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
 	stationNakor:setPosition(-34310, -37554):setCallSign("Nakor"):setDescription("Science and trading hub")
-    stationKelfist = SpaceStation():setTemplate("Medium Station"):setFaction("P-Rats")
+    stationKelfist = SpaceStation():setTemplate("Medium Station"):setFaction("Kraylor")
 	stationKelfist:setPosition(44640, 13554):setCallSign("Kelfist")
     stationFranklin = SpaceStation():setTemplate("Large Station"):setFaction("Human Navy"):setCommsScript(""):setCommsFunction(commsStation)
 	stationFranklin:setPosition(-24640, -13554):setCallSign("Franklin"):setDescription("Civilian and military station")
@@ -66,16 +66,16 @@ function init()
 	createRandomAlongArc(Nebula, 18, 70000, -50000, 55000, 90, 180, 18000)
 	-- Have players face a hostile enemy right away (more if difficulty is harder)
 	kraylorChaserList = {}
-	kraylorChaser1 = CpuShip():setTemplate("Phobos T3"):setFaction("P-Rats"):setPosition(24000,18200):setHeading(270)
+	kraylorChaser1 = CpuShip():setTemplate("Phobos T3"):setFaction("Kraylor"):setPosition(24000,18200):setHeading(270)
 	kraylorChaser1:orderAttack(player):setScanned(true)
 	table.insert(kraylorChaserList,kraylorChaser1)
 	if getScenarioVariation() ~= "Easy" then
-		kraylorChaser2 = CpuShip():setTemplate("Phobos T3"):setFaction("P-Rats"):setPosition(24000,18600):setHeading(270)
+		kraylorChaser2 = CpuShip():setTemplate("Phobos T3"):setFaction("Kraylor"):setPosition(24000,18600):setHeading(270)
 		kraylorChaser2:orderFlyFormation(kraylorChaser1,0,400):setScanned(true)
 		table.insert(kraylorChaserList,kraylorChaser2)
 	end
 	if getScenarioVariation() == "Hard" then
-		kraylorChaser3 = CpuShip():setTemplate("Phobos T3"):setFaction("P-Rats"):setPosition(24000,17800):setHeading(270)
+		kraylorChaser3 = CpuShip():setTemplate("Phobos T3"):setFaction("Kraylor"):setPosition(24000,17800):setHeading(270)
 		kraylorChaser3:orderFlyFormation(kraylorChaser1,0,-400):setScanned(true)
 		table.insert(kraylorChaserList,kraylorChaser3)
 	end
@@ -262,7 +262,7 @@ function playMsgSentry1()
 end
 
 function defeat(delta)
-	victory("P-Rats")
+	victory("Kraylor")
 end
 
 -- Create and send mission prevention enemies
@@ -272,43 +272,43 @@ function balindorInterceptor(delta)
 		local fo = 1000		-- formation offset
 		kraylorBalindorInterceptorList = {}
 		local x, y = player:getPosition()
-		kraylorBalindorInterceptor1 = CpuShip():setTemplate("Piranha F8"):setFaction("P-Rats"):setPosition(x-ao,y+ao):setHeading(45)
+		kraylorBalindorInterceptor1 = CpuShip():setTemplate("Piranha F8"):setFaction("Kraylor"):setPosition(x-ao,y+ao):setHeading(45)
 		kraylorBalindorInterceptor1:orderAttack(player)
 		table.insert(kraylorBalindorInterceptorList,kraylorBalindorInterceptor1)
-		kraylorBalindorInterceptor2 = CpuShip():setTemplate("Piranha F8"):setFaction("P-Rats"):setPosition(x-(ao+fo),y+ao):setHeading(45)
+		kraylorBalindorInterceptor2 = CpuShip():setTemplate("Piranha F8"):setFaction("Kraylor"):setPosition(x-(ao+fo),y+ao):setHeading(45)
 		kraylorBalindorInterceptor2:orderFlyFormation(kraylorBalindorInterceptor1,fo,0)
 		table.insert(kraylorBalindorInterceptorList,kraylorBalindorInterceptor2)
-		kraylorBalindorInterceptor3 = CpuShip():setTemplate("Piranha F8"):setFaction("P-Rats"):setPosition(x+ao,y-ao):setHeading(225)
+		kraylorBalindorInterceptor3 = CpuShip():setTemplate("Piranha F8"):setFaction("Kraylor"):setPosition(x+ao,y-ao):setHeading(225)
 		kraylorBalindorInterceptor3:orderAttack(player)
 		table.insert(kraylorBalindorInterceptorList,kraylorBalindorInterceptor3)
-		kraylorBalindorInterceptor4 = CpuShip():setTemplate("Piranha F8"):setFaction("P-Rats"):setPosition(x+ao+fo,y-ao):setHeading(225)
+		kraylorBalindorInterceptor4 = CpuShip():setTemplate("Piranha F8"):setFaction("Kraylor"):setPosition(x+ao+fo,y-ao):setHeading(225)
 		kraylorBalindorInterceptor4:orderFlyFormation(kraylorBalindorInterceptor3,-fo,0)
 		table.insert(kraylorBalindorInterceptorList,kraylorBalindorInterceptor4)
 		if getScenarioVariation() ~= "Easy" then
-			kraylorBalindorInterceptor5 = CpuShip():setTemplate("Piranha F8"):setFaction("P-Rats"):setPosition(x-ao,y+ao+fo):setHeading(45)
+			kraylorBalindorInterceptor5 = CpuShip():setTemplate("Piranha F8"):setFaction("Kraylor"):setPosition(x-ao,y+ao+fo):setHeading(45)
 			kraylorBalindorInterceptor5:orderFlyFormation(kraylorBalindorInterceptor1,0,fo)
 			table.insert(kraylorBalindorInterceptorList,kraylorBalindorInterceptor5)
-			kraylorBalindorInterceptor6 = CpuShip():setTemplate("Piranha F8"):setFaction("P-Rats"):setPosition(x-(ao+fo),y+ao+fo):setHeading(45)
+			kraylorBalindorInterceptor6 = CpuShip():setTemplate("Piranha F8"):setFaction("Kraylor"):setPosition(x-(ao+fo),y+ao+fo):setHeading(45)
 			kraylorBalindorInterceptor6:orderFlyFormation(kraylorBalindorInterceptor1,fo,fo)
 			table.insert(kraylorBalindorInterceptorList,kraylorBalindorInterceptor6)
-			kraylorBalindorInterceptor7 = CpuShip():setTemplate("Piranha F8"):setFaction("P-Rats"):setPosition(x+ao,y-(ao+fo)):setHeading(225)
+			kraylorBalindorInterceptor7 = CpuShip():setTemplate("Piranha F8"):setFaction("Kraylor"):setPosition(x+ao,y-(ao+fo)):setHeading(225)
 			kraylorBalindorInterceptor7:orderFlyFormation(kraylorBalindorInterceptor3,0,-fo)
 			table.insert(kraylorBalindorInterceptorList,kraylorBalindorInterceptor7)
-			kraylorBalindorInterceptor8 = CpuShip():setTemplate("Piranha F8"):setFaction("P-Rats"):setPosition(x+ao+fo,y-(ao+fo)):setHeading(225)
+			kraylorBalindorInterceptor8 = CpuShip():setTemplate("Piranha F8"):setFaction("Kraylor"):setPosition(x+ao+fo,y-(ao+fo)):setHeading(225)
 			kraylorBalindorInterceptor8:orderFlyFormation(kraylorBalindorInterceptor3,-fo,-fo)
 			table.insert(kraylorBalindorInterceptorList,kraylorBalindorInterceptor8)
 		end
 		if getScenarioVariation() == "Hard" then
-			kraylorBalindorInterceptor9 = CpuShip():setTemplate("Piranha F8"):setFaction("P-Rats"):setPosition(x-ao,y+ao+fo*2):setHeading(45)
+			kraylorBalindorInterceptor9 = CpuShip():setTemplate("Piranha F8"):setFaction("Kraylor"):setPosition(x-ao,y+ao+fo*2):setHeading(45)
 			kraylorBalindorInterceptor9:orderFlyFormation(kraylorBalindorInterceptor1,0,fo*2)
 			table.insert(kraylorBalindorInterceptorList,kraylorBalindorInterceptor9)
-			kraylorBalindorInterceptor10 = CpuShip():setTemplate("Piranha F8"):setFaction("P-Rats"):setPosition(x-(ao+fo*2),y+ao):setHeading(45)
+			kraylorBalindorInterceptor10 = CpuShip():setTemplate("Piranha F8"):setFaction("Kraylor"):setPosition(x-(ao+fo*2),y+ao):setHeading(45)
 			kraylorBalindorInterceptor10:orderFlyFormation(kraylorBalindorInterceptor1,fo*2,0)
 			table.insert(kraylorBalindorInterceptorList,kraylorBalindorInterceptor10)
-			kraylorBalindorInterceptor11 = CpuShip():setTemplate("Piranha F8"):setFaction("P-Rats"):setPosition(x+ao,y-(ao+fo*2)):setHeading(225)
+			kraylorBalindorInterceptor11 = CpuShip():setTemplate("Piranha F8"):setFaction("Kraylor"):setPosition(x+ao,y-(ao+fo*2)):setHeading(225)
 			kraylorBalindorInterceptor11:orderFlyFormation(kraylorBalindorInterceptor3,0,-fo*2)
 			table.insert(kraylorBalindorInterceptorList,kraylorBalindorInterceptor11)
-			kraylorBalindorInterceptor12 = CpuShip():setTemplate("Piranha F8"):setFaction("P-Rats"):setPosition(x+ao+fo*2,y-ao):setHeading(225)
+			kraylorBalindorInterceptor12 = CpuShip():setTemplate("Piranha F8"):setFaction("Kraylor"):setPosition(x+ao+fo*2,y-ao):setHeading(225)
 			kraylorBalindorInterceptor12:orderFlyFormation(kraylorBalindorInterceptor3,-fo*2,0)
 			table.insert(kraylorBalindorInterceptorList,kraylorBalindorInterceptor12)
 		end
@@ -351,49 +351,49 @@ function ningAttack(delta)
 		local fo = 500		-- formation offset
 		kraylorNingList = {}
 		local x, y = player:getPosition()
-		kraylorNing1 = CpuShip():setTemplate("Stalker Q7"):setFaction("P-Rats"):setPosition(x,y-ao):setHeading(180)
+		kraylorNing1 = CpuShip():setTemplate("Stalker Q7"):setFaction("Kraylor"):setPosition(x,y-ao):setHeading(180)
 		kraylorNing1:orderAttack(player)
 		table.insert(kraylorNingList,kraylorNing1)
---		kraylorNing2 = CpuShip():setTemplate("Stalker Q7"):setFaction("P-Rats"):setPosition(x-fo*2,y-ao):setHeading(180)
+--		kraylorNing2 = CpuShip():setTemplate("Stalker Q7"):setFaction("Kraylor"):setPosition(x-fo*2,y-ao):setHeading(180)
 --		kraylorNing2:orderFlyFormation(kraylorNing1,-fo*2,0)
 --		table.insert(kraylorNingList,kraylorNing2)
---		kraylorNing3 = CpuShip():setTemplate("Stalker Q7"):setFaction("P-Rats"):setPosition(x+fo*2,y-ao):setHeading(180)
+--		kraylorNing3 = CpuShip():setTemplate("Stalker Q7"):setFaction("Kraylor"):setPosition(x+fo*2,y-ao):setHeading(180)
 --		kraylorNing3:orderFlyFormation(kraylorNing1,fo*2,0)
 --		table.insert(kraylorNingList,kraylorNing3)
-		kraylorNing4 = CpuShip():setTemplate("Stalker Q7"):setFaction("P-Rats"):setPosition(x,y+ao):setHeading(0)
+		kraylorNing4 = CpuShip():setTemplate("Stalker Q7"):setFaction("Kraylor"):setPosition(x,y+ao):setHeading(0)
 		kraylorNing4:orderAttack(player)
 		table.insert(kraylorNingList,kraylorNing4)
---		kraylorNing5 = CpuShip():setTemplate("Stalker Q7"):setFaction("P-Rats"):setPosition(x-fo*2,y+ao):setHeading(0)
+--		kraylorNing5 = CpuShip():setTemplate("Stalker Q7"):setFaction("Kraylor"):setPosition(x-fo*2,y+ao):setHeading(0)
 --		kraylorNing5:orderFlyFormation(kraylorNing4,-fo*2,0)
 --		table.insert(kraylorNingList,kraylorNing5)
---		kraylorNing6 = CpuShip():setTemplate("Stalker Q7"):setFaction("P-Rats"):setPosition(x+fo*2,y+ao):setHeading(0)
+--		kraylorNing6 = CpuShip():setTemplate("Stalker Q7"):setFaction("Kraylor"):setPosition(x+fo*2,y+ao):setHeading(0)
 --		kraylorNing6:orderFlyFormation(kraylorNing4,fo*2,0)
 --		table.insert(kraylorNingList,kraylorNing6)
 		if getScenarioVariation() ~= "Easy" then
-			kraylorNing7 = CpuShip():setTemplate("Stalker Q7"):setFaction("P-Rats"):setPosition(x-fo,y-ao-fo*2):setHeading(180)
+			kraylorNing7 = CpuShip():setTemplate("Stalker Q7"):setFaction("Kraylor"):setPosition(x-fo,y-ao-fo*2):setHeading(180)
 			kraylorNing7:orderFlyFormation(kraylorNing1,-fo,-fo*2)
 			table.insert(kraylorNingList,kraylorNing7)
---			kraylorNing8 = CpuShip():setTemplate("Stalker Q7"):setFaction("P-Rats"):setPosition(x+fo,y-ao-fo*2):setHeading(180)
+--			kraylorNing8 = CpuShip():setTemplate("Stalker Q7"):setFaction("Kraylor"):setPosition(x+fo,y-ao-fo*2):setHeading(180)
 --			kraylorNing8:orderFlyFormation(kraylorNing1,fo,-fo*2)
 --			table.insert(kraylorNingList,kraylorNing8)
-			kraylorNing9 = CpuShip():setTemplate("Stalker Q7"):setFaction("P-Rats"):setPosition(x-fo,y+ao+fo*2):setHeading(0)
+			kraylorNing9 = CpuShip():setTemplate("Stalker Q7"):setFaction("Kraylor"):setPosition(x-fo,y+ao+fo*2):setHeading(0)
 			kraylorNing9:orderFlyFormation(kraylorNing4,-fo,fo*2)
 			table.insert(kraylorNingList,kraylorNing9)
---			kraylorNing10 = CpuShip():setTemplate("Stalker Q7"):setFaction("P-Rats"):setPosition(x+fo,y+ao+fo*2):setHeading(0)
+--			kraylorNing10 = CpuShip():setTemplate("Stalker Q7"):setFaction("Kraylor"):setPosition(x+fo,y+ao+fo*2):setHeading(0)
 --			kraylorNing10:orderFlyFormation(kraylorNing4,fo,fo*2)
 --			table.insert(kraylorNingList,kraylorNing10)
 		end
 		if getScenarioVariation() == "Hard" then
-			kraylorNing11 = CpuShip():setTemplate("Stalker Q7"):setFaction("P-Rats"):setPosition(x-fo,y-ao+fo*2):setHeading(180)
+			kraylorNing11 = CpuShip():setTemplate("Stalker Q7"):setFaction("Kraylor"):setPosition(x-fo,y-ao+fo*2):setHeading(180)
 			kraylorNing11:orderFlyFormation(kraylorNing1,-fo,fo*2)
 			table.insert(kraylorNingList,kraylorNing11)
---			kraylorNing12 = CpuShip():setTemplate("Stalker Q7"):setFaction("P-Rats"):setPosition(x+fo,y-ao+fo*2):setHeading(180)
+--			kraylorNing12 = CpuShip():setTemplate("Stalker Q7"):setFaction("Kraylor"):setPosition(x+fo,y-ao+fo*2):setHeading(180)
 --			kraylorNing12:orderFlyFormation(kraylorNing1,fo,fo*2)
 --			table.insert(kraylorNingList,kraylorNing12)
-			kraylorNing13 = CpuShip():setTemplate("Stalker Q7"):setFaction("P-Rats"):setPosition(x-fo,y+ao-fo*2):setHeading(0)
+			kraylorNing13 = CpuShip():setTemplate("Stalker Q7"):setFaction("Kraylor"):setPosition(x-fo,y+ao-fo*2):setHeading(0)
 			kraylorNing13:orderFlyFormation(kraylorNing4,-fo,-fo*2)
 			table.insert(kraylorNingList,kraylorNing13)
---			kraylorNing14 = CpuShip():setTemplate("Stalker Q7"):setFaction("P-Rats"):setPosition(x+fo,y+ao-fo*2):setHeading(0)
+--			kraylorNing14 = CpuShip():setTemplate("Stalker Q7"):setFaction("Kraylor"):setPosition(x+fo,y+ao-fo*2):setHeading(0)
 --			kraylorNing14:orderFlyFormation(kraylorNing4,fo,-fo*2)
 --			table.insert(kraylorNingList,kraylorNing14)					
 		end
@@ -404,7 +404,7 @@ end
 -- Tell player to wait for Gremus to finish before next mission goal. Set meeting timer
 function gotoNingling(delta)
 	if not ningling:isValid() then
-		victory("P-Rats")
+		victory("Kraylor")
 	end
 	if player:isDocked(ningling) then
 		ningling:sendCommsMessage(player, "Audio message received. Auto-transcribed into log. Stored for playback: NINGPCLO002")
@@ -431,22 +431,22 @@ function ningWait(delta)
 	local ao = 25000
 	local fo = 1200
 	waitNingList = {}
-	waitNing1 = CpuShip():setTemplate("MT52 Hornet"):setFaction("P-Rats"):setPosition(x+ao,y+ao):setHeading(315)
+	waitNing1 = CpuShip():setTemplate("MT52 Hornet"):setFaction("Kraylor"):setPosition(x+ao,y+ao):setHeading(315)
 	waitNing1:orderAttack(player)
 	table.insert(waitNingList,waitNing1)
 	if getScenarioVariation() ~= "Easy" then
-		waitNing2 = CpuShip():setTemplate("MU52 Hornet"):setFaction("P-Rats"):setPosition(x+ao+fo,y+ao):setHeading(315)
+		waitNing2 = CpuShip():setTemplate("MU52 Hornet"):setFaction("Kraylor"):setPosition(x+ao+fo,y+ao):setHeading(315)
 		waitNing2:orderFlyFormation(waitNing1,fo,0)
 		table.insert(waitNingList,waitNing2)
-		waitNing3 = CpuShip():setTemplate("Adder MK4"):setFaction("P-Rats"):setPosition(x+ao,y+ao+fo):setHeading(315)
+		waitNing3 = CpuShip():setTemplate("Adder MK4"):setFaction("Kraylor"):setPosition(x+ao,y+ao+fo):setHeading(315)
 		waitNing3:orderFlyFormation(waitNing1,0,fo)
 		table.insert(waitNingList,waitNing3)
 	end
 	if getScenarioVariation() == "Hard" then
-		waitNing4 = CpuShip():setTemplate("Adder MK5"):setFaction("P-Rats"):setPosition(x+ao+fo*2,y+ao):setHeading(315)
+		waitNing4 = CpuShip():setTemplate("Adder MK5"):setFaction("Kraylor"):setPosition(x+ao+fo*2,y+ao):setHeading(315)
 		waitNing4:orderFlyFormation(waitNing1,fo*2,0)
 		table.insert(waitNingList,waitNing4)
-		waitNing5 = CpuShip():setTemplate("Adder MK5"):setFaction("P-Rats"):setPosition(x+ao,y+ao+fo*2):setHeading(315)
+		waitNing5 = CpuShip():setTemplate("Adder MK5"):setFaction("Kraylor"):setPosition(x+ao,y+ao+fo*2):setHeading(315)
 		waitNing5:orderFlyFormation(waitNing1,0,fo*2)
 		table.insert(waitNingList,waitNing5)
 	end
@@ -456,7 +456,7 @@ end
 -- When meeting completes, request dock for next mission goal
 function waitForAmbassador(delta)
 	if not ningling:isValid() then
-		victory("P-Rats")
+		victory("Kraylor")
 	end
 	meetingTimer = meetingTimer + delta
 	if meetingTimer > 60 * 5 and not player:isDocked(ningling) then
@@ -478,7 +478,7 @@ end
 -- Set next goal: Goltin 7. Inform player. Create planet. Start sub-plots
 function getFromNingling(delta)
 	if not ningling:isValid() then
-		victory("P-Rats")
+		victory("Kraylor")
 	end
 	if player:isDocked(ningling) then
 		ningling:sendCommsMessage(player, "Audio message received. Auto-transcribed into log. Stored for playback: AMBGREMUS021")
@@ -641,34 +641,34 @@ function lastSabotage(delta)
 		local fo = 2500
 		local x, y = player:getPosition()
 		goltinList = {}
-		goltin1 = CpuShip():setTemplate("Atlantis X23"):setFaction("P-Rats"):setPosition(x+ao,y+ao):setHeading(315)
+		goltin1 = CpuShip():setTemplate("Atlantis X23"):setFaction("Kraylor"):setPosition(x+ao,y+ao):setHeading(315)
 		goltin1:orderAttack(player)
 		table.insert(goltinList,goltin1)
-		goltin2 = CpuShip():setTemplate("Starhammer II"):setFaction("P-Rats"):setPosition(x,y+ao):setHeading(0)
+		goltin2 = CpuShip():setTemplate("Starhammer II"):setFaction("Kraylor"):setPosition(x,y+ao):setHeading(0)
 		goltin2:orderAttack(player)
 		table.insert(goltinList,goltin2)
-		goltin3 = CpuShip():setTemplate("Stalker Q7"):setFaction("P-Rats"):setPosition(x+ao,y):setHeading(270)
+		goltin3 = CpuShip():setTemplate("Stalker Q7"):setFaction("Kraylor"):setPosition(x+ao,y):setHeading(270)
 		goltin3:orderAttack(player)
 		table.insert(goltinList,goltin3)
 		if getScenarioVariation() ~= "Easy" then
-			goltin4 = CpuShip():setTemplate("Stalker R7"):setFaction("P-Rats"):setPosition(x+ao+fo,y+ao-fo):setHeading(315)
+			goltin4 = CpuShip():setTemplate("Stalker R7"):setFaction("Kraylor"):setPosition(x+ao+fo,y+ao-fo):setHeading(315)
 			goltin4:orderAttack(player)
 			table.insert(goltinList,goltin4)
-			goltin5 = CpuShip():setTemplate("Ranus U"):setFaction("P-Rats"):setPosition(x+fo,y+ao):setHeading(0)
+			goltin5 = CpuShip():setTemplate("Ranus U"):setFaction("Kraylor"):setPosition(x+fo,y+ao):setHeading(0)
 			goltin5:orderAttack(player)
 			table.insert(goltinList,goltin5)
-			goltin6 = CpuShip():setTemplate("Phobos T3"):setFaction("P-Rats"):setPosition(x+ao,y-fo):setHeading(270)
+			goltin6 = CpuShip():setTemplate("Phobos T3"):setFaction("Kraylor"):setPosition(x+ao,y-fo):setHeading(270)
 			goltin6:orderAttack(player)
 			table.insert(goltinList,goltin6)
 		end
 		if getScenarioVariation() == "Hard" then
-			goltin7 = CpuShip():setTemplate("Nirvana R5"):setFaction("P-Rats"):setPosition(x+ao-fo,y+ao+fo):setHeading(315)
+			goltin7 = CpuShip():setTemplate("Nirvana R5"):setFaction("Kraylor"):setPosition(x+ao-fo,y+ao+fo):setHeading(315)
 			goltin7:orderAttack(player)
 			table.insert(goltinList,goltin7)
-			goltin8 = CpuShip():setTemplate("Piranha F12"):setFaction("P-Rats"):setPosition(x-fo,y+ao):setHeading(0)
+			goltin8 = CpuShip():setTemplate("Piranha F12"):setFaction("Kraylor"):setPosition(x-fo,y+ao):setHeading(0)
 			goltin8:orderAttack(player)
 			table.insert(goltinList,goltin8)
-			goltin9 = CpuShip():setTemplate("Nirvana R5A"):setFaction("P-Rats"):setPosition(x+ao,y+fo):setHeading(270)
+			goltin9 = CpuShip():setTemplate("Nirvana R5A"):setFaction("Kraylor"):setPosition(x+ao,y+fo):setHeading(270)
 			goltin9:orderAttack(player)
 			table.insert(goltinList,goltin9)
 		end
@@ -1113,7 +1113,7 @@ end
 
 function update(delta)
     if not player:isValid() then
-        victory("P-Rats")
+        victory("Kraylor")
         return
     end   
 	if plot1 == nil then
@@ -1121,7 +1121,7 @@ function update(delta)
 		return
 	end
 	if plot2 == defeat then
-		victory("P-Rats")
+		victory("Kraylor")
 	end
     if plot1 ~= nil then
         plot1(delta)

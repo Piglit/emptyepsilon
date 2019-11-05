@@ -169,7 +169,7 @@ function init()
 					placeScarletCit,		--10
 					placeStahlstadt,		--11
 					placeTic}				--12
-    brigStation = SpaceStation():setTemplate("Small Station"):setFaction("P-Rats"):setCallSign("DS23"):setPosition(912787, 148301)
+    brigStation = SpaceStation():setTemplate("Small Station"):setFaction("Kraylor"):setCallSign("DS23"):setPosition(912787, 148301)
 	table.insert(enemyStationList,brigStation)
 	buildNearbyStations()
 	--Player ship name lists to supplant standard randomized call sign generation
@@ -258,10 +258,10 @@ function init()
     junkRepulse = CpuShip():setFaction("Independent"):setTemplate("Repulse"):setPosition(shipx, shipy):orderIdle():setHull(14):setShields(0.00,2.00):setWeaponStorage("HVLI",0):setWeaponStorage("Homing",1)
 	table.insert(junkShips,junkRepulse)	
 	shipx, shipy = pickCoordinate(junkYardShipX, junkYardShipY)
-    junkAdder = CpuShip():setFaction("P-Rats"):setTemplate("Adder MK4"):setPosition(shipx, shipy):orderIdle():setHull(9):setShields(0.00):setWeaponStorage("HVLI", 1)
+    junkAdder = CpuShip():setFaction("Kraylor"):setTemplate("Adder MK4"):setPosition(shipx, shipy):orderIdle():setHull(9):setShields(0.00):setWeaponStorage("HVLI", 1)
 	table.insert(junkShips,junkAdder)
 	shipx, shipy = pickCoordinate(junkYardShipX, junkYardShipY)
-    junkFreighter1 = CpuShip():setFaction("P-Rats"):setTemplate("Fuel Freighter 1"):setPosition(shipx, shipy):orderIdle():setHull(6):setShields(1.00, 0.00)
+    junkFreighter1 = CpuShip():setFaction("Kraylor"):setTemplate("Fuel Freighter 1"):setPosition(shipx, shipy):orderIdle():setHull(6):setShields(1.00, 0.00)
 	table.insert(junkShips,junkFreighter1)
 	shipx, shipy = pickCoordinate(junkYardShipX, junkYardShipY)
     junkFreighter2 = CpuShip():setFaction("Independent"):setTemplate("Goods Freighter 3"):setPosition(shipx, shipy):orderIdle():setHull(7):setShields(14.00, 0.00)
@@ -273,7 +273,7 @@ function init()
     junkDrone2 = CpuShip():setFaction("Ktlitans"):setTemplate("Ktlitan Drone"):setPosition(shipx, shipy):orderIdle():setHull(6)
 	table.insert(junkShips,junkDrone2)
 	shipx, shipy = pickCoordinate(junkYardShipX, junkYardShipY)
-    junkDrone3 = CpuShip():setFaction("P-Rats"):setTemplate("Ktlitan Drone"):setPosition(shipx, shipy):orderIdle():setHull(2)
+    junkDrone3 = CpuShip():setFaction("Kraylor"):setTemplate("Ktlitan Drone"):setPosition(shipx, shipy):orderIdle():setHull(2)
 	table.insert(junkShips,junkDrone3)
 	shipx, shipy = pickCoordinate(junkYardShipX, junkYardShipY)
     junkDrone4 = CpuShip():setFaction("Ktlitans"):setTemplate("Ktlitan Drone"):setPosition(shipx, shipy):orderIdle():setHull(7)
@@ -288,13 +288,13 @@ function init()
     junkHornet3 = CpuShip():setFaction("Arlenians"):setTemplate("MT52 Hornet"):setPosition(shipx, shipy):orderIdle():setHull(1):setShields(1.00)
 	table.insert(junkShips,junkHornet3)
 	shipx, shipy = pickCoordinate(junkYardShipX, junkYardShipY)
-    junkHornet4 = CpuShip():setFaction("P-Rats"):setTemplate("MU52 Hornet"):setPosition(shipx, shipy):orderIdle():setHull(2):setShields(0.00)
+    junkHornet4 = CpuShip():setFaction("Kraylor"):setTemplate("MU52 Hornet"):setPosition(shipx, shipy):orderIdle():setHull(2):setShields(0.00)
 	table.insert(junkShips,junkHornet4)
 	shipx, shipy = pickCoordinate(junkYardShipX, junkYardShipY)
-    junkPhobos = CpuShip():setFaction("P-Rats"):setTemplate("Phobos M3"):setPosition(shipx, shipy):orderIdle():setHull(4):setShields(2.00, 1.00):setWeaponStorage("Homing", 1)
+    junkPhobos = CpuShip():setFaction("Kraylor"):setTemplate("Phobos M3"):setPosition(shipx, shipy):orderIdle():setHull(4):setShields(2.00, 1.00):setWeaponStorage("Homing", 1)
 	table.insert(junkShips,junkPhobos)
 	shipx, shipy = pickCoordinate(junkYardShipX, junkYardShipY)
-    junkStrikeship = CpuShip():setFaction("P-Rats"):setTemplate("Strikeship"):setPosition(shipx, shipy):orderIdle():setHull(0):setShields(4.00, 0.00, 30.00, 30.00)
+    junkStrikeship = CpuShip():setFaction("Kraylor"):setTemplate("Strikeship"):setPosition(shipx, shipy):orderIdle():setHull(0):setShields(4.00, 0.00, 30.00, 30.00)
 	table.insert(junkShips,junkStrikeship)
 	shipx, shipy = pickCoordinate(junkYardShipX, junkYardShipY)
     junkScout = CpuShip():setFaction("Ktlitans"):setTemplate("Ktlitan Scout"):setPosition(shipx, shipy):orderIdle():setHull(4)
@@ -399,7 +399,7 @@ function buildNearbyStations()
 	gSize = random(6000,8000)	--grid cell size in positional units
 	adjList = {}				--adjacent space on grid location list
 	--place enemy stations
-	stationFaction = "P-Rats"
+	stationFaction = "Kraylor"
 	for i=gx-2,gx+1 do			--reserve space for the junk yard
 		for j=gy-1,gy+2 do
 			grid[i][j] = gp
@@ -436,7 +436,7 @@ function buildNearbyStations()
 	bwy = brigy + (gRegion[sri][2] - (gbHigh/2))*gSize
 	planetBaldwin = Planet():setPosition(bwx,bwy):setPlanetRadius(3000):setDistanceFromMovementPlane(-2000):setCallSign("Baldwin")
 	planetBaldwin:setPlanetSurfaceTexture("planets/gas-1.png"):setAxialRotationTime(300):setDescription("Mining and heavy industry")
-	stationWig = SpaceStation():setTemplate("Small Station"):setFaction("P-Rats")
+	stationWig = SpaceStation():setTemplate("Small Station"):setFaction("Kraylor")
 	stationWig:setPosition(bwx, bwy+3000):setCallSign("BOBS"):setDescription("Baldwin Observatory")
 	stationWig.angle = 90
 	gp = gp + 1
@@ -4101,10 +4101,10 @@ function kraylorPatrol(delta)
 				nearFriend, rest = nearStations(playerRepulse, friendlyStationList)
 				nfx, nfy = nearFriend:getPosition()
 				plx, ply = playerRepulse:getPosition()
-				patrolGroup = spawnEnemies((nfx+plx)/2,(nfy+ply)/2,random(.8,1.2),"P-Rats")				
+				patrolGroup = spawnEnemies((nfx+plx)/2,(nfy+ply)/2,random(.8,1.2),"Kraylor")				
 			else
 				dx, dy = vectorFromAngle(random(0,360),random(25000,40000))
-				patrolGroup = spawnEnemies(tx+dx,ty+dy,random(.8,2.2),"P-Rats")
+				patrolGroup = spawnEnemies(tx+dx,ty+dy,random(.8,2.2),"Kraylor")
 			end
 			kGroup = kGroup + 1
 			for _, enemy in ipairs(patrolGroup) do
@@ -4118,7 +4118,7 @@ function kraylorPatrol(delta)
 end
 function spawnEnemies(xOrigin, yOrigin, danger, enemyFaction)
 	if enemyFaction == nil then
-		enemyFaction = "P-Rats"
+		enemyFaction = "Kraylor"
 	end
 	if danger == nil then 
 		danger = 1

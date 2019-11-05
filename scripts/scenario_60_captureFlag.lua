@@ -19,6 +19,11 @@
 
 require("utils.lua")
 
+Faction_1 = "Freunde"
+Faction_2 = "P-Rats"
+Faction_3 = "Black-Ops"
+Faction_Independent = "Fraktionslos"
+
 function init()
 	setVariations()
 	missile_types = {'Homing', 'Nuke', 'Mine', 'EMP', 'HVLI'}
@@ -199,7 +204,7 @@ function init()
 	playerShipNamesForHathcock = {"Hayha", "Waldron", "Plunkett", "Mawhinney", "Furlong", "Zaytsev", "Pavlichenko", "Pegahmagabow", "Fett", "Hawkeye", "Hanzo"}
 	playerShipNamesForLeftovers = {"Foregone","Righteous","Masher"}
 	stationList = {}
-	stationZebra = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation):setPosition(0,0):setCallSign("Zebra"):setDescription("Referee")
+	stationZebra = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation):setPosition(0,0):setCallSign("Zebra"):setDescription("Referee")
 	table.insert(stationList,stationZebra)
 	p1FlagDrop = false
 	p2FlagDrop = false
@@ -280,15 +285,15 @@ function intelligentBugger()
 		end
 	end
 	if buggerResupply == nil then
-		buggerResupply = SpaceStation():setFaction("Exuari"):setTemplate("Medium Station"):setPosition(0,boundary/2 + 2000):setCommsScript(""):setCommsFunction(resupplyStation)
+		buggerResupply = SpaceStation():setFaction(Faction_3):setTemplate("Medium Station"):setPosition(0,boundary/2 + 2000):setCommsScript(""):setCommsFunction(resupplyStation)
 	else
 		if not buggerResupply:isValid() then
-			buggerResupply = SpaceStation():setFaction("Exuari"):setTemplate("Medium Station"):setPosition(0,boundary/2 + 2000):setCommsScript(""):setCommsFunction(resupplyStation)
+			buggerResupply = SpaceStation():setFaction(Faction_3):setTemplate("Medium Station"):setPosition(0,boundary/2 + 2000):setCommsScript(""):setCommsFunction(resupplyStation)
 		end
 	end
 end
 function spawnBugger()
-	bugger = PlayerSpaceship():setFaction("Exuari"):setPosition(0,boundary/2):addReputationPoints(100)
+	bugger = PlayerSpaceship():setFaction(Faction_3):setPosition(0,boundary/2):addReputationPoints(100)
 	if random(1,500) < 50 then
 		bugger:setTemplate("ZX-Lindworm"):setWarpDrive(true)
 	else
@@ -503,35 +508,35 @@ function marauderWaves(delta)
 					mkey = boundary/2		--marauder kraylor end y
 				end
 			end
-			hmf = spawnEnemies(mhsx,mhsy,dangerValue,"Exuari")
+			hmf = spawnEnemies(mhsx,mhsy,dangerValue,Faction_3)
 			for _, enemy in ipairs(hmf) do
 				enemy:orderFlyTowards(mhex,mhey)
 			end
-			kmf = spawnEnemies(mksx,mksy,dangerValue,"Exuari")
+			kmf = spawnEnemies(mksx,mksy,dangerValue,Faction_3)
 			for _, enemy in ipairs(kmf) do
 				enemy:orderFlyTowards(mkex,mkey)
 			end
 			wakeList = getObjectsInRadius(playerStartX[1],playerStartY[1],500)
 			for _, obj in ipairs(wakeList) do
-				if obj:getFaction() == "Exuari" then
+				if obj:getFaction() == Faction_3 then
 					obj:orderRoaming()
 				end
 			end
 			wakeList = getObjectsInRadius(playerStartX[2],playerStartY[2],500)
 			for _, obj in ipairs(wakeList) do
-				if obj:getFaction() == "Exuari" then
+				if obj:getFaction() == Faction_3 then
 					obj:orderRoaming()
 				end
 			end
 			wakeList = getObjectsInRadius(0,-1*boundary/2,500)
 			for _, obj in ipairs(wakeList) do
-				if obj:getFaction() == "Exuari" then
+				if obj:getFaction() == Faction_3 then
 					obj:orderRoaming()
 				end
 			end
 			wakeList = getObjectsInRadius(0,boundary/2,500)
 			for _, obj in ipairs(wakeList) do
-				if obj:getFaction() == "Exuari" then
+				if obj:getFaction() == Faction_3 then
 					obj:orderRoaming()
 				end
 			end
@@ -541,7 +546,7 @@ function marauderWaves(delta)
 end
 function spawnEnemies(xOrigin, yOrigin, danger, enemyFaction)
 	if enemyFaction == nil then
-		enemyFaction = "P-Rats"
+		enemyFaction = Faction_2
 	end
 	if danger == nil then 
 		danger = 1
@@ -591,7 +596,7 @@ function placeAlcaleica()
 	--Alcaleica
 	stationAlcaleica = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationAlcaleica:setPosition(psx,psy):setCallSign("Alcaleica"):setDescription("Optical Components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationAlcaleica] = {{"food",math.random(5,10),1},{"medicine",5,5},{"optic",5,66}}
 		else
@@ -613,7 +618,7 @@ function placeAnderson()
 	--Anderson 
 	stationAnderson = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationAnderson:setPosition(psx,psy):setCallSign("Anderson"):setDescription("Battery and software engineering")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationAnderson] = {{"food",math.random(5,10),1},{"medicine",5,5},{"battery",5,65},{"software",5,115}}
 		else
@@ -633,7 +638,7 @@ function placeArcher()
 	--Archer 
 	stationArcher = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationArcher:setPosition(psx,psy):setCallSign("Archer"):setDescription("Shield and Armor Research")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationArcher] = {{"food",math.random(5,10),1},{"medicine",5,5},{"shield",5,90}}
 		else
@@ -655,7 +660,7 @@ function placeArchimedes()
 	--Archimedes
 	stationArchimedes = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationArchimedes:setPosition(psx,psy):setCallSign("Archimedes"):setDescription("Energy and particle beam components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationArchimedes] = {{"food",math.random(5,10),1},{"medicine",5,5},{"beam",5,80}}
 		else
@@ -677,7 +682,7 @@ function placeArmstrong()
 	--Armstrong
 	stationArmstrong = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationArmstrong:setPosition(psx,psy):setCallSign("Armstrong"):setDescription("Warp and Impulse engine manufacturing")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationArmstrong] = {{"food",math.random(5,10),1},{"medicine",5,5},{"repulsor",5,62}}
 		else
@@ -697,7 +702,7 @@ function placeAsimov()
 	--Asimov
 	stationAsimov = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationAsimov:setCallSign("Asimov"):setDescription("Training and Coordination"):setPosition(psx,psy)
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationAsimov] = {{"food",math.random(5,10),1},{"medicine",5,5},{"tractor",5,48}}
 		else
@@ -716,7 +721,7 @@ function placeBarclay()
 	--Barclay
 	stationBarclay = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationBarclay:setPosition(psx,psy):setCallSign("Barclay"):setDescription("Communication components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationBarclay] = {{"food",math.random(5,10),1},{"medicine",5,5},{"communication",5,58}}
 		else
@@ -748,7 +753,7 @@ function placeBroeck()
 	--Broeck
 	stationBroeck = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationBroeck:setPosition(psx,psy):setCallSign("Broeck"):setDescription("Warp drive components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationBroeck] = {{"food",math.random(5,10),1},{"medicine",5,5},{"warp",5,130}}
 			if random(1,100) < 62 then tradeLuxury[stationBroeck] = true end
@@ -773,7 +778,7 @@ function placeCalifornia()
 	--California
 	stationCalifornia = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationCalifornia:setPosition(psx,psy):setCallSign("California"):setDescription("Mining station")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationCalifornia] = {{"food",math.random(5,10),1},{"medicine",5,5},{"gold",5,25},{"dilithium",2,25}}
 		else
@@ -789,7 +794,7 @@ function placeCalvin()
 	--Calvin 
 	stationCalvin = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationCalvin:setPosition(psx,psy):setCallSign("Calvin"):setDescription("Robotic research")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationCalvin] = {{"food",math.random(5,10),1},{"medicine",5,5},{"robotic",5,87}}
 		else
@@ -810,7 +815,7 @@ function placeCavor()
 	--Cavor 
 	stationCavor = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationCavor:setPosition(psx,psy):setCallSign("Cavor"):setDescription("Advanced Material components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationCavor] = {{"food",math.random(5,10),1},{"medicine",5,5},{"filament",5,42}}
 			if random(1,100) < 33 then tradeLuxury[stationCavor] = true end
@@ -843,7 +848,7 @@ function placeChatuchak()
 	--Chatuchak
 	stationChatuchak = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationChatuchak:setPosition(psx,psy):setCallSign("Chatuchak"):setDescription("Trading station")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationChatuchak] = {{"food",math.random(5,10),1},{"medicine",5,5},{"luxury",5,60}}
 		else
@@ -862,7 +867,7 @@ function placeCoulomb()
 	--Coulomb
 	stationCoulomb = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationCoulomb:setPosition(psx,psy):setCallSign("Coulomb"):setDescription("Shielded circuitry fabrication")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationCoulomb] = {{"food",math.random(5,10),1},{"medicine",5,5},{"circuit",5,50}}
 		else
@@ -885,7 +890,7 @@ function placeCyrus()
 	--Cyrus
 	stationCyrus = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationCyrus:setPosition(psx,psy):setCallSign("Cyrus"):setDescription("Impulse engine components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationCyrus] = {{"food",math.random(5,10),1},{"medicine",5,5},{"impulse",5,124}}
 		else
@@ -908,7 +913,7 @@ function placeDeckard()
 	--Deckard
 	stationDeckard = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationDeckard:setPosition(psx,psy):setCallSign("Deckard"):setDescription("Android components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationDeckard] = {{"food",math.random(5,10),1},{"medicine",5,5},{"android",5,73}}
 		else
@@ -929,7 +934,7 @@ function placeDeer()
 	--Deer
 	stationDeer = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationDeer:setPosition(psx,psy):setCallSign("Deer"):setDescription("Repulsor and Tractor Beam Components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationDeer] = {{"food",math.random(5,10),1},{"medicine",5,5},{"tractor",5,90},{"repulsor",5,95}}
 		else
@@ -952,7 +957,7 @@ function placeErickson()
 	--Erickson
 	stationErickson = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationErickson:setPosition(psx,psy):setCallSign("Erickson"):setDescription("Transporter components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationErickson] = {{"food",math.random(5,10),1},{"medicine",5,5},{"transporter",5,63}}
 		else
@@ -975,7 +980,7 @@ function placeEvondos()
 	--Evondos
 	stationEvondos = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationEvondos:setPosition(psx,psy):setCallSign("Evondos"):setDescription("Autodoc components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationEvondos] = {{"food",math.random(5,10),1},{"medicine",5,5},{"autodoc",5,56}}
 		else
@@ -997,7 +1002,7 @@ function placeFeynman()
 	--Feynman 
 	stationFeynman = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationFeynman:setPosition(psx,psy):setCallSign("Feynman"):setDescription("Nanotechnology research")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationFeynman] = {{"food",math.random(5,10),1},{"medicine",5,5},{"nanites",5,79},{"software",5,115}}
 		else
@@ -1024,7 +1029,7 @@ function placeGrasberg()
 	stationGrasberg.generalInformation = "We mine nearby asteroids for precious minerals and process them for sale"
 	stationGrasberg.stationHistory = "This station's name is inspired by a large gold mine on Earth in Indonesia. The station builders hoped to have a similar amount of minerals found amongst these asteroids"
 	grasbergGoods = random(1,100)
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			if grasbergGoods < 20 then
 				goods[stationGrasberg] = {{"luxury",5,70},{"gold",5,25},{"cobalt",4,50},{"food",math.random(5,10),1},{"medicine",5,5}}
@@ -1065,7 +1070,7 @@ function placeHayden()
 	--Hayden
 	stationHayden = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationHayden:setPosition(psx,psy):setCallSign("Hayden"):setDescription("Observatory and stellar mapping")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationHayden] = {{"food",math.random(5,10),1},{"medicine",5,5},{"nanites",5,65}}
 		else
@@ -1083,7 +1088,7 @@ function placeHeyes()
 	--Heyes
 	stationHeyes = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationHeyes:setPosition(psx,psy):setCallSign("Heyes"):setDescription("Sensor components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationHeyes] = {{"food",math.random(5,10),1},{"medicine",5,5},{"sensor",5,72}}
 		else
@@ -1103,7 +1108,7 @@ function placeHossam()
 	--Hossam
 	stationHossam = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationHossam:setPosition(psx,psy):setCallSign("Hossam"):setDescription("Nanite supplier")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationHossam] = {{"food",math.random(5,10),1},{"medicine",5,5},{"nanites",5,48}}
 		else
@@ -1132,7 +1137,7 @@ function placeImpala()
 	stationImpala.publicRelations = true
 	stationImpala.generalInformation = "We mine nearby asteroids for precious minerals"
 	impalaGoods = random(1,100)
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			if impalaGoods < 20 then
 				goods[stationImpala] = {{"luxury",5,70},{"gold",5,25},{"cobalt",4,50},{"food",math.random(5,10),1},{"medicine",5,5}}
@@ -1173,7 +1178,7 @@ function placeKomov()
 	--Komov
 	stationKomov = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationKomov:setPosition(psx,psy):setCallSign("Komov"):setDescription("Xenopsychology training")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationKomov] = {{"food",math.random(5,10),1},{"medicine",5,5},{"filament",5,46}}
 		else
@@ -1277,7 +1282,7 @@ function placeLipkin()
 	--Lipkin
 	stationLipkin = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationLipkin:setPosition(psx,psy):setCallSign("Lipkin"):setDescription("Autodoc components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationLipkin] = {{"food",math.random(5,10),1},{"medicine",5,5},{"autodoc",5,76}}
 		else
@@ -1298,7 +1303,7 @@ function placeMadison()
 	--Madison
 	stationMadison = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationMadison:setPosition(psx,psy):setCallSign("Madison"):setDescription("Zero gravity sports and entertainment")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationMadison] = {{"food",math.random(5,10),1},{"medicine",5,5},{"luxury",5,70}}
 		else
@@ -1319,7 +1324,7 @@ function placeMaiman()
 	--Maiman
 	stationMaiman = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationMaiman:setPosition(psx,psy):setCallSign("Maiman"):setDescription("Energy beam components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationMaiman] = {{"food",math.random(5,10),1},{"medicine",5,5},{"beam",5,70}}
 		else
@@ -1340,7 +1345,7 @@ function placeMarconi()
 	--Marconi 
 	stationMarconi = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationMarconi:setPosition(psx,psy):setCallSign("Marconi"):setDescription("Energy Beam Components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationMarconi] = {{"food",math.random(5,10),1},{"medicine",5,5},{"beam",5,80}}
 		else
@@ -1374,7 +1379,7 @@ function placeMiller()
 	--Miller
 	stationMiller = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationMiller:setPosition(psx,psy):setCallSign("Miller"):setDescription("Exobiology research")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationMiller] = {{"food",math.random(5,10),1},{"medicine",5,5},{"optic",10,60}}
 		else
@@ -1393,7 +1398,7 @@ function placeMuddville()
 	--Muddville 
 	stationMudd = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationMudd:setPosition(psx,psy):setCallSign("Muddville"):setDescription("Trading station")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationMudd] = {{"food",math.random(5,10),1},{"medicine",5,5},{"luxury",10,60}}
 		else
@@ -1412,7 +1417,7 @@ function placeNexus6()
 	--Nexus-6
 	stationNexus6 = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationNexus6:setPosition(psx,psy):setCallSign("Nexus-6"):setDescription("Android components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationNexus6] = {{"food",math.random(5,10),1},{"medicine",5,5},{"android",5,93}}
 		else
@@ -1433,7 +1438,7 @@ function placeOBrien()
 	--O'Brien
 	stationOBrien = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationOBrien:setPosition(psx,psy):setCallSign("O'Brien"):setDescription("Transporter components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationOBrien] = {{"food",math.random(5,10),1},{"medicine",5,5},{"transporter",5,76}}
 		else
@@ -1457,7 +1462,7 @@ function placeOlympus()
 	--Olympus
 	stationOlympus = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationOlympus:setPosition(psx,psy):setCallSign("Olympus"):setDescription("Optical components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationOlympus] = {{"food",math.random(5,10),1},{"medicine",5,5},{"optic",5,66}}
 		else
@@ -1492,7 +1497,7 @@ function placeOutpost15()
 	stationOutpost15:setPosition(psx,psy):setCallSign("Outpost-15"):setDescription("Mining and trade")
 	tradeFood[stationOutpost15] = true
 	outpost15Goods = random(1,100)
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			if outpost15Goods < 20 then
 				goods[stationOutpost15] = {{"luxury",5,70},{"gold",5,25},{"cobalt",4,50},{"food",math.random(5,10),1},{"medicine",5,5}}
@@ -1536,7 +1541,7 @@ function placeOutpost21()
 	stationOutpost21:setPosition(psx,psy):setCallSign("Outpost-21"):setDescription("Mining and gambling")
 	placeRandomAroundPoint(Asteroid,15,1,15000,psx,psy)
 	outpost21Goods = random(1,100)
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			if outpost21Goods < 20 then
 				goods[stationOutpost21] = {{"luxury",5,70},{"gold",5,25},{"cobalt",4,50},{"food",math.random(5,10),1},{"medicine",5,5}}
@@ -1580,7 +1585,7 @@ function placeOwen()
 	--Owen
 	stationOwen = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationOwen:setPosition(psx,psy):setCallSign("Owen"):setDescription("Load lifters and components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationOwen] = {{"food",math.random(5,10),1},{"medicine",5,5},{"lifter",5,61}}
 		else
@@ -1601,7 +1606,7 @@ function placePanduit()
 	--Panduit
 	stationPanduit = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationPanduit:setPosition(psx,psy):setCallSign("Panduit"):setDescription("Optic components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationPanduit] = {{"food",math.random(5,10),1},{"medicine",5,5},{"optic",5,79}}
 		else
@@ -1624,7 +1629,7 @@ function placeRipley()
 	--Ripley
 	stationRipley = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationRipley:setPosition(psx,psy):setCallSign("Ripley"):setDescription("Load lifters and components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationRipley] = {{"food",math.random(5,10),1},{"medicine",5,5},{"lifter",5,82}}
 		else
@@ -1647,7 +1652,7 @@ function placeRutherford()
 	--Rutherford
 	stationRutherford = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationRutherford:setPosition(psx,psy):setCallSign("Rutherford"):setDescription("Shield components and research")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationRutherford] = {{"food",math.random(5,10),1},{"medicine",5,5},{"shield",5,90}}
 		else
@@ -1678,7 +1683,7 @@ function placeShawyer()
 	--Shawyer
 	stationShawyer = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationShawyer:setPosition(psx,psy):setCallSign("Shawyer"):setDescription("Impulse engine components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationShawyer] = {{"food",math.random(5,10),1},{"medicine",5,5},{"impulse",5,100}}
 		else
@@ -1700,7 +1705,7 @@ function placeShree()
 	--Shree
 	stationShree = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationShree:setPosition(psx,psy):setCallSign("Shree"):setDescription("Repulsor and tractor beam components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationShree] = {{"food",math.random(5,10),1},{"medicine",5,5},{"tractor",5,90},{"repulsor",5,95}}
 		else
@@ -1723,7 +1728,7 @@ function placeSoong()
 	--Soong 
 	stationSoong = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationSoong:setPosition(psx,psy):setCallSign("Soong"):setDescription("Android components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationSoong] = {{"food",math.random(5,10),1},{"medicine",5,5},{"android",5,73}}
 		else
@@ -1756,7 +1761,7 @@ function placeTokra()
 	stationTokra = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationTokra:setPosition(psx,psy):setCallSign("Tokra"):setDescription("Advanced material components")
 	whatTrade = random(1,100)
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationTokra] = {{"food",math.random(5,10),1},{"medicine",5,5},{"filament",5,42}}
 			tradeLuxury[stationTokra] = true
@@ -1788,7 +1793,7 @@ function placeToohie()
 	--Toohie
 	stationToohie = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationToohie:setPosition(psx,psy):setCallSign("Toohie"):setDescription("Shield and armor components and research")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationToohie] = {{"food",math.random(5,10),1},{"medicine",5,5},{"shield",5,90}}
 		else
@@ -1810,7 +1815,7 @@ function placeUtopiaPlanitia()
 	--Utopia Planitia
 	stationUtopiaPlanitia = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationUtopiaPlanitia:setPosition(psx,psy):setCallSign("Utopia Planitia"):setDescription("Ship building and maintenance facility")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationUtopiaPlanitia] = {{"food",math.random(5,10),1},{"medicine",5,5},{"warp",5,167}}
 		else
@@ -1828,7 +1833,7 @@ function placeVactel()
 	--Vactel
 	stationVactel = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationVactel:setPosition(psx,psy):setCallSign("Vactel"):setDescription("Shielded Circuitry Fabrication")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationVactel] = {{"food",math.random(5,10),1},{"medicine",5,5},{"circuit",5,50}}
 		else
@@ -1847,7 +1852,7 @@ function placeVeloquan()
 	--Veloquan
 	stationVeloquan = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationVeloquan:setPosition(psx,psy):setCallSign("Veloquan"):setDescription("Sensor components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationVeloquan] = {{"food",math.random(5,10),1},{"medicine",5,5},{"sensor",5,68}}
 		else
@@ -1869,7 +1874,7 @@ function placeZefram()
 	--Zefram
 	stationZefram = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationZefram:setPosition(psx,psy):setCallSign("Zefram"):setDescription("Warp engine components")
-	if stationFaction ~= "Independent" then
+	if stationFaction ~= Faction_Independent then
 		if random(1,5) <= 1 then
 			goods[stationZefram] = {{"food",math.random(5,10),1},{"medicine",5,5},{"warp",5,140}}
 		else
@@ -2119,7 +2124,7 @@ function randomSymmetric()
 	mirrorKrik = false
 	psx, psy = vectorFromAngle(random(135,225),4000)
 	stationSize = "Small Station"
-	stationFaction = "Human Navy"
+	stationFaction = Faction_1
 	si = math.random(1,#placeGenericStation)
 	pStation = placeGenericStation[si]()
 	table.remove(placeGenericStation,si)
@@ -2130,7 +2135,7 @@ function randomSymmetric()
 	end
 	psx = -psx
 	psy = -psy
-	stationFaction = "P-Rats"
+	stationFaction = Faction_2
 	si = math.random(1,#placeGenericStation)
 	pStation = placeGenericStation[si]()
 	table.remove(placeGenericStation,si)
@@ -2158,15 +2163,15 @@ function randomSymmetric()
 		until(psx < 0 and closestStationDistance > 4000)
 		stationSize = nil
 		if psx > -1000 then
-			stationFaction = "Independent"
+			stationFaction = Faction_Independent
 		else
-			stationFaction = "Human Navy"
+			stationFaction = Faction_1
 		end
 		si = math.random(1,#placeGenericStation)
 		pStation = placeGenericStation[si]()
 		table.remove(placeGenericStation,si)
 		table.insert(stationList,pStation)
-		if stationFaction == "Human Navy" then
+		if stationFaction == Faction_1 then
 			table.insert(humanStationList,pStation)
 		end
 		if mirrorKrik then
@@ -2178,14 +2183,14 @@ function randomSymmetric()
 		stationSize = sizeTemplate
 		psx = -psx
 		psy = -psy
-		if stationFaction ~= "Independent" then
-			stationFaction = "P-Rats"
+		if stationFaction ~= Faction_Independent then
+			stationFaction = Faction_2
 		end
 		si = math.random(1,#placeGenericStation)
 		pStation = placeGenericStation[si]()
 		table.remove(placeGenericStation,si)
 		table.insert(stationList,pStation)
-		if stationFaction == "P-Rats" then
+		if stationFaction == Faction_2 then
 			table.insert(kraylorStationList,pStation)
 		end
 		if mirrorKrik then
@@ -2275,13 +2280,13 @@ function defaultTerrain()
 		psx = (gRegion[sri][1] - (gbHigh/2))*gSize + random(-gSize/2*.95,gSize/2*.95)	--place station x coordinate
 		psy = (gRegion[sri][2] - (gbHigh/2))*gSize + random(-gSize/2*.95,gSize/2*.95)	--place station y coordinate
 		if psx < -1*neutralZoneDistance then		--left stations
-			stationFaction = "Human Navy"			--human
+			stationFaction = Faction_1			--human
 		elseif psx > neutralZoneDistance then		--right stations
-			stationFaction = "P-Rats"				--kraylor
+			stationFaction = Faction_2				--kraylor
 		else										--near the middle
-			stationFaction = "Independent"			--independent
+			stationFaction = Faction_Independent			--independent
 		end
-		if stationFaction == "Independent" and random(1,5) >= 20 and #placeGenericStation > 1 then
+		if stationFaction == Faction_Independent and random(1,5) >= 20 and #placeGenericStation > 1 then
 			si = math.random(1,#placeGenericStation)	--station index
 			pStation = placeGenericStation[si]()		--place selected station
 			table.remove(placeGenericStation,si)		--remove station from placement list
@@ -4844,7 +4849,7 @@ function update(delta)
 			p2 = getPlayerShip(2)
 			if p2 == nil then
 				tempPlayerType = p1:getTypeName()
-				p2 = PlayerSpaceship():setFaction("P-Rats"):setTemplate(tempPlayerType):setPosition(playerStartX[2],playerStartY[2]):setRotation(p1:getRotation()+180)
+				p2 = PlayerSpaceship():setFaction(Faction_2):setTemplate(tempPlayerType):setPosition(playerStartX[2],playerStartY[2]):setRotation(p1:getRotation()+180)
 				setPlayer(p2)
 			end
 			if not p1.nameAssigned then
@@ -4861,7 +4866,7 @@ function update(delta)
 			p4 = getPlayerShip(4)
 			if p4 == nil then
 				tempPlayerType = p3:getTypeName()
-				p4 = PlayerSpaceship():setFaction("P-Rats"):setTemplate(tempPlayerType):setPosition(playerStartX[4],playerStartY[4]):setRotation(p3:getRotation()+180)
+				p4 = PlayerSpaceship():setFaction(Faction_2):setTemplate(tempPlayerType):setPosition(playerStartX[4],playerStartY[4]):setRotation(p3:getRotation()+180)
 				setPlayer(p4)
 			end
 			if not p3.nameAssigned then
@@ -4878,7 +4883,7 @@ function update(delta)
 			p6 = getPlayerShip(6)
 			if p6 == nil then
 				tempPlayerType = p5:getTypeName()
-				p6 = PlayerSpaceship():setFaction("P-Rats"):setTemplate(tempPlayerType):setPosition(playerStartX[6],playerStartY[6]):setRotation(p5:getRotation()+180)
+				p6 = PlayerSpaceship():setFaction(Faction_2):setTemplate(tempPlayerType):setPosition(playerStartX[6],playerStartY[6]):setRotation(p5:getRotation()+180)
 				setPlayer(p6)
 			end
 			if not p5.nameAssigned then
@@ -4895,7 +4900,7 @@ function update(delta)
 			p8 = getPlayerShip(8)
 			if p8 == nil then
 				tempPlayerType = p7:getTypeName()
-				p8 = PlayerSpaceship():setFaction("P-Rats"):setTemplate(tempPlayerType):setPosition(playerStartX[8],playerStartY[8]):setRotation(p7:getRotation()+180)
+				p8 = PlayerSpaceship():setFaction(Faction_2):setTemplate(tempPlayerType):setPosition(playerStartX[8],playerStartY[8]):setRotation(p7:getRotation()+180)
 				setPlayer(p8)
 			end
 			if not p7.nameAssigned then
@@ -4918,7 +4923,7 @@ function update(delta)
 			p10 = getPlayerShip(10)
 			if p10 == nil then
 				tempPlayerType = p9:getTypeName()
-				p10 = PlayerSpaceship():setFaction("P-Rats"):setTemplate(tempPlayerType):setPosition(playerStartX[10],playerStartY[10]):setRotation(p9:getRotation()+180)
+				p10 = PlayerSpaceship():setFaction(Faction_2):setTemplate(tempPlayerType):setPosition(playerStartX[10],playerStartY[10]):setRotation(p9:getRotation()+180)
 				setPlayer(p10)
 			end
 			if not p9.nameAssigned then
@@ -4935,7 +4940,7 @@ function update(delta)
 			p12 = getPlayerShip(12)
 			if p12 == nil then
 				tempPlayerType = p11:getTypeName()
-				p12 = PlayerSpaceship():setFaction("P-Rats"):setTemplate(tempPlayerType):setPosition(playerStartX[12],playerStartY[12]):setRotation(p11:getRotation()+180)
+				p12 = PlayerSpaceship():setFaction(Faction_2):setTemplate(tempPlayerType):setPosition(playerStartX[12],playerStartY[12]):setRotation(p11:getRotation()+180)
 				setPlayer(p12)
 			end
 			if not p11.nameAssigned then
@@ -4954,7 +4959,7 @@ function update(delta)
 	end
 	gameTimeLimit = gameTimeLimit - delta
 	if gameTimeLimit < 0 then
-		victory("Exuari")
+		victory(Faction_3)
 	end
 	if gameTimeLimit < (maxGameTime - hideFlagTime - 1) then	--1499
 		--hunt begins
@@ -4976,13 +4981,13 @@ function update(delta)
 					if pidx % 2 == 0 then	--process Kraylor player ship
 						kraylorShipsRemaining = kraylorShipsRemaining + 1
 						if p.flag and px > 0 then
-							victory("P-Rats")
+							victory(Faction_2)
 						end
 						if p1Flag:isValid() then
-							if distance(p,p1Flag) < 500 and p1Flag:isScannedByFaction("P-Rats") then
+							if distance(p,p1Flag) < 500 and p1Flag:isScannedByFaction(Faction_2) then
 								p.flag = true
 								p1Flag:destroy()
-								p:addToShipLog("You picked up the Human Navy flag","Green")
+								p:addToShipLog("You picked up the " .. Faction_1 .. " flag","Green")
 								if difficulty < 2 then
 									for cpidx=1,11,2 do
 										cp = getPlayerShip(cpidx)
@@ -5017,9 +5022,9 @@ function update(delta)
 										if p.flag then				--carrying flag
 											p.flag = false			--drop flag
 											p1Flag = Artifact():setPosition(px,py):setModel("artifact5"):allowPickup(false)
-											p1Flag:setDescriptions("Flag","Human Navy Flag"):setRadarSignatureInfo(15,10,5):setScanningParameters(flagScanComplexity,flagScanDepth)
+											p1Flag:setDescriptions("Flag",Faction_1 .. " Flag"):setRadarSignatureInfo(15,10,5):setScanningParameters(flagScanComplexity,flagScanDepth)
 											if difficulty < 2 then
-												p1Flag:setScannedByFaction("P-Rats",true)
+												p1Flag:setScannedByFaction(Faction_2,true)
 											end
 										end
 									end
@@ -5029,13 +5034,13 @@ function update(delta)
 					else	-- process Human player ship
 						humanShipsRemaining = humanShipsRemaining + 1
 						if p.flag and px < 0 then
-							victory("Human Navy")
+							victory(Faction_1)
 						end
 						if p2Flag:isValid() then
-							if distance(p,p2Flag) < 500 and p2Flag:isScannedByFaction("Human Navy") then
+							if distance(p,p2Flag) < 500 and p2Flag:isScannedByFaction(Faction_1) then
 								p.flag = true
 								p2Flag:destroy()
-								p:addToShipLog("You picked up the Kraylor flag","Green")
+								p:addToShipLog("You picked up the " .. Faction_2 .. " flag","Green")
 								if difficulty < 2 then
 									for cpidx=2,12,2 do
 										cp = getPlayerShip(cpidx)
@@ -5070,9 +5075,9 @@ function update(delta)
 										if p.flag then				--carrying flag
 											p.flag = false			--drop flag
 											p2Flag = Artifact():setPosition(px,py):setModel("artifact5"):allowPickup(false)
-											p2Flag:setDescriptions("Flag","Kraylor Flag"):setRadarSignatureInfo(15,10,5):setScanningParameters(flagScanComplexity,flagScanDepth)
+											p2Flag:setDescriptions("Flag",Faction_2 .. " Flag"):setRadarSignatureInfo(15,10,5):setScanningParameters(flagScanComplexity,flagScanDepth)
 											if difficulty < 2 then
-												p2Flag:setScannedByFaction("Human Navy",true)
+												p2Flag:setScannedByFaction(Faction_1,true)
 											end
 										end
 									end
@@ -5085,15 +5090,15 @@ function update(delta)
 						p.flag = false		--drop flag
 						if pidx % 2 == 0 then	--Kraylor destroyed, reinstate Human flag
 							p1Flag = Artifact():setPosition(px,py):setModel("artifact5"):allowPickup(false)
-							p1Flag:setDescriptions("Flag","Human Navy Flag"):setRadarSignatureInfo(15,10,5):setScanningParameters(flagScanComplexity,flagScanDepth)
+							p1Flag:setDescriptions("Flag",Faction_1 .. " Flag"):setRadarSignatureInfo(15,10,5):setScanningParameters(flagScanComplexity,flagScanDepth)
 							if difficulty < 2 then
-								p1Flag:setScannedByFaction("P-Rats",true)
+								p1Flag:setScannedByFaction(Faction_2,true)
 							end
 						else					--Human destroyed, reinstate Kraylor flag
 							p2Flag = Artifact():setPosition(px,py):setModel("artifact5"):allowPickup(false)
-							p2Flag:setDescriptions("Flag","Kraylor Flag"):setRadarSignatureInfo(15,10,5):setScanningParameters(flagScanComplexity,flagScanDepth)
+							p2Flag:setDescriptions("Flag",Faction_2 .. " Flag"):setRadarSignatureInfo(15,10,5):setScanningParameters(flagScanComplexity,flagScanDepth)
 							if difficulty < 2 then
-								p2Flag:setScannedByFaction("Human Navy",true)
+								p2Flag:setScannedByFaction(Faction_1,true)
 							end
 						end
 					end
@@ -5101,10 +5106,10 @@ function update(delta)
 			end
 		end
 		if kraylorShipsRemaining == 0 then
-			victory("Human Navy")
+			victory(Faction_1)
 		end
 		if humanShipsRemaining == 0 then
-			victory("P-Rats")
+			victory(Faction_2)
 		end
 	elseif gameTimeLimit < (maxGameTime - hideFlagTime) then		--1500
 		--transition from preparation to hunt
@@ -5125,9 +5130,9 @@ function update(delta)
 			if p1Flagy > boundary/2 then
 				p1Flagy = boundary/2
 			end
-			p1Flag = Artifact():setPosition(p1Flagx,p1Flagy):setModel("artifact5"):allowPickup(false):setDescriptions("Flag","Human Navy Flag"):setRadarSignatureInfo(15,10,5):setScanningParameters(flagScanComplexity,flagScanDepth)
+			p1Flag = Artifact():setPosition(p1Flagx,p1Flagy):setModel("artifact5"):allowPickup(false):setDescriptions("Flag",Faction_1 .. " Flag"):setRadarSignatureInfo(15,10,5):setScanningParameters(flagScanComplexity,flagScanDepth)
 			if difficulty < 1 then
-				p1Flag:setScannedByFaction("P-Rats")
+				p1Flag:setScannedByFaction(Faction_2)
 			end
 		end
 		if p2Flag == nil then
@@ -5143,9 +5148,9 @@ function update(delta)
 			if p2Flagy > boundary/2 then
 				p2Flagy = boundary/2
 			end
-			p2Flag = Artifact():setPosition(p2Flagx,p2Flagy):setModel("artifact5"):allowPickup(false):setDescriptions("Flag","Kraylor Flag"):setRadarSignatureInfo(15,10,5):setScanningParameters(flagScanComplexity,flagScanDepth)
+			p2Flag = Artifact():setPosition(p2Flagx,p2Flagy):setModel("artifact5"):allowPickup(false):setDescriptions("Flag",Faction_2 .. " Flag"):setRadarSignatureInfo(15,10,5):setScanningParameters(flagScanComplexity,flagScanDepth)
 			if difficulty < 1 then
-				p2Flag:setScannedByFaction("Human Navy")
+				p2Flag:setScannedByFaction(Faction_1)
 			end
 		end
 		removeP7DecoyButton()
@@ -5169,7 +5174,7 @@ function update(delta)
 		if decoyH1 == nil then
 			if decoyH1x ~= nil then
 				if decoyH1x > -1*boundary and decoyH1y > -1*boundary/2 and decoyH1y < boundary/2 then
-					decoyH1 = Artifact():setPosition(decoyH1x,decoyH1y):setModel("artifact5"):setDescriptions("Flag","Human Navy Decoy Flag"):allowPickup(false)
+					decoyH1 = Artifact():setPosition(decoyH1x,decoyH1y):setModel("artifact5"):setDescriptions("Flag",Faction_1 .. " Decoy Flag"):allowPickup(false)
 					if difficulty > 1 then
 						decoyH1:setRadarSignatureInfo(15,10,5):setScanningParameters(flagScanComplexity,flagScanDepth)
 					else
@@ -5181,7 +5186,7 @@ function update(delta)
 		if decoyK1 == nil then
 			if decoyK1x ~= nil then
 				if decoyK1x > boundary and decoyK1y > -1*boundary/2 and decoyK1y < boundary/2 then
-					decoyK1 = Artifact():setPosition(decoyK1x,decoyK1y):setModel("artifact5"):setDescriptions("Flag","Kraylor Decoy Flag"):allowPickup(false)
+					decoyK1 = Artifact():setPosition(decoyK1x,decoyK1y):setModel("artifact5"):setDescriptions("Flag",Faction_2 .. " Decoy Flag"):allowPickup(false)
 					if difficulty > 1 then
 						decoyK1:setRadarSignatureInfo(15,10,5):setScanningParameters(flagScanComplexity,flagScanDepth)
 					else
@@ -5193,7 +5198,7 @@ function update(delta)
 		if decoyH2 == nil then
 			if decoyH2x ~= nil then
 				if decoyH2x > -1*boundary and decoyH2y > -1*boundary/2 and decoyH2y < boundary/2 then
-					decoyH2 = Artifact():setPosition(decoyH2x,decoyH2y):setModel("artifact5"):setDescriptions("Flag","Human Navy Decoy Flag"):allowPickup(false)
+					decoyH2 = Artifact():setPosition(decoyH2x,decoyH2y):setModel("artifact5"):setDescriptions("Flag",Faction_1 .. " Decoy Flag"):allowPickup(false)
 					if difficulty > 1 then
 						decoyH2:setRadarSignatureInfo(15,10,5):setScanningParameters(flagScanComplexity,flagScanDepth)
 					else
@@ -5205,7 +5210,7 @@ function update(delta)
 		if decoyK2 == nil then
 			if decoyK2x ~= nil then
 				if decoyK2x > boundary and decoyK2y > -1*boundary/2 and decoyK2y < boundary/2 then
-					decoyK2 = Artifact():setPosition(decoyK2x,decoyK2y):setModel("artifact5"):setDescriptions("Flag","Kraylor Decoy Flag"):allowPickup(false)
+					decoyK2 = Artifact():setPosition(decoyK2x,decoyK2y):setModel("artifact5"):setDescriptions("Flag",Faction_2 .. " Decoy Flag"):allowPickup(false)
 					if difficulty > 1 then
 						decoyK2:setRadarSignatureInfo(15,10,5):setScanningParameters(flagScanComplexity,flagScanDepth)
 					else
@@ -5217,7 +5222,7 @@ function update(delta)
 		if decoyH3 == nil then
 			if decoyH3x ~= nil then
 				if decoyH3x > -1*boundary and decoyH3y > -1*boundary/2 and decoyH3y < boundary/2 then
-					decoyH3 = Artifact():setPosition(decoyH3x,decoyH3y):setModel("artifact5"):setDescriptions("Flag","Human Navy Decoy Flag"):allowPickup(false)
+					decoyH3 = Artifact():setPosition(decoyH3x,decoyH3y):setModel("artifact5"):setDescriptions("Flag",Faction_1 .. " Decoy Flag"):allowPickup(false)
 					if difficulty > 1 then
 						decoyH3:setRadarSignatureInfo(15,10,5):setScanningParameters(flagScanComplexity,flagScanDepth)
 					else
@@ -5229,7 +5234,7 @@ function update(delta)
 		if decoyK3 == nil then
 			if decoyK3x ~= nil then
 				if decoyK3x > boundary and decoyK3y > -1*boundary/2 and decoyK3y < boundary/2 then
-					decoyK3 = Artifact():setPosition(decoyK3x,decoyK3y):setModel("artifact5"):setDescriptions("Flag","Kraylor Decoy Flag"):allowPickup(false)
+					decoyK3 = Artifact():setPosition(decoyK3x,decoyK3y):setModel("artifact5"):setDescriptions("Flag",Faction_2 .. " Decoy Flag"):allowPickup(false)
 					if difficulty > 1 then
 						decoyK3:setRadarSignatureInfo(15,10,5):setScanningParameters(flagScanComplexity,flagScanDepth)
 					else

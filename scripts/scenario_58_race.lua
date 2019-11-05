@@ -462,7 +462,7 @@ function setStations()
 	end
 	ganaldaAngle = random(0,360)
 	xGanalda, yGanalda = vectorFromAngle(ganaldaAngle,random(120000,150000))
-	stationGanalda = SpaceStation():setTemplate("Medium Station"):setFaction("P-Rats")
+	stationGanalda = SpaceStation():setTemplate("Medium Station"):setFaction("Kraylor")
 	stationGanalda:setPosition(xGanalda,yGanalda):setCallSign("Ganalda")
 	empokAngle = ganaldaAngle + random(60,180)
 	xEmpok, yEmpok = vectorFromAngle(empokAngle,random(120000,150000))
@@ -470,7 +470,7 @@ function setStations()
 	stationEmpok:setPosition(xEmpok,yEmpok):setCallSign("Empok Nor")
 	ticAngle = empokAngle + random(60,120)
 	xTic, yTic = vectorFromAngle(ticAngle,random(120000,150000))
-	stationTic = SpaceStation():setTemplate("Medium Station"):setFaction("P-Rats")
+	stationTic = SpaceStation():setTemplate("Medium Station"):setFaction("Kraylor")
 	stationTic:setPosition(xTic,yTic):setCallSign("Ticonderoga")
 	createRandomAlongArc(Nebula, 15, 100000, -100000, 140000, 100, 170, 25000)
 	Nebula():setPosition(xGanalda,yGanalda)
@@ -1743,7 +1743,7 @@ function enemyComms(comms_data)
 			taunt_option = "We will see to your destruction!"
 			taunt_success_reply = "Your bloodline will end here!"
 			taunt_failed_reply = "Your feeble threats are meaningless."
-			if faction == "P-Rats" then
+			if faction == "Kraylor" then
 				setCommsMessage("Ktzzzsss.\nYou will DIEEee weaklingsss!");
 			elseif faction == "Arlenians" then
 				setCommsMessage("We wish you no harm, but will harm you if we must.\nEnd of transmission.");
@@ -2009,7 +2009,7 @@ function spawnTargetDrone(originx,originy,targetDroneID,area,sequenceNumber)
 		enemyTemplate = "Fighter"
 	end
 	tdx, tdy = vectorFromAngle(random(0,360),random(2500,4800))
-	td = CpuShip():setTemplate(enemyTemplate):setPosition(originx+tdx,originy+tdy):setFaction("P-Rats")
+	td = CpuShip():setTemplate(enemyTemplate):setPosition(originx+tdx,originy+tdy):setFaction("Kraylor")
 	td:setHullMax(0):setShieldsMax(0):setHull(0)
 	td:setCallSign(string.format("%s %s",td:getCallSign(),targetDroneID))
 	td.owner = targetDroneID
@@ -2298,13 +2298,13 @@ function update(delta)
 								p5.chaser = true
 								cx, cy = vectorFromAngle(raceAxis,random(5000,8000))
 								p5.c1 = CpuShip():setTemplate("Stalker Q7"):setPosition(racePoint1x+cx,racePoint1y+cy)
-								p5.c1:setFaction("P-Rats"):orderAttack(p5)
+								p5.c1:setFaction("Kraylor"):orderAttack(p5)
 								cx, cy = vectorFromAngle(raceAxis,random(5000,8000))
 								p5.c2 = CpuShip():setTemplate("Stalker R7"):setPosition(racePoint1x+cx,racePoint1y+cy)
-								p5.c2:setFaction("P-Rats"):orderAttack(p5)
+								p5.c2:setFaction("Kraylor"):orderAttack(p5)
 								cx, cy = vectorFromAngle(raceAxis,random(1000,3000))
 								p5.c3 = CpuShip():setTemplate("Piranha F12"):setPosition(racePoint1x+cx,racePoint1y+cy)
-								p5.c3:setFaction("P-Rats"):orderDefendLocation(racePoint1x,racePoint1y)						
+								p5.c3:setFaction("Kraylor"):orderDefendLocation(racePoint1x,racePoint1y)						
 							end
 						end
 					end

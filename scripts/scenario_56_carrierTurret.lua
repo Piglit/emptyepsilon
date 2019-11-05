@@ -4072,7 +4072,7 @@ function enemyComms(comms_data)
 		taunt_option = "We will see to your destruction!"
 		taunt_success_reply = "Your bloodline will end here!"
 		taunt_failed_reply = "Your feeble threats are meaningless."
-		if faction == "P-Rats" then
+		if faction == "Kraylor" then
 			setCommsMessage("Ktzzzsss.\nYou will DIEEee weaklingsss!");
 		elseif faction == "Arlenians" then
 			setCommsMessage("We wish you no harm, but will harm you if we must.\nEnd of transmission.");
@@ -5467,7 +5467,7 @@ function pushed()
 	if difficulty >= 1 then
 		sealed:setFaction("Human Navy")
 	else
-		sealed:setFaction("P-Rats")
+		sealed:setFaction("Kraylor")
 	end
 	playerCarrier:removeCustom(doNotPushButton)
 	playerCarrier:removeCustom(doNotPushButtonTac)
@@ -5756,7 +5756,7 @@ end
 -- spawn enemies based on player strength
 function spawnEnemies(xOrigin, yOrigin, danger, enemyFaction)
 	if enemyFaction == nil then
-		enemyFaction = "P-Rats"
+		enemyFaction = "Kraylor"
 	end
 	if danger == nil then 
 		danger = 1

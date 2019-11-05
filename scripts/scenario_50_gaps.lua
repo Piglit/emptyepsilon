@@ -409,14 +409,14 @@ function buildStations()
 	pStation = placeStation[si]()		--place selected station
 	table.remove(placeStation,si)		--remove station from placement list
 	table.insert(stationList,pStation)	--save station in general station list
-	stationFaction = "P-Rats"
+	stationFaction = "Kraylor"
 	psx = 0
 	psy = -60000
 	si = math.random(1,#placeEnemyStation)
 	pStation = placeEnemyStation[si]()
 	table.remove(placeEnemyStation,si)
 	table.insert(enemyStationList,pStation)
-	hf = spawnEnemies(psx,psy,10,"P-Rats")
+	hf = spawnEnemies(psx,psy,10,"Kraylor")
 	for _, enemy in ipairs(hf) do
 		enemy:orderDefendTarget(pStation)
 	end
@@ -3328,7 +3328,7 @@ function enemyComms(comms_data)
 		taunt_option = "We will see to your destruction!"
 		taunt_success_reply = "Your bloodline will end here!"
 		taunt_failed_reply = "Your feeble threats are meaningless."
-		if faction == "P-Rats" then
+		if faction == "Kraylor" then
 			setCommsMessage("Ktzzzsss.\nYou will DIEEee weaklingsss!");
 		elseif faction == "Arlenians" then
 			setCommsMessage("We wish you no harm, but will harm you if we must.\nEnd of transmission.");
@@ -4221,7 +4221,7 @@ function destroyEnemyBases(delta)
 			victory("Human Navy")
 		end
 	else
-		victory("P-Rats")
+		victory("Kraylor")
 	end
 end
 -- keep the pressure up on the players
@@ -4231,7 +4231,7 @@ function waves(delta)
 		waveTimer = delta + interWave + random(1,60)
 		spawnCompass = math.random(1,4)
 		if spawnCompass == 1 then
-			hf = spawnEnemies(0,-40000,difficulty,"P-Rats")
+			hf = spawnEnemies(0,-40000,difficulty,"Kraylor")
 			if northMet then
 				for _, enemy in ipairs(hf) do
 					enemy:orderFlyTowardsBlind(0,0)
@@ -4292,7 +4292,7 @@ end
 
 function spawnEnemies(xOrigin, yOrigin, danger, enemyFaction)
 	if enemyFaction == nil then
-		enemyFaction = "P-Rats"
+		enemyFaction = "Kraylor"
 	end
 	if danger == nil then 
 		danger = 1
@@ -4358,7 +4358,7 @@ function update(delta)
 	if playWithTimeLimit then
 		gameTimeLimit = gameTimeLimit - delta
 		if gameTimeLimit < 0 then
-			victory("P-Rats")
+			victory("Kraylor")
 		end
 	end
 	if plot1 ~= nil then	--main plot

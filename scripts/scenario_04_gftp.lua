@@ -5,11 +5,11 @@
 -- Type: Mission
 -- Author: Fouindor
 
-Enemy_Faction = "Ktlitans"
-Hacker_Faction = "Ghosts"
-Player_Faction = "Human Navy"
-Independent_Faction = "Independent"
-Lightbringer_Faction = "Arlenians"
+Enemy_Faction = "P-Rats"
+Hacker_Faction = "Black-Ops"
+Player_Faction = "Freunde"
+Independent_Faction = "Fraktionslos"
+Lightbringer_Faction = "Objekon"
 
 function init()
 	--Spawn Marco Polo, its defenders and a Ktilitian strike team

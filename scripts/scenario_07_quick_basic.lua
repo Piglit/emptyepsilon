@@ -11,7 +11,7 @@ timewarning = 10 * 60 -- Used for checking when to give a warning, and to update
 Faction_Player = "Freunde"
 Faction_Enemy = "P-Rats"
 Faction_Independent = "Fraktionslos"
-Faction_Exercise_Target = "P-Rats"
+Faction_Exercise_Target = "Black-Ops"
 
 ship_names = {
     "SS Epsilon",

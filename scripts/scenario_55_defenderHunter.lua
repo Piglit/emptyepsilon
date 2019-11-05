@@ -671,7 +671,7 @@ function buildStations()
 	gx = adjList[rn][1]
 	gy = adjList[rn][2]
 	--place enemy stations (from generic pool)
-	stationFaction = "P-Rats
+	stationFaction = "Kraylor"
 	fb = gp	--set faction boundary (between neutral and enemy)
 	for j=1,5 do
 		tSize = math.random(3,6)	--tack on to region size
@@ -718,7 +718,7 @@ function buildStations()
 		gy = adjList[rn][2]
 	end
 	--place enemy stations (from enemy pool)
-	stationFaction = "P-Rats
+	stationFaction = "Kraylor"
 	fb = gp	--set faction boundary (between enemy and enemy leadership)
 	for j=1,2 do
 		tSize = math.random(4,6)	--tack on to region size
@@ -4311,7 +4311,7 @@ function enemyComms(comms_data)
 		taunt_option = "We will see to your destruction!"
 		taunt_success_reply = "Your bloodline will end here!"
 		taunt_failed_reply = "Your feeble threats are meaningless."
-		if faction == "P-Rats then
+		if faction == "Kraylor" then
 			setCommsMessage("Ktzzzsss.\nYou will DIEEee weaklingsss!");
 		elseif faction == "Arlenians" then
 			setCommsMessage("We wish you no harm, but will harm you if we must.\nEnd of transmission.");
@@ -4666,7 +4666,7 @@ function pressureWaves(delta)
 	if not homeStation:isValid() then
 		missionVictory = false
 		endStatistics()
-		victory("P-Rats)
+		victory("Kraylor")
 		return
 	end
 	if not targetEnemyStation:isValid() then
@@ -4978,31 +4978,31 @@ function warpJamLineStart(delta)
 		p = closestPlayerTo(targetEnemyStation)
 		esx, esy = targetEnemyStation:getPosition()
 		cpx, cpy = p:getPosition()
-		wjCenter = CpuShip():setFaction("P-Rats):setTemplate("Phobos M3"):setPosition((esx+cpx)/2,(esy+cpy)/2):orderFlyTowardsBlind(cpx,cpy)
-		wjP1 = CpuShip():setFaction("P-Rats):setTemplate("Phobos M3"):setPosition((esx+cpx)/2+20000,(esy+cpy)/2+20000):orderFlyTowardsBlind(cpx+20000,cpy+20000)
-		wjP2 = CpuShip():setFaction("P-Rats):setTemplate("Phobos M3"):setPosition((esx+cpx)/2-20000,(esy+cpy)/2-20000):orderFlyTowardsBlind(cpx-20000,cpy-20000)
-		wjP3 = CpuShip():setFaction("P-Rats):setTemplate("Phobos M3"):setPosition((esx+cpx)/2+20000,(esy+cpy)/2-20000):orderFlyTowardsBlind(cpx+20000,cpy-20000)
-		wjP4 = CpuShip():setFaction("P-Rats):setTemplate("Phobos M3"):setPosition((esx+cpx)/2-20000,(esy+cpy)/2+20000):orderFlyTowardsBlind(cpx-20000,cpy+20000)
-		wjCenterE1 = CpuShip():setFaction("P-Rats):setTemplate("MT52 Hornet"):setPosition((esx+cpx)/2,(esy+cpy)/2):orderDefendTarget(wjCenter)
-		wjCenterE2 = CpuShip():setFaction("P-Rats):setTemplate("MU52 Hornet"):setPosition((esx+cpx)/2,(esy+cpy)/2):orderDefendTarget(wjCenter)
-		wjCenterE3 = CpuShip():setFaction("P-Rats):setTemplate("Fighter"):setPosition((esx+cpx)/2,(esy+cpy)/2):orderDefendTarget(wjCenter)
-		wjCenterE4 = CpuShip():setFaction("P-Rats):setTemplate("Ktlitan Fighter"):setPosition((esx+cpx)/2,(esy+cpy)/2):orderDefendTarget(wjCenter)
-		wjP1E1 = CpuShip():setFaction("P-Rats):setTemplate("MT52 Hornet"):setPosition((esx+cpx)/2+20000,(esy+cpy)/2+20000):orderDefendTarget(wjP1)
-		wjP1E2 = CpuShip():setFaction("P-Rats):setTemplate("MU52 Hornet"):setPosition((esx+cpx)/2+20000,(esy+cpy)/2+20000):orderDefendTarget(wjP1)
-		wjP1E3 = CpuShip():setFaction("P-Rats):setTemplate("Fighter"):setPosition((esx+cpx)/2+20000,(esy+cpy)/2+20000):orderDefendTarget(wjP1)
-		wjP1E4 = CpuShip():setFaction("P-Rats):setTemplate("Ktlitan Fighter"):setPosition((esx+cpx)/2+20000,(esy+cpy)/2+20000):orderDefendTarget(wjP1)
-		wjP2E1 = CpuShip():setFaction("P-Rats):setTemplate("MT52 Hornet"):setPosition((esx+cpx)/2-20000,(esy+cpy)/2-20000):orderDefendTarget(wjP2)
-		wjP2E2 = CpuShip():setFaction("P-Rats):setTemplate("MU52 Hornet"):setPosition((esx+cpx)/2-20000,(esy+cpy)/2-20000):orderDefendTarget(wjP2)
-		wjP2E3 = CpuShip():setFaction("P-Rats):setTemplate("Fighter"):setPosition((esx+cpx)/2-20000,(esy+cpy)/2-20000):orderDefendTarget(wjP2)
-		wjP2E4 = CpuShip():setFaction("P-Rats):setTemplate("Ktlitan Fighter"):setPosition((esx+cpx)/2-20000,(esy+cpy)/2-20000):orderDefendTarget(wjP2)
-		wjP3E1 = CpuShip():setFaction("P-Rats):setTemplate("MT52 Hornet"):setPosition((esx+cpx)/2+20000,(esy+cpy)/2-20000):orderDefendTarget(wjP3)
-		wjP3E2 = CpuShip():setFaction("P-Rats):setTemplate("MU52 Hornet"):setPosition((esx+cpx)/2+20000,(esy+cpy)/2-20000):orderDefendTarget(wjP3)
-		wjP3E3 = CpuShip():setFaction("P-Rats):setTemplate("Fighter"):setPosition((esx+cpx)/2+20000,(esy+cpy)/2-20000):orderDefendTarget(wjP3)
-		wjP3E4 = CpuShip():setFaction("P-Rats):setTemplate("Ktlitan Fighter"):setPosition((esx+cpx)/2+20000,(esy+cpy)/2-20000):orderDefendTarget(wjP3)
-		wjP4E1 = CpuShip():setFaction("P-Rats):setTemplate("MT52 Hornet"):setPosition((esx+cpx)/2-20000,(esy+cpy)/2+20000):orderDefendTarget(wjP4)
-		wjP4E2 = CpuShip():setFaction("P-Rats):setTemplate("MU52 Hornet"):setPosition((esx+cpx)/2-20000,(esy+cpy)/2+20000):orderDefendTarget(wjP4)
-		wjP4E3 = CpuShip():setFaction("P-Rats):setTemplate("Fighter"):setPosition((esx+cpx)/2-20000,(esy+cpy)/2+20000):orderDefendTarget(wjP4)
-		wjP4E4 = CpuShip():setFaction("P-Rats):setTemplate("Ktlitan Fighter"):setPosition((esx+cpx)/2-20000,(esy+cpy)/2+20000):orderDefendTarget(wjP4)
+		wjCenter = CpuShip():setFaction("Kraylor"):setTemplate("Phobos M3"):setPosition((esx+cpx)/2,(esy+cpy)/2):orderFlyTowardsBlind(cpx,cpy)
+		wjP1 = CpuShip():setFaction("Kraylor"):setTemplate("Phobos M3"):setPosition((esx+cpx)/2+20000,(esy+cpy)/2+20000):orderFlyTowardsBlind(cpx+20000,cpy+20000)
+		wjP2 = CpuShip():setFaction("Kraylor"):setTemplate("Phobos M3"):setPosition((esx+cpx)/2-20000,(esy+cpy)/2-20000):orderFlyTowardsBlind(cpx-20000,cpy-20000)
+		wjP3 = CpuShip():setFaction("Kraylor"):setTemplate("Phobos M3"):setPosition((esx+cpx)/2+20000,(esy+cpy)/2-20000):orderFlyTowardsBlind(cpx+20000,cpy-20000)
+		wjP4 = CpuShip():setFaction("Kraylor"):setTemplate("Phobos M3"):setPosition((esx+cpx)/2-20000,(esy+cpy)/2+20000):orderFlyTowardsBlind(cpx-20000,cpy+20000)
+		wjCenterE1 = CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setPosition((esx+cpx)/2,(esy+cpy)/2):orderDefendTarget(wjCenter)
+		wjCenterE2 = CpuShip():setFaction("Kraylor"):setTemplate("MU52 Hornet"):setPosition((esx+cpx)/2,(esy+cpy)/2):orderDefendTarget(wjCenter)
+		wjCenterE3 = CpuShip():setFaction("Kraylor"):setTemplate("Fighter"):setPosition((esx+cpx)/2,(esy+cpy)/2):orderDefendTarget(wjCenter)
+		wjCenterE4 = CpuShip():setFaction("Kraylor"):setTemplate("Ktlitan Fighter"):setPosition((esx+cpx)/2,(esy+cpy)/2):orderDefendTarget(wjCenter)
+		wjP1E1 = CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setPosition((esx+cpx)/2+20000,(esy+cpy)/2+20000):orderDefendTarget(wjP1)
+		wjP1E2 = CpuShip():setFaction("Kraylor"):setTemplate("MU52 Hornet"):setPosition((esx+cpx)/2+20000,(esy+cpy)/2+20000):orderDefendTarget(wjP1)
+		wjP1E3 = CpuShip():setFaction("Kraylor"):setTemplate("Fighter"):setPosition((esx+cpx)/2+20000,(esy+cpy)/2+20000):orderDefendTarget(wjP1)
+		wjP1E4 = CpuShip():setFaction("Kraylor"):setTemplate("Ktlitan Fighter"):setPosition((esx+cpx)/2+20000,(esy+cpy)/2+20000):orderDefendTarget(wjP1)
+		wjP2E1 = CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setPosition((esx+cpx)/2-20000,(esy+cpy)/2-20000):orderDefendTarget(wjP2)
+		wjP2E2 = CpuShip():setFaction("Kraylor"):setTemplate("MU52 Hornet"):setPosition((esx+cpx)/2-20000,(esy+cpy)/2-20000):orderDefendTarget(wjP2)
+		wjP2E3 = CpuShip():setFaction("Kraylor"):setTemplate("Fighter"):setPosition((esx+cpx)/2-20000,(esy+cpy)/2-20000):orderDefendTarget(wjP2)
+		wjP2E4 = CpuShip():setFaction("Kraylor"):setTemplate("Ktlitan Fighter"):setPosition((esx+cpx)/2-20000,(esy+cpy)/2-20000):orderDefendTarget(wjP2)
+		wjP3E1 = CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setPosition((esx+cpx)/2+20000,(esy+cpy)/2-20000):orderDefendTarget(wjP3)
+		wjP3E2 = CpuShip():setFaction("Kraylor"):setTemplate("MU52 Hornet"):setPosition((esx+cpx)/2+20000,(esy+cpy)/2-20000):orderDefendTarget(wjP3)
+		wjP3E3 = CpuShip():setFaction("Kraylor"):setTemplate("Fighter"):setPosition((esx+cpx)/2+20000,(esy+cpy)/2-20000):orderDefendTarget(wjP3)
+		wjP3E4 = CpuShip():setFaction("Kraylor"):setTemplate("Ktlitan Fighter"):setPosition((esx+cpx)/2+20000,(esy+cpy)/2-20000):orderDefendTarget(wjP3)
+		wjP4E1 = CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setPosition((esx+cpx)/2-20000,(esy+cpy)/2+20000):orderDefendTarget(wjP4)
+		wjP4E2 = CpuShip():setFaction("Kraylor"):setTemplate("MU52 Hornet"):setPosition((esx+cpx)/2-20000,(esy+cpy)/2+20000):orderDefendTarget(wjP4)
+		wjP4E3 = CpuShip():setFaction("Kraylor"):setTemplate("Fighter"):setPosition((esx+cpx)/2-20000,(esy+cpy)/2+20000):orderDefendTarget(wjP4)
+		wjP4E4 = CpuShip():setFaction("Kraylor"):setTemplate("Ktlitan Fighter"):setPosition((esx+cpx)/2-20000,(esy+cpy)/2+20000):orderDefendTarget(wjP4)
 		plot2 = warpJamLineSpring
 	end
 end
@@ -5031,27 +5031,27 @@ function warpJamLineRelease(delta)
 	plot2name = "warpJamLineRelease"
 	if wjCenter:isValid() then
 		wx, wy = wjCenter:getPosition()
-		WarpJammer():setFaction("P-Rats):setRange(20000):setPosition(wx,wy)
+		WarpJammer():setFaction("Kraylor"):setRange(20000):setPosition(wx,wy)
 		wjCenter:orderStandGround()
 	end
 	if wjP1:isValid() then
 		wx, wy = wjP1:getPosition()
-		WarpJammer():setFaction("P-Rats):setRange(20000):setPosition(wx,wy)
+		WarpJammer():setFaction("Kraylor"):setRange(20000):setPosition(wx,wy)
 		wjP1:orderStandGround()
 	end
 	if wjP2:isValid() then
 		wx, wy = wjP2:getPosition()
-		WarpJammer():setFaction("P-Rats):setRange(20000):setPosition(wx,wy)
+		WarpJammer():setFaction("Kraylor"):setRange(20000):setPosition(wx,wy)
 		wjP2:orderStandGround()
 	end
 	if wjP3:isValid() then
 		wx, wy = wjP3:getPosition()
-		WarpJammer():setFaction("P-Rats):setRange(20000):setPosition(wx,wy)
+		WarpJammer():setFaction("Kraylor"):setRange(20000):setPosition(wx,wy)
 		wjP3:orderStandGround()
 	end
 	if wjP4:isValid() then
 		wx, wy = wjP4:getPosition()
-		WarpJammer():setFaction("P-Rats):setRange(20000):setPosition(wx,wy)
+		WarpJammer():setFaction("Kraylor"):setRange(20000):setPosition(wx,wy)
 		wjP4:orderStandGround()
 	end
 	startAngle = random(0,360)
@@ -6307,7 +6307,7 @@ function timedGame(delta)
 		else
 			missionVictory = false
 			endStatistics()
-			victory("P-Rats")
+			victory("Kraylor")
 		end
 	end
 end
@@ -6401,7 +6401,7 @@ end
 -----------------------------------------------------------------]]--
 function spawnEnemies(xOrigin, yOrigin, danger, enemyFaction)
 	if enemyFaction == nil then
-		enemyFaction = "P-Rats"
+		enemyFaction = "Kraylor"
 	end
 	if danger == nil then 
 		danger = 1
