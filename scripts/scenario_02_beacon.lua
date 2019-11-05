@@ -163,7 +163,7 @@ end
 function missionRetrieveCriminals(delta)
     if player:isDocked(neutral_station) then
         neutral_station:sendCommsMessage(player, [[Two tough looking criminals board your ship. They are already cuffed, and do not look too happy about the whole situation.
-One of them is a human pirate, blind in one eye and has clearly seen his fair share of battles. The other is ]] .. enemyFaction .. [[ who hisses what you presume is a curse in their native language.
+One of them is a P-Rat Pylos, blind in one eye and has clearly seen his fair share of battles. The other is a Rat who hisses what you presume is a curse in their obscure dialect.
 
 You are wondering how voluntary their exchange really is...
 
@@ -200,7 +200,7 @@ function missionAmbushed(delta)
         if not ambush_main:isValid() and not ambush_side1:isValid() and not ambush_side2:isValid() then
             message = [[Good job on dealing with those ]] .. enemyFaction .. [[ scum. The criminals are safely in our custody now. We'll be sending out a protection detail for Refugee-X
 
-We managed to extract some vital infro from the ]] .. enemyFaction .. [[. In the next transport convoy towards Research-1 a ]] .. enemyFaction .. [[ death squad is hiding in one of the ships. The transport detail is heading in from D7, seek them out and scan the ships to find the ]] .. enemyFaction .. [[ transport.]]
+We managed to extract some vital info from the ]] .. enemyFaction .. [[. In the next transport convoy towards Research-1 a ]] .. enemyFaction .. [[ death squad is hiding in one of the ships. The transport detail is heading in from D7, seek them out and scan the ships to find the ]] .. enemyFaction .. [[ transport.]]
             if refilled then
                 message = message .. [[
 

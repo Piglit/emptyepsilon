@@ -153,16 +153,16 @@ function init()
 	friendlyList = {}
 
 	if getScenarioVariation() == "Advanced" then
-        player = PlayerSpaceship():setFaction(Player_Faction):setTemplate("Atlantis")
+        player = PlayerSpaceship():setFaction(Faction_Player):setTemplate("Atlantis")
     else
-        player = PlayerSpaceship():setFaction(Player_Faction):setTemplate("Phobos M3P")
+        player = PlayerSpaceship():setFaction(Faction_Player):setTemplate("Phobos M3P")
     end
     player:setPosition(random(-2000, 2000), random(-2000, 2000)):setCallSign(ship_names[math.random(1,#ship_names)])
     player:setJumpDrive(true)
     player:setWarpDrive(false)
 
 	-- Put a single small station here, which needs to be defended.
-	table.insert(friendlyList, SpaceStation():setTemplate('Small Station'):setCallSign("DS-1"):setRotation(random(0, 360)):setFaction(Player_Faction):setPosition(random(-2000, 2000), random(-2000, 2000)))
+	table.insert(friendlyList, SpaceStation():setTemplate('Small Station'):setCallSign("DS-1"):setRotation(random(0, 360)):setFaction(Faction_Player):setPosition(random(-2000, 2000), random(-2000, 2000)))
 
 	-- Start the players with 300 reputation.
 	player:addReputationPoints(300.0)
@@ -176,7 +176,7 @@ function init()
 
 	-- Let the GM declare the Humans (players) victorious.
 	addGMFunction("Win", function()
-		victory(Player_Faction);
+		victory(Faction_Player);
 	end)
 
 	-- Let the GM declare the Humans (players) defeated.
@@ -229,7 +229,7 @@ function init()
 
     --Create a bunch of neutral stations
 	for n=1, 6 do
-		setCirclePos(SpaceStation():setTemplate("Small Station"):setFaction(Independent_Faction), 0, 0, random(0, 360), random(15000, 30000))
+		setCirclePos(SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent), 0, 0, random(0, 360), random(15000, 30000))
 	end
 	-- Spawn random neutral transports.
 	Script():run("util_random_transports.lua")
@@ -238,7 +238,7 @@ function init()
     scenario_started = false
     if getScenarioVariation() == "GM Start" then
         target_practice_drone = CpuShip():setFaction(Faction_Exercise_Target):setTemplate("MT52 Hornet"):setTypeName("Target practice")
-        target_practice_drone:setScannedByFaction(Player_Faction, true)
+        target_practice_drone:setScannedByFaction(Faction_Player, true)
         target_practice_drone:setImpulseMaxSpeed(60)
         target_practice_drone:setBeamWeapon(0, 0, 0, 0.0, 0, 0)
         x, y = 2500, 3500
@@ -321,7 +321,7 @@ function update(delta)
         -- Declare victory for the Humans (players) once all enemies are destroyed.
         -- Note that players can win even if they destroy the enemies by blowing themselves up.
         if enemy_count == 0 then
-            victory(Player_Faction)
+            victory(Faction_Player)
             setBanner("Mission: SUCCESS")
             return
         end

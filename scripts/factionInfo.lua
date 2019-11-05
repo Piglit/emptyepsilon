@@ -9,7 +9,7 @@ human:setDescription([[Diese meist fraktionslosen Schiffe sind mit euch verbuend
 kraylor = FactionInfo():setName("P-Rats")
 kraylor:setGMColor(255, 0, 0)
 kraylor:setEnemy(human)
-kraylor:setDescription([[Die P-Rats sind eine Zweckgemeinschaft aus raumfahrenden Banditen. Ihre Geschichte begann auf einem jener Planeten, welche zu Minenzwecken mit Raumschiffen erstbesiedelt werden mussten. Als sie dort vom DUST-Konzern zurueckgelassen wurden, schafften sie es einige Schiffe zu kapern und mit ihnen den Planeten zu verlassen. Um an das zu kommen, was ihnen „zusteht“, kapern und ueberfallen sie andere Schiffe und vergroessern dadurch ihre Flotte.]])
+kraylor:setDescription([[Die P-Rats sind eine Zweckgemeinschaft aus raumfahrenden Banditen. Ihre Geschichte begann auf einem jener Planeten, welche zu Minenzwecken mit Raumschiffen erstbesiedelt werden mussten. Als sie dort vom DUST-Konzern zurueckgelassen wurden, schafften sie es einige Schiffe zu kapern und mit ihnen den Planeten zu verlassen. Um an das zu kommen, was ihnen zusteht, kapern und ueberfallen sie andere Schiffe und vergroessern dadurch ihre Flotte.]])
 
 f1 = FactionInfo():setName("My.S.T")
 f1:setGMColor(255, 128, 0)

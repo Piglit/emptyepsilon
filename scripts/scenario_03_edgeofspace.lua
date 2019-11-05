@@ -331,9 +331,9 @@ Please dock so we can come aboard.]])
 			if inspection_init == 1 and inspection_complete == 0 then 
 				if inspection_progress > 50 then
 	globalMessage("Away Team have returned.")
-	Technical_Officer:sendCommsMessage(Player, [[Our inspection of the scope facility is complete. We were able to retrieve much of the data recorded over the past few days, though proper analysis will require an expert.
+	Technical_Officer:sendCommsMessage(Player, [[Our inspection of the relay facility is complete. We were able to retrieve much of the data recorded over the past few days, though proper analysis will require an expert.
 
-	We should hurry back to Central Command with    this so they can begin work.]])
+	We should hurry back to Central Command with this so they can begin work.]])
 			
 			inspection_complete = 1 -- flag preventing continuous triggering of "Job Done" comms
 				end
@@ -371,7 +371,7 @@ Please dock so we can come aboard.]])
 		if distance(Player, Science_Galileo) < 30000 then
 			Science_Galileo:sendCommsMessage(Player, [[Distress Signal incoming from Galileo station:
 			
-			]] .. Enemy_Faction .. [[ ships are in our vicinity, we have reason to believe they intend to attack us! Please, you are the only battle-ready ship near our sector. Assist us!]])
+			]] .. Enemy_Faction .. [[ ships are in our vicinity, we have reason to believe they intend to attack us!Please, you are the only battle-ready ship near our sector. Assist us!]])
 			
 			Enemy_Faction_g1:orderRoaming()
 			Enemy_Faction_g2:orderRoaming()
@@ -392,7 +392,7 @@ Please dock so we can come aboard.]])
 		if not Enemy_Faction_g1:isValid() and not Enemy_Faction_g2:isValid() and not Enemy_Faction_g3:isValid() then
 			Science_Galileo:sendCommsMessage(Player, [[We don't know why ]] .. Enemy_Faction .. [[ ships were attacking us. We had just recieved word that your ship was on its way with data from the Edge-of-space relay station when they began interrupting transmissions.
 			
-			Thank you for defending our station. Please    dock with us and we'll be able to analyze the data from E.O.S Relay.]])
+			Thank you for defending our station. Please dock with us and we'll be able to analyze the data from E.O.S Relay.]])
 			
 			Central_Command.mission_state = 5
 		end
@@ -620,7 +620,7 @@ Please dock so we can come aboard.]])
 
 			Central_Command:sendCommsMessage(Player, [[Science station Galileo has returned with their analysis of the E.O.S Relay data.
 			
-			Edge-of-space sensors picked up on sparse signals from the super-nebula in ]] .. Enemy_Faction .. [[ space that indicate they have some kind of wormhole. Intelligence suggests they intend to use it to infiltrate Human space and attack us where we are defenseless!
+			Edge-of-space sensors picked up on sparse signals from the super-nebula in ]] .. Enemy_Faction .. [[ space that indicate they have some kind of wormhole. Intelligence suggests they intend to use it to infiltrate corporate space and attack us where we are defenseless!
 			
 			When your ship is finished being outfitted for war move up to the nebula, but be cautious. There may be traps.]])
 			
