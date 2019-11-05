@@ -11,6 +11,11 @@
 
 require("utils.lua")
 
+Faction_Player = "Freunde"
+Faction_Independent = "Fraktionslos"
+Faction_Enemy = "P-Rats"
+Faction_Enemy_2 = "Black-Ops"
+
 -- Create amount of objects of type object_type along arc
 -- Center defined by x and y
 -- Radius defined by distance
@@ -147,52 +152,52 @@ function setStations()
 	totalStations = 0
 	friendlyStations = 0
 	neutralStations = 0
-	stationTimer = SpaceStation():setTemplate("Small Station"):setFaction("Human Navy"):setCommsScript(""):setCommsFunction(commsStation)
+	stationTimer = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Player):setCommsScript(""):setCommsFunction(commsStation)
 	stationTimer:setPosition(-5000,-5000):setDescription("Race Timing Facility"):setCallSign("Timer")
 	table.insert(stationList,stationTimer)
 	friendlyStations = friendlyStations + 1
-	stationVaiken = SpaceStation():setTemplate("Huge Station"):setFaction("Human Navy"):setCommsScript(""):setCommsFunction(commsStation)
+	stationVaiken = SpaceStation():setTemplate("Huge Station"):setFaction(Faction_Player):setCommsScript(""):setCommsFunction(commsStation)
 	stationVaiken:setPosition(random(-10000,5000),random(5000,9000)):setCallSign("Vaiken"):setDescription("Ship building and maintenance facility")
 	table.insert(stationList,stationVaiken)
 	friendlyStations = friendlyStations + 1
 	goods[stationVaiken] = {{"food",10,1},{"medicine",5,5}}
-	stationZefram = SpaceStation():setTemplate("Medium Station"):setFaction("Human Navy"):setCommsScript(""):setCommsFunction(commsStation)
+	stationZefram = SpaceStation():setTemplate("Medium Station"):setFaction(Faction_Player):setCommsScript(""):setCommsFunction(commsStation)
 	stationZefram:setPosition(random(5000,8000),random(-8000,9000)):setCallSign("Zefram"):setDescription("Warp Engine Components")
 	table.insert(stationList,stationZefram)
 	friendlyStations = friendlyStations + 1
 	goods[stationZefram] = {{"warp",5,140},{"food",5,1}}
 	marconiAngle = random(0,360)
 	xMarconi, yMarconi = vectorFromAngle(marconiAngle,random(12500,15000))
-	stationMarconi = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationMarconi = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationMarconi:setPosition(xMarconi,yMarconi):setCallSign("Marconi"):setDescription("Energy Beam Components")
 	table.insert(stationList,stationMarconi)
 	neutralStations = neutralStations + 1
 	goods[stationMarconi] = {{"beam",5,80}}
 	muddAngle = marconiAngle + random(60,180)
 	xMudd, yMudd = vectorFromAngle(muddAngle,random(12500,15000))
-	stationMudd = SpaceStation():setTemplate("Medium Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationMudd = SpaceStation():setTemplate("Medium Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationMudd:setPosition(xMudd,yMudd):setCallSign("Muddville"):setDescription("Trading station")
 	table.insert(stationList,stationMudd)
 	neutralStations = neutralStations + 1
 	goods[stationMudd] = {{"luxury",10,60}}
 	alcaleicaAngle = muddAngle + random(60,120)
 	xAlcaleica, yAlcaleica = vectorFromAngle(alcaleicaAngle,random(12500,15000))
-	stationAlcaleica = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationAlcaleica = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationAlcaleica:setPosition(xAlcaleica,yAlcaleica):setCallSign("Alcaleica"):setDescription("Optical Components")
 	table.insert(stationList,stationAlcaleica)
 	neutralStations = neutralStations + 1
 	goods[stationAlcaleica] = {{"optic",5,66}}
-	stationCalifornia = SpaceStation():setTemplate("Small Station"):setFaction("Human Navy"):setCommsScript(""):setCommsFunction(commsStation)
+	stationCalifornia = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Player):setCommsScript(""):setCommsFunction(commsStation)
 	stationCalifornia:setPosition(random(-90000,-70000),random(-15000,25000)):setCallSign("California"):setDescription("Mining station")
 	table.insert(stationList,stationCalifornia)
 	friendlyStations = friendlyStations + 1
 	goods[stationCalifornia] = {{"food",2,1},{"gold",5,25},{"dilithium",2,25}}
-	stationOutpost15 = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationOutpost15 = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationOutpost15:setPosition(random(35000,50000),random(52000,79000)):setCallSign("Outpost-15"):setDescription("Mining and trade")
 	table.insert(stationList,stationOutpost15)
 	neutralStations = neutralStations + 1
 	placeRandomAroundPoint(Asteroid,25,1,15000,60000,75000)
-	stationOutpost21 = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationOutpost21 = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationOutpost21:setPosition(random(50000,75000),random(52000,61250)):setCallSign("Outpost-21"):setDescription("Mining and gambling")
 	table.insert(stationList,stationOutpost21)
 	neutralStations = neutralStations + 1
@@ -203,147 +208,147 @@ function setStations()
 		goods[stationOutpost21] = {{"luxury",5,70},{"gold",5,25}}
 		goods[stationOutpost15] = {{"cobalt",4,50}}
 	end
-	stationValero = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationValero = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationValero:setPosition(random(-88000,-65000),random(36250,40000)):setCallSign("Valero"):setDescription("Resupply")
 	table.insert(stationList,stationValero)
 	neutralStations = neutralStations + 1
 	goods[stationValero] = {{"luxury",5,77}}
 	vactelAngle = random(0,360)
 	xVactel, yVactel = vectorFromAngle(vactelAngle,random(50000,61250))
-	stationVactel = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationVactel = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationVactel:setPosition(xVactel,yVactel):setCallSign("Vactel"):setDescription("Shielded Circuitry Fabrication")
 	table.insert(stationList,stationVactel)
 	neutralStations = neutralStations + 1
 	goods[stationVactel] = {{"circuit",5,50}}
 	archerAngle = vactelAngle + random(60,120)
 	xArcher, yArcher = vectorFromAngle(archerAngle,random(50000,61250))
-	stationArcher = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationArcher = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationArcher:setPosition(xArcher,yArcher):setCallSign("Archer"):setDescription("Shield and Armor Research")
 	table.insert(stationList,stationArcher)
 	neutralStations = neutralStations + 1
 	goods[stationArcher] = {{"shield",5,90}}
 	deerAngle = archerAngle + random(60,120)
 	xDeer, yDeer = vectorFromAngle(deerAngle,random(50000,61250))
-	stationDeer = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationDeer = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationDeer:setPosition(xDeer,yDeer):setCallSign("Deer"):setDescription("Repulsor and Tractor Beam Components")
 	table.insert(stationList,stationDeer)
 	neutralStations = neutralStations + 1
 	goods[stationDeer] = {{"tractor",5,90},{"repulsor",5,95}}
 	cavorAngle = deerAngle + random(60,90)
 	xCavor, yCavor = vectorFromAngle(cavorAngle,random(50000,61250))
-	stationCavor = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationCavor = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationCavor:setPosition(xCavor,yCavor):setCallSign("Cavor"):setDescription("Advanced Material components")
 	table.insert(stationList,stationCavor)
 	neutralStations = neutralStations + 1
 	goods[stationCavor] = {{"filament",5,42}}
-	stationEmory = SpaceStation():setTemplate("Small Station"):setFaction("Human Navy"):setCommsScript(""):setCommsFunction(commsStation)
+	stationEmory = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Player):setCommsScript(""):setCommsFunction(commsStation)
 	stationEmory:setPosition(random(72000,85000),random(-50000,-26000)):setCallSign("Emory"):setDescription("Transporter Components")
 	table.insert(stationList,stationEmory)
 	friendlyStations = friendlyStations + 1
 	goods[stationEmory] = {{"transporter",5,63},{"food",2,1}}
-	stationVeloquan = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationVeloquan = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationVeloquan:setPosition(random(-25000,15000),random(27000,40000)):setCallSign("Veloquan"):setDescription("Sensor components")
 	table.insert(stationList,stationVeloquan)
 	neutralStations = neutralStations + 1
 	goods[stationVeloquan] = {{"sensor",5,68}}
-	stationBarclay = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationBarclay = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationBarclay:setPosition(random(-20000,0),random(-45000,-25000)):setCallSign("Barclay"):setDescription("Communications components")
 	table.insert(stationList,stationBarclay)
 	neutralStations = neutralStations + 1
 	goods[stationBarclay] = {{"communication",5,58}}
-	stationLipkin = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationLipkin = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationLipkin:setPosition(random(20000,45000),random(-25000,-15000)):setCallSign("Lipkin"):setDescription("Autodoc components")
 	table.insert(stationList,stationLipkin)
 	neutralStations = neutralStations + 1
 	goods[stationLipkin] = {{"autodoc",5,76}}
-	stationRipley = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationRipley = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationRipley:setPosition(random(-75000,-30000),random(55000,62150)):setCallSign("Ripley"):setDescription("Load Lifters and components")
 	table.insert(stationList,stationRipley)
 	neutralStations = neutralStations + 1
 	goods[stationRipley] = {{"lifter",5,61}}
-	stationDeckard = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationDeckard = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationDeckard:setPosition(random(-45000,-25000),random(-25000,-14000)):setCallSign("Deckard"):setDescription("Android components")
 	table.insert(stationList,stationDeckard)
 	neutralStations = neutralStations + 1
 	goods[stationDeckard] = {{"android",5,73}}
-	stationConnor = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationConnor = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationConnor:setPosition(random(-10000,15000),random(15000,27000)):setCallSign("Connor"):setDescription("Weapons Automation components")
 	table.insert(stationList,stationConnor)
 	neutralStations = neutralStations + 1
-	stationAnderson = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationAnderson = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationAnderson:setPosition(random(15000,20000),random(-25000,48000)):setCallSign("Anderson"):setDescription("Battery and Software Engineering")
 	table.insert(stationList,stationAnderson)
 	neutralStations = neutralStations + 1
 	goods[stationAnderson] = {{"battery",5,65},{"software",5,115}}
-	stationFeynman = SpaceStation():setTemplate("Small Station"):setFaction("Human Navy"):setCommsScript(""):setCommsFunction(commsStation)
+	stationFeynman = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Player):setCommsScript(""):setCommsFunction(commsStation)
 	stationFeynman:setPosition(random(-90000,-55000),random(25000,36250)):setCallSign("Feynman"):setDescription("Nanotechnology Research")
 	table.insert(stationList,stationFeynman)
 	friendlyStations = friendlyStations + 1
 	goods[stationFeynman] = {{"nanites",5,79},{"software",5,115},{"food",2,1}}
-	stationMayo = SpaceStation():setTemplate("Large Station"):setFaction("Human Navy"):setCommsScript(""):setCommsFunction(commsStation)
+	stationMayo = SpaceStation():setTemplate("Large Station"):setFaction(Faction_Player):setCommsScript(""):setCommsFunction(commsStation)
 	stationMayo:setPosition(random(-45000,-30000),random(-14000,12500)):setCallSign("Mayo"):setDescription("Medical Research")
 	table.insert(stationList,stationMayo)
 	friendlyStations = friendlyStations + 1
 	goods[stationMayo] = {{"food",5,1},{"medicine",5,5}}
-	stationNefatha = SpaceStation():setTemplate("Medium Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationNefatha = SpaceStation():setTemplate("Medium Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationNefatha:setPosition(random(-10000,12500),random(-96000,-80000)):setCallSign("Nefatha"):setDescription("Commerce and recreation")
 	table.insert(stationList,stationNefatha)
 	neutralStations = neutralStations + 1
 	goods[stationNefatha] = {{"luxury",5,70}}
-	stationScience4 = SpaceStation():setTemplate("Medium Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationScience4 = SpaceStation():setTemplate("Medium Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationScience4:setPosition(random(-60000,-40000),random(47000,55000)):setCallSign("Science-4"):setDescription("Biotech research")
 	table.insert(stationList,stationScience4)
 	neutralStations = neutralStations + 1
-	stationSpeculation4 = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationSpeculation4 = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationSpeculation4:setPosition(random(-26000,-15000),random(-10000,27000)):setCallSign("Speculation-4"):setDescription("Trading post")
 	table.insert(stationList,stationSpeculation4)
 	neutralStations = neutralStations + 1
 	goods[stationSpeculation4] = {{"luxury",5,65}}
-	stationTiberius = SpaceStation():setTemplate("Medium Station"):setFaction("Human Navy"):setCommsScript(""):setCommsFunction(commsStation)
+	stationTiberius = SpaceStation():setTemplate("Medium Station"):setFaction(Faction_Player):setCommsScript(""):setCommsFunction(commsStation)
 	stationTiberius:setPosition(random(-30000,-26000),random(-14000,35000)):setCallSign("Tiberius"):setDescription("Logistics coordination")
 	table.insert(stationList,stationTiberius)
 	friendlyStations = friendlyStations + 1
 	goods[stationTiberius] = {{"food",5,1}}
-	stationResearch11 = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationResearch11 = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationResearch11:setPosition(random(-75000,-55000),random(-50000,-25000)):setCallSign("Research-11"):setDescription("Low Gravity Research")
 	table.insert(stationList,stationResearch11)
 	neutralStations = neutralStations + 1
-	stationFreena = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationFreena = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationFreena:setPosition(random(0,15000),irandom(-37500,-15000)):setCallSign("Freena"):setDescription("Zero gravity sports")
 	table.insert(stationList,stationFreena)
 	neutralStations = neutralStations + 1
-	stationOutpost33 = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationOutpost33 = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationOutpost33:setPosition(random(15000,65000),random(-65000,-25000)):setCallSign("Outpost-33"):setDescription("Resupply")
 	table.insert(stationList,stationOutpost33)
 	neutralStations = neutralStations + 1
 	goods[stationOutpost33] = {{"luxury",5,75}}
-	stationLando = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationLando = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationLando:setPosition(random(-60000,-30000),random(612500,70000)):setCallSign("Lando"):setDescription("Casino and Gambling")
 	table.insert(stationList,stationLando)
 	neutralStations = neutralStations + 1
-	stationKomov = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationKomov = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationKomov:setPosition(random(-55000,-30000),random(70000,80000)):setCallSign("Komov"):setDescription("Xenopsychology research")
 	table.insert(stationList,stationKomov)
 	neutralStations = neutralStations + 1
-	stationScience2 = SpaceStation():setTemplate("Medium Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationScience2 = SpaceStation():setTemplate("Medium Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationScience2:setPosition(random(20000,35000),random(55000,70000)):setCallSign("Science-2"):setDescription("Research Lab and Observatory")
 	table.insert(stationList,stationScience2)
 	neutralStations = neutralStations + 1
-	stationPrefect = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationPrefect = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationPrefect:setPosition(random(-65000,-60000),random(36250,55000)):setCallSign("Prefect"):setDescription("Textile and Fashion Creation")
 	table.insert(stationList,stationPrefect)
 	neutralStations = neutralStations + 1
 	goods[stationPrefect] = {{"luxury",5,45}}
-	stationOutpost7 = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationOutpost7 = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationOutpost7:setPosition(random(35000,45000),random(-15000,25000)):setCallSign("Outpost-7"):setDescription("Resupply")
 	table.insert(stationList,stationOutpost7)
 	neutralStations = neutralStations + 1
 	goods[stationOutpost7] = {{"luxury",5,80}}
-	stationOrgana = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationOrgana = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationOrgana:setPosition(irandom(55000,62000),random(20000,45000)):setCallSign("Organa"):setDescription("Diplomatic training")
 	table.insert(stationList,stationOrgana)
 	neutralStations = neutralStations + 1
-	stationGrap = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationGrap = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	xGrap = random(-20000,0)
 	yGrap = random(-25000,-20000)
 	stationGrap:setPosition(xGrap,yGrap):setCallSign("Grap"):setDescription("Mining station")
@@ -360,7 +365,7 @@ function setStations()
 	createRandomAlongArc(Asteroid, afd+negEnd, xGrap+xNegAngleGrap, yGrap+yNegAngleGrap, negGrap, posAxisGrap, posAxisGrap+negEnd, spreadGrap)
 	table.insert(stationList,stationGrap)
 	neutralStations = neutralStations + 1
-	stationGrup = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationGrup = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	xGrup = random(-20000,-10000)
 	yGrup = random(15000,30000)
 	stationGrup:setPosition(xGrup,yGrup):setCallSign("Grup"):setDescription("Mining station")
@@ -389,21 +394,21 @@ function setStations()
 	end
 	table.insert(stationList,stationGrup)
 	neutralStations = neutralStations + 1
-	stationOutpost8 = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationOutpost8 = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationOutpost8:setPosition(random(-65000,-40000),random(-61250,-50000)):setCallSign("Outpost-8")
 	table.insert(stationList,stationOutpost8)
 	neutralStations = neutralStations + 1
-	stationScience7 = SpaceStation():setTemplate("Small Station"):setFaction("Human Navy"):setCommsScript(""):setCommsFunction(commsStation)
+	stationScience7 = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Player):setCommsScript(""):setCommsFunction(commsStation)
 	stationScience7:setPosition(random(-25000,-20000),random(-40000,-10000)):setCallSign("Science-7"):setDescription("Observatory")
 	table.insert(stationList,stationScience7)
 	friendlyStations = friendlyStations + 1
 	goods[stationScience7] = {{"food",2,1}}
-	stationCarradine = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationCarradine = SpaceStation():setTemplate("Small Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationCarradine:setPosition(random(20000,35000),random(-15000,40000)):setCallSign("Carradine"):setDescription("Impulse Engine Components")
 	table.insert(stationList,stationCarradine)
 	neutralStations = neutralStations + 1
 	goods[stationCarradine] = {{"impulse",5,100}}
-	stationCalvin = SpaceStation():setTemplate("Medium Station"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsStation)
+	stationCalvin = SpaceStation():setTemplate("Medium Station"):setFaction(Faction_Independent):setCommsScript(""):setCommsFunction(commsStation)
 	stationCalvin:setPosition(random(40000,86250),random(45000,51000)):setCallSign("Calvin"):setDescription("Robotic components")
 	table.insert(stationList,stationCalvin)
 	neutralStations = neutralStations + 1
@@ -462,15 +467,15 @@ function setStations()
 	end
 	ganaldaAngle = random(0,360)
 	xGanalda, yGanalda = vectorFromAngle(ganaldaAngle,random(120000,150000))
-	stationGanalda = SpaceStation():setTemplate("Medium Station"):setFaction("Kraylor")
+	stationGanalda = SpaceStation():setTemplate("Medium Station"):setFaction(Faction_Enemy)
 	stationGanalda:setPosition(xGanalda,yGanalda):setCallSign("Ganalda")
 	empokAngle = ganaldaAngle + random(60,180)
 	xEmpok, yEmpok = vectorFromAngle(empokAngle,random(120000,150000))
-	stationEmpok = SpaceStation():setTemplate("Large Station"):setFaction("Exuari")
+	stationEmpok = SpaceStation():setTemplate("Large Station"):setFaction(Faction_Enemy_2)
 	stationEmpok:setPosition(xEmpok,yEmpok):setCallSign("Empok Nor")
 	ticAngle = empokAngle + random(60,120)
 	xTic, yTic = vectorFromAngle(ticAngle,random(120000,150000))
-	stationTic = SpaceStation():setTemplate("Medium Station"):setFaction("Kraylor")
+	stationTic = SpaceStation():setTemplate("Medium Station"):setFaction(Faction_Enemy)
 	stationTic:setPosition(xTic,yTic):setCallSign("Ticonderoga")
 	createRandomAlongArc(Nebula, 15, 100000, -100000, 140000, 100, 170, 25000)
 	Nebula():setPosition(xGanalda,yGanalda)
@@ -1747,7 +1752,7 @@ function enemyComms(comms_data)
 				setCommsMessage("Ktzzzsss.\nYou will DIEEee weaklingsss!");
 			elseif faction == "Arlenians" then
 				setCommsMessage("We wish you no harm, but will harm you if we must.\nEnd of transmission.");
-			elseif faction == "Exuari" then
+			elseif faction == Faction_Enemy_2 then
 				setCommsMessage("Stay out of our way, or your death will amuse us extremely!");
 			elseif faction == "Ghosts" then
 				setCommsMessage("One zero one.\nNo binary communication detected.\nSwitching to universal speech.\nGenerating appropriate response for target from human language archives.\n:Do not cross us:\nCommunication halted.");
@@ -2009,7 +2014,7 @@ function spawnTargetDrone(originx,originy,targetDroneID,area,sequenceNumber)
 		enemyTemplate = "Fighter"
 	end
 	tdx, tdy = vectorFromAngle(random(0,360),random(2500,4800))
-	td = CpuShip():setTemplate(enemyTemplate):setPosition(originx+tdx,originy+tdy):setFaction("Kraylor")
+	td = CpuShip():setTemplate(enemyTemplate):setPosition(originx+tdx,originy+tdy):setFaction(Faction_Enemy)
 	td:setHullMax(0):setShieldsMax(0):setHull(0)
 	td:setCallSign(string.format("%s %s",td:getCallSign(),targetDroneID))
 	td.owner = targetDroneID
@@ -2298,13 +2303,13 @@ function update(delta)
 								p5.chaser = true
 								cx, cy = vectorFromAngle(raceAxis,random(5000,8000))
 								p5.c1 = CpuShip():setTemplate("Stalker Q7"):setPosition(racePoint1x+cx,racePoint1y+cy)
-								p5.c1:setFaction("Kraylor"):orderAttack(p5)
+								p5.c1:setFaction(Faction_Enemy):orderAttack(p5)
 								cx, cy = vectorFromAngle(raceAxis,random(5000,8000))
 								p5.c2 = CpuShip():setTemplate("Stalker R7"):setPosition(racePoint1x+cx,racePoint1y+cy)
-								p5.c2:setFaction("Kraylor"):orderAttack(p5)
+								p5.c2:setFaction(Faction_Enemy):orderAttack(p5)
 								cx, cy = vectorFromAngle(raceAxis,random(1000,3000))
 								p5.c3 = CpuShip():setTemplate("Piranha F12"):setPosition(racePoint1x+cx,racePoint1y+cy)
-								p5.c3:setFaction("Kraylor"):orderDefendLocation(racePoint1x,racePoint1y)						
+								p5.c3:setFaction(Faction_Enemy):orderDefendLocation(racePoint1x,racePoint1y)						
 							end
 						end
 					end
@@ -2382,11 +2387,11 @@ function update(delta)
 			end
 			if unfinishedRacers < 1 then
 				allRacersFinished()
-				victory("Human Navy")
+				victory(Faction_Player)
 			end
 			if raceTimer > patienceTimeLimit then
 				raceTimerExpired()
-				victory("Human Navy")
+				victory(Faction_Player)
 			end
 		end
 	end
