@@ -3996,7 +3996,7 @@ function afterPatrol(delta)
 			closestUtopiaPlayer = closestPlayerTo(stationUtopiaPlanitia)
 			if closestUtopiaPlayer ~= nil then
 				stationUtopiaPlanitia:sendCommsMessage(closestUtopiaPlayer, "Audio message received, auto-transcribed to log, stored for playback: UTPLNT441")
-				closestUtopiaPlayer:addToShipLog("[UTPLNT441](Utopia Planitia) Our long range sensors show a number of enemy ships approaching. Cease patrolling Torrin/Duncan and defend station Utopia Planitia","Yellow")
+				closestUtopiaPlayer:addToShipLog("[UTPLNT441](Utopia Planitia) Our long range sensors show a number of enemy ships approaching. Cease patrolling and defend station Utopia Planitia","Yellow")
 				if defendUtopiaMsgButton == nil then
 					defendUtopiaMsgButton = "defendUtopiaMsgButton"
 					closestUtopiaPlayer:addCustomButton("Relay",defendUtopiaMsgButton,"|> UTPLNT441",playDefendUtopiaMsg)
@@ -4004,7 +4004,7 @@ function afterPatrol(delta)
 					closestUtopiaPlayer:addCustomButton("Operations",defendUtopiaMsgButtonOps,"|> UTPLNT441",playDefendUtopiaMsg)
 				end
 			end
-			stationUtopiaPlanitia:sendCommsMessage(closestPlayer, "Our long range sensors show a number of enemy ships approaching. Cease patrolling Torrin/Duncan and defend station Utopia Planitia")
+			stationUtopiaPlanitia:sendCommsMessage(closestPlayer, "Our long range sensors show a number of enemy ships approaching. Cease patrolling and defend station Utopia Planitia")
 			primaryOrders = "Defend Utopia Planitia"
 			waveDelayTimer = 120
 			longWave = 0
