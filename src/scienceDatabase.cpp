@@ -53,7 +53,7 @@ void ScienceDatabase::setLongDescription(string text)
 void fillDefaultDatabaseData()
 {
     P<ScienceDatabase> factionDatabase = new ScienceDatabase();
-    factionDatabase->setName("Factions");
+    factionDatabase->setName("Fraktionen");
     for(unsigned int n=0; n<factionInfo.size(); n++)
     {
         P<ScienceDatabase> entry = factionDatabase->addEntry(factionInfo[n]->getName());
@@ -74,7 +74,7 @@ void fillDefaultDatabaseData()
     }
 
     P<ScienceDatabase> shipDatabase = new ScienceDatabase();
-    shipDatabase->setName("Ships");
+    shipDatabase->setName("Schiffe");
 
     std::vector<string> template_names = ShipTemplate::getTemplateNameList(ShipTemplate::Ship);
     std::sort(template_names.begin(), template_names.end());

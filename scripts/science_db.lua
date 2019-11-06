@@ -2,7 +2,7 @@
 	Everything in the science database files is just readable data for the science officer.
 	This data does not affect the game in any other way and just contributes to the lore.
 --]]
-space_objects = ScienceDatabase():setName('Natural')
+space_objects = ScienceDatabase():setName('Objekte')
 item = space_objects:addEntry('Asteroid')
 item:setLongDescription([[Asteroids are minor planets, usually smaller than a few kilometers. Larger variants are sometimes refered to as planetoids.]])
 
@@ -19,7 +19,7 @@ item:setLongDescription([[A wormhole, also known as an Einstein-Rosen bridge, is
 
 Wormholes are rare, and most can move objects in only one direction. Traversable wormholes, which are stable and allow for movement in both directions, are even rarer. All wormholes generate tremendous sensor activity, which an astute science officer can detect even through disruptions such as nebulae.]])
 
-weapons = ScienceDatabase():setName('Technologie')
+weapons = ScienceDatabase():setName('Technologien')
 item = weapons:addEntry('Homing missile')
 item:addKeyValue('Range', '5.4u')
 item:addKeyValue('Damage', '35')
