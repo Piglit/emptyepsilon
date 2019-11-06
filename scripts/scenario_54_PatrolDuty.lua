@@ -32,7 +32,7 @@ require("utils.lua")
 
 Faction_Enemy = "P-Rats"
 Faction_Timed_Enemy = "Black-Ops"
-Faction_Player = "Freunde"
+Faction_Player = "Allied"
 Faction_Independent = "Fraktionslos"
 
 -- Create amount of objects of type object_type along arc

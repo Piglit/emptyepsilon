@@ -27,7 +27,7 @@ require("utils.lua")
 
 function init()
     --Create the player ship
-    player = PlayerSpaceship():setFaction("Freunde"):setTemplate("Phobos M3P")
+    player = PlayerSpaceship():setFaction("Allied"):setTemplate("Phobos M3P")
     tutorial:setPlayerShip(player)
 
     tutorial:showMessage([[Welcome to the EmptyEpsilon tutorial.
@@ -136,8 +136,8 @@ end)
 addToSequence(scienceTutorial, [[Welcome, science officer.
 
 You are the eyes of the ship. Your job is to supply the captain with information. From your station, you can detect and scan objects at a range of up to 30u.]])
-addToSequence(scienceTutorial, function() prev_object = SpaceStation():setTemplate("Medium Station"):setFaction("Freunde"):setPosition(3000, -15000) end)
-addToSequence(scienceTutorial, function() prev_object2 = CpuShip():setFaction("Freunde"):setTemplate("Phobos T3"):setPosition(5000, -17000):orderIdle():setScanned(true) end)
+addToSequence(scienceTutorial, function() prev_object = SpaceStation():setTemplate("Medium Station"):setFaction("Allied"):setPosition(3000, -15000) end)
+addToSequence(scienceTutorial, function() prev_object2 = CpuShip():setFaction("Allied"):setTemplate("Phobos T3"):setPosition(5000, -17000):orderIdle():setScanned(true) end)
 addToSequence(scienceTutorial, [[On this radar, you can select objects to get information about them.
 I've added a friendly ship and a station for you to examine. Select them and notice how much information you can observe.
 Heading and distance are of particular importance, as without these, the helms officer will be jumping in the dark.]])

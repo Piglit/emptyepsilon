@@ -30,7 +30,7 @@
 require("utils.lua")
 function init()
     --Create the player ship
-    player = PlayerSpaceship():setFaction("Freunde"):setTemplate("Phobos M3P")
+    player = PlayerSpaceship():setFaction("Allied"):setTemplate("Phobos M3P")
     tutorial:setPlayerShip(player)
 
     tutorial:showMessage([[Welcome to the EmptyEpsilon tutorial.
@@ -154,7 +154,7 @@ I've disabled your impulse engine for now. Next, let's rotate your ship.
 Rotating the ship is easy. Simply press a heading on the radar screen to rotate your ship in that direction.
 Try rotating to heading 200 right now.]], function() return math.abs(player:getHeading() - 200) < 1.0 end)
 addToSequence(helmsTutorial, function() player:setImpulseMaxSpeed(90) end)
-addToSequence(helmsTutorial, function() prev_object = SpaceStation():setTemplate("Medium Station"):setFaction("Freunde"):setPosition(0, -1500) end)
+addToSequence(helmsTutorial, function() prev_object = SpaceStation():setTemplate("Medium Station"):setFaction("Allied"):setPosition(0, -1500) end)
 addToSequence(helmsTutorial, [[Excellent!
 
 Next up: docking. Docking with a station recharges your energy, repairs your hull, and allows the relay officer to request weapon refills. It can also be important for other mission-related events.

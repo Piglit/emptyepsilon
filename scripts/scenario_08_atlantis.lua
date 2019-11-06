@@ -49,7 +49,7 @@ Rundown of the mission:
 --]]
 
 Enemy_Faction = "P-Rats"
-Player_Faction = "Freunde"
+Player_Faction = "Allied"
 Target_Faction = "Black-Ops"
 
 -- Init is run when the scenario is started. Create your initial world

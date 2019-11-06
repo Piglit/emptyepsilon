@@ -7,7 +7,7 @@
 
 Enemy_Faction = "P-Rats"
 Hacker_Faction = "Black-Ops"
-Player_Faction = "Freunde"
+Player_Faction = "Allied"
 Independent_Faction = "Fraktionslos"
 Lightbringer_Faction = "Objekon"
 

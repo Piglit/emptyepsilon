@@ -8,12 +8,12 @@ enemyFaction = "P-Rats"
 -- Init is run when the scenario is started. Create your initial world
 function init()
     -- Create the main ship for the players.
-    player = PlayerSpaceship():setFaction("Freunde"):setTemplate("Atlantis")
+    player = PlayerSpaceship():setFaction("Allied"):setTemplate("Atlantis")
 	player:setPosition(22400, 18200):setCallSign("Epsilon")
 
-    research_station = SpaceStation():setTemplate("Small Station"):setFaction("Freunde")
+    research_station = SpaceStation():setTemplate("Small Station"):setFaction("Allied")
     research_station:setPosition(23500, 16100):setCallSign("Research-1")
-    main_station = SpaceStation():setTemplate("Medium Station"):setFaction("Freunde")
+    main_station = SpaceStation():setTemplate("Medium Station"):setFaction("Allied")
     main_station:setPosition(-25200, 32200):setCallSign("Orion-5")
     enemy_station = SpaceStation():setTemplate("Large Station"):setFaction(enemyFaction)
     enemy_station:setPosition(-45600, -15800):setCallSign("Omega")
@@ -48,7 +48,7 @@ function init()
     CpuShip():setTemplate("MT52 Hornet"):setFaction(enemyFaction):setPosition(-46000, -18200):orderDefendTarget(enemy_dreadnought)
     CpuShip():setTemplate("MT52 Hornet"):setFaction(enemyFaction):setPosition(-46000, -18300):orderDefendTarget(enemy_dreadnought)
 
-    transport_RT4 = CpuShip():setTemplate("Flavia"):setFaction("Freunde"):setPosition(3750, 31250)
+    transport_RT4 = CpuShip():setTemplate("Flavia"):setFaction("Allied"):setPosition(3750, 31250)
     transport_RT4:orderIdle():setCallSign("RT-4"):setCommsScript("")
     transport_RT4:setHull(1):setShieldsMax(1, 1)
 
@@ -79,7 +79,7 @@ function missionRT4UnderAttack(delta)
     if not transport_RT4:isValid() then
         -- RT-4 destroyed, send a transmission to the player, create a supply drop to indicate an escape pod.
         mission_state = missionRT4EscapeDropped
-        transport_RT4_drop = SupplyDrop():setFaction("Freunde"):setPosition(3750, 31250)
+        transport_RT4_drop = SupplyDrop():setFaction("Allied"):setPosition(3750, 31250)
         transport_RT4_drop_time = 0.0
         research_station:sendCommsMessage(player, [[RT-4 has been destroyed! But an escape pod is ejected from the ship.
 
@@ -91,7 +91,7 @@ And destroy those ]] .. enemyFaction .. [[ scum while you are at it!]])
         -- Not sure how you did it, but you managed to destroy the two Exauri's before they detroy RT4...
         transport_RT4:destroy()
         mission_state = missionRT4EscapeDropped
-        transport_RT4_drop = SupplyDrop():setFaction("Freunde"):setPosition(3750, 31250)
+        transport_RT4_drop = SupplyDrop():setFaction("Allied"):setPosition(3750, 31250)
         transport_RT4_drop_time = 0.0
         research_station:sendCommsMessage(player, [[RT-4 has been destroyed! But an escape pod is ejected from the ship.
 
@@ -210,8 +210,8 @@ We also refitted your nukes and EMPs. Awesome job on taking out the ]] .. enemyF
             main_station:sendCommsMessage(player, message)
             
             x, y = neutral_station:getPosition()
-            CpuShip():setTemplate("Phobos T3"):setFaction("Freunde"):setPosition(x - 1000, y - 1000):orderDefendTarget(neutral_station):setCommsScript("")
-            CpuShip():setTemplate("Nirvana R5"):setFaction("Freunde"):setPosition(x + 1000, y + 1000):orderDefendTarget(neutral_station):setCommsScript("")
+            CpuShip():setTemplate("Phobos T3"):setFaction("Allied"):setPosition(x - 1000, y - 1000):orderDefendTarget(neutral_station):setCommsScript("")
+            CpuShip():setTemplate("Nirvana R5"):setFaction("Allied"):setPosition(x + 1000, y + 1000):orderDefendTarget(neutral_station):setCommsScript("")
             
             transports = {}
             for n=1,5 do
@@ -259,7 +259,7 @@ function missionStopTransport(delta)
         mission_timer = 40
 		
         local x, y = transport_target:getPosition()
-        transport_recovery_team = CpuShip():setTemplate("Flavia"):setFaction("Freunde"):setPosition(x - random(8000, 10000), y + random(8000, 10000))
+        transport_recovery_team = CpuShip():setTemplate("Flavia"):setFaction("Allied"):setPosition(x - random(8000, 10000), y + random(8000, 10000))
         transport_recovery_team:setCallSign("RTRV"):setScanned(true)
         transport_recovery_team:orderFlyTowardsBlind(transport_target:getPosition()):setCommsScript("")
     end
@@ -313,7 +313,7 @@ function update(delta)
         return
     end
     if not enemy_station:isValid() then
-        victory("Freunde")
+        victory("Allied")
         return
     end
     

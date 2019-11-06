@@ -71,7 +71,7 @@ end
 
 function init()
 	-- Spawn a player Atlantis.
-	player = PlayerSpaceship():setFaction("Freunde"):setTemplate("Atlantis")
+	player = PlayerSpaceship():setFaction("Allied"):setTemplate("Atlantis")
 
 	enemyList = {}
 	friendlyList = {}
@@ -79,16 +79,16 @@ function init()
 
 	-- Randomly distribute 3 allied stations throughout the region.
 	n = 0
-	station_1 = SpaceStation():setTemplate('Small Station'):setRotation(random(0, 360)):setFaction("Freunde")
+	station_1 = SpaceStation():setTemplate('Small Station'):setRotation(random(0, 360)):setFaction("Allied")
 	table.insert(stationList, station_1)
 	table.insert(friendlyList, setCirclePos(station_1, 0, 0, n * 360 / 3 + random(-30, 30), random(10000, 22000)))
 	n = 1
 	table.insert(stationList, station_2)
-	station_2 = SpaceStation():setTemplate('Medium Station'):setRotation(random(0, 360)):setFaction("Freunde")
+	station_2 = SpaceStation():setTemplate('Medium Station'):setRotation(random(0, 360)):setFaction("Allied")
 	table.insert(friendlyList, setCirclePos(station_2, 0, 0, n * 360 / 3 + random(-30, 30), random(10000, 22000)))
 	n = 2
 	table.insert(stationList, station_3)
-	station_3 = SpaceStation():setTemplate('Large Station'):setRotation(random(0, 360)):setFaction("Freunde")
+	station_3 = SpaceStation():setTemplate('Large Station'):setRotation(random(0, 360)):setFaction("Allied")
 	table.insert(friendlyList, setCirclePos(station_3, 0, 0, n * 360 / 3 + random(-30, 30), random(10000, 22000)))
 
 	-- Start the players with 300 reputation.
@@ -146,12 +146,12 @@ function init()
 		d = random(15000, 20000 + math.random(20) * 1500)
 		friendlyShip = {'Phobos T3','MU52 Hornet','Piranha F12'}
 		friendlyShipIndex = math.random(#friendlyShip)
-		table.insert(friendlyList, setCirclePos(CpuShip():setTemplate(friendlyShip[friendlyShipIndex]):setRotation(a):setFaction("Freunde"):orderRoaming():setScanned(true), 0, 0, a + random(-5, 5), d + random(-100, 100)))
+		table.insert(friendlyList, setCirclePos(CpuShip():setTemplate(friendlyShip[friendlyShipIndex]):setRotation(a):setFaction("Allied"):orderRoaming():setScanned(true), 0, 0, a + random(-5, 5), d + random(-100, 100)))
 	end)
 
 	-- Let the GM declare the Humans (players) victorious.
 	addGMFunction("Win", function()
-		victory("Freunde");
+		victory("Allied");
 	end)
 
 	-- Set the number of enemy waves based on the scenario variation.
@@ -274,7 +274,7 @@ function update(delta)
 	-- In the Empty variation, the GM must use the Win button to declare
 	-- a Human victory.
 	if (enemy_count == 0 and getScenarioVariation() ~= "Empty") then
-		victory("Freunde");
+		victory("Allied");
 	end
 
 	-- If all allies are destroyed, the Humans (players) lose.

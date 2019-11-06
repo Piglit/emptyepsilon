@@ -6,7 +6,7 @@
 ---             The Human Navy's HNS Gallipoli and Kraylor's Crusader Naa'Tvek face off in an all-out battle for Shangri-La.
 -- Type: PvP
 
-Faction_1 = "Freunde"
+Faction_1 = "Allied"
 Faction_2 = "P-Rats"
 
 function init()

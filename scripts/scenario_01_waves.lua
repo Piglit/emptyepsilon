@@ -30,10 +30,10 @@ function init()
 	enemyList = {}
 	friendlyList = {}
 	
-	PlayerSpaceship():setFaction("Freunde"):setTemplate("Atlantis")
+	PlayerSpaceship():setFaction("Allied"):setTemplate("Atlantis")
 
 	for n=1, 2 do
-		table.insert(friendlyList, SpaceStation():setTemplate(randomStationTemplate()):setFaction("Freunde"):setPosition(random(-5000, 5000), random(-5000, 5000)))
+		table.insert(friendlyList, SpaceStation():setTemplate(randomStationTemplate()):setFaction("Allied"):setPosition(random(-5000, 5000), random(-5000, 5000)))
 	end
 	friendlyList[1]:addReputationPoints(150.0)
 

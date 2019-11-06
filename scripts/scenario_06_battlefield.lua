@@ -8,7 +8,7 @@ function setCirclePos(obj, x, y, angle, distance)
 	obj:setPosition(x + math.sin(angle / 180 * math.pi) * distance, y + -math.cos(angle / 180 * math.pi) * distance)
 end
 
-Player_Faction = "Freunde"
+Player_Faction = "Allied"
 Enemy_Faction = "P-Rats"
 Independent_Faction = "Fraktionslos"
 

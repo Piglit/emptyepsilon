@@ -8,7 +8,7 @@
 gametimeleft = 20 * 60 -- Maximum game time in seconds.
 timewarning = 10 * 60 -- Used for checking when to give a warning, and to update it so the warning happens once.
 
-Faction_Player = "Freunde"
+Faction_Player = "Allied"
 Faction_Enemy = "P-Rats"
 Faction_Independent = "Fraktionslos"
 Faction_Exercise_Target = "Black-Ops"

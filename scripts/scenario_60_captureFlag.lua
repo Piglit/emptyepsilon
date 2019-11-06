@@ -19,7 +19,7 @@
 
 require("utils.lua")
 
-Faction_1 = "Freunde"
+Faction_1 = "Allied"
 Faction_2 = "P-Rats"
 Faction_3 = "Black-Ops"
 Faction_Independent = "Fraktionslos"

@@ -5,7 +5,7 @@ require("utils.lua")
 --TODO Remove this file. 
 function init()
     --Create the player ship
-    player = PlayerSpaceship():setFaction("Freunde"):setTemplate("Phobos M3P")
+    player = PlayerSpaceship():setFaction("Allied"):setTemplate("Phobos M3P")
     tutorial:setPlayerShip(player)
 
     tutorial:showMessage([[Welcome to the EmptyEpsilon tutorial.
@@ -126,7 +126,7 @@ addToSequence(radarTutorial, function() prev_object:destroy() end)
 addToSequence(radarTutorial, function() prev_object = Mine():setPosition(5000, 0) end)
 addToSequence(radarTutorial, [[The white dot is a mine. When you move near a mine, it explodes with a powerful 1u-radius blast. Striking a mine while your shields are down will surely destroy your ship.]])
 addToSequence(radarTutorial, function() prev_object:destroy() end)
-addToSequence(radarTutorial, function() prev_object = SpaceStation():setTemplate("Medium Station"):setFaction("Freunde"):setPosition(5000, 0) end)
+addToSequence(radarTutorial, function() prev_object = SpaceStation():setTemplate("Medium Station"):setFaction("Allied"):setPosition(5000, 0) end)
 addToSequence(radarTutorial, function() prev_object2 = SpaceStation():setTemplate("Large Station"):setFaction("Fraktionslos"):setPosition(5000, 5000) end)
 addToSequence(radarTutorial, function() prev_object3 = SpaceStation():setTemplate("Huge Station"):setFaction("P-Rats"):setPosition(5000, -5000) end)
 addToSequence(radarTutorial, [[This large dot is a station. Stations can be several different sizes and belong to different factions. The dot's color indicates whether the station is friendly (green), neutral (light blue), or hostile (red).]])
@@ -136,7 +136,7 @@ addToSequence(radarTutorial, function() prev_object3:destroy() end)
 addToSequence(radarTutorial, function() prev_object = Nebula():setPosition(8000, 0) end)
 addToSequence(radarTutorial, [[The rainbow-colored cloud is a nebula. Nebulae block long-range sensors, preventing ships from detecting what's inside of them at distances of more than 5u. Sensors also cannot detect objects behind nebulae.]])
 addToSequence(radarTutorial, function() prev_object:destroy() end)
-addToSequence(radarTutorial, function() prev_object = CpuShip():setFaction("Freunde"):setTemplate("Phobos T3"):setPosition(5000, -2500):orderIdle():setScanned(true) end)
+addToSequence(radarTutorial, function() prev_object = CpuShip():setFaction("Allied"):setTemplate("Phobos T3"):setPosition(5000, -2500):orderIdle():setScanned(true) end)
 addToSequence(radarTutorial, function() prev_object2 = CpuShip():setFaction("Fraktionslos"):setTemplate("Phobos T3"):setPosition(5000, 2500):orderIdle():setScanned(true) end)
 addToSequence(radarTutorial, function() prev_object3 = CpuShip():setFaction("P-Rats"):setTemplate("Phobos T3"):setPosition(5000, -7500):orderIdle():setScanned(true) end)
 addToSequence(radarTutorial, function() prev_object4 = CpuShip():setFaction("P-Rats"):setTemplate("Phobos T3"):setPosition(5000, 7500):orderIdle():setScanned(false) end)
@@ -174,7 +174,7 @@ I've disabled your impulse engine for now. Next, let's rotate your ship.
 Rotating the ship is easy. Simply press a heading on the radar screen to rotate your ship in that direction.
 Try rotating to heading 200 right now.]], function() return math.abs(player:getHeading() - 200) < 1.0 end)
 addToSequence(helmsTutorial, function() player:setImpulseMaxSpeed(90) end)
-addToSequence(helmsTutorial, function() prev_object = SpaceStation():setTemplate("Medium Station"):setFaction("Freunde"):setPosition(0, -1500) end)
+addToSequence(helmsTutorial, function() prev_object = SpaceStation():setTemplate("Medium Station"):setFaction("Allied"):setPosition(0, -1500) end)
 addToSequence(helmsTutorial, [[Excellent!
 
 Next up: docking. Docking with a station recharges your energy, repairs your hull, and allows the relay officer to request weapon refills. It can also be important for other mission-related events.
@@ -367,8 +367,8 @@ end)
 addToSequence(scienceTutorial, [[Welcome, science officer.
 
 You are the eyes of the ship. Your job is to supply the captain with information. From your station, you can detect and scan objects at a range of up to 30u.]])
-addToSequence(scienceTutorial, function() prev_object = SpaceStation():setTemplate("Medium Station"):setFaction("Freunde"):setPosition(3000, -15000) end)
-addToSequence(scienceTutorial, function() prev_object2 = CpuShip():setFaction("Freunde"):setTemplate("Phobos T3"):setPosition(5000, -17000):orderIdle():setScanned(true) end)
+addToSequence(scienceTutorial, function() prev_object = SpaceStation():setTemplate("Medium Station"):setFaction("Allied"):setPosition(3000, -15000) end)
+addToSequence(scienceTutorial, function() prev_object2 = CpuShip():setFaction("Allied"):setTemplate("Phobos T3"):setPosition(5000, -17000):orderIdle():setScanned(true) end)
 addToSequence(scienceTutorial, [[On this radar, you can select objects to get information about them.
 I've added a friendly ship and a station for you to examine. Select them and notice how much information you can observe.
 Heading and distance are of particular importance, as without these, the helms officer will be jumping in the dark.]])
@@ -405,7 +405,7 @@ addToSequence(relayTutorial, [[Your first responsibility is to coordinate the sh
 
 You can target any station or ship and attempt to communicate with it. Other ships can also attempt to contact you.]])
 addToSequence(relayTutorial, function()
-    prev_object = SpaceStation():setTemplate("Medium Station"):setFaction("Freunde"):setPosition(3000, -15000)
+    prev_object = SpaceStation():setTemplate("Medium Station"):setFaction("Allied"):setPosition(3000, -15000)
     prev_object:setCommsFunction(function()
         setCommsMessage("You successfully opened communications. Congratulations.");
         addCommsReply("Tell me more!", function()
@@ -423,10 +423,10 @@ addToSequence(relayTutorial, function() tutorial:setMessageToBottomPosition() en
 addToSequence(relayTutorial, function() prev_object:destroy() end)
 addToSequence(relayTutorial, [[Depending on the scenario, you might have different options when communicating with stations.
 They might inform you about new objectives and your mission progress, ask for backup, or resupply your weapons. This is all part of your responsibilities as relay officer.]])
-addToSequence(relayTutorial, function() prev_object = CpuShip():setFaction("Freunde"):setTemplate("Phobos T3"):setPosition(20000, -20000):orderIdle():setCallSign("DMY-01"):setScanned(true) end)
-addToSequence(relayTutorial, function() prev_object2 = CpuShip():setFaction("Freunde"):setTemplate("Phobos T3"):setPosition(-24000, 2500):orderIdle():setScanned(true) end)
-addToSequence(relayTutorial, function() prev_object3 = CpuShip():setFaction("Freunde"):setTemplate("Phobos T3"):setPosition(-17000, -7500):orderIdle():setScanned(true) end)
-addToSequence(relayTutorial, function() prev_object4 = CpuShip():setFaction("Freunde"):setTemplate("Phobos T3"):setPosition(5400, 7500):orderIdle():setScanned(false) end)
+addToSequence(relayTutorial, function() prev_object = CpuShip():setFaction("Allied"):setTemplate("Phobos T3"):setPosition(20000, -20000):orderIdle():setCallSign("DMY-01"):setScanned(true) end)
+addToSequence(relayTutorial, function() prev_object2 = CpuShip():setFaction("Allied"):setTemplate("Phobos T3"):setPosition(-24000, 2500):orderIdle():setScanned(true) end)
+addToSequence(relayTutorial, function() prev_object3 = CpuShip():setFaction("Allied"):setTemplate("Phobos T3"):setPosition(-17000, -7500):orderIdle():setScanned(true) end)
+addToSequence(relayTutorial, function() prev_object4 = CpuShip():setFaction("Allied"):setTemplate("Phobos T3"):setPosition(5400, 7500):orderIdle():setScanned(false) end)
 addToSequence(relayTutorial, [[Your station also includes this radar map.
 
 On this map, you can detect objects within 5u of all allied ships and stations. Everything else is invisible to you. This gives you a different view from the science officer, because you can scan the contents of nebulae.]])
@@ -453,8 +453,8 @@ end)
 addToSequence(operationsTutorial, [[Welcome, science officer.
 
 You are the eyes of the ship. Your job is to supply the captain with information. From your station, you can detect and scan objects at a range of up to 30u.]])
-addToSequence(operationsTutorial, function() prev_object = SpaceStation():setTemplate("Medium Station"):setFaction("Freunde"):setPosition(3000, -15000) end)
-addToSequence(operationsTutorial, function() prev_object2 = CpuShip():setFaction("Freunde"):setTemplate("Phobos T3"):setPosition(5000, -17000):orderIdle():setScanned(true) end)
+addToSequence(operationsTutorial, function() prev_object = SpaceStation():setTemplate("Medium Station"):setFaction("Allied"):setPosition(3000, -15000) end)
+addToSequence(operationsTutorial, function() prev_object2 = CpuShip():setFaction("Allied"):setTemplate("Phobos T3"):setPosition(5000, -17000):orderIdle():setScanned(true) end)
 addToSequence(operationsTutorial, [[On this radar, you can select objects to get information about them.
 I've added a friendly ship and a station for you to examine. Select them and notice how much information you can observe.
 Heading and distance are of particular importance, as without these, the helms officer will be jumping in the dark.]])
@@ -481,7 +481,7 @@ addToSequence(operationsTutorial, [[Your second responsibility is to coordinate 
 
 You can target any station or ship and attempt to communicate with it. Other ships can also attempt to contact you.]])
 addToSequence(operationsTutorial, function()
-    prev_object = SpaceStation():setTemplate("Medium Station"):setFaction("Freunde"):setPosition(3000, -15000)
+    prev_object = SpaceStation():setTemplate("Medium Station"):setFaction("Allied"):setPosition(3000, -15000)
     prev_object:setCommsFunction(function()
         setCommsMessage("You successfully opened communications. Congratulations.");
         addCommsReply("Tell me more!", function()

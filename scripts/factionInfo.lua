@@ -2,7 +2,7 @@ neutral = FactionInfo():setName("Fraktionslos")
 neutral:setGMColor(128, 128, 128)	--grey
 neutral:setDescription([[Fraktionslose Schiffe sind meist Haendler oder zivile Reisende.]])
 
-human = FactionInfo():setName("Freunde")
+human = FactionInfo():setName("Allied")
 human:setGMColor(255, 255, 255)	--white
 human:setDescription([[Diese meist fraktionslosen Schiffe sind mit euch verbuendet.]])
 
