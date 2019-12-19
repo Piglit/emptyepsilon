@@ -52,7 +52,7 @@ template:addDoor(8, 4, false);
 --[[Corvette Melonidas--]]
 template = ShipTemplate():setName("Melonidas"):setClass("Corvette", "Destroyer"):setModel("AtlasDestroyerGreen"):setType("playership")
 template:setDescription([[The Melonidas is the smallest model of destroyer, and its combination of frigate-like size and corvette-like power makes it an excellent escort ship when defending larger ships against multiple smaller enemies. Because the Melonidas is fitted with a jump drive, it can also serve as an intersystem patrol craft.]])
-template:setRadarTrace("radar_dread.png")
+template:setRadarTrace("radar_melon.png")
 template:setJumpDrive(true)
 template:setShields(200, 200)
 template:setHull(250)
@@ -60,23 +60,25 @@ template:setSpeed(90, 10, 20)
 template:setCombatManeuver(400, 250)
 template:setDockClasses("Starfighter")
 --                  Arc, Dir, Range, CycleTime, Dmg
-template:setBeam(0,100, -20, 1500.0, 6.0, 8)
-template:setBeam(1,100,  20, 1500.0, 6.0, 8)
+template:setBeam(0,80, -80, 1500.0, 6.0, 8)
+template:setBeam(1,80,  80, 1500.0, 6.0, 8)
+template:setBeam(2,80, -100, 1500.0, 6.0, 8)
+template:setBeam(3,80,  100, 1500.0, 6.0, 8)
 template:setWeaponStorage("Homing", 12)
 template:setWeaponStorage("Nuke", 4)
 template:setWeaponStorage("Mine", 8)
 template:setWeaponStorage("EMP", 6)
 template:setWeaponStorage("HVLI", 20)
-template:setTubes(5, 8.0) -- Amount of torpedo tubes, and loading time of the tubes.
+template:setTubes(4, 8.0) -- Amount of torpedo tubes, and loading time of the tubes.
 template:weaponTubeDisallowMissle(0, "Mine")
 template:weaponTubeDisallowMissle(1, "Mine")
 template:weaponTubeDisallowMissle(2, "Mine")
 template:weaponTubeDisallowMissle(3, "Mine")
-template:setTubeDirection(4, 180):setWeaponTubeExclusiveFor(4, "Mine")
-template:setTubeDirection(0, -90)
-template:setTubeDirection(1, -90)
-template:setTubeDirection(2,  90)
-template:setTubeDirection(3,  90)
+
+template:setTubeDirection(0, 0)
+template:setTubeDirection(1, 0):weaponTubeDisallowMissle(1, "Nuke"):weaponTubeDisallowMissle(1, "EMP")
+template:setTubeDirection(2, 0):weaponTubeDisallowMissle(2, "Nuke"):weaponTubeDisallowMissle(2, "EMP")
+template:setTubeDirection(3, 180):setWeaponTubeExclusiveFor(3, "Mine")
 
 template:addRoomSystem(1, 0, 3, 1, "Maneuver");
 template:addRoom(0, 1, 2, 1);

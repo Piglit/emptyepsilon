@@ -49,7 +49,7 @@ The Rockbreaker is equiped with a central homing missile tube to do initial dama
 ]]
 
 --Balancing: 1 Rockbreaker ~= 1.5 Human Frigates.
---strong against Nirvanas and Phobos (R. takes out one or two), weak against Piranhas and Storms (R. takes out zero or one)
+--strong against Nirvanas and Phobos (R. takes out one or two), weak against Orcas and Storms (R. takes out zero or one)
 
 template = ShipTemplate():setName("Rockbreaker"):setModel("battleship_destroyer_5_upgraded"):setClass("Kraylor","Gunship")
 template:setRadarTrace("radar_kraylor_gunship.png")
@@ -202,6 +202,7 @@ template:setWeaponStorage("Homing", 1000)
 for n=0,15 do
     template:setBeamWeapon(n, 90,  n * 22.5, 3200, 3, 10)
     template:setTubeDirection(n, n * 22.5)
+    template:setTubeSize(n, "large")
 end
 template:setHull(2000)
 template:setShields(1200, 1200, 1200, 1200, 1200, 1200)
