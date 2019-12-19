@@ -5,6 +5,13 @@
 -- Variation[Advanced]: Give the players a stronger Atlantis instead of the Phobos. Which is more difficult to control, but has more firepower and defense. Increases enemy strengh as well.
 -- Variation[GM Start]: The scenario is not started until the GM gives the start sign. This gives some time for a new crew to get a feeling for the controls before the actual scenario starts.
 
+require("utils.lua")
+-- For this scenario, utils.lua provides:
+--   vectorFromAngle(angle, length)
+--      Returns a relative vector (x, y coordinates)
+--   setCirclePos(obj, x, y, angle, distance)
+--      Returns the object with its position set to the resulting coordinates.
+
 gametimeleft = 20 * 60 -- Maximum game time in seconds.
 timewarning = 10 * 60 -- Used for checking when to give a warning, and to update it so the warning happens once.
 
@@ -77,15 +84,6 @@ ship_names = {
     "Jenny"
 }
 
-function vectorFromAngle(angle, length)
-	return math.cos(angle / 180 * math.pi) * length, math.sin(angle / 180 * math.pi) * length
-end
-
-function setCirclePos(obj, x, y, angle, distance)
-	dx, dy = vectorFromAngle(angle, distance)
-	return obj:setPosition(x + dx, y + dy)
-end
-
 -- Add an enemy wave.
 -- enemyList: A table containing enemy ship objects.
 -- type: A number; at each integer, determines a different wave of ships to add
@@ -112,7 +110,7 @@ function addWave(enemyList,type,a,d)
 	elseif type < 5.0 then
 		table.insert(enemyList, setCirclePos(CpuShip():setTemplate('Atlantis X23'):setRotation(a + 180):orderRoaming(), 0, 0, a + random(-5, 5), d + random(-100, 100)))
 	elseif type < 6.0 then
-		leader = setCirclePos(CpuShip():setTemplate('Piranha F12'):setRotation(a + 180):orderRoaming(), 0, 0, a + random(-5, 5), d + random(-100, 100))
+		leader = setCirclePos(CpuShip():setTemplate('Orca F12'):setRotation(a + 180):orderRoaming(), 0, 0, a + random(-5, 5), d + random(-100, 100))
 		table.insert(enemyList, leader)
 		table.insert(enemyList, setCirclePos(CpuShip():setTemplate('MT52 Hornet'):setRotation(a + 180):orderFlyFormation(leader,-1500, 400), 0, 0, a + random(-1, 1), d + random(-100, 100)))
 		table.insert(enemyList, setCirclePos(CpuShip():setTemplate('MT52 Hornet'):setRotation(a + 180):orderFlyFormation(leader, 1500, 400), 0, 0, a + random(-1, 1), d + random(-100, 100)))

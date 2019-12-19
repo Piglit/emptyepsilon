@@ -5,6 +5,13 @@
 -- Type: Mission
 -- Author: Fouindor
 
+require("utils.lua")
+-- For this scenario, utils.lua provides:
+--   distance(obj1, obj2)
+--     Returns the distance between two objects.
+--   placeRandomAroundPoint(object_type, amount, dist_min, dist_max, x0, y0)
+--     create amount of object_type, at a distance between dist_min and dist_max around the point (x0, y0)
+
 function init()
 	--Spawn Marco Polo, its defenders and a Ktilitian strike team
 	marco_polo = SpaceStation():setTemplate("Small Station"):setFaction("Human Navy"):setCallSign("Marco Polo"):setDescription("A merchant and entertainement hub."):setPosition(-21200, 45250)
@@ -21,10 +28,10 @@ function init()
 
 	--Spawn Stakhanov, its defenders and a Ktilitian assault
 	stakhanov = SpaceStation():setTemplate("Medium Station"):setFaction("Human Navy"):setCallSign("Stakhanov"):setDescription("The Stakhanov Mining Complex centralises the efforts to mine the material-rich asteroids of the sector."):setPosition(32000, 9000)
-	create(Asteroid, 90, 4000, 16000, 32000, 9000)
-	create(VisualAsteroid, 70, 4000, 15000, 32000, 9000)
+	placeRandomAroundPoint(Asteroid, 90, 4000, 16000, 32000, 9000)
+	placeRandomAroundPoint(VisualAsteroid, 70, 4000, 15000, 32000, 9000)
 	
-	euphrates = CpuShip():setTemplate("Piranha F12"):setFaction("Human Navy"):setCallSign("HNS Euphrates"):setScanned(true):orderDefendTarget(stakhanov):setPosition(31000, 8500)
+	euphrates = CpuShip():setTemplate("Orca F12"):setFaction("Human Navy"):setCallSign("HNS Euphrates"):setScanned(true):orderDefendTarget(stakhanov):setPosition(31000, 8500)
 	CpuShip():setTemplate("MT52 Hornet"):setFaction("Human Navy"):setPosition(32500, 8500):orderDefendTarget(euphrates):setScanned(true)
 	CpuShip():setTemplate("MT52 Hornet"):setFaction("Human Navy"):setPosition(32500, 9500):orderDefendTarget(euphrates):setScanned(true)
 	
@@ -42,13 +49,13 @@ function init()
 	
 	--Spawn the Black Site and itBLAH BLAH BLAH
 	bs114 = SpaceStation():setTemplate("Small Station"):setFaction("Independent"):setCallSign("Black Site #114"):setDescription("A Human Navy secret base. Its purpose is highly classified."):setPosition(-45600, -14800)
-	create(Nebula, 4, 10000, 15000, -45600, -14800)
-	create(Mine, 8, 5000, 7500, -45600, -14800)
+	placeRandomAroundPoint(Nebula, 4, 10000, 15000, -45600, -14800)
+	placeRandomAroundPoint(Mine, 8, 5000, 7500, -45600, -14800)
 	
 	--Spawn the Arlenian Lighbringer
 	lightbringer = CpuShip():setTemplate("Phobos T3"):setCallSign("Lightbringer"):setFaction("Arlenians"):setPosition(-10000, -20000)
 	Nebula():setPosition(-10000, -20000)
-	create(Nebula, 2, 4500, 5500, -10000, -20000)
+	placeRandomAroundPoint(Nebula, 2, 4500, 5500, -10000, -20000)
 	
 	--Spawn diverse things
 	nsa = SpaceStation():setTemplate("Small Station"):setFaction("Human Navy"):setCallSign("NSA"):setDescription("Nosy Sensing Array, an old SIGINT platform."):setPosition(5000, 5000):setCommsScript("")
@@ -59,10 +66,10 @@ function init()
 	d4 = CpuShip():setTemplate("Ktlitan Fighter"):setCallSign("Drone-4"):setFaction("Ghosts"):setPosition(35000, 54000):orderDefendTarget(swarm_command)
 	d5 = CpuShip():setTemplate("Ktlitan Fighter"):setCallSign("Drone-5"):setFaction("Ghosts"):setPosition(35500, 53500):orderDefendTarget(swarm_command)
 	Nebula():setPosition(35000, 53000)
-	create(Nebula, 3, 4500, 5500, 35000, 53000)
+	placeRandomAroundPoint(Nebula, 3, 4500, 5500, 35000, 53000)
 	
 	--Pop random nebulae
-	create(Nebula, 5, 10000, 60000, -10000, 10000)
+	placeRandomAroundPoint(Nebula, 5, 10000, 60000, -10000, 10000)
 	
 	--Spawn the Player
 	player = PlayerSpaceship():setFaction("Human Navy"):setTemplate("Atlantis"):setPosition(-22000, 44000):setCallSign("Epsilon")
@@ -591,7 +598,7 @@ We are both ready to continue our purpose, it seems."]])) then
 end
 
 function spawnHacker()
-    ship = CpuShip():setTemplate("Transport1x1")
+    ship = CpuShip():setTemplate("Personnel Freighter 1")
     ship:setHullMax(100):setHull(100)
     ship:setShieldsMax(50, 50):setShields(50, 50)
     ship:setImpulseMaxSpeed(120):setRotationMaxSpeed(10)
@@ -609,25 +616,6 @@ function spawnNuker()
 	ship:setWeaponStorageMax("Nuke", 10)
     ship:setWeaponStorage("Nuke", 10)
     return ship
-end
-
--- create amount of object_type, at a distance between dist_min and dist_max around the point (x0, y0)
-function create(object_type, amount, dist_min, dist_max, x0, y0)
-        for n=1,amount do
-		local r = random(0, 360)
-        local distance = random(dist_min, dist_max)
-        x = x0 + math.cos(r / 180 * math.pi) * distance
-        y = y0 + math.sin(r / 180 * math.pi) * distance
-        object_type():setPosition(x, y)
-		end
-end
-
---distance between 2 objects
-function distance(obj1, obj2)
-    x1, y1 = obj1:getPosition()
-    x2, y2 = obj2:getPosition()
-    xd, yd = (x1 - x2), (y1 - y2)
-    return math.sqrt(xd * xd + yd * yd)
 end
 
 function find(x_target, y_target, randomness)

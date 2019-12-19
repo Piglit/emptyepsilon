@@ -14,7 +14,7 @@ function init()
 		setCirclePos(ship, random(0, 360), random(7000, 10000))
 	end
     for n=1,2 do
-        ship = CpuShip():setTemplate("Piranha F12"):orderRoaming()
+        ship = CpuShip():setTemplate("Orca F12"):orderRoaming()
 		setCirclePos(ship, random(0, 360), random(7000, 10000))
 	end
 	

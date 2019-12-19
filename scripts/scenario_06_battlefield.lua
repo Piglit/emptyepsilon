@@ -4,9 +4,10 @@
 -- Variation[Large]: Larger battle, normally it's about 30 vs 30 ships. This increases this to 100 vs 100 ships.
 -- Variation[Huge]: Huge battle, normally it's about 30 vs 30 ships. This increases this to 500 vs 500 ships.
 
-function setCirclePos(obj, x, y, angle, distance)
-	obj:setPosition(x + math.sin(angle / 180 * math.pi) * distance, y + -math.cos(angle / 180 * math.pi) * distance)
-end
+require("utils.lua")
+-- For this scenario, utils.lua provides:
+--   setCirclePos(obj, x, y, angle, distance)
+--     Place an object relative to a vector. Returns the object with its position set to the resulting coordinates.
 
 function init()
     neutral_station = SpaceStation():setTemplate("Large Station"):setPosition(0, -15000):setRotation(random(0, 360)):setFaction("Independent")
@@ -46,7 +47,7 @@ function init()
 		CpuShip():setTemplate("Phobos T3"):setPosition(random(-13000 * location_scale, 13000 * location_scale), random(5000, 8000)):setRotation(-90):setFaction("Exuari"):orderRoaming()
 	end
 	for n=1,3*battle_scale do
-		CpuShip():setTemplate("Piranha F12"):setPosition(random(-13000 * location_scale, 13000 * location_scale), 5000):setRotation(-90):setFaction("Exuari"):orderRoaming()
+		CpuShip():setTemplate("Orca F12"):setPosition(random(-13000 * location_scale, 13000 * location_scale), 5000):setRotation(-90):setFaction("Exuari"):orderRoaming()
 	end
 	for n=1,1*battle_scale do
 		CpuShip():setTemplate("Atlantis X23"):setPosition(random(-3000 * location_scale, 3000 * location_scale), 7000):setRotation(-90):setFaction("Exuari"):orderRoaming()

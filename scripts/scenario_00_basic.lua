@@ -39,7 +39,7 @@ function addWave(enemyList,type,a,d)
 	elseif type < 5.0 then
 		table.insert(enemyList, setCirclePos(CpuShip():setTemplate('Atlantis X23'):setRotation(a + 180):orderRoaming(), 0, 0, a + random(-5, 5), d + random(-100, 100)))
 	elseif type < 6.0 then
-		leader = setCirclePos(CpuShip():setTemplate('Piranha F12'):setRotation(a + 180):orderRoaming(), 0, 0, a + random(-5, 5), d + random(-100, 100))
+		leader = setCirclePos(CpuShip():setTemplate('Orca F12'):setRotation(a + 180):orderRoaming(), 0, 0, a + random(-5, 5), d + random(-100, 100))
 		table.insert(enemyList, leader)
 		table.insert(enemyList, setCirclePos(CpuShip():setTemplate('MT52 Hornet'):setRotation(a + 180):orderFlyFormation(leader,-1500, 400), 0, 0, a + random(-1, 1), d + random(-100, 100)))
 		table.insert(enemyList, setCirclePos(CpuShip():setTemplate('MT52 Hornet'):setRotation(a + 180):orderFlyFormation(leader, 1500, 400), 0, 0, a + random(-1, 1), d + random(-100, 100)))
@@ -144,7 +144,7 @@ function init()
 	addGMFunction("Random friendly", function()
 		a = setWaveAngle(math.random(20), math.random(20))
 		d = random(15000, 20000 + math.random(20) * 1500)
-		friendlyShip = {'Phobos T3','MU52 Hornet','Piranha F12'}
+		friendlyShip = {'Phobos T3','MU52 Hornet','Orca F12'}
 		friendlyShipIndex = math.random(#friendlyShip)
 		table.insert(friendlyList, setCirclePos(CpuShip():setTemplate(friendlyShip[friendlyShipIndex]):setRotation(a):setFaction("Human Navy"):orderRoaming():setScanned(true), 0, 0, a + random(-5, 5), d + random(-100, 100)))
 	end)
