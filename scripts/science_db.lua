@@ -58,3 +58,75 @@ item:addKeyValue('Burst', '5')
 item:setLongDescription([[A high-velocity lead impactor (HVLI) fires a simple slug of lead at a high velocity. This weapon is usually found in simpler ships since it does not require guidance computers. This also means its projectiles fly in a straight line from its tube and can't pursue a target.
 
 Each shot from an HVLI fires a burst of 5 projectiles, which increases the chance to hit but requires precision aiming to be effective.]])
+
+item = weapons:addEntry('Kraylor beam')
+item:addKeyValue('Range', '1.0-1.5u')
+item:addKeyValue('Damage', '8')
+item:addKeyValue('Reload Time', '6s')
+item:addKeyValue('Damage per Second', '1.33')
+item:setLongDescription([[The Kraylor particle beam weapon fires a pulse ray of accelerated high energy particles towards it's target. High damage is dealt with single blasts at moderate reload time. 
+
+The weapon itself is a several meters long linear particle accelerator consisting of a plasma filled pipe, a particle source, a series of electrodes for accelerating the particles, and magnets for beam focusing and bending. All the components are placed inside the ships hulk, with only the far end exposed to space, often utilising the length of the ship. 
+The beams fired consist of high-energy atomic or subatomic particles that do damage by disrupting the targets atomic and molecular structure.
+
+It is sayed that there is a shield penetrating beam coming with the Doombringer prototype.]])
+
+item = weapons:addEntry('Kraylor turbo beam')
+item:addKeyValue('Range', '3.0-4u')
+item:addKeyValue('Damage', '10')
+item:addKeyValue('Reload Time', '3s')
+item:addKeyValue('Damage per Second', '3.33')
+item:setLongDescription([[Like the Kraylor particle beam weapon, the turbo beam fires bursts of accelerated high energy particles towards it's target. Very high damage is dealt with quick blasts, but the energy consumption is imense, even when not firing. It is only found on stations, since it is too big for ships.
+
+The weapon itself is a cyclic particle accelerator consisting of linear accelerators as source, an accelerator to further increade the beams' energy, a storage ring to keep beams ready for rapid firing and several linera accelerators as cannons. The cannons usualy are arranged from the outside of the ring towards the outside of the station.
+The beams fired consist of atomic and subatomic particles are accelerated to near-light speed and then shot at a target. These particles have tremendous kinetic energy on impact, causing near-instantaneous and catastrophic superheating on the target, and when penetrating deeper, ionization effects which can harm electronics whithin the target.
+
+Alltogether each turbo beam cannon does about 2.5 times the damage of standard Kraylor beams over time.]])
+
+item = weapons:addEntry('Exuari Fighter Gun')
+item:addKeyValue('Fire Arc', '60 deg')
+item:addKeyValue('Range', '1.0u')
+item:addKeyValue('Damage', '4')
+item:addKeyValue('Reload Time', '4s')
+item:addKeyValue('Damage per Second', '1.0')
+item:setLongDescription([[The Exuari Fighter Gun is a rapid firing laser cannon that can run on battery. It is mass produced and is easily attached to small spacecraft. The wide fire arc and low in-combat energy consumption made it extremly popular among the Exuari, so you can see this gun on almost every Exuari fighter or bomber.]])
+
+item = weapons:addEntry('Exuari Striker Gun')
+item:addKeyValue('Fire Arc', '40 deg')
+item:addKeyValue('Range', '1.0u')
+item:addKeyValue('Damage', '6')
+item:addKeyValue('Reload Time', '6s')
+item:addKeyValue('Damage per Second', '1.0')
+item:setLongDescription([[The Exuari Striker Gun is a low cost laser cannon. It is produced from recycled materials. It will not last for many operations without beeing replaced. The moderate need of energy and the short lifetime make it the ideal weapon for Exuari Strikers on suicide missions. The gun is often mounted in twin-pairs on both sides of a ship to comprehend the (in the eyes of the Exuari) small firing arc and the low rate of fire.]])
+
+item = weapons:addEntry('Exuari Turret Gun')
+item:addKeyValue('Fire Arc', '20 deg')
+item:addKeyValue('Rotation Arc', '180°')
+item:addKeyValue('Range', '1.2u')
+item:addKeyValue('Damage', '2/4/6')
+item:addKeyValue('Reload Time', '3/6/9s')
+item:addKeyValue('Damage per Second', '0.66')
+item:setLongDescription([[The Exuari Turret Gun is a laser cannon mounted on a rotatable turret. This is the main weapon of Exuari frigates, since they focus on defense rather than attack.]])
+
+item = weapons:addEntry('Ktlitan beam')
+item:addKeyValue('Range', '0.6-1.2u')
+item:addKeyValue('Damage', '6')
+item:addKeyValue('Reload Time', '4s')
+item:addKeyValue('Damage per Second', '1.5')
+item:setLongDescription([[The Ktlitan spacecrafts use a reversed gravitational impulse beam to tear apart their enemies hull platings. The details of this technology is mostly unknown to other species, the nearest equivalent beeing tractor beams. The damage is done hard and fast, and over time even more devastive than Kraylor particle beam damage. However the downside of this weapons is it's short range.]])
+
+
+item = weapons:addEntry('Human beam')
+item:addKeyValue('Range', '1.2u')
+item:addKeyValue('Arc', '90 deg')
+item:addKeyValue('Damage', '6')
+item:addKeyValue('Reload Time', '8s')
+item:addKeyValue('Damage per Second', '0.75')
+item:setLongDescription([[The human race currently uses energy-wave beams for space combat. Those weapons emit great amounts of directed energy in form of electromagnetic radiation as waves towards a desired target. 
+
+The beam's source is a specialiced vacuum tube that generates waves of electrons.
+
+While in default configuration this weapon does less damage than other alien beam weapons, but keen users of this technology may cause great harm: One may alter the wavelength of the beam to match the enemies shield frequencies weakest configuration or one may concentrate fire on a single ship system to increase its heat and possibly overload it.]])
+
+
+
