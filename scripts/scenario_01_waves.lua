@@ -168,7 +168,7 @@ function spawnWave()
             if irandom(1, 100) < 80 then
                 ship:setTemplate("Phobos T3");
             else
-                ship:setTemplate("Piranha F12");
+                ship:setTemplate("Orca F12");
             end
             score = 15
         elseif type < 7 then
