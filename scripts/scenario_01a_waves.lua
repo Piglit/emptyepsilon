@@ -1,5 +1,5 @@
 -- Name: Waves
--- Description: Waves of increasingly difficult enemies.
+-- Description: Waves of increasingly difficult enemies. Prevent the destruction of your stations.
 -- Type: Basic
 -- Variation[Hard]: Difficulty starts at wave 5 and increases by 1.5 after the players defeat each wave. (Players are more quickly overwhelmed, leading to shorter games.)
 -- Variation[Easy]: Makes each wave easier by decreasing the number of ships in each wave. (Takes longer for the players to be overwhelmed; good for new players.)
@@ -29,8 +29,8 @@ function init()
 	spawnWaveDelay = nil
 	enemyList = {}
 	friendlyList = {}
-	
-	PlayerSpaceship():setFaction("Human Navy"):setTemplate("Atlantis")
+
+	--PlayerSpaceship():setFaction("Human Navy"):setTemplate("Atlantis")
 
 	for n=1, 2 do
 		table.insert(friendlyList, SpaceStation():setTemplate(randomStationTemplate()):setFaction("Human Navy"):setPosition(random(-5000, 5000), random(-5000, 5000)))
@@ -59,7 +59,7 @@ function init()
 			VisualAsteroid():setPosition(x + dx1 + dx2, y + dy1 + dy2)
 		end
 	end
-	
+
 	spawnWave()
 
 	for n=1, 6 do
@@ -91,11 +91,93 @@ function randomSpawnPointInfo(distance)
 	return x, y, rx, ry
 end
 
+
+function createEnemyGroup(difficulty)
+	local faction = "Ghosts"
+	-- all human ships are possible.
+	-- groups are sorted by color (faction)
+	local enemyList = {}
+	local totalScore = 0
+	local costs = {
+		["MU52 Hornet"]= 5,
+		["WX-Lindworm"]= 7,
+		["Adder MK6"]= 8,
+		["Phobos M3"]= 15,
+		["Orca M5"]= 20,
+		["Nirvana R5M"]= 21,
+		["Storm"]= 22,
+		["Yellow Hornet"]= 5,
+		["Yellow Lindworm"]= 7,
+		["Yellow Adder MK5"]= 7,
+		["Yellow Adder MK4"]= 6,
+		["Phobos Y2"]= 16,	
+		["Orca F12"]= 15,
+		["Nirvana R5A"]= 20,
+		["Blue Hornet"]= 5,
+		["Blue Lindworm"]= 7,
+		["Blue Adder MK5"]= 7,
+		["Blue Adder MK4"]= 6,
+		["Phobos Vanguard"]= 16, 
+		["Phobos Rear-Guard"]= 15,
+		["Orca Vanguard"]= 17,
+		["Orca Rear-Guard"]= 15,
+		["Nirvana Vanguard"]= 20,
+		["Nirvana Rear-Guard"]= 20,
+		["Red Hornet"]= 5,
+		["Red Lindworm"]= 7,
+		["Red Adder MK5"]= 7,
+		["Red Adder MK4"]= 6,
+		["Phobos Firehawk"]= 16,
+		["Orca F12.M"]= 17,
+		["Nirvana Thunder Child"]= 21,
+		["Lightning Storm"]= 22,
+		["Advanced Hornet"]= 5,
+		["Advanced Lindworm"]= 7,
+		["Advanced Adder MK5"]= 7,
+		["Advanced Adder MK4"]= 6,
+		["Phobos G4"]= 17,
+		["Orca G4"]= 16,
+		["Nirvana 0x81"]= 22,
+		["Solar Storm"]= 22,
+		["MT52 Hornet"]= 5,
+		["WX-Lindworm"]= 7,
+		["Adder MK5"]= 7,
+		["Adder MK4"]= 6,
+		["Phobos T3"]= 15,
+		["Orca F8"]= 15,
+		["Nirvana R5"]= 19,
+	}
+	local groups = {
+		{"MU52 Hornet", "WX-Lindworm", "Adder MK6", "Phobos M3", "Orca M5", "Nirvana R5M", "Storm"},
+		{"Yellow Hornet", "Yellow Lindworm", "Yellow Adder MK5", "Yellow Adder MK4", "Phobos Y2", "Orca F12", "Nirvana R5A"},
+		{"Blue Hornet", "Blue Lindworm", "Blue Adder MK5", "Blue Adder MK4", "Phobos Vanguard", "Phobos Rear-Guard", "Orca Vanguard", "Orca Rear-Guard", "Nirvana Vanguard", "Nirvana Rear-Guard"},
+		{"Red Hornet", "Red Lindworm", "Red Adder MK5", "Red Adder MK4", "Phobos Firehawk", "Orca F12.M", "Nirvana Thunder Child", "Lightning Storm"},
+		{"Advanced Hornet", "Advanced Lindworm", "Advanced Adder MK5", "Advanced Adder MK4", "Phobos G4", "Orca G4", "Nirvana 0x81", "Solar Storm"},
+		{"MT52 Hornet", "WX-Lindworm", "Adder MK5", "Adder MK4", "Phobos T3", "Orca F8", "Nirvana R5"}
+	}
+
+	local groupIdx = math.random(#groups)
+	while totalScore < difficulty do
+		local tmpl = groups[groupIdx][math.random(#(groups[groupIdx]))]
+		local cost = costs[tmpl]
+		if cost == nil then
+			cost = 5
+		end
+		if cost < difficulty - totalScore + 5 then
+			local ship = CpuShip():setFaction(faction):setTemplate(tmpl)
+			totalScore = totalScore + cost
+			table.insert(enemyList, ship)
+		end
+	end
+
+	return enemyList
+end
+
 function spawnWave()
 	waveNumber = waveNumber + 1
 	friendlyList[1]:addReputationPoints(150 + waveNumber * 15)
-	
-	enemyList = {}
+
+
 	if getScenarioVariation() == "Hard" then
 		totalScoreRequirement = math.pow(waveNumber * 1.5 + 4, 1.3) * 10;
 	elseif getScenarioVariation() == "Easy" then
@@ -103,77 +185,18 @@ function spawnWave()
 	else
 		totalScoreRequirement = math.pow(waveNumber, 1.3) * 10;
 	end
-	
-	scoreInSpawnPoint = 0
+
+	local newEnemies = createEnemyGroup(totalScoreRequirement)
+
 	spawnDistance = 20000
 	spawnPointLeader = nil
 	spawn_x, spawn_y, spawn_range_x, spawn_range_y = randomSpawnPointInfo(spawnDistance)
-	while totalScoreRequirement > 0 do
-		ship = CpuShip():setFaction("Ghosts");
+	for _,ship in ipairs(newEnemies) do
 		ship:setPosition(random(-spawn_range_x, spawn_range_x) + spawn_x, random(-spawn_range_y, spawn_range_y) + spawn_y);
-		if spawnPointLeader == nil then
-			ship:orderRoaming()
-			spawnPointLeader = ship
-		else
-			ship:orderDefendTarget(spawnPointLeader)
-		end
-
-		type = random(0, 10)
-		score = 9999
-		if type < 2 then
-            if irandom(1, 100) < 80 then
-                ship:setTemplate("MT52 Hornet");
-            else
-                ship:setTemplate("MU52 Hornet");
-            end
-			score = 5
-        elseif type < 3 then
-            if irandom(1, 100) < 80 then
-                ship:setTemplate("Adder MK5")
-            else
-                ship:setTemplate("WX-Lindworm")
-            end
-            score = 7
-		elseif type < 6 then
-            if irandom(1, 100) < 80 then
-                ship:setTemplate("Phobos T3");
-            else
-                ship:setTemplate("Orca F12");
-            end
-			score = 15
-		elseif type < 7 then
-			ship:setTemplate("Ranus U");
-			score = 25
-		elseif type < 8 then
-            if irandom(1, 100) < 50 then
-                ship:setTemplate("Stalker Q7");
-            else
-                ship:setTemplate("Stalker R7");
-            end
-			score = 25
-		elseif type < 9 then
-			ship:setTemplate("Atlantis X23");
-			score = 50
-		else
-			ship:setTemplate("Odin");
-			score = 250
-		end
-		
-		if score > totalScoreRequirement * 1.1 + 5 then
-			ship:destroy()
-		else
-			table.insert(enemyList, ship);
-			totalScoreRequirement = totalScoreRequirement - score
-			scoreInSpawnPoint = scoreInSpawnPoint + score
-		end
-		if scoreInSpawnPoint > totalScoreRequirement * 2.0 then
-			spawnDistance = spawnDistance + 5000
-			spawn_x, spawn_y, spawn_range_x, spawn_range_y = randomSpawnPointInfo(spawnDistance)
-			scoreInSpawnPoint = 0
-			spawnPointLeader = nil
-		end
+		ship:orderRoaming()
+		table.insert(enemyList, ship);
 	end
-	
+
 	globalMessage("Wave " .. waveNumber);
 end
 
@@ -206,6 +229,6 @@ function update(delta)
 		globalMessage("Wave cleared!");
 	end
 	if friendly_count == 0 then
-		victory("Ghosts");	--Victory for the Ghosts (== defeat for the players)
+		victory("Kraylor");
 	end
 end
