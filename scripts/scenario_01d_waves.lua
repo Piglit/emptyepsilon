@@ -1,5 +1,5 @@
 -- Name: Kraylor Waves
--- Description: Waves of increasingly difficult enemies.
+-- Description: Waves of increasingly difficult enemies. Prevent the destruction of your stations.
 -- Type: Basic
 -- Variation[Hard]: Difficulty starts at wave 5 and increases by 1.5 after the players defeat each wave. (Players are more quickly overwhelmed, leading to shorter games.)
 -- Variation[Easy]: Makes each wave easier by decreasing the number of ships in each wave. (Takes longer for the players to be overwhelmed; good for new players.)
@@ -30,7 +30,7 @@ function init()
 	enemyList = {}
 	friendlyList = {}
 
-	PlayerSpaceship():setFaction("Human Navy"):setTemplate("Atlantis")
+--	PlayerSpaceship():setFaction("Human Navy"):setTemplate("Atlantis")
 
 	for n=1, 2 do
 		table.insert(friendlyList, SpaceStation():setTemplate(randomStationTemplate()):setFaction("Human Navy"):setPosition(random(-5000, 5000), random(-5000, 5000)))
