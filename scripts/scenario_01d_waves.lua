@@ -96,44 +96,49 @@ function createEnemyGroup(difficulty)
 	local faction = "Kraylor"
 	local enemyList = {}
 	local totalScore = 0
-	--groups consist of gunships and occasionally few destroyers
-	local gunships = {
-		"Rockbreaker",
-		"Rockbreaker Merchant",
-		"Rockbreaker Murderer",
-		"Rockbreaker Mercenary",
-		"Rockbreaker Marauder",
-		"Rockbreaker Military",
-		"Spinebreaker",
+	local costs = {
+		["Drone"]= 5,
+		["Rockbreaker"]= 22,
+		["Rockbreaker Merchant"]= 25,
+		["Rockbreaker Murderer"]= 26,
+		["Rockbreaker Mercenary"]= 28,
+		["Rockbreaker Marauder"]= 30,
+		["Rockbreaker Military"]= 32,
+		["Spinebreaker"]= 24,
+		["Deathbringer"]= 47,
+		["Painbringer"]= 50,
+		["Doombringer"]= 65,
+		["Battlestation"]= 70,
+		["Goddess of Destruction"]= 170,
 	}
-	local destroyers = {
-		"Deathbringer",
-		"Painbringer",
-		"Doombringer",
-	}
-	local dest = math.random(math.floor(difficulty/3)) -- max d/3 points in destroyers
-	local guns = difficulty - dest
+	local destroyers = {"Deathbringer", "Painbringer", "Doombringer"}
+	local gunships = {"Rockbreaker", "Rockbreaker Merchant", "Rockbreaker Murderer", "Rockbreaker Mercenary", "Rockbreaker Marauder", "Rockbreaker Military", "Spinebreaker"}
+	local dest = math.random(math.floor(difficulty/6), math.floor(difficulty/3)) -- max d/3 points in destroyers
 
 	while totalScore < difficulty do
-		local ship = CpuShip():setFaction(faction);
-		if dest > 2.5 then
-			local tmpl = destroyers[math.random(#destroyers)]
-			local costs = {
-				Deathbringer = 2.3,
-				Painbringer = 2.5,
-				Doombringer = 3.3,
-			}
-			local cost = costs[tmpl]
-			if cost == nil then
-				cost = 2.5
+		local ship = CpuShip():setFaction(faction)
+		if (difficulty - totalScore) > 20 then
+			if dest > 25 then
+				local tmpl = destroyers[math.random(#destroyers)]
+				local cost = costs[tmpl]
+				if cost == nil then
+					cost = 50
+				end
+				ship:setTemplate(tmpl)
+				totalScore = totalScore + cost
+				dest = dest - cost
+			else
+				local tmpl = gunships[math.random(#gunships)]
+				local cost = costs[tmpl]
+				if cost == nil then
+					cost = 25
+				end
+				ship:setTemplate(tmpl)
+				totalScore = totalScore + cost 
 			end
-			ship:setTemplate(tmpl)
-			totalScore = totalScore + cost
-			dest = dest - cost
 		else
-			ship:setTemplate(gunships[math.random(#gunships)])
-			totalScore = totalScore + 1.3
-			guns = guns - 1.3
+			ship:setTemplate("Drone")
+			totalScore = totalScore + 5 
 		end
 		table.insert(enemyList, ship)
 	end
