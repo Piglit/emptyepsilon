@@ -26,7 +26,6 @@ function init()
 	chapter2started = false
 	chapter3started = false
 	finishedTimer = 5
-	finishedFlag = false
 	bonusEscapes = false
 	instr1 = false
 	instr2 = false
@@ -76,7 +75,7 @@ end
 function commsInstr()
 	if not instr1 and timer > 8.0 then
 		instr1 = true
-		command:sendCommsMessage(player, "Here is Commander Saberhagen. In this training mission you will practice more advanced tactics using a Orca missile cruiser. You will need to find and destroy the ships of a scattered enemy convoy, and use your jumpdrive and your missiles to take 'em by surprise. Notice that you ship does not have any beam weapons. I will keep you updated about the positions of the next enemy targets on a public broadcast channel; you can look at it on your comms log if you missed one. Commander Saberhagen out.")
+		command:sendCommsMessage(player, "Here is Commander Saberhagen. In this training mission you will practice more advanced tactics using a Orca missile cruiser. You will need to find and destroy the ships of a scattered enemy convoy, and use your jumpdrive and your missiles to take 'em by surprise. Notice that your ship does not have any beam weapons. I will keep you updated about the positions of the next enemy targets on a public broadcast channel; you can look at it on your comms log if you missed one. Commander Saberhagen out.")
 	end
 	if not instr2 and timer > 10.0 then
 		instr2 = true
@@ -85,6 +84,10 @@ function commsInstr()
 	if not instr3 and distance(player, pos1x,pos1y) < 8000 then
 		instr3 = true
 		player:addToShipLog("[Cmd. Saberhagen] Escort 1 detected movement in sector "..chi:getSectorName()..". This aint a tutorial, so you should already know how to operate probes.", "White")
+	end
+	if not instr3b and #enemyList <= 4 then
+		instr3b = true
+		player:addToShipLog("[Cmd. Saberhagen] Did you notice that Escort 1 detected movement in sector "..chi:getSectorName()..". If not, check your comms log more carefully.", "White")
 	end
 	if not instr4 and distance(player, pos2x,pos2y) < 5000 then
 		instr4 = true
@@ -105,12 +108,21 @@ function commsInstr()
 	end
 	if not instr7 and chapter3started then
 		instr7 = true
+		local bonusString = "escaped."
+		if not bonus:isValid() then
+			bonusString = "destroyed."
+		end
+		globalMessage("Mission Complete. Your Time: "..tostring(math.floor(timer)).."s. Bonus target "..bonusString)
 		local msg = "The official part of this training ends here. You have done quite well. But if you want to challenge a superior enemy, seek and destroy the mothership where these drones came from.", "White"
 		if command:isValid() then
 			command:sendCommsMessage(player, "Here is Commander Saberhagen. "..msg.." Commander Saberhagen out.")
 		else
 			player:addToShipLog("[Cmd. Saberhagen] "..msg, "White")
 		end
+	end
+	if not instr8 and boss ~= nil and distance(player, boss) < 10000 then
+		instr8 = true
+		globalMessage("Kobayashi-Maru mode activated")
 	end
 end
 
@@ -120,13 +132,9 @@ function finished(delta)
 	if finishedTimer < 0 then
 		victory("Human Navy")
 	end
-	if finishedFlag == false then
+	if not finishedFlag then
 		finishedFlag = true
-		local bonusString = "escaped."
-		if not bonus:isValid() then
-			bonusString = "destroyed."
-		end
-		globalMessage("Mission Complete. Your Time: "..tostring(math.floor(timer)).."s. Bonus target "..bonusString)
+		globalMessage("Mission Complete.")
 	end
 end
 
