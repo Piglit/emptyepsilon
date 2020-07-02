@@ -430,7 +430,7 @@ template:addDoor( 4, 1, true)
 
 
 --[[Corvette--]]
-template = ShipTemplate():setName("Atlantis"):setClass("Corvette", "Destroyer"):setModel("AtlasDestroyer"..color_player):setType("playership")
+template = ShipTemplate():setName("Atlantis"):setClass("Corvette", "Destroyer"):setModel("AtlasDreadnought"..color_player):setType("playership")
 template:setDescription([[The Atlantis X23 is the smallest model of destroyer, and its combination of frigate-like size and corvette-like power makes it an excellent escort ship when defending larger ships against multiple smaller enemies. Because the Atlantis X23 is fitted with a jump drive, it can also serve as an intersystem patrol craft.
 This is a refitted Atlantis X23 for more general tasks. The large shield system has been replaced with an advanced combat maneuvering systems and improved impulse engines. Its missile loadout is also more diverse. Mistaking the modified Atlantis for an Atlantis X23 would be a deadly mistake.]])
 template:setRadarTrace("radar_dread.png")
@@ -486,7 +486,7 @@ template:addDoor(8, 4, false);
 
 --[[Assault Missile Cruiser--]]
 --template = ShipTemplate():setName("Huntmaster"):setClass("Corvette", "Heavy Artillery")
---template:setModel("MissileCorvetteDestroyer"..color_player):setType("playership")
+--template:setModel("MissileCorvetteDreadnought"..color_player):setType("playership")
 --template:setRadarTrace("radar_dread.png")
 --template:setDescription([[A heavy artillery cruiser, the Hunter fires bunches of missiles from forward facing tubes. This spacecraft is designed for pure offensive actions, hence the use of the Hunter is only allowed to the Human Navy. A big weakness of the Hunter is it's slow turning rate.]] )
 --template:setJumpDrive(false)

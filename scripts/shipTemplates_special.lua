@@ -50,7 +50,7 @@ template:addDoor(8, 4, false);
 
 
 --[[Corvette Melonidas--]]
-template = ShipTemplate():setName("Melonidas"):setClass("Corvette", "Destroyer"):setModel("AtlasDestroyerGreen"):setType("playership")
+template = ShipTemplate():setName("Melonidas"):setClass("Corvette", "Destroyer"):setModel("AtlasDreadnoughtGreen"):setType("playership")
 template:setDescription([[The Melonidas is the smallest model of destroyer, and its combination of frigate-like size and corvette-like power makes it an excellent escort ship when defending larger ships against multiple smaller enemies. Because the Melonidas is fitted with a jump drive, it can also serve as an intersystem patrol craft.]])
 template:setRadarTrace("radar_melon.png")
 template:setJumpDrive(true)

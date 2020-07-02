@@ -123,7 +123,7 @@ variation:setTubeSize(0, "large")
 
 --[[ Strikers --]]
 -- The Strikeship is a warp-drive equipped figher build for quick strikes, it's fast, it's agile, but does not do an extreme amount of damage, and lacks in rear shields.
-template = ShipTemplate():setName("Racer"):setModel("small_frigate_3"):setClass("Exuari","Striker")
+template = ShipTemplate():setName("Racer"):setClass("Exuari","Striker")
 template:setModel("small_frigate_1"):setRadarTrace("radar_exuari_1.png")
 template:setDescription("The Exuari alpha striker 'Racer' is a warp-drive equipped Figter build for quick strikes. This spacecraft runs on a small crew and is often used as scout, interceptor or to perform preemptive attacks. It's fast, it's agile, but the striker beams do not cause an extreme amount of damage. Like all strikers, it lacks in rear shields.")
 --                  Arc, Dir, Range, CycleTime, Dmg
