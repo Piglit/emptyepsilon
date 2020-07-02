@@ -6,10 +6,10 @@ color_player = "White" --change it if you want another style
 
 --[[Starfighter--]]
 
-template = ShipTemplate():setName("MP52 Hornet"):setClass("Starfighter", "Interceptor"):setModel("WespeScout"..color_player):setType("playership")
+template = ShipTemplate():setName("MP52 Hornet"):setClass("Starfighter", "Interceptor"):setModel("WespeFighter"..color_player):setType("playership")
 template:setRadarTrace("radar_fighter.png")
 template:setDescription([[The Hornet is a basic interceptor found in many corners of the galaxy. 
-The MP52 Hornet is a significantly upgraded version of MU52 Hornet, with nearly twice the hull strength, nearly three times the shielding, better acceleration, impulse boosters, and a second laser cannon.]])
+The MP52 Hornet is a significantly upgraded version of MU52 Hornet, with nearly twice the hull strength, nearly three times the shielding, better acceleration, impulse boosters, and a second laser cannon. Combat maneuver systems are included.]])
 template:setHull(70)
 template:setShields(60)
 template:setSpeed(125, 32, 40)
@@ -17,17 +17,24 @@ template:setCombatManeuver(600, 0)
 template:setBeam(0, 30, 5, 900.0, 4.0, 2.5)
 template:setBeam(1, 30,-5, 900.0, 4.0, 2.5)
 template:setEnergyStorage(400)
-
 template:setRepairCrewCount(1)
+template:setLongRangeRadarRange(5000)
+template:setShortRangeRadarRange(1000)
+
+template:setCanScan(false)
+template:setCanHack(false)
+template:setCanDock(true)
+template:setCanCombatManeuver(true)
+template:setCanLaunchProbe(false)
+template:setCanSelfDestruct(false)
+
 template:addRoomSystem(3, 0, 1, 1, "Maneuver");
 template:addRoomSystem(1, 0, 2, 1, "BeamWeapons");
-
 template:addRoomSystem(0, 1, 1, 2, "RearShield");
 template:addRoomSystem(1, 1, 2, 2, "Reactor");
 template:addRoomSystem(3, 1, 2, 1, "Warp");
 template:addRoomSystem(3, 2, 2, 1, "JumpDrive");
 template:addRoomSystem(5, 1, 1, 2, "FrontShield");
-
 template:addRoomSystem(1, 3, 2, 1, "MissileSystem");
 template:addRoomSystem(3, 3, 1, 1, "Impulse");
 
@@ -46,7 +53,7 @@ template:addDoor(5, 2, false);
 template = ShipTemplate():setName("ZX-Lindworm"):setClass("Starfighter", "Bomber"):setType("playership")
 template:setModel("LindwurmFighter"..color_player)
 template:setRadarTrace("radar_fighter.png")
-template:setDescription([[The WX-Lindworm, or "Worm" as it's often called, is a bomber-class starfighter. While one of the least-shielded starfighters in active duty, the Worm's two launchers can pack quite a punch. Its goal is to fly in, destroy its target, and fly out or be destroyed.]])
+template:setDescription([[The WX-Lindworm, or "Worm" as it's often called, is a bomber-class starfighter. While one of the least-shielded starfighters in active duty, the Worm's two launchers can pack quite a punch. Its goal is to fly in, destroy its target, and fly out or be destroyed. The engine can be overloaded to cause a massive explotion - however this destroys the bomber, too.]])
 template:setHull(75)
 template:setShields(40)
 template:setSpeed(70, 15, 25)
@@ -64,8 +71,17 @@ template:setBeam(0, 10, 180, 700, 6.0, 2)
 template:setBeamWeaponTurret( 0, 270, 180, 4)
 template:setCombatManeuver(250, 150)
 template:setEnergyStorage(400)
-
 template:setRepairCrewCount(1)
+template:setLongRangeRadarRange(5000)
+template:setShortRangeRadarRange(1000)
+
+template:setCanScan(false)
+template:setCanHack(false)
+template:setCanDock(true)
+template:setCanCombatManeuver(false)
+template:setCanLaunchProbe(false)
+template:setCanSelfDestruct(true)
+
 template:addRoomSystem(0,0,1,3,"RearShield")
 template:addRoomSystem(1,1,3,1,"MissileSystem")
 template:addRoomSystem(4,1,2,1,"Beamweapons")
@@ -92,7 +108,7 @@ template:addDoor(4,5,true)
 template = ShipTemplate():setName("Adder MK7"):setClass("Starfighter", "Scout"):setType("playership")
 template:setModel("AdlerLongRangeScout"..color_player)
 template:setRadarTrace("radar_cruiser.png")
-template:setDescription([[The Adder mark 7 is a superior scout.]])
+template:setDescription([[The Adder mark 7 is a superior scout with scanning and hacking capabilities.]])
 template:setHull(100)
 template:setShields(100)
 template:setSpeed(100, 30, 30)
@@ -105,8 +121,15 @@ template:setTubeSize(0, "small")
 template:setWeaponStorage("HVLI", 8)
 template:setCombatManeuver(400, 250)
 template:setEnergyStorage(400)
-template:setRepairCrewCount(1)
 template:setWarpSpeed(750)
+template:setRepairCrewCount(1)
+
+template:setCanScan(true)
+template:setCanHack(true)
+template:setCanDock(true)
+template:setCanCombatManeuver(false)
+template:setCanLaunchProbe(true)
+template:setCanSelfDestruct(false)
 
 template:addRoomSystem(3, 0, 1, 1, "Maneuver");
 template:addRoomSystem(1, 0, 2, 1, "BeamWeapons");
@@ -127,7 +150,6 @@ template:addDoor(3, 3, true);
 template:addDoor(2, 3, true);
 template:addDoor(5, 1, false);
 template:addDoor(5, 2, false);
-
 
 
 --[[ Player Light Cruiser--]]
