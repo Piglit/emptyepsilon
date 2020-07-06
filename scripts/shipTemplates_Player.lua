@@ -10,6 +10,8 @@ template = ShipTemplate():setName("MP52 Hornet"):setClass("Starfighter", "Interc
 template:setRadarTrace("radar_fighter.png")
 template:setDescription([[The Hornet is a basic interceptor found in many corners of the galaxy. 
 The MP52 Hornet is a significantly upgraded version of MU52 Hornet, with nearly twice the hull strength, nearly three times the shielding, better acceleration, impulse boosters, and a second laser cannon. Combat maneuver systems are included.]])
+template:setImpulseSoundFile("sfx/engine_fighter.wav")
+
 template:setHull(70)
 template:setShields(60)
 template:setSpeed(125, 32, 40)
@@ -54,6 +56,8 @@ template = ShipTemplate():setName("ZX-Lindworm"):setClass("Starfighter", "Bomber
 template:setModel("LindwurmFighter"..color_player)
 template:setRadarTrace("radar_fighter.png")
 template:setDescription([[The WX-Lindworm, or "Worm" as it's often called, is a bomber-class starfighter. While one of the least-shielded starfighters in active duty, the Worm's two launchers can pack quite a punch. Its goal is to fly in, destroy its target, and fly out or be destroyed. The engine can be overloaded to cause a massive explotion - however this destroys the bomber, too.]])
+template:setImpulseSoundFile("sfx/engine_fighter.wav")
+
 template:setHull(75)
 template:setShields(40)
 template:setSpeed(70, 15, 25)
@@ -109,6 +113,8 @@ template = ShipTemplate():setName("Adder MK7"):setClass("Starfighter", "Scout"):
 template:setModel("AdlerLongRangeScout"..color_player)
 template:setRadarTrace("radar_cruiser.png")
 template:setDescription([[The Adder mark 7 is a superior scout with scanning and hacking capabilities.]])
+template:setImpulseSoundFile("sfx/engine_fighter.wav")
+
 template:setHull(100)
 template:setShields(100)
 template:setSpeed(100, 30, 30)
@@ -356,7 +362,7 @@ template:addDoor(5, 5, true)
 template:addDoor(6, 5, true)
 
 
-template = ShipTemplate():setName("Repulse"):setClass("Frigate", "Armored Transport"):setModel("LightCorvetteRed"):setType("playership")
+template = ShipTemplate():setName("Repulse"):setClass("Frigate", "Armored Transport"):setModel("LightCorvette"..color_player):setType("playership")
 template:setRadarTrace("radar_tug.png")
 template:setDescription("Jump/Turret version of Flavia Falcon")
 template:setHull(120)
@@ -403,7 +409,8 @@ template:addDoor(10, 2, false)
 
 
 
-
+--[[Mine Layer--]]
+--TODO model?
 template = ShipTemplate():setName("Nautilus"):setType("playership"):setClass("Frigate","Mine Layer"):setModel("space_tug")
 template:setDescription("Small mine laying vessel with minimal armament, shields and hull")
 template:setRadarTrace("radar_tug.png")
@@ -477,6 +484,7 @@ template:setTubeDirection(0, -90)
 template:setTubeDirection(1, -90)
 template:setTubeDirection(2,  90)
 template:setTubeDirection(3,  90)
+template:setDockClasses("Starfighter")
 
 template:addRoomSystem(1, 0, 2, 1, "Maneuver");
 template:addRoomSystem(1, 1, 2, 1, "BeamWeapons");
@@ -506,89 +514,121 @@ template:addDoor(8, 3, false);
 template:addDoor(8, 4, false);
  
 
---[[Assault Missile Cruiser--]]
---template = ShipTemplate():setName("Huntmaster"):setClass("Corvette", "Heavy Artillery")
---template:setModel("MissileCorvetteDreadnought"..color_player):setType("playership")
---template:setRadarTrace("radar_dread.png")
---template:setDescription([[A heavy artillery cruiser, the Hunter fires bunches of missiles from forward facing tubes. This spacecraft is designed for pure offensive actions, hence the use of the Hunter is only allowed to the Human Navy. A big weakness of the Hunter is it's slow turning rate.]] )
---template:setJumpDrive(false)
---template:setWarpSpeed(500)
---template:setCombatManeuver(400, 250)
---template:setBeamWeapon(0, 60, 0, 1200, 6, 8)
---template:setHull(250)
---template:setShields(200, 100)
---template:setSpeed(80, 10, 20)
---template:setTubes(5, 8.0)
---template:setWeaponStorage("Homing", 15)
---template:setWeaponStorage("Nuke", 3)
---template:setWeaponStorage("EMP", 3)
---template:setWeaponStorage("HVLI", 20)
---template:weaponTubeDisallowMissle(0, "Mine")
---template:weaponTubeDisallowMissle(1, "Mine")
---template:weaponTubeDisallowMissle(2, "Mine")
---template:weaponTubeDisallowMissle(3, "Mine")
---template:weaponTubeDisallowMissle(4, "Mine")
---template:setTubeDirection(0,  0)
---template:setTubeDirection(1, -1)
---template:setTubeDirection(2,  1)
---template:setTubeDirection(3, -2)
---template:setTubeDirection(4,  2)
---template:setDockClasses("Starfighter")
---
--- MissileCorvette:
---template:addRoomSystem(0, 0, 1, 4, "RearShield")
---template:addRoom(1, 0, 1, 1)
---template:addRoomSystem(1, 1, 3, 2, "MissileSystem")
---template:addRoom(1, 3, 1, 1)
---template:addRoomSystem(2, 0, 2, 1, "Beamweapons")
---template:addRoomSystem(2, 3, 2, 1, "Maneuver")
---template:addRoomSystem(4, 0, 2, 1, "Warp")
---template:addRoomSystem(4, 3, 2, 1, "JumpDrive")
---template:addRoomSystem(5, 1, 1, 2, "Reactor")
---template:addRoom(6, 0, 1, 1)
---template:addRoomSystem(6, 1, 1, 2, "Impulse")
---template:addRoom(6, 3, 1, 1)
---template:addRoomSystem(7, 0, 1, 4, "FrontShield")
---
---template:addDoor(1, 0, false)
---template:addDoor(2, 0, false)
---template:addDoor(4, 0, false)
---template:addDoor(6, 0, false)
---template:addDoor(7, 0, false)
---template:addDoor(1, 1, true)
---template:addDoor(1, 3, true)
---template:addDoor(6, 1, true)
---template:addDoor(6, 2, false)
---template:addDoor(6, 3, true)
---template:addDoor(1, 3, false)
---template:addDoor(2, 3, false)
---template:addDoor(4, 3, false)
---template:addDoor(6, 3, false)
---template:addDoor(7, 3, false)
---
--- HeavyCorvette:
---template:addRoomSystem(0, 2, 2, 1, "Maneuver");
---template:addRoomSystem(4, 2, 2, 1, "BeamWeapons");
---template:addRoom(2, 2, 2, 1);
---template:addRoomSystem(0, 3, 1, 2, "RearShield");
---template:addRoomSystem(1, 3, 2, 2, "Reactor");
---template:addRoomSystem(3, 3, 2, 2, "Warp");
---template:addRoomSystem(5, 3, 2, 2, "JumpDrive");
---template:addRoomSystem(7, 3, 1, 2, "FrontShield");
---template:addRoom(2, 5, 2, 1);
---template:addRoomSystem(4, 5, 2, 1, "MissileSystem");
---template:addRoomSystem(0, 5, 2, 1, "Impulse");
---template:addDoor(1, 3, true);
---template:addDoor(4, 3, true);
---template:addDoor(3, 3, true);
---template:addDoor(1, 3, false);
---template:addDoor(3, 4, false);
---template:addDoor(3, 5, true);
---template:addDoor(4, 5, true);
---template:addDoor(1, 5, true);
---template:addDoor(5, 3, false);
---template:addDoor(7, 3, false);
---template:addDoor(7, 4, false);
+
+--[[Missile Corvette--]]
+--TODO other model?
+template = ShipTemplate():setName("Crucible"):setLocaleName(_("Crucible")):setClass(_("Corvette"),_("Popper")):setModel("LaserDreadnought"..color_player):setType("playership")
+template:setDescription(_("A number of missile tubes range around this ship. Beams were deemed lower priority, though they are still present. Stronger defenses than a frigate, but not as strong as the Atlantis"))
+template:setRadarTrace("radar_laser.png")
+template:setHull(160)
+template:setShields(160,160)
+template:setSpeed(80,15,40)
+template:setCombatManeuver(400, 250)
+template:setJumpDrive(false)
+template:setWarpSpeed(750)
+--                  Arc, Dir,  Range, CycleTime, Dmg
+template:setBeam(0, 70, -30, 1000.0, 6.0, 5)
+template:setBeam(1, 70,  30, 1000.0, 6.0, 5)
+template:setTubes(6, 8.0)
+template:setWeaponStorage("HVLI", 24)
+template:setWeaponStorage("Homing", 8)
+template:setWeaponStorage("EMP", 6)
+template:setWeaponStorage("Nuke", 4)
+template:setWeaponStorage("Mine", 6)
+template:setTubeDirection(0, 0)
+template:setTubeSize(0, "small")
+template:setTubeDirection(1, 0)
+template:setTubeDirection(2, 0)
+template:setTubeSize(2, "large")
+template:setTubeDirection(3, -90)
+template:setTubeDirection(4,  90)
+template:setTubeDirection(5, 180)
+template:setWeaponTubeExclusiveFor(0, "HVLI")
+template:setWeaponTubeExclusiveFor(1, "HVLI")
+template:setWeaponTubeExclusiveFor(2, "HVLI")
+template:weaponTubeDisallowMissle(3, "Mine")
+template:weaponTubeDisallowMissle(4, "Mine")
+template:setWeaponTubeExclusiveFor(5, "Mine")
+template:setDockClasses("Starfighter")
+
+template:setRepairCrewCount(4)
+
+template:addRoomSystem(2, 0, 2, 1, "Maneuver");
+template:addRoomSystem(1, 1, 2, 1, "BeamWeapons");
+template:addRoomSystem(0, 2, 3, 2, "RearShield");
+template:addRoomSystem(1, 4, 2, 1, "Reactor");
+template:addRoomSystem(2, 5, 2, 1, "Warp");
+template:addRoomSystem(3, 1, 3, 2, "JumpDrive");
+template:addRoomSystem(3, 3, 3, 2, "FrontShield");
+template:addRoom(6, 2, 6, 2);
+template:addRoomSystem(9, 1, 2, 1, "MissileSystem");
+template:addRoomSystem(9, 4, 2, 1, "Impulse");
+
+template:addDoor(2, 1, true)
+template:addDoor(1, 2, true)
+template:addDoor(1, 4, true)
+template:addDoor(2, 5, true)
+template:addDoor(3, 2, false)
+template:addDoor(4, 3, true)
+template:addDoor(6, 3, false)
+template:addDoor(9, 2, true)
+template:addDoor(10,4, true)
+
+--[[Beam Corvette--]]
+template = ShipTemplate():setName("Maverick"):setLocaleName(_("Maverick")):setClass(_("Corvette"),_("Gunner")):setModel("LaserDreadnought"..color_player):setType("playership")
+template:setDescription(_("A number of beams bristle from various points on this gunner. Missiles were deemed lower priority, though they are still present. Stronger defenses than a frigate, but not as strong as the Atlantis"))
+template:setRadarTrace("radar_laser.png")
+template:setHull(160)
+template:setShields(160,160)
+template:setSpeed(80,15,40)
+template:setCombatManeuver(400, 250)
+template:setJumpDrive(false)
+template:setWarpSpeed(800)
+--                 Arc, Dir,  Range, CycleTime, Dmg
+template:setBeam(0, 10,   0, 2000.0, 6.0, 6)
+template:setBeam(1, 90, -20, 1500.0, 6.0, 8)
+template:setBeam(2, 90,  20, 1500.0, 6.0, 8)
+template:setBeam(3, 40, -70, 1000.0, 4.0, 6)
+template:setBeam(4, 40,  70, 1000.0, 4.0, 6)
+template:setBeam(5, 10, 180,  800.0, 6.0, 4)
+--								Arc, Dir, Rotate speed
+template:setBeamWeaponTurret(5, 180, 180, .5)
+template:setTubes(3, 8.0)
+template:setWeaponStorage("HVLI", 10)
+template:setWeaponStorage("Homing", 6)
+template:setWeaponStorage("EMP", 4)
+template:setWeaponStorage("Nuke", 2)
+template:setWeaponStorage("Mine", 2)
+template:setTubeDirection(0, -90)
+template:setTubeDirection(1,  90)
+template:setTubeDirection(2, 180)
+template:weaponTubeDisallowMissle(0, "Mine")
+template:weaponTubeDisallowMissle(1, "Mine")
+template:setWeaponTubeExclusiveFor(2, "Mine")
+
+template:setDockClasses("Starfighter")
+template:setRepairCrewCount(4)
+
+template:addRoomSystem(2, 0, 2, 1, "Maneuver");
+template:addRoomSystem(1, 1, 2, 1, "BeamWeapons");
+template:addRoomSystem(0, 2, 3, 2, "RearShield");
+template:addRoomSystem(1, 4, 2, 1, "Reactor");
+template:addRoomSystem(2, 5, 2, 1, "Warp");
+template:addRoomSystem(3, 1, 3, 2, "JumpDrive");
+template:addRoomSystem(3, 3, 3, 2, "FrontShield");
+template:addRoom(6, 2, 6, 2);
+template:addRoomSystem(9, 1, 2, 1, "MissileSystem");
+template:addRoomSystem(9, 4, 2, 1, "Impulse");
+
+template:addDoor(2, 1, true)
+template:addDoor(1, 2, true)
+template:addDoor(1, 4, true)
+template:addDoor(2, 5, true)
+template:addDoor(3, 2, false)
+template:addDoor(4, 3, true)
+template:addDoor(6, 3, false)
+template:addDoor(9, 2, true)
+template:addDoor(10,4, true)
 
  
 --[[---------------------Carrier------------------------]]
