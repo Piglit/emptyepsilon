@@ -431,9 +431,6 @@ template:setTubeDirection(0, 180)
 template:setTubeDirection(1, 180)
 template:setTubeDirection(2, 180)
 template:setWeaponStorage("Mine", 12)
-template:setWeaponStorage("Homing", 0)
-template:setWeaponStorage("Nuke", 0)
-template:setWeaponStorage("EMP", 0)
 
 template:setRepairCrewCount(4)
 --	(H)oriz, (V)ert	   HC,VC,HS,VS, system    (C)oordinate (S)ize
@@ -674,12 +671,6 @@ template:addDoor(9, 3, false)
 
 var2 = template:copy("Kiriya")
 var2:setDescription("Kiriya is an improved warp drive version of the Jump Carrier")
---                  Arc, Dir, Range, CycleTime, Dmg
-var2:setBeam(0, 10,   0, 1500.0, 6.0, 4)
-var2:setBeam(1, 10, 180, 1500.0, 6.0, 4)
---								 Arc, Dir, Rotate speed
-var2:setBeamWeaponTurret( 0, 90,   0, 6)
-var2:setBeamWeaponTurret( 1, 90, 180, 6)
 var2:setJumpDrive(false)
 var2:setWarpSpeed(750)
 
