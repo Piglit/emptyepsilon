@@ -418,10 +418,10 @@ model:addEngineEmitter(-95,-30, 0,  0.2, 0.2, 1.0, 5.0)
 model:addEngineEmitter(-95,-30,-8,  0.2, 0.2, 1.0, 5.0)
 
 sizes = {
-    "Fighter"={20,30},
-    "Scout"={30,45},
-    "Corvette"={50,80},
-    "Dreadnought"={100,160}
+    Fighter={20,30},
+    Scout={30,45},
+    Corvette={50,80},
+    Dreadnought={100,160},
 }
 for sizeName, sizeValues in pairs(sizes) do
   for _, color in ipairs({"Blue", "Green", "Grey", "Red", "White", "Yellow"}) do
