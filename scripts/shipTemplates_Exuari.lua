@@ -1,74 +1,76 @@
 --Exuari ships
---
---Usage in scenarios:
--- Eighter Agent-Style: one to few ships attack chosen target.
--- Or Assault-Style: Carrier with defending Frigates start somewhere off-sector. Carrier starts waves of all kinds of fighters and Artillery. Upon first resistance, Strikers are started.
---
---Faction style (equipment):
--- shields weaker than kraylor/human shields
--- front shields stronger than rear shields
--- hull stronger than shields
--- weaker beams than kraylor/human beams
--- many missiles, including missiles of mass destruction
--- most hvli, less homing; both small
--- focus on small specialiced ships and fighters
--- small ships with many thin parts. Wings.
--- Models: small_frigate_{1-5} and maybe dark_fighter_6, small_fighter_1, space_cruiser_4 (as fighter)
--- TODO use pool of small_frigate in different size for (same) ship
---
---Tech details:
--- Beams
---  Exuari Fighter beam: rng 1000, cycle 4, dmg 4, dps 1
---  Exuari Striker beam: rng 1000, cycle 6, dmg 6, dps 1
---  Exuari Turret  beam: rng 1200, cycle 3/6/9, dmg 2/4/6, dps 0.66 
--- Hull/shields
---  Fighter 30, 30
---  Bomber  40, 30
---  Striker 50, 50/30 or 80/30/30/30
---  Frigate 70, 50/40 (more variation)
--- Engines
---  Fighter 120-130, 30-35, 25-30
---  Bomber  70, 20, 15
---  Striker 70, 12, 12 +warp
---  Frigate 40-70, 6-15, 8-20 
---  Station 20, 1.5, 3
---
---remaining Names
--- Butch
--- Ace
--- Wilder
---
---Striker Names
--- Racer
--- Hunter
--- Strike
--- Dash
---
---Fighter Names
--- Dagger
--- Blade
--- Gunner
--- Shooter
--- Jagger
---
---Defender Names
--- Warden
--- Sentinel
--- Guard
---
---Sniper Names
--- Flash
--- Ranger
--- Buster
---
---Defender Names (unused)
--- Rebel
--- Ransom
--- Rowdy
---
---Carrier Names
--- Ryder
 
+--[[
+
+Description
+-----------
+This file describes a set of ships of a similar style that was designed with the background of the Exuari culture.
+
+Appearance
+----------
+Small ships with wings and many thin parts are the primary design features for the Exuari fleet.
+The models that were chosen for the ships provide those common features.
+Custom radar traces were designed for most of the Exuari ships. The radar traces show wings on all Exuari ships, so it should be easy for players to distinguish between Exuari ships and ships of other factions. As wings are considered to be the primary feature of Exuari ships, so make sure they are shown on radar traces if you add new ones.
+If you want to extend this list of ships, consider using variations of the "small_frigate" Models/Meshes or other models that show mentioned features, like "dark_fighter_6", "small_fighter_1", "space_cruiser_4".
+
+Strategic use in scenarios
+--------------------------
+Considering the faction description and existing scenarios the following strategies have been developed for the Exuari fleet.
+  * Assassins ("death teams"): One or few ships attack a chosen target. Warp Jammers or other technology may be used. When used in a scenario, the players goal can be to defend the target or themself. Ambushes are a common element.
+  * Siege: A carrier ship with defending frigates is hidden somewhere near the sector. The carrier launches waves of all kinds of fighters and artillery. Upon first resistance, Warp-enabled strikers are started as reinforcements. The players goals can be to simply defend and survive or to find and destroy the hidden carrier ship.
+ 
+Ship Properties
+---------------
+The following features were chosen for Exuari ships, to make them distinguishable from other factions:
+  * Exuari focus on small specialised ships and fighters, rather than massive corvettes
+  * Hull is stronger than shields, front shields are stronger than rear shields
+  * Shields are weaker than the shields of most other factions
+  * Beams are weaker than the beams of most other factions
+  * Heavy use of missiles: mostly small HVLIs, few small homing. Some missiles of mass destruction.
+
+Naming Convention
+-----------------
+The Exuari ship template names mostly are "bad boys" names (like "Buster"). Some are named after a weapon (like "Dagger") or by their function (like "Warden"). Each class of ships has it's own small naming convention, so the names of similar ships provide similar association. Further names could be "Butch", "Ace", "Wilder" or "Rebel", "Ransom", "Rowdy".
+
+Ship Classes
+------------
+As Exuari ships are specialised, there are several classes of ships that provide specific purposes:
+  * Fighters are quick agile ships that do not do a lot of damage, but usually come in larger groups. They are easy to take out, but should not be underestimated.
+  * Striker are warp-drive equipped fighters build for quick strikes. Fast, agile, but do not do an extreme amount of damage. Low rear shields.
+  * Frigates are non-warp capable ships, mostly used to defend bases or to build the rear line in an assault.
+  * Artillery are non-warp capable ships, mostly used to delivers Nukes to their enemies.
+  * Carriers are huge ships with many defensive features. It can be docked by smaller ships.
+
+Overview
+--------
+Strikers:
+  * Racer
+  * Hunter
+  * Strike
+  * Dash
+
+Fighters:
+  * Dagger
+  * Blade
+  * Gunner
+  * Shooter
+  * Jagger
+
+Defenders/Frigates:
+  * Warden
+  * Sentinel
+  * Guard
+
+Sniper/Artillery:
+  * Flash
+  * Ranger
+  * Buster
+
+Carriers:
+  * Ryder
+  * Fortress
+
+--]]
 
 --[[ Fighters --]]
 -- Fighters are quick agile ships that do not do a lot of damage, but usually come in larger groups. They are easy to take out, but should not be underestimated.
@@ -275,7 +277,7 @@ template:setSharesEnergyWithDocked(true)
 --threat level: 12(dps)+0(tube)+12(shields)+5(hull)+0.2(speed)+0(maneuver) = 29.2 => 14.6 
 
 variation = template:copy("Fortress")
-variation:setDescription("The Exuari Fortress is a huge carrier with many defensive features. It can be docked by smaller ships to refuel or carry them. Unlike a station it is equipped with a slow impulse drive. The shields of this base carrier are sayed to be undestroyable.")
+variation:setDescription("The Exuari Fortress is a huge carrier with many defensive features. It can be docked by smaller ships to refuel or carry them. Unlike a station it is equipped with a slow impulse drive. The shields of this base carrier are saied to be undestroyable.")
 --                  Arc, Dir, Range, CycleTime, Dmg
 variation:setBeam(0,  20, -90, 2400.0, 6.1, 4):setBeamWeaponTurret(0, 160, -90, 5)
 variation:setBeam(1,  20, -90, 2400.0, 6.0, 4):setBeamWeaponTurret(1, 160, -90, 5)
@@ -291,4 +293,23 @@ variation:setBeam(10, 20,  90, 2400.0, 6.1, 4):setBeamWeaponTurret(10, 160,  90,
 variation:setBeam(11, 20,  90, 2400.0, 6.0, 4):setBeamWeaponTurret(11, 160,  90, 5)
 variation:setShields(2500)
 --threat level: 12(dps)+0(tube)+120(shields)+5(hull)+0.2(speed)+0(maneuver) = 137.2 => 68
+
+--[[
+Tech details:
+ Beams
+  Exuari Fighter beam: rng 1000, cycle 4, dmg 4, dps 1
+  Exuari Striker beam: rng 1000, cycle 6, dmg 6, dps 1
+  Exuari Turret  beam: rng 1200, cycle 3/6/9, dmg 2/4/6, dps 0.66 
+ Hull/shields
+  Fighter 30, 30
+  Bomber  40, 30
+  Striker 50, 50/30 or 80/30/30/30
+  Frigate 70, 50/40 (more variation)
+ Engines
+  Fighter 120-130, 30-35, 25-30
+  Bomber  70, 20, 15
+  Striker 70, 12, 12 +warp
+  Frigate 40-70, 6-15, 8-20 
+  Station 20, 1.5, 3
+--]]
 
