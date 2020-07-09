@@ -31,7 +31,7 @@ function init()
 	placeRandomAroundPoint(Asteroid, 90, 4000, 16000, 32000, 9000)
 	placeRandomAroundPoint(VisualAsteroid, 70, 4000, 15000, 32000, 9000)
 	
-	euphrates = CpuShip():setTemplate("Orca F12"):setFaction("Human Navy"):setCallSign("HNS Euphrates"):setScanned(true):orderDefendTarget(stakhanov):setPosition(31000, 8500)
+	euphrates = CpuShip():setTemplate("Piranha F12"):setFaction("Human Navy"):setCallSign("HNS Euphrates"):setScanned(true):orderDefendTarget(stakhanov):setPosition(31000, 8500)
 	CpuShip():setTemplate("MT52 Hornet"):setFaction("Human Navy"):setPosition(32500, 8500):orderDefendTarget(euphrates):setScanned(true)
 	CpuShip():setTemplate("MT52 Hornet"):setFaction("Human Navy"):setPosition(32500, 9500):orderDefendTarget(euphrates):setScanned(true)
 	

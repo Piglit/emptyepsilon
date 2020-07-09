@@ -88,7 +88,7 @@ color_civil2 = "Blue"  --get civil equipment. Blues like to travel in column for
 --
 --HeavyCorvette
 --radius: 80, beams: 0, tubes: 0
---Orca(Missile, no beam)
+--Piranha(Missile, no beam)
 --
 --MultiGunCorvette
 --radius: 80, beams: 0, tubes: 0
@@ -292,14 +292,14 @@ variation:setBeamWeapon(1, 60,  15, 1500, 6, 8)
 
 
 --[[Missile Cruiser--]]
-model_orca = "HeavyCorvette" 
-descr_orca = [[The Orca broadside missile cruiser is a light artillery frigate. It is often used as escort or countermeassure against ambushes. It's homing missiles can take out single starfighters quickly, and capital ships fear the full broadside HVLI attacks. It was designed to replace the old Piranha missile cruiser. However, the biggest flaw of the Piranha is still present: the lack of beam weapons.
+model_piranha = "HeavyCorvette" 
+descr_piranha = [[The Piranha broadside missile cruiser is a light artillery frigate. It is often used as escort or countermeassure against ambushes. It's homing missiles can take out single starfighters quickly, and capital ships fear the full broadside HVLI attacks. It was designed to replace the old Piranha missile cruiser. However, the biggest flaw of the Piranha is still present: the lack of beam weapons.
 
 ]]
 --as is, yellow
-template = ShipTemplate():setName("Orca F12"):setClass("Frigate", "Missile Cruiser")
-template:setModel(model_orca..color_civil1)
-template:setDescription(descr_orca..[[This is the top-seller outfit for civil use. Like the old Piranha, the Orca F12 fires exclusively from broadside weapons. Is is merely used as defense for unarmed industrial vessels against pirate raiders.]])
+template = ShipTemplate():setName("Piranha F12"):setClass("Frigate", "Missile Cruiser")
+template:setModel(model_piranha..color_civil1)
+template:setDescription(descr_piranha..[[This is the top-seller outfit for civil use. Like the old Piranha, the Piranha F12 fires exclusively from broadside weapons. Is is merely used as defense for unarmed industrial vessels against pirate raiders.]])
 template:setRadarTrace("radar_missile_cruiser_thin.png")
 template:setHull(70)
 template:setShields(30, 30)
@@ -316,9 +316,9 @@ template:setTubeDirection(5,  90):setWeaponTubeExclusiveFor(5, "HVLI")
 template:setDefaultAI('missilevolley')
 
 --as is, old
-variation = template:copy("Orca F8")
-variation:setModel(model_orca..color_default)
-variation:setDescription(descr_orca..[[The first version of the Orca was released into mass production before the secondary missile tubes were designed. It is not popular due to its meager firepower and unfinished tube configuration. The result was a huge financial failure.]])
+variation = template:copy("Piranha F8")
+variation:setModel(model_piranha..color_default)
+variation:setDescription(descr_piranha..[[The first version of the Piranha was released into mass production before the secondary missile tubes were designed. It is not popular due to its meager firepower and unfinished tube configuration. The result was a huge financial failure.]])
 variation:setTubes(2, 12.0)
 variation:setWeaponStorage("HVLI", 10)
 variation:setWeaponStorage("Homing", 5)
@@ -326,45 +326,45 @@ variation:setTubeDirection(0, -90)
 variation:setTubeDirection(1,  90)
 
 --blue front
-variation = variation:copy("Orca Vanguard")
-variation:setModel(model_orca..color_civil2)
-variation:setDescription(descr_orca..[[After the Orca F8 turned out to be a flop on the market and the Orca F12 were already available, the Blue Star Trading Cartell acquired the remaining Orca F8 models while they were cheap.
-The Orca Vanguard and Orca Rear-Guard were created by turning the missile tubes direction of the Orca F8.
+variation = variation:copy("Piranha Vanguard")
+variation:setModel(model_piranha..color_civil2)
+variation:setDescription(descr_piranha..[[After the Piranha F8 turned out to be a flop on the market and the Piranha F12 were already available, the Blue Star Trading Cartell acquired the remaining Piranha F8 models while they were cheap.
+The Piranha Vanguard and Piranha Rear-Guard were created by turning the missile tubes direction of the Piranha F8.
 
-The Orca Vanguard is often found as formation leader of echelon (diagonal left to right) formations. Convoys with a Orca Vanguard often come with a Nirvana Rear-Guard.]])
+The Piranha Vanguard is often found as formation leader of echelon (diagonal left to right) formations. Convoys with a Piranha Vanguard often come with a Nirvana Rear-Guard.]])
 variation:setTubeDirection(0, 0)
 variation:setTubeDirection(1, 0)
 variation:setDefaultAI('default')
 
 --blue back 
-variation = variation:copy("Orca Rear-Guard")
-variation:setModel(model_orca..color_civil2)
-variation:setDescription(descr_orca..[[After the Orca F8 turned out to be a flop on the market and the Orca F12 were already available, the Blue Star Trading Cartell acquired the remaining Orca F8 models while they were cheap.
-The Orca Vanguard and Orca Rear-Guard were created by turning the missile tubes direction of the Orca F8.
+variation = variation:copy("Piranha Rear-Guard")
+variation:setModel(model_piranha..color_civil2)
+variation:setDescription(descr_piranha..[[After the Piranha F8 turned out to be a flop on the market and the Piranha F12 were already available, the Blue Star Trading Cartell acquired the remaining Piranha F8 models while they were cheap.
+The Piranha Vanguard and Piranha Rear-Guard were created by turning the missile tubes direction of the Piranha F8.
 
-The Orca Rear-Guard is often found on the last position of echelon or column formations. Convoys with a Orca Rear-Guard often come with a Nirvana Vanguard.]])
+The Piranha Rear-Guard is often found on the last position of echelon or column formations. Convoys with a Piranha Rear-Guard often come with a Nirvana Vanguard.]])
 variation:setTubeDirection(0, 180)
 variation:setTubeDirection(1, 180)
 variation:setDefaultAI('missilevolley')
 
 --as is
-variation = template:copy("Orca F12.M")
-variation:setModel(model_orca..color_pirate)
-variation:setDescription(descr_orca .. [[This modified Orca F12 is in all respects the same vessel except for special weapon tube modifications that allow it to fire nukes in addition to its normal loadout. However, these changes reduce its overall missile storage capacity and render the ship illegal.]])
+variation = template:copy("Piranha F12.M")
+variation:setModel(model_piranha..color_pirate)
+variation:setDescription(descr_piranha .. [[This modified Piranha F12 is in all respects the same vessel except for special weapon tube modifications that allow it to fire nukes in addition to its normal loadout. However, these changes reduce its overall missile storage capacity and render the ship illegal.]])
 variation:setWeaponStorage("HVLI", 10)
 variation:setWeaponStorage("Homing", 4)
 variation:setWeaponStorage("Nuke", 2)
 
 --ghosts
-variation = template:copy("Orca G4")
-variation:setModel(model_orca..color_ghosts)
-variation:setDescription(descr_orca .. [[This modified Orca F12 is in all respects the same vessel except for special weapon tube modifications that allow it to fire nukes in addition to its normal loadout. However, these changes render the ship illegal.]])
+variation = template:copy("Piranha G4")
+variation:setModel(model_piranha..color_ghosts)
+variation:setDescription(descr_piranha .. [[This modified Piranha F12 is in all respects the same vessel except for special weapon tube modifications that allow it to fire nukes in addition to its normal loadout. However, these changes render the ship illegal.]])
 variation:setWeaponStorage("Nuke", 1)
 
 --milit
-variation = template:copy("Orca M5")
-variation:setModel(model_orca..color_milit)
-variation:setDescription(descr_orca..[[This combat-specialized Orca M5 adds nukes and the secondary tubes can also launch homing missiles.]])
+variation = template:copy("Piranha M5")
+variation:setModel(model_piranha..color_milit)
+variation:setDescription(descr_piranha..[[This combat-specialized Piranha M5 adds nukes and the secondary tubes can also launch homing missiles.]])
 variation:setWeaponStorage("Homing", 12)
 variation:setWeaponStorage("Nuke", 6)
 variation:weaponTubeAllowMissle(1, "Homing"):weaponTubeAllowMissle(2, "Homing")
@@ -404,13 +404,13 @@ variation:setSpeed(70, 15, 10)
 --blue front
 variation = template:copy("Nirvana Vanguard")
 variation:setModel(model_nirvana..color_civil2)
-variation:setDescription(descr_nirvana..[[The Nirvana Vanguard is designed to travel on the top position of convoys in echelon formation. The shields are reconfigured for frontal defense. Convoys with a Nirvana Vanguard often come with a Orca Rear-Guard.]])
+variation:setDescription(descr_nirvana..[[The Nirvana Vanguard is designed to travel on the top position of convoys in echelon formation. The shields are reconfigured for frontal defense. Convoys with a Nirvana Vanguard often come with a Piranha Rear-Guard.]])
 variation:setShields(70, 30)
 
 --blue back 
 variation = template:copy("Nirvana Rear-Guard")
 variation:setModel(model_nirvana..color_civil2)
-variation:setDescription(descr_nirvana..[[The Nirvana Rear-Guard is designed to travel on the last position of convoys in column formation. It features a rear mounted beam. Convoys with a Nirvana Rear-Guard often come with a Orca Vanguard.]])
+variation:setDescription(descr_nirvana..[[The Nirvana Rear-Guard is designed to travel on the last position of convoys in column formation. It features a rear mounted beam. Convoys with a Nirvana Rear-Guard often come with a Piranha Vanguard.]])
 variation:setBeamWeapon(4, 90, 180, 1400, 3, 2)
 
 --pirate

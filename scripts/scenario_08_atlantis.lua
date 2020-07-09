@@ -177,7 +177,7 @@ Doppler instability: %i]], b20_artifact.beta_radiation, b20_artifact.gravity_dis
     CpuShip():setFaction("Ghosts"):setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):setTemplate("Phobos T3"):orderDefendLocation(x, y)
 
     x, y = table.remove(b20_nebula_list, math.random(#b20_nebula_list)):getPosition()
-    CpuShip():setFaction("Ghosts"):setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):setTemplate("Orca F12"):orderDefendLocation(x, y)
+    CpuShip():setFaction("Ghosts"):setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):setTemplate("Piranha F12"):orderDefendLocation(x, y)
 
     x, y = table.remove(b20_nebula_list, math.random(#b20_nebula_list)):getPosition()
     CpuShip():setFaction("Ghosts"):setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):setTemplate("Starhammer II"):orderDefendLocation(x, y)

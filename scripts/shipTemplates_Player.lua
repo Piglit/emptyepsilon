@@ -261,11 +261,11 @@ template:addDoor( 5, 1, false)
 
 
 --[[Player Missile Cruiser--]]
-template = ShipTemplate():setName("Orca M5P"):setClass("Frigate", "Missile Cruiser"):setType("playership")
+template = ShipTemplate():setName("Piranha M5P"):setClass("Frigate", "Missile Cruiser"):setType("playership")
 template:setModel("HeavyCorvette"..color_player)
-template:setDescription([[The Orca is a light artillery cruiser, designed to fire from broadside weapon tubes. It comes to use as a escort or defensive spacecraft, since it can quickly react to ambushes. However since it comes without beam weapons, it has proven to be useless against starfighters.
+template:setDescription([[The Piranha is a light artillery cruiser, designed to fire from broadside weapon tubes. It comes to use as a escort or defensive spacecraft, since it can quickly react to ambushes. However since it comes without beam weapons, it has proven to be useless against starfighters.
 
-This combat-specialized Orca M5P adds nukes, mine-laying tubes, combat maneuvering systems, and a jump drive.]])
+This combat-specialized Piranha M5P adds nukes, mine-laying tubes, combat maneuvering systems, and a jump drive.]])
 template:setRadarTrace("radar_missile_cruiser_thin.png")
 template:setTubes(8, 15.0)
 template:setWeaponStorage("HVLI", 20)

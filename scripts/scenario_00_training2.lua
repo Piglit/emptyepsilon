@@ -7,7 +7,7 @@
 --- Description:
 --- During this training your will learn to navigate and use a jumpdrive, destroy enemies with broadside missile tubes and you will coordinate your attack with an allied beam cruiser.
 ---
---- Your ship is a Orca missile cruiser - a jump-driven cruiser with broadside missiles, but without beam weapons.
+--- Your ship is a Piranha missile cruiser - a jump-driven cruiser with broadside missiles, but without beam weapons.
 ---
 --- Advice:
 --- If you completed 'Training: Cruiser' and your science managed to scan all targets, increase the scan complexity.
@@ -51,7 +51,7 @@ function init()
 	dir = irandom(60, 120)
 	pos3x, pos3y = radialPosition(pos2x, pos2y, rr + irandom(2000, rr-5000), -dir)
 
-	player = PlayerSpaceship():setTemplate("Orca M5P"):setCallSign("Rookie 1"):setFaction("Human Navy"):setPosition(pos0x, pos0y):setHeading(90)
+	player = PlayerSpaceship():setTemplate("Piranha M5P"):setCallSign("Rookie 1"):setFaction("Human Navy"):setPosition(pos0x, pos0y):setHeading(90)
 	command = CpuShip():setTemplate("Nirvana R5M"):setCallSign("Escort 1"):setFaction("Human Navy"):setPosition(pos0x-1000, pos0y-1000):setHeading(90):orderIdle():setScannedByFaction("Human Navy", true)
 
 	table.insert(enemyList, CpuShip():setFaction("Kraylor"):setTemplate("Equipment Freighter 3"):setCallSign("FTR Phi1"):setPosition(pos1x+1200, pos1y):setHeading(0):orderStandGround())
@@ -75,7 +75,7 @@ end
 function commsInstr()
 	if not instr1 and timer > 8.0 then
 		instr1 = true
-		command:sendCommsMessage(player, "Here is Commander Saberhagen. In this training mission you will practice more advanced tactics using an Orca missile cruiser. You will need to find and destroy the ships of a scattered enemy convoy, and use your jump drive and your missiles to take 'em by surprise. Notice that your ship does not have any beam weapons. I will keep you updated about the positions of the next enemy targets on a public broadcast channel; you can look at it on your comms log if you missed one. Commander Saberhagen out.")
+		command:sendCommsMessage(player, "Here is Commander Saberhagen. In this training mission you will practice more advanced tactics using an Piranha missile cruiser. You will need to find and destroy the ships of a scattered enemy convoy, and use your jump drive and your missiles to take 'em by surprise. Notice that your ship does not have any beam weapons. I will keep you updated about the positions of the next enemy targets on a public broadcast channel; you can look at it on your comms log if you missed one. Commander Saberhagen out.")
 	end
 	if not instr2 and timer > 10.0 then
 		instr2 = true

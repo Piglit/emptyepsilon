@@ -47,7 +47,7 @@ function init()
 		CpuShip():setTemplate("Phobos T3"):setPosition(random(-13000 * location_scale, 13000 * location_scale), random(5000, 8000)):setRotation(-90):setFaction("Exuari"):orderRoaming()
 	end
 	for n=1,3*battle_scale do
-		CpuShip():setTemplate("Orca F12"):setPosition(random(-13000 * location_scale, 13000 * location_scale), 5000):setRotation(-90):setFaction("Exuari"):orderRoaming()
+		CpuShip():setTemplate("Piranha F12"):setPosition(random(-13000 * location_scale, 13000 * location_scale), 5000):setRotation(-90):setFaction("Exuari"):orderRoaming()
 	end
 	for n=1,1*battle_scale do
 		CpuShip():setTemplate("Atlantis X23"):setPosition(random(-3000 * location_scale, 3000 * location_scale), 7000):setRotation(-90):setFaction("Exuari"):orderRoaming()

@@ -14,7 +14,7 @@ hangars = Hangars
 function createMiningFrigate()
 	local frigates = {
 		"Phobos Y2",
-		"Orca F12",
+		"Piranha F12",
 		"Nirvana R5A",
 	}
 	local idx = math.random(#frigates)
