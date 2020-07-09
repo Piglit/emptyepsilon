@@ -118,6 +118,7 @@ template:setRadarTrace("radar_fighter.png")
 template:setDescription(descr_hornet)
 template:setHull(30)
 template:setShields(20)
+--Reputation Score: 5.0
 template:setSpeed(120, 30, 25)
 template:setDefaultAI('fighter')
 --                  Arc, Dir, Range, CycleTime, Dmg
@@ -128,6 +129,7 @@ variation:setModel(model_hornet..color_milit)
 variation:setDescription([[The MU52 Hornet is a new, upgraded version of the MT52. All of its systems are slightly improved over the MT52 model.]])
 variation:setHull(35)
 variation:setShields(22)
+--Reputation Score: 5.7
 variation:setSpeed(125, 32, 25)
 variation:setBeam(0, 30, 0, 900.0, 4.0, 2.5)
 
@@ -150,6 +152,7 @@ template:setRadarTrace("radar_fighter.png")
 template:setDescription(descr_lindworm)
 template:setHull(50)
 template:setShields(20)
+--Reputation Score: 7
 template:setSpeed(50, 15, 25)
 template:setTubes(3, 15.0)
 template:setTubeSize(0, "small")
@@ -179,6 +182,7 @@ template:setRadarTrace("radar_fighter.png")
 template:setDescription(descr_adder)
 template:setHull(50)
 template:setShields(30)
+--Reputation Score: 8
 template:setSpeed(80, 28, 25)
 template:setBeam(0, 35, 0, 800, 5.0, 2.0)
 template:setBeam(1, 70, 30, 600, 5.0, 2.0)
@@ -201,6 +205,7 @@ variation:setModel(model_adder..color_default)
 variation:setDescription([[The mark 4 Adder is a rare sight these days due to the success its successor, the mark 5 Adder, which often replaces this model. Its similar hull, however, means careless buyers are sometimes conned into buying mark 4 models disguised as the mark 5.]])
 variation:setHull(40)
 variation:setShields(20)
+--Reputation Score: 6
 variation:setSpeed(60, 20, 20)
 variation:setTubes(1, 20.0)
 variation:setTubeSize(0, "small")
@@ -236,6 +241,7 @@ template:setDescription(descr_phobos)
 template:setRadarTrace("radar_cruiser.png")
 template:setHull(70)
 template:setShields(50, 40)
+--Reputation Score: 16
 template:setSpeed(60, 10, 10)
 template:setBeamWeapon(0, 90, -15, 1200, 8, 6)
 template:setBeamWeapon(1, 90,  15, 1200, 8, 6)
@@ -250,6 +256,7 @@ variation = template:copy("Phobos Y2")
 variation:setModel(model_phobos..color_civil1)
 variation:setDescription(descr_phobos..[[This civil version of the Phobos is outfited for use in asteroid belts. Higher maneuverability is combined with reinfored hull against impact.]])
 variation:setHull(90)
+--Reputation Score: 18
 variation:setSpeed(60, 15, 10)
 
 --blue front
@@ -257,6 +264,7 @@ variation = template:copy("Phobos Vanguard")
 variation:setModel(model_phobos..color_civil2)
 variation:setDescription(descr_phobos..[[The Phobos Vanguard is designed to travel on the top position of convoys in column formation. The shields are reconfigured for frontal defense.]])
 variation:setShields(70, 30)
+--Reputation Score: 17
 variation:setSpeed(65, 10, 10)
 
 --blue rear 
@@ -303,6 +311,7 @@ template:setDescription(descr_piranha..[[This is the top-seller outfit for civil
 template:setRadarTrace("radar_missile_cruiser_thin.png")
 template:setHull(70)
 template:setShields(30, 30)
+--Reputation Score: 13
 template:setSpeed(40, 6, 8)
 template:setTubes(6, 15.0)
 template:setWeaponStorage("HVLI", 20)
@@ -389,6 +398,7 @@ template:setBeamWeapon(2, 90,  50, 1400, 3, 2)
 template:setBeamWeapon(3, 90, -50, 1400, 3, 2)
 template:setHull(70)
 template:setShields(50, 40)
+--Reputation Score: 16
 template:setSpeed(70, 12, 10)
 
 --as is, yellow
@@ -406,6 +416,7 @@ variation = template:copy("Nirvana Vanguard")
 variation:setModel(model_nirvana..color_civil2)
 variation:setDescription(descr_nirvana..[[The Nirvana Vanguard is designed to travel on the top position of convoys in echelon formation. The shields are reconfigured for frontal defense. Convoys with a Nirvana Vanguard often come with a Piranha Rear-Guard.]])
 variation:setShields(70, 30)
+--Reputation Score: 17
 
 --blue back 
 variation = template:copy("Nirvana Rear-Guard")
@@ -452,6 +463,7 @@ template:setDescription(descr_flavia)
 template:setRadarTrace("radar_tug.png")
 template:setHull(50)
 template:setShields(50, 50)
+--Reputation Score: 15
 template:setSpeed(30, 8, 10)
 
 --blue
@@ -504,6 +516,7 @@ template:setDescription(descr_storm)
 template:setBeamWeapon(0, 60, 0, 1200, 3, 2)
 template:setHull(50)
 template:setShields(30, 30)
+--Reputation Score: 11
 template:setSpeed(40, 6, 8)
 template:setTubes(5, 15.0)
 template:setWeaponStorage("HVLI", 15)
@@ -539,6 +552,7 @@ template:setDescription(descr_atlantis)
 template:setRadarTrace("radar_dread.png")
 template:setHull(100)
 template:setShields(200, 200, 200, 200)
+--Reputation Score: 90
 template:setSpeed(30, 3.5, 5)
 template:setJumpDrive(true)
 --                  Arc, Dir, Range, CycleTime, Dmg
@@ -559,6 +573,7 @@ template:setDescription([[Contrary to its predecessor, the Starhammer II lives u
 template:setRadarTrace("radar_dread.png")
 template:setHull(200)
 template:setShields(450, 350, 150, 150, 350)
+--Reputation Score: 165
 template:setSpeed(35, 6, 10)
 template:setJumpDrive(true)
 --                  Arc, Dir, Range, CycleTime, Dmg
@@ -579,6 +594,7 @@ template:setDescription([[The Jump Carrier is a specialized Freighter. It does n
 It is designed to carry other ships deep into space. So it has special docking parameters, allowing other ships to attach themselves to this ship.]])
 template:setHull(100)
 template:setShields(50, 50)
+--Reputation Score: 20
 template:setSpeed(50, 6, 10)
 template:setRadarTrace("radar_transport.png")
 template:setJumpDrive(true)
@@ -595,6 +611,7 @@ template:setDescription([[This stationary defense platform operates like a stati
 template:setRadarTrace("radartrace_smallstation.png")
 template:setHull(150)
 template:setShields(120, 120, 120, 120, 120, 120)
+--Reputation Score: 87
 template:setSpeed(0, 0.5, 0)
 template:setDockClasses("Starfighter", "Frigate")
 --                  Arc, Dir, Range, CycleTime, Dmg

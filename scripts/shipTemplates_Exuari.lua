@@ -82,6 +82,7 @@ template:setDescription("The Exuari fighter 'Dagger' is a single-seated spacecra
 template:setBeam(0, 60, 0, 1000.0, 4.0, 4)
 template:setHull(30)
 template:setShields(30)
+--Reputation Score: 6
 template:setSpeed(120, 30, 25)
 template:setDefaultAI('fighter')	-- set fighter AI, which dives at the enemy, and then flies off, doing attack runs instead of "hanging in your face".
 --threat level: 1(dps)+0(tube)+1.5(shields)+1.5(hull)+1.2(speed)+3(maneuver) = 1+1.5+1.5+1.2+3=8.2 => 4.1
@@ -104,6 +105,7 @@ template:setDescription("The Exuari light bomber 'Gunner' is a single-seated spa
 template:setBeam(0, 60, 0, 1000.0, 4.0, 4)
 template:setHull(40)
 template:setShields(30)
+--Reputation Score: 7
 template:setSpeed(70, 20, 15)
 template:setDefaultAI('fighter')	-- set fighter AI, which dives at the enemy, and then flies off, doing attack runs instead of "hanging in your face".
 template:setTubes(1, 60.0)
@@ -133,6 +135,7 @@ template:setBeam(0, 40,-5, 1000.0, 6.0, 6)
 template:setBeam(1, 40, 5, 1000.0, 6.0, 6)
 template:setHull(50)
 template:setShields(50, 30)
+--Reputation Score: 13
 template:setSpeed(70, 12, 12)
 template:setWarpSpeed(600)
 --threat level: 2(dps)+0(tube)+2(shields)+2.5(hull)+5+0.7(speed)+1.2(maneuver) = 13.4 => 6.7
@@ -143,6 +146,7 @@ variation:setModel("small_frigate_4"):setRadarTrace("radar_exuari_4.png")
 variation:setBeam(2, 50,-15, 1000.0, 6.0, 6)
 variation:setBeam(3, 50, 15, 1000.0, 6.0, 6)
 variation:setShields(80, 30)
+--Reputation Score: 16
 variation:setWarpSpeed(400)
 --threat level: 4(dps)+0(tube)+2.5(shields)+2.5(hull)+4+0.7(speed)+1.2(maneuver) = 14.9 = 7.5
 
@@ -162,6 +166,7 @@ variation:setTubes(1, 10.0)
 variation:setWeaponStorage("HVLI", 4)
 variation:setHull(70)
 variation:setShields(80, 30)
+--Reputation Score: 18
 variation:setWarpSpeed(200)
 --threat level: 2(dps)+4(tube)+2.5(shields)+3.5(hull)+1.5+0.7(speed)+1.2(maneuver) = 15.4 => 7.7
 
@@ -173,6 +178,7 @@ template:setModel("transport_1_1"):setRadarTrace("radar_exuari_frigate_1.png")
 template:setDescription([[The Exuari Guard is not impressive, trying to be a alround escort or defense vessel. It has powering problems, causing the reload cycle of beams and missiles to take longer than expected. The Guard is equipped with turret beams and a large stock of different missiles, including homing missiles and mines.]])
 template:setHull(70)
 template:setShields(50, 40)
+--Reputation Score: 16
 template:setSpeed(55, 10, 10)
 template:setBeamWeapon(0, 10, -15, 1200, 9, 6)
 template:setBeamWeapon(1, 10,  15, 1200, 9, 6)
@@ -200,6 +206,7 @@ template:setBeamWeaponTurret(2, 180,  50, 5)
 template:setBeamWeaponTurret(3, 180, -50, 5)
 template:setHull(70)
 template:setShields(50, 40)
+--Reputation Score: 16
 template:setSpeed(70, 15, 10)
 --threat level: 4(dps)+0(tube)+2.5(shields)+3.5(hull)+0.7(speed)+1.5(maneuver) = 12.2 => 6.1
 
@@ -210,6 +217,7 @@ template:setBeamWeapon(0, 20, 0, 1200, 3, 2)
 template:setBeamWeaponTurret(0, 270, 0, 5)
 template:setHull(50)
 template:setShields(30, 30)
+--Reputation Score: 11
 template:setSpeed(40, 6, 8)
 template:setTubes(5, 15.0)
 template:setWeaponStorage("HVLI", 15)
@@ -228,6 +236,7 @@ template:setModel("small_frigate_2"):setRadarTrace("radar_exuari_2.png")
 template:setDescription([[The Exuari Flash is a special artillery sniper, built to deal a large amounts of damage quickly and from a distance before escaping. It's a basic freighter that carries nuclear weapons. Some say, this is what happens to freighters, when they fall into the hands of the Exuari.]])
 template:setHull(30)
 template:setShields(30, 5, 5)
+--Reputation Score: 7
 template:setSpeed(50, 6, 20)
 template:setTubes(3, 25.0)
 template:weaponTubeDisallowMissle(1, "Nuke"):weaponTubeDisallowMissle(2, "Nuke")
@@ -271,6 +280,7 @@ template:setBeam(10, 20,  90, 1200.0, 6.1, 4):setBeamWeaponTurret(10, 160,  90, 
 template:setBeam(11, 20,  90, 1200.0, 6.0, 4):setBeamWeaponTurret(11, 160,  90, 5)
 template:setHull(100)
 template:setShields(250)
+--Reputation Score: 35
 template:setSpeed(20, 1.5, 3)
 template:setDockClasses("Exuari")
 template:setSharesEnergyWithDocked(true)
@@ -292,6 +302,7 @@ variation:setBeam(9,  20, -90, 2400.0, 6.0, 4):setBeamWeaponTurret(9, 160, -90, 
 variation:setBeam(10, 20,  90, 2400.0, 6.1, 4):setBeamWeaponTurret(10, 160,  90, 5)
 variation:setBeam(11, 20,  90, 2400.0, 6.0, 4):setBeamWeaponTurret(11, 160,  90, 5)
 variation:setShields(2500)
+--Reputation Score: 260
 --threat level: 12(dps)+0(tube)+120(shields)+5(hull)+0.2(speed)+0(maneuver) = 137.2 => 68
 
 --[[

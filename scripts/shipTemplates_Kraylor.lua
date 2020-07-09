@@ -35,6 +35,7 @@ template:setRadarTrace("radar_kraylor_fighter.png")
 template:setDescription([[The Kraylor Drone is an automated interceptor vehicle. Often some gunships or destroyers carry drones with them to distract their enemies while attacking. Novice crews often fall for it and waste expensive missiles firing at drones, but due to theirs small size, drones can easily dodge some missiles. The drones beams consist of old and lightweight technology, nothing compared with the usual Kraylor beams. As long as your shields are up, its almost save to igonre drones.]])
 template:setHull(16)
 template:setShields(15)
+--Reputation Score: 3.1
 template:setSpeed(100, 25, 20)
 template:setDefaultAI('fighter')
 --                  Arc, Dir, Range, CycleTime, Dmg
@@ -60,6 +61,7 @@ template:setBeam(1, 50, 0, 1000.0, 6.0, 8)
 template:setTubes(1, 16.0) -- Amount of torpedo tubes
 template:setHull(100)
 template:setShields(100, 80, 80)
+--Reputation Score: 36
 template:setSpeed(60, 5, 10)
 template:setWeaponStorage("Homing", 4)
 --threat level: 2*1.3=2.6(dps)+1*4(tube)+(100+80+80)/60=4.3(shields)+100/100=1(hull) = 2.6+4+4.3+1=11.9
@@ -103,6 +105,7 @@ template:setBeam(4, 60, -5, 1000.0, 6.0, 8)
 template:setBeam(5, 60, 5, 1000.0, 6.0, 8)
 template:setHull(60)
 template:setShields(150, 100)
+--Reputation Score: 31
 template:setSpeed(60, 10, 20)
 
 
@@ -125,6 +128,7 @@ template:setBeam(4, 30,   0, 2000.0, 6.0, 8)
 template:setBeam(5,100, 180, 1200.0, 6.0, 8)
 template:setHull(70)
 template:setShields(300, 300, 300, 300, 300)
+--Reputation Score: 157
 template:setSpeed(30, 1.5, 5)
 --threat level: 6*1.3=7.8(dps)+(300)/20=15(shields)+0.7(hull) = 7.8+15+0.7=23.5
 --Key features: Beams configuration. Variants should change arc, dir, range.
@@ -134,6 +138,7 @@ template:setDescription([[The Painbringer a small destroyer, and its combination
 template:setRadarTrace("radar_kraylor_destroyer_sides.png")
 template:setHull(100)
 template:setShields(200, 200, 200, 200)
+--Reputation Score: 90
 template:setSpeed(30, 3.5, 5)
 template:setJumpDrive(true)
 --                  Arc, Dir, Range, CycleTime, Dmg
@@ -151,6 +156,7 @@ template:setDescription([[The Doombringer lives its name as a phenomenal frontal
 template:setRadarTrace("radar_kraylor_destroyer_frontal.png")
 template:setHull(200)
 template:setShields(450, 350, 150, 150, 350)
+--Reputation Score: 165
 template:setSpeed(35, 6, 10)
 template:setJumpDrive(true)
 --                  Arc, Dir, Range, CycleTime, Dmg
@@ -173,6 +179,7 @@ template:setDescription([[This stationary defense platform operates like a stati
 template:setRadarTrace("radartrace_smallstation.png")
 template:setHull(150)
 template:setShields(120, 120, 120, 120, 120, 120)
+--Reputation Score: 87
 template:setSpeed(0, 0.5, 0)
 template:setDockClasses("Starfighter", "Frigate", "Gunship", "Destroyer", "Striker")
 --                  Arc, Dir, Range, CycleTime, Dmg
@@ -206,6 +213,7 @@ for n=0,15 do
 end
 template:setHull(2000)
 template:setShields(1200, 1200, 1200, 1200, 1200, 1200)
+--Reputation Score: 920
 template:setSpeed(0, 1, 0)
 template:setDockClasses("Starfighter", "Frigate", "Gunship", "Destroyer", "Striker")
 --threat level: 15*3.3=49.5(dps)+32(tubes)+(1200)/20=60(shields)+20(hull) = 49.5+32+60+20=161.5!
