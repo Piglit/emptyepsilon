@@ -364,24 +364,37 @@ int main(int argc, char** argv)
 
 void returnToMainMenu()
 {
-    if (PreferencesManager::get("headless") != "")
+    if ((PreferencesManager::get("headless") != "") || (PreferencesManager::get("startscenario") != ""))
     {
         new EpsilonServer();
         if (PreferencesManager::get("headless_name") != "") game_server->setServerName(PreferencesManager::get("headless_name"));
         if (PreferencesManager::get("headless_password") != "") game_server->setPassword(PreferencesManager::get("headless_password").upper());
         if (PreferencesManager::get("headless_internet") == "1") game_server->registerOnMasterServer(PreferencesManager::get("registry_registration_url", "http://daid.eu/ee/register.php"));
         if (PreferencesManager::get("variation") != "") gameGlobalInfo->variation = PreferencesManager::get("variation");
-        gameGlobalInfo->startScenario(PreferencesManager::get("headless"));
+        if (PreferencesManager::get("startscenario") != "")
+        {
+            gameGlobalInfo->startScenario(PreferencesManager::get("startscenario"));
+        }
+        else
+        {
+            gameGlobalInfo->startScenario(PreferencesManager::get("headless"));
+        }
 
         if (PreferencesManager::get("startpaused") != "1")
             engine->setGameSpeed(1.0);
+        if (PreferencesManager::get("headless") != "")
+            return;
     }
-    else if (PreferencesManager::get("autoconnect").toInt())
+    if (PreferencesManager::get("autoconnect").toInt())
     {
         int crew_position = PreferencesManager::get("autoconnect").toInt() - 1;
         if (crew_position < 0) crew_position = 0;
         if (crew_position > max_crew_positions) crew_position = max_crew_positions;
         new AutoConnectScreen(ECrewPosition(crew_position), PreferencesManager::get("autocontrolmainscreen").toInt(), PreferencesManager::get("autoconnectship", "solo"));
+    }
+    else if (PreferencesManager::get("startscenario") != "")
+    {
+        new ShipSelectionScreen();
     }
     else if (PreferencesManager::get("touchcalib").toInt())
     {
