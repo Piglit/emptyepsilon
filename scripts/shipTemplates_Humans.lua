@@ -110,7 +110,7 @@ color_civil2 = "Blue"  --get civil equipment. Blues like to travel in column for
 --stalker? nuker? enemies!
 
 --[[Fighter--]]
-model_hornet = "WespeScout"
+model_hornet = "WespeFighter"
 descr_hornet = [[The MT52 Hornet is a basic interceptor found in many corners of the galaxy. It's easy to find spare parts for MT52s, not only because they are produced in large numbers, but also because they suffer high losses in combat.]]
 template = ShipTemplate():setName("MT52 Hornet"):setClass("Starfighter", "Interceptor")
 template:setModel(model_hornet..color_default)
@@ -123,6 +123,7 @@ template:setSpeed(120, 30, 25)
 template:setDefaultAI('fighter')
 --                  Arc, Dir, Range, CycleTime, Dmg
 template:setBeam(0, 30, 0, 700.0, 4.0, 2)
+template:setBeam(1, 30, 0, 700.0, 4.0, 2)
 
 variation = template:copy("MU52 Hornet")
 variation:setModel(model_hornet..color_milit)
@@ -132,6 +133,7 @@ variation:setShields(22)
 --Reputation Score: 5.7
 variation:setSpeed(125, 32, 25)
 variation:setBeam(0, 30, 0, 900.0, 4.0, 2.5)
+variation:setBeam(1, 30, 0, 900.0, 4.0, 2.5)
 
 for _,color in ipairs({"Green", "Red", "Yellow", "Blue"}) do
 	if color == "Green" then

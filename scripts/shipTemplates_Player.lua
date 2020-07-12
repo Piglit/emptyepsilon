@@ -26,7 +26,7 @@ template:setShortRangeRadarRange(1000)
 template:setCanScan(false)
 template:setCanHack(false)
 template:setCanDock(true)
-template:setCanCombatManeuver(true)
+template:setCanCombatManeuver(false)
 template:setCanLaunchProbe(false)
 template:setCanSelfDestruct(false)
 
