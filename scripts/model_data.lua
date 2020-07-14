@@ -564,6 +564,8 @@ for sizeName, sizeValues in pairs(sizes) do
     model:setScale(sizeValues[1])
     model:setRadius(sizeValues[2])
 
+    model:addBeamPosition(0.93, 0.23, 0.08)
+    model:addBeamPosition(0.93,-0.23, 0.08)
     model:addEngineEmitter(-0.75, 0.2,-0.03,  0.5, 0.5, 1.0, 0.2)
     model:addEngineEmitter(-0.75, 0.0,-0.03,  0.5, 0.5, 1.0, 0.2)
     model:addEngineEmitter(-0.75,-0.2,-0.03,  0.5, 0.5, 1.0, 0.2)
