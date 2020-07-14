@@ -162,8 +162,9 @@ template:setTubeSize(1, "small")
 template:setTubeSize(2, "small")
 template:setWeaponStorage("HVLI", 6)
 template:setWeaponStorage("Homing", 1)
-template:setTubeDirection(1, 1):setWeaponTubeExclusiveFor(1, "HVLI")
-template:setTubeDirection(2,-1):setWeaponTubeExclusiveFor(2, "HVLI")
+template:setTubeDirection(1,-1):setWeaponTubeExclusiveFor(2, "HVLI")
+template:setTubeDirection(2, 1):setWeaponTubeExclusiveFor(1, "HVLI")
+
 
 for _,color in ipairs({"Green", "Red", "Yellow", "Blue"}) do
 	if color == "Green" then
@@ -187,8 +188,8 @@ template:setShields(30)
 --Reputation Score: 8
 template:setSpeed(80, 28, 25)
 template:setBeam(0, 35, 0, 800, 5.0, 2.0)
-template:setBeam(1, 70, 30, 600, 5.0, 2.0)
-template:setBeam(2, 70, -35, 600, 5.0, 2.0)
+template:setBeam(1, 70, -35, 600, 5.0, 2.0)
+template:setBeam(2, 70, 30, 600, 5.0, 2.0)
 template:setTubes(1, 15.0)
 template:setTubeSize(0, "small")
 template:setWeaponStorage("HVLI", 4)
