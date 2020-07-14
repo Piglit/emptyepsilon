@@ -61,6 +61,11 @@ function mainMenu()
 				setCommsMessage("The Kraylor Super-nebula is hiding a wormhole which we believe is going to be used in an attack on Human space. There is an entrance into the nebula in sector F10, but be careful of traps!")
 				return true
 			end
+			
+			if comms_target.mission_state == 12 then
+			setCommsMessage("Apollo, you've incited a war! What a disaster.")
+				return true
+			end
 		end
 		-----------------------------------------------
 		
