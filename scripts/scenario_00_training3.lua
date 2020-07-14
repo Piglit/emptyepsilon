@@ -45,9 +45,10 @@ function init()
 	instr1 = false
 	timer = 0
 	finishedTimer = 5
-	rr = getLongRangeRadarRange()
-	
+
 	player = PlayerSpaceship():setTemplate("Hathcock"):setCallSign("Rookie 1"):setFaction("Human Navy"):setPosition(0, 0):setHeading(90)
+	rr = player:getLongRangeRadarRange()
+
 	wingman = CpuShip():setTemplate("Nirvana R5M"):setCallSign("Wingman"):setFaction("Human Navy"):setPosition(-1000, -1000):setHeading(225):setScannedByFaction("Human Navy", true):orderDefendLocation(0,0)
 	
 	bonus = CpuShip():setTemplate("Flavia Express"):setCallSign("Bonus"):setFaction("Criminals"):setShieldsMax(200,200):setShields(200,200):setPosition(rr+2000,-rr-2000):setHeading(225):orderFlyTowardsBlind(-rr,rr)
