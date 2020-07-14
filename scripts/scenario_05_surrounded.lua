@@ -6,32 +6,34 @@ function setCirclePos(obj, angle, distance)
 	obj:setPosition(math.sin(angle / 180 * math.pi) * distance, -math.cos(angle / 180 * math.pi) * distance)
 end
 
+enemy_faction = "Criminals"
+
 function init()
     SpaceStation():setTemplate("Small Station"):setPosition(0, -500):setRotation(random(0, 360)):setFaction("Independent")
     
     for n=1,5 do
-        ship = CpuShip():setTemplate("Phobos T3"):orderRoaming()
+        ship = CpuShip():setTemplate("Phobos T3"):orderRoaming():setFaction(enemy_faction)
 		setCirclePos(ship, random(0, 360), random(7000, 10000))
 	end
     for n=1,2 do
-        ship = CpuShip():setTemplate("Piranha F12"):orderRoaming()
+        ship = CpuShip():setTemplate("Piranha F12"):orderRoaming():setFaction(enemy_faction)
 		setCirclePos(ship, random(0, 360), random(7000, 10000))
 	end
 	
 	a = random(0, 360)
 	d = 9000
-	ship = CpuShip():setTemplate("Atlantis X23"):setRotation(a + 180):orderRoaming()
+	ship = CpuShip():setTemplate("Atlantis X23"):setRotation(a + 180):orderRoaming():setFaction(enemy_faction)
 	setCirclePos(ship, a, d)
 
-    wingman = CpuShip():setTemplate("MT52 Hornet"):setRotation(a + 180)
+    wingman = CpuShip():setTemplate("MT52 Hornet"):setRotation(a + 180):setFaction(enemy_faction)
 	setCirclePos(wingman, a - 5, d + 100)
 	wingman:orderFlyFormation(ship, 500, 100)
 
-    wingman = CpuShip():setTemplate("MT52 Hornet"):setRotation(a + 180)
+    wingman = CpuShip():setTemplate("MT52 Hornet"):setRotation(a + 180):setFaction(enemy_faction)
 	setCirclePos(wingman, a + 5, d + 100)
 	wingman:orderFlyFormation(ship, -500, 100)
 
-    wingman = CpuShip():setTemplate("MT52 Hornet"):setRotation(a + 180)
+    wingman = CpuShip():setTemplate("MT52 Hornet"):setRotation(a + 180):setFaction(enemy_faction)
 	setCirclePos(wingman, a + random(-5, 5), d - 500)
 	wingman:orderFlyFormation(ship, 0, 600)
 	
