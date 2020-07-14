@@ -1,4 +1,4 @@
--- Name: Waves
+-- Name: Basic Waves
 -- Description: Waves of increasingly difficult enemies. Prevent the destruction of your stations.
 -- Type: Basic
 -- Variation[Hard]: Difficulty starts at wave 5 and increases by 1.5 after the players defeat each wave. (Players are more quickly overwhelmed, leading to shorter games.)
@@ -229,6 +229,6 @@ function update(delta)
 		globalMessage("Wave cleared!");
 	end
 	if friendly_count == 0 then
-		victory("Kraylor");
+		victory("Ghosts");
 	end
 end
