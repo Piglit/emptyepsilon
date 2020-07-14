@@ -200,6 +200,6 @@ function update(delta)
 		globalMessage("Wave cleared!");
 	end
 	if friendly_count == 0 then
-		victory("Kraylor");
+		victory("Exuari");
 	end
 end
