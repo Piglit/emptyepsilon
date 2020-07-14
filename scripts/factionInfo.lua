@@ -38,11 +38,15 @@ exuari:setEnemy(neutral)
 exuari:setEnemy(human)
 exuari:setEnemy(kraylor)
 exuari:setEnemy(arlenians)
-exuari:setDescription([[Exuari are race of predatory amphibians with long noses. They once had an empire that stretched halfway across the galaxy, but their territory is now limited to a handful of star systems. For some reason, they find death to be outrageously funny, and several of their most famous comedians have died on stage.
+exuari:setDescription([[Exuari are race of predatory amphibians with long noses. They once had an empire that stretched halfway across the galaxy, but their territory is now limited to a handful of star systems. Nowadays small societies travel between the stars in their interstallar base carriers.
+
+For some reason, they find death to be outrageously funny, and several of their most famous comedians have died on stage.
 
 Upon making contact with other races, the chaotic Exuari found that killing aliens is more fun than killing their own people, and as such attack all non-Exuari on sight.
 
-Exuari spacecrafts are mostly starfighters or small frigates, sometimes they are just guns attached to engines. The individual ships are quite fragile, but often come in greater numbers or appear unexpected. The Exuari equip most of their ships only with weak shields and often the hull itself can take more hits than the shields. You can recognise Exuari ships by their wings; most of the smaller ships are designed to perform in atmosphere as well as in space. Exuari usually travel in smaller to larger groups and attack in waves of specialised ships: quick fighters or bombers attack in great number; warp-driven striker ships run surprise attacks; Often those ships are armed with HVLIs in addition to fast-firing but low-damage beam weapons. For defense Exuari use mostly their frigates equipped with turrets and all types of missiles.]])
+In human terriory Exuari are feared for their secret agents and infiltrators: The most capable agents spread mistrust and grief between their enemies, ruining entire solar systems.
+
+Exuari spacecrafts are highly specialised small frigates or starfighters, sometimes they are just guns attached to engines. The individual ships are quite fragile, but often come in greater numbers or appear unexpected. The Exuari equip most of their ships only with weak shields and often the hull itself can take more hits than the shields. You can recognise Exuari ships by their wings; most of the smaller ships are designed to perform in atmosphere as well as in space. Exuari usually travel in smaller to larger groups or operate from a base carrier ship. They often attack in waves of their specialised ships: quick fighters or bombers attack in great number; warp-driven striker ships run surprise attacks; Transporters re-fitted with nuclear weapons deliver their deadly cargo; For defense Exuari use mostly their frigates equipped with turrets and all types of missiles. But most of their ships are only armed with HVLIs in addition to fast-firing but low-damage beam weapons.]])
 
 GITM = FactionInfo():setName("Ghosts")
 GITM:setGMColor(0, 255, 0)
@@ -100,3 +104,6 @@ reds:setEnemy(GITM)
 reds:setDescription([[Despite appearing as a faction, criminals are distinguished primarily by having no strong affiliation with any faction at all. Pirates, outlaws and fugitives are considered criminals.]])
 
 
+empty = FactionInfo():setName("Empty")
+empty:setGMColor(70, 70, 70)
+empty:setDescription([[Does not belong to a faction. Abandoned stations or ships can be empty.]])
