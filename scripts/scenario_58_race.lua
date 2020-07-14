@@ -10,92 +10,13 @@
 -- Variation[Hazardous]: Feisty drones and raiders *plus* dangers along the course
 
 require("utils.lua")
-
--- Create amount of objects of type object_type along arc
--- Center defined by x and y
--- Radius defined by distance
--- Start of arc between 0 and 360 (startArc), end arc: endArcClockwise
--- Use randomize to vary the distance from the center point. Omit to keep distance constant
--- Example:
---   createRandomAlongArc(Asteroid, 100, 500, 3000, 65, 120, 450)
-function createRandomAlongArc(object_type, amount, x, y, distance, startArc, endArcClockwise, randomize)
-	if randomize == nil then randomize = 0 end
-	if amount == nil then amount = 1 end
-	arcLen = endArcClockwise - startArc
-	if startArc > endArcClockwise then
-		endArcClockwise = endArcClockwise + 360
-		arcLen = arcLen + 360
-	end
-	if amount > arcLen then
-		for ndex=1,arcLen do
-			radialPoint = startArc+ndex
-			pointDist = distance + random(-randomize,randomize)
-			object_type():setPosition(x + math.cos(radialPoint / 180 * math.pi) * pointDist, y + math.sin(radialPoint / 180 * math.pi) * pointDist)			
-		end
-		for ndex=1,amount-arcLen do
-			radialPoint = random(startArc,endArcClockwise)
-			pointDist = distance + random(-randomize,randomize)
-			object_type():setPosition(x + math.cos(radialPoint / 180 * math.pi) * pointDist, y + math.sin(radialPoint / 180 * math.pi) * pointDist)			
-		end
-	else
-		for ndex=1,amount do
-			radialPoint = random(startArc,endArcClockwise)
-			pointDist = distance + random(-randomize,randomize)
-			object_type():setPosition(x + math.cos(radialPoint / 180 * math.pi) * pointDist, y + math.sin(radialPoint / 180 * math.pi) * pointDist)
-		end
-	end
-end
+require("xansta_mods.lua")
 --[[-----------------------------------------------------------------
       Initialization 
 -----------------------------------------------------------------]]--
 function init()
-	missile_types = {'Homing', 'Nuke', 'Mine', 'EMP', 'HVLI'}
-	--Player Ship Beams
-	psb = {}
-	psb["MP52 Hornet"] = 2
-	psb["Phobos M3P"] = 2
-	psb["Flavia P.Falcon"] = 2
-	psb["Atlantis"] = 2
-	psb["Player Cruiser"] = 2
-	psb["Player Fighter"] = 2
-	-- 27 types of goods so far
-	goodsList = {	{"food",0},
-					{"medicine",0},
-					{"nickel",0},
-					{"platinum",0},
-					{"gold",0},
-					{"dilithium",0},
-					{"tritanium",0},
-					{"luxury",0},
-					{"cobalt",0},
-					{"impulse",0},
-					{"warp",0},
-					{"shield",0},
-					{"tractor",0},
-					{"repulsor",0},
-					{"beam",0},
-					{"optic",0},
-					{"robotic",0},
-					{"filament",0},
-					{"transporter",0},
-					{"sensor",0},
-					{"communication",0},
-					{"autodoc",0},
-					{"lifter",0},
-					{"android",0},
-					{"nanites",0},
-					{"software",0},
-					{"battery",0}	}
+	init_constants_xansta()
 	diagnostic = true
-	playerShipNamesForMP52Hornet = {"Dragonfly","Scarab","Mantis","Yellow Jacket","Jimminy","Flik","Thorny"}
-	playerShipNamesForPiranha = {"Razor's Edge","Biter","Ripper","Voracious","Carnivorous","Characid","Vulture","Predator"}
-	playerShipNamesForFlaviaPFalcon = {"Ladyhawke","Hunter","Seeker","Gyrefalcon","Kestrel","Magpie","Bandit","Buccaneer"}
-	playerShipNamesForPhobosM3P = {"Blinder","Shadow","Distortion","Diemos","Ganymede","Castillo","Thebe","Retrograde"}
-	playerShipNamesForAtlantis = {"Excaliber","Thrasher","Punisher","Vorpal","Protang","Drummond","Parchim","Coronado"}
-	playerShipNamesForCruiser = {"Excelsior","Velociraptor","Thunder","Kona","Encounter","Perth","Aspern","Panther"}
-	playerShipNamesForMissileCruiser = {"Projectus","Hurlmeister","Flinger","Ovod","Amatola","Nakhimov","Antigone"}
-	playerShipNamesForFighter = {"Buzzer","Flitter","Zippiticus","Hopper","Molt"}
-	playerShipNamesForLeftovers = {"Forgone","Righteous","Masher"}
 	goods = {}
 	raceStartDelay = 600		-- should be 600 for a 10 minute prep period
 	racePoint1x = -4000
