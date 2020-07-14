@@ -183,12 +183,11 @@ end
 function missionWaitForAmbush(delta)
 	if distance(player, main_station) < 50000 then
 		--We can jump to the Orion-5 station in 1 jump. So ambush the player!
-		--Balancing: Strikers are too hard here, since they use warp, so player can not escap
 		x, y = player:getPosition()
 		WarpJammer():setFaction("Exuari"):setPosition(x - 2008, y + 2711)
-		ambush_main = CpuShip():setFaction("Exuari"):setTemplate("Strike"):setScanned(true):setPosition(x - 1667, y + 2611):setRotation(-80):orderAttack(player)
-		ambush_side1 = CpuShip():setFaction("Exuari"):setTemplate("Jagger"):setScanned(true):setPosition(x - 736, y + 2875):setRotation(-80):orderAttack(player)
-		ambush_side2 = CpuShip():setFaction("Exuari"):setTemplate("Shooter"):setScanned(true):setPosition(x - 2542, y + 2208):setRotation(-80):orderAttack(player)
+		ambush_main = CpuShip():setFaction("Exuari"):setTemplate("Strike"):setScanned(true):setPosition(x - 1667, y + 2611):setRotation(-80):setWarpDrive(false):orderAttack(player)
+		ambush_side1 = CpuShip():setFaction("Exuari"):setTemplate("Jagger"):setScanned(true):setPosition(x - 736, y + 2875):setRotation(-80):setWarpDrive(false):orderAttack(player)
+		ambush_side2 = CpuShip():setFaction("Exuari"):setTemplate("Shooter"):setScanned(true):setPosition(x - 2542, y + 2208):setRotation(-80):setWarpDrive(false):orderAttack(player)
 		mission_state = missionAmbushed
 
         ambush_main:sendCommsMessage(player, _([[Sllaaami graa kully fartsy!
