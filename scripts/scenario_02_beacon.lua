@@ -115,7 +115,7 @@ function missionRT4EscapeDropped(delta)
 			mission_state = missionRT4Died
             research_station:sendCommsMessage(player, _([[Sir Johnson seems to have suffocated. This is a great loss for our cause of global peace.
 
-Please deliver his body back to Research-1. We will arrange for you to take over his mission.]])
+Please deliver his body back to Research-1. We will arrange for you to take over his mission.]]))
         else
             --Diplomat lives, drop him off at Orion-5
             jjj_alive = true
@@ -146,7 +146,7 @@ To make sure Refugee-X is aware of your peaceful intentions, we have stripped yo
 Lately Refugee-X has been under attack by Exuari ships, and some criminals living there have offered to give themselves up in exchange for better protection of the station.
 
 The officers at Orion-5 will gladly make this trade. And they ask you to retrieve the criminals for them at Refugee-X in sector D5.
-To make sure Refugee-X is aware of your peaceful intentions, we have stripped you of Nukes and EMPs. You will get them back once you deliver the criminals.]])
+To make sure Refugee-X is aware of your peaceful intentions, we have stripped you of Nukes and EMPs. You will get them back once you deliver the criminals.]]))
 		end
 		player.old_nuke_max = player:getWeaponStorageMax("Nuke")
 		player.old_emp_max = player:getWeaponStorageMax("EMP")
