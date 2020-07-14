@@ -546,7 +546,7 @@ variation:setBeam(0,  60, 0, 1500.0, 6.0, 8)
 --[[Corvette--]]
 --as is, military
 
-model_atlantis = "AtlasCorvette"
+model_atlantis = "AtlasHeavyCorvette"
 descr_atlantis = [[The Atlantis X23 is the smallest model of destroyer, and its combination of frigate-like size and corvette-like power makes it an excellent escort ship when defending larger ships against multiple smaller enemies. Because the Atlantis X23 is fitted with a jump drive, it can also serve as an intersystem patrol craft.]]
 template = ShipTemplate():setName("Atlantis X23"):setClass("Corvette", "Destroyer")
 template:setModel(model_atlantis..color_milit)
