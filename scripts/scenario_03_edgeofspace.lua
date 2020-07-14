@@ -59,6 +59,8 @@ function init()
     Player:setWeaponStorageMax("Mine", 0)
     Player:setJumpDrive(true)
 
+    allowNewPlayerShips(false)
+
     --Create a "Technical Officer" entity hidden in sector Z81 to talk to Relay and prompt the Captain to give the order to return to Central Command.
     Technical_Officer = CpuShip():setFaction("Human Navy"):setTemplate("Flavia"):setCallSign("Technical Officer"):setPosition(1530000,411000):orderIdle()
     Technical_Officer:setCommsScript("") -- Disable the comms script for the Technical Officer station (though really, they should never find it all the way out in sector Z81).
