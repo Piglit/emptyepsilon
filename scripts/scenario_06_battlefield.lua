@@ -9,6 +9,8 @@ require("utils.lua")
 --   setCirclePos(obj, x, y, angle, distance)
 --     Place an object relative to a vector. Returns the object with its position set to the resulting coordinates.
 
+enemy_faction = "Criminals"
+
 function init()
     neutral_station = SpaceStation():setTemplate("Large Station"):setPosition(0, -15000):setRotation(random(0, 360)):setFaction("Independent")
     neutral_station.comms_data = {supplydrop = "neutral", weapons = {Mine = "friend" } } -- Setup the neutral station to supply supplydrops to anyone, but mines only to friendlies (which rules out the player)
@@ -41,16 +43,16 @@ function init()
 	end
 
 	for n=1,20*battle_scale do
-		CpuShip():setTemplate("MT52 Hornet"):setPosition(random(-13000 * location_scale, 13000 * location_scale), random(5000, 8000)):setRotation(-90):setFaction("Exuari"):orderRoaming():setScanned(true)
+		CpuShip():setTemplate("MT52 Hornet"):setPosition(random(-13000 * location_scale, 13000 * location_scale), random(5000, 8000)):setRotation(-90):setFaction(enemy_faction):orderRoaming():setScanned(true)
 	end
 	for n=1,10*battle_scale do
-		CpuShip():setTemplate("Phobos T3"):setPosition(random(-13000 * location_scale, 13000 * location_scale), random(5000, 8000)):setRotation(-90):setFaction("Exuari"):orderRoaming()
+		CpuShip():setTemplate("Phobos T3"):setPosition(random(-13000 * location_scale, 13000 * location_scale), random(5000, 8000)):setRotation(-90):setFaction(enemy_faction):orderRoaming()
 	end
 	for n=1,3*battle_scale do
-		CpuShip():setTemplate("Piranha F12"):setPosition(random(-13000 * location_scale, 13000 * location_scale), 5000):setRotation(-90):setFaction("Exuari"):orderRoaming()
+		CpuShip():setTemplate("Piranha F12"):setPosition(random(-13000 * location_scale, 13000 * location_scale), 5000):setRotation(-90):setFaction(enemy_faction):orderRoaming()
 	end
 	for n=1,1*battle_scale do
-		CpuShip():setTemplate("Atlantis X23"):setPosition(random(-3000 * location_scale, 3000 * location_scale), 7000):setRotation(-90):setFaction("Exuari"):orderRoaming()
+		CpuShip():setTemplate("Atlantis X23"):setPosition(random(-3000 * location_scale, 3000 * location_scale), 7000):setRotation(-90):setFaction(enemy_faction):orderRoaming()
 	end
 end
 
