@@ -12,13 +12,14 @@
 --- Advice:
 --- If you completed 'Training: Cruiser' and your science managed to scan all targets, increase the scan complexity.
 ---	Recommendend radar range: 20-30u
-
+-- Variation[Boss]: Skip to the boss battle.
 -- Type: Basic
 
 require "utils.lua"
 require "script_hangar.lua"
 
 function init()
+	allowNewPlayerShips(false)
 	Hangars.init()
 	enemyList = {}
 	timer = 0
@@ -69,7 +70,38 @@ function init()
 	table.insert(enemyList, CpuShip():setFaction("Kraylor"):setTemplate("Fuel Freighter 3"):setCallSign("FTR Psi2"):setPosition(pos3x-1500, pos3y):setHeading(180):orderDefendLocation(pos3x, pos3y))
 
 	bonus = CpuShip():setFaction("Kraylor"):setTemplate("Personnel Jump Freighter 3"):setCallSign("FTR bonus"):setPosition(pos1x, pos1y-3000):setHeading(0):orderStandGround()
+	if getScenarioVariation() == "Boss" then
+		spawnWave2()
+		spawnBoss()
+	end
+end
 
+function spawnWave2()
+	chapter2started = true
+	local posfx, posfy = radialPosition(player, rr+1000, 90)
+	local k1 = CpuShip():setFaction("Kraylor"):setTemplate("Drone"):setCallSign("Kappa1")
+	local k2 = CpuShip():setFaction("Kraylor"):setTemplate("Drone"):setCallSign("Kappa2")
+	local k3 = CpuShip():setFaction("Kraylor"):setTemplate("Drone"):setCallSign("Kappa3")
+	local k4 = CpuShip():setFaction("Kraylor"):setTemplate("Drone"):setCallSign("Kappa4")
+	k1:setPosition(posfx, posfy):setHeading(-90)
+	k2:setPosition(posfx-300, posfy+300):setHeading(-90)
+	k3:setPosition(posfx-300, posfy-300):setHeading(-90)
+	k4:setPosition(posfx-600, posfy-600):setHeading(-90)
+	k1:orderAttack(player)
+	k2:orderFlyFormation(k1, 300, -300)
+	k3:orderFlyFormation(k1, 300, 300)
+	k4:orderFlyFormation(k3, 300, 300)
+	table.insert(enemyList, k1)
+	table.insert(enemyList, k2)
+	table.insert(enemyList, k3)
+	table.insert(enemyList, k4)
+end
+
+function spawnBoss()
+	chapter3started = true
+	local posbx, posby = radialPosition(player, rr*1.5, irandom(80,100))
+	boss = CpuShip():setFaction("Kraylor"):setTemplate("Doombringer"):setCallSign("Omega"):setPosition(posbx, posby):setHeading(-90):orderDefendLocation(posbx,posby)
+	Hangars.create(boss, "Drone", 6)
 end
 
 function commsInstr()
@@ -154,30 +186,10 @@ function update(delta)
 			chapter1completed = true
 		elseif not chapter2started then
 			if distance(player, command) < 5000 then
-				chapter2started = true
-				local posfx, posfy = radialPosition(player, rr+1000, 90)
-				local k1 = CpuShip():setFaction("Kraylor"):setTemplate("Drone"):setCallSign("Kappa1")
-				local k2 = CpuShip():setFaction("Kraylor"):setTemplate("Drone"):setCallSign("Kappa2")
-				local k3 = CpuShip():setFaction("Kraylor"):setTemplate("Drone"):setCallSign("Kappa3")
-				local k4 = CpuShip():setFaction("Kraylor"):setTemplate("Drone"):setCallSign("Kappa4")
-				k1:setPosition(posfx, posfy):setHeading(-90)
-				k2:setPosition(posfx-300, posfy+300):setHeading(-90)
-				k3:setPosition(posfx-300, posfy-300):setHeading(-90)
-				k4:setPosition(posfx-600, posfy-600):setHeading(-90)
-				k1:orderAttack(player)
-				k2:orderFlyFormation(k1, 300, -300)
-				k3:orderFlyFormation(k1, 300, 300)
-				k4:orderFlyFormation(k3, 300, 300)
-				table.insert(enemyList, k1)
-				table.insert(enemyList, k2)
-				table.insert(enemyList, k3)
-				table.insert(enemyList, k4)
+				spawnWave2()
 			end
 		elseif not chapter3started then
-			chapter3started = true
-			local posbx, posby = radialPosition(player, rr*1.5, irandom(80,100))
-			boss = CpuShip():setFaction("Kraylor"):setTemplate("Doombringer"):setCallSign("Omega"):setPosition(posbx, posby):setHeading(-90):orderDefendLocation(posbx,posby)
-			Hangars.create(boss, "Drone", 6)
+			spawnBoss()
 		elseif boss ~=nil and not boss:isValid() then
 			finished(delta)
 		end
@@ -189,7 +201,6 @@ function update(delta)
 			bonus:orderFlyTowardsBlind(radialPosition(bonus, 100000, irandom(0,360)))
 		end
 	end
-
 
 	Hangars.update(delta)
 	commsInstr()
