@@ -465,6 +465,16 @@ for sizeName, sizeValues in pairs(sizes) do
     model:addEngineEmitter(-1.1,-0.7, 0.0,  0.5, 0.5, 1.0, 0.4)
     model:addEngineEmitter(-1.1,-1.05, 0.0,  0.5, 0.5, 1.0, 0.4)
 
+    --variation with side beams and frontal tubes
+    --model:addBeamPosition(-0.0, -1.3, -0)
+    --model:addBeamPosition(-0.0,  1.3, -0)
+    --model:addBeamPosition(-0.8, -1.3, -0)
+    --model:addBeamPosition(-0.8,  1.3, -0)
+    --model:addTubePosition(2.1, -0, 0)
+    --model:addTubePosition(1, -0.4, 0)
+    --model:addTubePosition(1,  0.4, 0)
+    --model:addTubePosition(-1, 0, 0) --Mine tube
+
     model = ModelData()
     model:setName("Lindwurm" .. sizeName .. color)
     model:setMesh("LindwurmFighter/LindwurmFighterHull.model")
@@ -502,6 +512,15 @@ for sizeName, sizeValues in pairs(sizes) do
     model:setIllumination("HeavyCorvette/HeavyCorvetteIllumination.png")
     model:setScale(sizeValues[1])
     model:setRadius(sizeValues[2])
+
+    model:addTubePosition( 0.10, -0.8, 0.0)
+    model:addTubePosition(-0.51, -0.8, 0.0)
+    model:addTubePosition(-1.10, -0.8, 0.0)
+    model:addTubePosition( 0.10,  0.8, 0.0)
+    model:addTubePosition(-0.51,  0.8, 0.0)
+    model:addTubePosition(-1.10,  0.8, 0.0)
+    model:addTubePosition(-1.40, -0.3, 0.0)
+    model:addTubePosition(-1.40,  0.3, 0.0)
 
     model:addEngineEmitter(-1.4, 0.4, 0.0,  0.5, 0.5, 1.0, 0.6)
     model:addEngineEmitter(-1.4, 0.0, 0.0,  0.5, 0.5, 1.0, 0.6)
