@@ -29,7 +29,6 @@ function randomStationTemplate()
 end
 
 function init()
-	Hangars.init()
 	waveNumber = 0
 	spawnWaveDelay = nil
 	enemyList = {}
@@ -144,7 +143,7 @@ function createEnemyGroup(difficulty)
 			ship:setTemplate(tmpl)
 			totalScore = totalScore + cost
 			dest = dest - cost
-			Hangars.create(ship, "Drone", 3, function (_,fighter,_)
+			script_hangar.create(ship, "Drone", 3, function (_,fighter,_)
 				table.insert(enemyList, fighter)
 			end)
 		else
@@ -215,5 +214,5 @@ function update(delta)
 	if friendly_count == 0 then
 		victory("Kraylor");
 	end
-	Hangars.update()
+	script_hangar.update()
 end

@@ -14,7 +14,6 @@ require("script_hangar.lua")
 
 -- Init is run when the scenario is started. Create your initial world
 function init()
-	Hangars.init()
 
 	-- Create the main ship for the players.
 	player = PlayerSpaceship():setFaction("Human Navy"):setTemplate("Atlantis")
@@ -53,7 +52,7 @@ function init()
 	CpuShip():setTemplate("Sentinel"):setFaction("Exuari"):setPosition(-47000, -14000):orderDefendTarget(enemy_station)
 	CpuShip():setTemplate("Warden"):setFaction("Exuari"):setPosition(-46000, -18000):orderDefendTarget(enemy_station)
 
-	Hangars.create(enemy_station, "Blade", 3)
+	script_hangar.create(enemy_station, "Blade", 3)
 
 	transport_RT4 = CpuShip():setTemplate("Flavia"):setFaction("Human Navy"):setPosition(3750, 31250)
 	transport_RT4:orderIdle():setCallSign("RT-4"):setCommsScript("")
@@ -317,7 +316,7 @@ end
 
 
 function update(delta)
-    Hangars.update(delta)
+    script_hangar.update(delta)
     --When the player ship, or the research station is destroyed, call it a victory for the Exuari
     if not player:isValid() or not research_station:isValid() or not main_station:isValid() then
         victory("Exuari")

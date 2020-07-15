@@ -1,4 +1,4 @@
-require("script_hangar.lua")
+require("script_formation.lua")
 
 function init_constants_xansta()
 
@@ -416,7 +416,7 @@ function spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction, cu
 		end
 		if enemyFaction == "Kraylor" then
 			--kraylor formation
-			formationLeader, formationSecond = Hangars.buildFormationIncremental(ship, enemyPosition, formationLeader, formationSecond)
+			formationLeader, formationSecond = script_formation.buildFormationIncremental(ship, enemyPosition, formationLeader, formationSecond)
 		end
 		table.insert(enemyList, ship)
 	end

@@ -9,7 +9,6 @@
 
 require("utils.lua")
 require("script_hangar.lua")
-hangars = Hangars
 
 function createMiningFrigate()
 	local frigates = {
@@ -64,8 +63,6 @@ end
 
 function init()
 
-	hangars.init()
-
 	player = PlayerSpaceship():setFaction("Human Navy"):setTemplate("Phobos M3P")
     station = SpaceStation():setTemplate("Small Station"):setPosition(0, -500):setRotation(random(0, 360)):setFaction("Mining Corporation"):setCallSign("Mining Outpost")
     enemies = {}
@@ -85,7 +82,7 @@ function init()
         ship = createKraylorGunship():orderRoaming()
 		setCirclePos(ship, 0, 0, random(0, 360), random(20000, 30000))
 		table.insert(enemies, ship)
-		--hangars.create(ship, "Drone", 1)
+		script_hangar.create(ship, "Drone", 1)
 	end
 
 	a = random(0, 360)
@@ -93,7 +90,7 @@ function init()
 	ship_with_hangar = createKraylorDestroyer():setRotation(a + 180):orderRoaming()
 	setCirclePos(ship_with_hangar, 0, 0, a, d)
 	table.insert(enemies, ship_with_hangar)
-	hangars.create(ship_with_hangar, "Drone", 3)
+	script_hangar.create(ship_with_hangar, "Drone", 3)
 
     for n=1,10 do
         setCirclePos(Mine(), 0, 0, random(0, 360), random(10000, 25000))
@@ -110,7 +107,7 @@ end
 
 function update(dt)
 	--launch fighters from mothership
-	hangars.update(dt)
+	script_hangar.update(dt)
 
 	--victory condition
 	enemy_count = 0

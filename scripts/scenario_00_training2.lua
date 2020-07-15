@@ -20,7 +20,6 @@ require "script_hangar.lua"
 
 function init()
 	allowNewPlayerShips(false)
-	Hangars.init()
 	enemyList = {}
 	timer = 0
 	chapter1completed = false
@@ -101,7 +100,7 @@ function spawnBoss()
 	chapter3started = true
 	local posbx, posby = radialPosition(player, rr*1.5, irandom(80,100))
 	boss = CpuShip():setFaction("Kraylor"):setTemplate("Doombringer"):setCallSign("Omega"):setPosition(posbx, posby):setHeading(-90):orderDefendLocation(posbx,posby)
-	Hangars.create(boss, "Drone", 6)
+	script_hangar.create(boss, "Drone", 6)
 end
 
 function commsInstr()
@@ -202,7 +201,7 @@ function update(delta)
 		end
 	end
 
-	Hangars.update(delta)
+	script_hangar.update(delta)
 	commsInstr()
 
 end
