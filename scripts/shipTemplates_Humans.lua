@@ -393,7 +393,7 @@ descr_nirvana = [[The Nirvana is an anti-fighter cruiser. It has several rapid-f
 --as is, old
 template = ShipTemplate():setName("Nirvana R5"):setClass("Frigate", "Beam Cruiser")
 template:setModel(model_nirvana..color_default)
-template:setRadarTrace("radar_cruiser.png")
+template:setRadarTrace("radar_laser.png")
 template:setDescription(descr_nirvana)
 template:setBeamWeapon(0, 90, -15, 1400, 3, 2)
 template:setBeamWeapon(1, 90,  15, 1400, 3, 2)

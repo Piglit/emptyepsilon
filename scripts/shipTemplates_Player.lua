@@ -215,7 +215,7 @@ template:addDoor(8, 4, false);
 template = ShipTemplate():setName("Hathcock"):setClass("Frigate", "Battlecruiser"):setType("playership") 
 template:setModel("LaserCorvette"..color_player)
 template:setDescription("Long range narrow beam and some point defense beams, broadside missiles. Agile for a frigate")
-template:setRadarTrace("radar_cruiser.png")
+template:setRadarTrace("radar_laser.png")
 --						Arc, Dir, Range, CycleTime, Dmg
 template:setBeamWeapon(0, 4,   0, 1400.0, 6.0, 4)
 template:setBeamWeapon(1,20,   0, 1200.0, 6.0, 4)
