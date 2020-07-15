@@ -10,44 +10,49 @@
 --- Your ship is a Hathcock Battle Cruiser - a warp-driven cruiser with great beam power and few missiles.
 --- You will be escorted by a Nirvana Beam Cruiser as wingman.
 -- Type: Basic
+-- Variation[Test Formations]: Spawn all variations of formations at start
+
+
+-- Goal: design an easy training for beam cruisers:
+-- helm: heavy rotating -> battle against fighters and slowly rotating ships
+-- weap: few missiles, focus on beams
+-- eng:  beam cruiser
+-- sci:  beam freq
+-- rel:  hackking, raputation handling
+
+-- secondary goal: test formation code
+
 
 require "utils.lua"
 
 function init()
+
+	player = PlayerSpaceship():setTemplate("Hathcock"):setCallSign("Rookie 1"):setFaction("Human Navy"):setPosition(0, 0):setHeading(90)
+	rr = player:getLongRangeRadarRange()
+
 	enemies = {
 		"Yellow Hornet",
 		"Blue Lindworm",
 		"Red Adder MK4",
 		"Phobos M3",
-		"Advanced Adder MK5",
-		"Phobos Y2",
-		"Adder MK6",
-		"Piranha F12",
-		"Nirvana R5A",
-		{"Phobos Vanguard", "Phobos Rear-Guard"},
-		"Piranha M5",
-		"Nirvana R5M",
-		"Phobos Firehawk",
-		{"Piranha Vanguard", "Piranha Rear-Guard"},
 		"Nirvana Thunder Child",
-		"Storm",
-		"Phobos G4",
-		"Piranha F12.M",
-		{"Nirvana Vanguard", "Nirvana Rear-Guard"},
-		"Lightning Storm",
-		"Piranha G4",
-		"Nirvana 0x81",
 		"Solar Storm",
 	}
+	spawnPositions = {
+		{rr, 0},
+		{0, rr},
+		{-rr, 0},
+		{0, -rr},
+		{rr, -rr},
+		{rr, rr},
+	}
+
 	enemiesIndex = 1
 	enemyList = {}
 	
 	instr1 = false
 	timer = 0
 	finishedTimer = 5
-
-	player = PlayerSpaceship():setTemplate("Hathcock"):setCallSign("Rookie 1"):setFaction("Human Navy"):setPosition(0, 0):setHeading(90)
-	rr = player:getLongRangeRadarRange()
 
 	wingman = CpuShip():setTemplate("Nirvana R5M"):setCallSign("Wingman"):setFaction("Human Navy"):setPosition(-1000, -1000):setHeading(225):setScannedByFaction("Human Navy", true):orderDefendLocation(0,0)
 	
@@ -58,7 +63,14 @@ function init()
 	createRandomAlongArc(VisualAsteroid, 100, 0, 0, rr-2000, 180, 270, 1000)
 	placeRandomAroundPoint(Nebula, 4, 10000, 10000, rr*0.75, -rr*0.75)
 	
-	wingman:sendCommsMessage(player, "Here is Commander Saberhagen. In this combat training you will practise your ability to beat up different types of armed enemies with a Hathcock battlecruiser. Whenever you destroy an opponent, the next one will appear just in sensor range. Use all of your capabilities to your advantage: Hacking, shield and beam frequencies, the database, energy management, your wingman etc. Engage with your warp drive, when you are ready. Commander Saberhagen out.")
+	wingman:sendCommsMessage(player, [[This is Commander Saberhagen.
+
+In this combat training you will practise your ability to beat up different types of armed enemies with a Hathcock battlecruiser.
+Whenever you destroy an opponent, the next one will appear just in sensor range.
+Use all of your capabilities to your advantage: Hacking, shield and beam frequencies, the database, energy management, your wingman etc.
+Engage with your warp drive, when you are ready.
+
+Commander Saberhagen out.]])
 
 	spwanNextWave()
 end
@@ -69,26 +81,21 @@ function spwanNextWave()
 	end
 	
 	local enemyTempl = enemies[enemiesIndex]
+	local pos = spawnPositions[enemiesIndex]
+	local posx, posy = player.getPosition()
+	posx = posx + pos[1]
+	posy = posy + pos[2]
+	local amount = enemiesIndex % 4 + 1
+	enemyList = script_formation.spawnFormation(enemyTempl, amount, posx, posy, "Criminals")
 	enemiesIndex = enemiesIndex + 1
-	local px, py = player:getPosition()
-	local arc = random(0,360)
-	if type(enemyTempl) == "table" then
-		for i,et in ipairs(enemyTempl) do
-			local enemy = CpuShip():setTemplate(et):setFaction("Criminals"):orderRoaming()
-			setCirclePos(enemy, px, py, arc+i, rr-500)
-			table.insert(enemyList, enemy)
-		end
-	else
-		local enemy = CpuShip():setTemplate(enemyTempl):setFaction("Criminals"):orderRoaming()
-		setCirclePos(enemy, px, py, arc, rr-500)
-		table.insert(enemyList, enemy)
-	end
-	
 	return true
 end
 	
 
 function finished(delta)
+	if getScenarioVariation() == "Test Factions" then
+		return
+	end
 	finishedTimer = finishedTimer - delta
 	if finishedTimer < 0 then
 		victory("Human Navy")
@@ -114,7 +121,8 @@ function update(delta)
 			break
 		end
 	end
-	if #enemyList == 0 then
+
+	if #enemyList == 0 or getScenarioVariation() == "Test Factions" then
 		if not spwanNextWave() then
 			finished(delta)
 		end
