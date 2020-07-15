@@ -27,6 +27,7 @@ require "utils.lua"
 require "script_formation.lua"
 
 function init()
+	allowNewPlayerShips(false)
 
 	player = PlayerSpaceship():setTemplate("Hathcock"):setCallSign("Rookie 1"):setFaction("Human Navy"):setPosition(0, 0):setHeading(90)
 	rr = player:getLongRangeRadarRange()
