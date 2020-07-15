@@ -10,7 +10,7 @@
 --- Your ship is a Hathcock Battle Cruiser - a warp-driven cruiser with great beam power and few missiles.
 --- You will be escorted by a Nirvana Beam Cruiser as wingman.
 -- Type: Basic
--- Variation[Test Formations]: Spawn all variations of formations at start
+-- Variation[Test Formations]: All enemies (and more stonger ones) are present at the beginning of the scenario. This is for testing formations.
 
 
 -- Goal: design an easy training for beam cruisers:
@@ -24,6 +24,7 @@
 
 
 require "utils.lua"
+require "script_formation.lua"
 
 function init()
 
@@ -43,8 +44,16 @@ function init()
 		{0, rr},
 		{-rr, 0},
 		{0, -rr},
-		{rr, -rr},
-		{rr, rr},
+		{rr*0.7, rr*0.7},
+		{-rr*0.7, rr*0.7},
+	}
+	enemiesNames = {
+		"Alpha-",
+		"Beta-",
+		"Gamma-",
+		"Rho-",
+		"Sigma-",
+		"Tau-",
 	}
 
 	enemiesIndex = 1
@@ -54,7 +63,9 @@ function init()
 	timer = 0
 	finishedTimer = 5
 
-	wingman = CpuShip():setTemplate("Nirvana R5M"):setCallSign("Wingman"):setFaction("Human Navy"):setPosition(-1000, -1000):setHeading(225):setScannedByFaction("Human Navy", true):orderDefendLocation(0,0)
+	station = SpaceStation():setTemplate('Small Station'):setCallSign("Maintainance Dock"):setRotation(random(0, 360)):setFaction("Human Navy"):setPosition(-800, 1200)
+	wingman = CpuShip():setTemplate("Nirvana R5M"):setCallSign("Wingman"):setFaction("Human Navy"):setPosition(-1000, -1000):setHeading(225):setScannedByFaction("Human Navy", true):orderDefendTarget(station)
+
 	
 	bonus = CpuShip():setTemplate("Flavia Express"):setCallSign("Bonus"):setFaction("Criminals"):setShieldsMax(200,200):setShields(200,200):setPosition(rr+2000,-rr-2000):setHeading(225):orderFlyTowardsBlind(-rr,rr)
 	
@@ -81,19 +92,26 @@ function spwanNextWave()
 	end
 	
 	local enemyTempl = enemies[enemiesIndex]
+	local name = enemiesNames[enemiesIndex]
 	local pos = spawnPositions[enemiesIndex]
-	local posx, posy = player.getPosition()
+	local posx, posy = player:getPosition()
 	posx = posx + pos[1]
 	posy = posy + pos[2]
-	local amount = enemiesIndex % 4 + 1
-	enemyList = script_formation.spawnFormation(enemyTempl, amount, posx, posy, "Criminals")
+
+	local amount
+	if getScenarioVariation() == "Test Formations" then
+		amount = enemiesIndex + 1
+	else
+		amount = enemiesIndex % 4 + 1
+	end
+	enemyList = script_formation.spawnFormation(enemyTempl, amount, posx, posy, "Criminals", name)
 	enemiesIndex = enemiesIndex + 1
 	return true
 end
 	
 
 function finished(delta)
-	if getScenarioVariation() == "Test Factions" then
+	if getScenarioVariation() == "Test Formations" then
 		return
 	end
 	finishedTimer = finishedTimer - delta
@@ -122,9 +140,23 @@ function update(delta)
 		end
 	end
 
-	if #enemyList == 0 or getScenarioVariation() == "Test Factions" then
+	if #enemyList == 0 or getScenarioVariation() == "Test Formations" then
 		if not spwanNextWave() then
 			finished(delta)
+		end
+		if enemiesIndex >= 3 and not instr1 and wingman:isValid() and station:isValid() then
+			instr1 = true
+			wingman:sendCommsMessage(player, [[This is Commander Saberhagen.
+
+Do not forget to restore your energy at the Maintainance Dock.
+If you need repairs, that station will also be of some help.
+
+You may have noticed that every destroyed energy raises your reputation. When your reputation is high enough, make sure to call for reinforcements at the Maintainance Dock.
+
+The Human Navy is only stong when working together!
+
+Commander Saberhagen out.
+]])
 		end
 	end
 	

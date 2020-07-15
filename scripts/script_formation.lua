@@ -1,5 +1,6 @@
 script_formation = {}
 
+require "utils.lua"
 --[[
 Description:
 ------------
@@ -115,16 +116,16 @@ end
 -- The squads order defaults to roaming. If you want to change that, set the squad leader's order:
 -- ```squad[1]:orderAttack(player)```
 --]]
-function spawnFormation(shipTemplate, amount, posx, posy, faction, callSignPrefix)
+function script_formation.spawnFormation(shipTemplate, amount, posx, posy, faction, callSignPrefix)
 	local ships = {}
-	local leader, second = nil -- here the current formation leaders are stored
-	for local index = 1, amount do
+	local leader, second = nil, nil -- here the current formation leaders are stored
+	for index = 1, amount do
 		local ship = CpuShip():setTemplate(shipTemplate)
 		if faction ~= nil then
 			ship:setFaction(faction)
 		end
-		if namePrefix ~= nil then
-			ship:setCallSign(namePrefix..tostring(index))
+		if callSignPrefix ~= nil then
+			ship:setCallSign(callSignPrefix..tostring(index))
 		end
 		local arc = random(0,360)
 		setCirclePos(ship, posx, posy, arc, 100)
