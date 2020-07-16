@@ -11,7 +11,6 @@
 ---
 --- Advice: set radar range down to 20, otherwise relay will be bored.
 
--- Type: Basic
 function init()
 	enemyList = {}
 	timer = 0

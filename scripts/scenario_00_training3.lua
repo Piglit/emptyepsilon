@@ -9,7 +9,6 @@
 ---
 --- Your ship is a Hathcock Battle Cruiser - a warp-driven cruiser with great beam power and few missiles.
 --- You will be escorted by a Nirvana Beam Cruiser as wingman.
--- Type: Basic
 -- Variation[Test Formations]: All enemies (and more stonger ones) are present at the beginning of the scenario. This is for testing formations.
 
 
@@ -63,6 +62,7 @@ function init()
 	instr1 = false
 	timer = 0
 	finishedTimer = 5
+	finishedFlag = false
 
 	station = SpaceStation():setTemplate('Small Station'):setCallSign("Maintainance Dock"):setRotation(random(0, 360)):setFaction("Human Navy"):setPosition(-800, 1200)
 	wingman = CpuShip():setTemplate("Nirvana R5M"):setCallSign("Wingman"):setFaction("Human Navy"):setPosition(-800, -1700):setHeading(250):setScannedByFaction("Human Navy", true):orderDefendTarget(station)

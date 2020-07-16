@@ -13,7 +13,6 @@
 --- If you completed 'Training: Cruiser' and your science managed to scan all targets, increase the scan complexity.
 ---	Recommendend radar range: 20-30u
 -- Variation[Boss]: Skip to the boss battle.
--- Type: Basic
 
 require "utils.lua"
 require "script_hangar.lua"
@@ -26,6 +25,7 @@ function init()
 	chapter2started = false
 	chapter3started = false
 	finishedTimer = 5
+	finishedFlag = false
 	bonusEscapes = false
 	instr1 = false
 	instr2 = false
