@@ -52,6 +52,7 @@ function init()
 	dir = irandom(60, 120)
 	pos3x, pos3y = radialPosition(pos2x, pos2y, rr + irandom(2000, rr-5000), -dir)
 
+	station = SpaceStation():setTemplate('Small Station'):setCallSign("Maintainance Dock"):setRotation(random(0, 360)):setFaction("Human Navy"):setPosition(-800, 1200)
 	command = CpuShip():setTemplate("Nirvana R5M"):setCallSign("Escort 1"):setFaction("Human Navy"):setPosition(pos0x-1000, pos0y-1000):setHeading(90):orderIdle():setScannedByFaction("Human Navy", true)
 
 	table.insert(enemyList, CpuShip():setFaction("Kraylor"):setTemplate("Equipment Freighter 3"):setCallSign("FTR Phi1"):setPosition(pos1x+1200, pos1y):setHeading(0):orderStandGround())
@@ -70,8 +71,19 @@ function init()
 
 	bonus = CpuShip():setFaction("Kraylor"):setTemplate("Personnel Jump Freighter 3"):setCallSign("FTR bonus"):setPosition(pos1x, pos1y-3000):setHeading(0):orderStandGround()
 	if getScenarioVariation() == "Boss" then
+		enemyList = {} -- clear
 		spawnWave2()
 		spawnBoss()
+		instr1 = true
+		instr2 = true
+		instr3 = true
+		instr4 = true
+		instr5 = true
+		instr6 = true
+		instr7 = true
+		instr8 = true
+		local msg = "Forget about the training targets. A pack of drones are comming straight to us. Hunt them down. Then seek and destroy the mothership where these drones came from.", "White"
+		command:sendCommsMessage(player, "This is Commander Saberhagen. "..msg.." Commander Saberhagen out.")
 	end
 end
 
@@ -126,13 +138,13 @@ function commsInstr()
 	end
 	if not instr5 and chapter1completed then
 		instr5 = true
-		player:addToShipLog("[Cmd. Saberhagen] Good work. Now return to the position of Escort 1.", "White")
+		player:addToShipLog("[Cmd. Saberhagen] Good work. Now return to the Maintainance Dock.", "White")
 	end
 	if not instr6 and chapter2started then
 		instr6 = true
 		local msg = "Welcome back. Our sensors show some enemy fighters approaching. You may choose an appropriate countermeassure. Remember, Escort 1 can be of great assistance against fighters, but it will not interfere without beeing orders to do so."
 		if command:isValid() then
-			command:sendCommsMessage(player, "Here is Commander Saberhagen. "..msg.." Commander Saberhagen out.")
+			command:sendCommsMessage(player, "This is Commander Saberhagen. "..msg.." Commander Saberhagen out.")
 		else
 			player:addToShipLog("[Cmd. Saberhagen] "..msg, "White")
 		end
@@ -146,7 +158,7 @@ function commsInstr()
 		globalMessage("Mission Complete. Your Time: "..tostring(math.floor(timer)).."s. Bonus target "..bonusString)
 		local msg = "The official part of this training ends here. You have done quite well. But if you want to challenge a superior enemy, seek and destroy the mothership where these drones came from.", "White"
 		if command:isValid() then
-			command:sendCommsMessage(player, "Here is Commander Saberhagen. "..msg.." Commander Saberhagen out.")
+			command:sendCommsMessage(player, "This is Commander Saberhagen. "..msg.." Commander Saberhagen out.")
 		else
 			player:addToShipLog("[Cmd. Saberhagen] "..msg, "White")
 		end
@@ -184,7 +196,7 @@ function update(delta)
 		if not chapter1completed then
 			chapter1completed = true
 		elseif not chapter2started then
-			if distance(player, command) < 5000 then
+			if distance(player, station) < 5000 then
 				spawnWave2()
 			end
 		elseif not chapter3started then
