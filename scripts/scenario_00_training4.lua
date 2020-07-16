@@ -15,6 +15,7 @@ function init()
 
 	player = PlayerSpaceship():setTemplate("Nautilus"):setCallSign("Rookie 1"):setFaction("Human Navy"):setPosition(0, 0):setHeading(90)
 	rr = player:getLongRangeRadarRange()
+	player:addReputationPoints(100.0)
 
 	enemyList = {}
 	
