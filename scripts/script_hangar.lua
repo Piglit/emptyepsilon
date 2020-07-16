@@ -34,6 +34,15 @@ function script_hangar.update(dt)
 					local nidx = hangar.nextIndex
 					local leader = hangar.nextLeader
 					local second = hangar.nextSecond
+					if second ~= nil and second:isValid() and distance(ship, second) >= 7000 then
+						-- second out of range 
+						second = nil
+					end
+					if leader ~= nil and leader:isValid() and distance(ship, leader) >= 7000 then
+						-- leader out of range, reset formation 
+						leader = nil
+						nidx = 1
+					end
 					leader, second = script_formation.buildFormationIncremental(ship2, nidx, leader, second)
 					hangar.nextIndex = nidx +1
 					hangar.nextLeader = leader
