@@ -1,5 +1,5 @@
 -- Name: The Mining Outpost
--- Description: A mining outpost near the Kraylor border sent an emercency call. Select a ship of your choise and defend the outpost against the Kraylor attack!
+-- Description: A mining outpost near the Kraylor border sent an emercency call. Defend the outpost against the Kraylor attack!
 --- This mission is designed for any number of player ships.
 -- Type: Basic
 
@@ -63,7 +63,7 @@ end
 
 function init()
 
-	player = PlayerSpaceship():setFaction("Human Navy"):setTemplate("Phobos M3P")
+	player = PlayerSpaceship():setFaction("Human Navy"):setTemplate("Hathcock")
     station = SpaceStation():setTemplate("Small Station"):setPosition(0, -500):setRotation(random(0, 360)):setFaction("Mining Corporation"):setCallSign("Mining Outpost")
     enemies = {}
 	friends = {}
