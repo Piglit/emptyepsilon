@@ -23,20 +23,26 @@ function init()
 	finishedTimer = 5
 	finishedFlag = false
 
-	station = SpaceStation():setTemplate('Small Station'):setCallSign("Maintainance Dock"):setRotation(random(0, 360)):setFaction("Human Navy"):setPosition(-800, 1200)
+	station = SpaceStation():setTemplate('Medium Station'):setCallSign("Maintainance Dock"):setRotation(random(0, 360)):setFaction("Human Navy"):setPosition(-800, 1200)
 	wingman = CpuShip():setTemplate("Nirvana R5M"):setCallSign("Wingman"):setFaction("Human Navy"):setPosition(-800, -1700):setHeading(250):setScannedByFaction("Human Navy", true):orderDefendTarget(station)
 
-	station2 = SpaceStation():setTemplate('Medium Station'):setCallSign("Civilian Station"):setRotation(random(0, 360)):setFaction("Human Navy"):setPosition(800, -rr*0.5)
-	enemy_station = CpuShip():setTemplate("Ryder"):setFaction("Exuari"):orderStandGround()
-	enemy_station:setPosition(0, -rr*0.9):setRotation(0):setCallSign("Omega")
+	station2 = SpaceStation():setTemplate('Small Station'):setCallSign("Civilian Station"):setRotation(random(0, 360)):setFaction("Human Navy"):setPosition(800, -rr*0.5)
+	enemy_station = CpuShip():setTemplate("Ryder"):setFaction("Exuari"):orderDefendLocation(0,-rr*0.9)
+	enemy_station:setPosition(0, -rr):setRotation(90):setCallSign("Omega")
+
 	script_hangar.create(enemy_station, "Dagger", 3)
 	script_hangar.append(enemy_station, "Blade", 3)
 	script_hangar.config(enemy_station, "onLaunch", addToEnemiesList)
+	script_hangar.config(enemy_station, "callSignPrefix", "Zeta-")
+	script_hangar.config(enemy_station, "launchDistance", 900)
+
 	script_hangar.create(enemy_station, "Gunner", 3)
 	script_hangar.append(enemy_station, "Shooter", 3)
 	script_hangar.append(enemy_station, "Jagger", 3)
 	script_hangar.config(enemy_station, "triggerRange", rr*0.5)
 	script_hangar.config(enemy_station, "onLaunch", addToEnemiesList)
+	script_hangar.config(enemy_station, "callSignPrefix", "Gamma-")
+	script_hangar.config(enemy_station, "launchDistance", 900)
 	table.insert(enemyList, enemy_station)
 	
 	--createObjectsOnLine(rr/2, rr/4, rr/4, rr/2, 1000, Mine, 2)
