@@ -34,7 +34,7 @@ function init()
 	table.insert(enemyList, CpuShip():setFaction("Exuari"):setTemplate("Personnel Freighter 1"):setCallSign("Omega3"):setPosition(-29270, -2853):setTypeName("Exuari transport"):setHeading(60))
 	table.insert(enemyList, CpuShip():setFaction("Exuari"):setTemplate("Goods Freighter 5"):setCallSign("FTR1"):setPosition(2787, -1822):orderFlyTowards(-42873, -13865):setTypeName("Exuari freighter"):setHeading(-60))
 
-	player = PlayerSpaceship():setTemplate("Phobos M3P"):setPosition(18, -48):setCallSign("Rookie 1"):setJumpDrive(false)
+	player = PlayerSpaceship():setTemplate("Phobos M3P"):setPosition(18, -48):setCallSign("Rookie 1"):setJumpDrive(false):setLongRangeRadarRange(20000)
 	command = CpuShip():setFaction("Human Navy"):setTemplate("Phobos M3"):setCallSign("Command"):setPosition(-100000, -100000):orderIdle()
 end
 
