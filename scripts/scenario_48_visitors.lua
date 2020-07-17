@@ -9244,7 +9244,6 @@ function checkOrbitingArtifactEvents(delta)
 							p.sensor_status_tactical = nil
 						end
 					end
-					break
 				end
 			end
 		--end
@@ -9480,7 +9479,6 @@ function checkTransportPrimusResearcherEvents(delta)
 							p:setMaxEnergy(p:getMaxEnergy()*1.1)
 							p:addReputationPoints(50)
 						end
-						break
 					end
 				else
 					if p.planetologistAboard then
@@ -10069,7 +10067,7 @@ function checkVirusEvents(delta)
 		for pidx=1,8 do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
-				if station_fatality_count = 0 then
+				if station_fatality_count == 0 then
 					p:addToShipLog(string.format("Stations have been saved from the virus outbreak. Dock with %s for further orders",plotChoiceStation:getCallSign()),"Magenta")
 				elseif station_cure_count > station_fatality_count then
 					p:addToShipLog(string.format("Most stations have been saved from the virus outbreak. Dock with %s for further orders",plotChoiceStation:getCallSign()),"Magenta")
