@@ -31,6 +31,8 @@
 -- Variation[Hard Random]: Hard goals and/or enemies, Next mission is chosen at random
 -- Variation[Hard Selectable]: Hard goals and/or enemies, Next mission may be selected
 
+--XXX start server with Easy Random; choose Easy Selectable if something fails
+
 require("utils.lua")
 require("xansta_mods.lua")
 
@@ -77,146 +79,146 @@ end
 ---------------------------
 function mainGMButtons()
 	clearGMFunctions()
-	addGMFunction("Player ships",playerShipGMButtons)
+	--addGMFunction("Player ships",playerShipGMButtons)
 	addGMFunction("Adjust speed",adjustSpeedGMButtons)
 	addGMFunction("End Mission",endMissionGMButtons)
 end
 -- GM player ship functions
-function playerShipGMButtons()
-	clearGMFunctions()
-	addGMFunction("Back to main",mainGMButtons)
-	if playerNarsil == nil then
-		addGMFunction("Narsil",createPlayerShipNarsil)
-	end
-	if playerHeadhunter == nil then
-		addGMFunction("Headhunter",createPlayerShipHeadhunter)
-	end
-	if playerBlazon == nil then
-		addGMFunction("Blazon",createPlayerShipBlazon)
-	end
-	if playerSting == nil then
-		addGMFunction("Sting",createPlayerShipSting)
-	end
-end
-function createPlayerShipNarsil()
-	playerNarsil = PlayerSpaceship():setTemplate("Atlantis"):setFaction("Human Navy"):setCallSign("Narsil")
-	playerNarsil:setTypeName("Proto-Atlantis")
-	playerNarsil:setRepairCrewCount(4)					--more repair crew (vs 3)
-	playerNarsil:setImpulseMaxSpeed(70)					--slower impulse max (vs 90)
-	playerNarsil:setRotationMaxSpeed(14)				--faster spin (vs 10)
-	playerNarsil:setJumpDrive(false)					--no Jump
-	playerNarsil:setWarpDrive(true)						--add warp
-	playerNarsil:setHullMax(200)						--weaker hull (vs 250)
-	playerNarsil:setHull(200)							
-	playerNarsil:setShieldsMax(150,150)					--weaker shields (vs 200)
-	playerNarsil:setShields(150,150)
-	playerNarsil:setWeaponTubeCount(6)					--one more forward tube, less flexible ordnance
-	playerNarsil:setWeaponTubeDirection(0,0)			--front facing
-	playerNarsil:setWeaponTubeExclusiveFor(0,"HVLI")	--HVLI only
-	playerNarsil:setWeaponTubeDirection(1,-90)			--left facing
-	playerNarsil:weaponTubeDisallowMissle(1,"Mine")		--all but mine
-	playerNarsil:setWeaponTubeDirection(2,-90)			--left facing
-	playerNarsil:setWeaponTubeExclusiveFor(2,"HVLI")	--HVLI only
-	playerNarsil:setWeaponTubeDirection(3,90)			--right facing
-	playerNarsil:weaponTubeDisallowMissle(3,"Mine")		--all but mine
-	playerNarsil:setWeaponTubeDirection(4,90)			--right facing
-	playerNarsil:setWeaponTubeExclusiveFor(4,"HVLI")	--HVLI only
-	playerNarsil:setWeaponTubeDirection(5,180)			--rear facing
-	playerNarsil:setWeaponTubeExclusiveFor(5,"Mine")	--Mine only
-	playerNarsil:addReputationPoints(50)
-	removeGMFunction("Narsil")
-end
-function createPlayerShipHeadhunter()
-	playerHeadhunter = PlayerSpaceship():setTemplate("Piranha"):setFaction("Human Navy"):setCallSign("Headhunter")
-	playerHeadhunter:setTypeName("Redhook")
-	playerHeadhunter:setRepairCrewCount(4)						--more repair crew (vs 2)
-	playerHeadhunter:setJumpDriveRange(2000,25000)				--shorter jump drive range (vs 5-50)
-	playerHeadhunter:setHullMax(140)							--stronger hull (vs 120)
-	playerHeadhunter:setHull(140)
-	playerHeadhunter:setShieldsMax(100, 100)					--stronger shields (vs 70, 70)
-	playerHeadhunter:setShields(100, 100)
-	playerHeadhunter:setBeamWeapon(0, 10, 0, 1200.0, 4.0, 4)	--one beam (vs 0)
-	playerHeadhunter:setBeamWeaponTurret(0, 80, 0, 1)			--slow turret 
-	playerHeadhunter:setWeaponTubeCount(7)						--one fewer mine tube, but EMPs added
-	playerHeadhunter:setWeaponTubeDirection(6, 180)				--mine tube points straight back
-	playerHeadhunter:setWeaponTubeExclusiveFor(0,"HVLI")
-	playerHeadhunter:setWeaponTubeExclusiveFor(1,"HVLI")
-	playerHeadhunter:setWeaponTubeExclusiveFor(2,"HVLI")
-	playerHeadhunter:setWeaponTubeExclusiveFor(3,"HVLI")
-	playerHeadhunter:setWeaponTubeExclusiveFor(4,"HVLI")
-	playerHeadhunter:setWeaponTubeExclusiveFor(5,"HVLI")
-	playerHeadhunter:setWeaponTubeExclusiveFor(6,"Mine")
-	playerHeadhunter:weaponTubeAllowMissle(1,"Homing")
-	playerHeadhunter:weaponTubeAllowMissle(1,"EMP")
-	playerHeadhunter:weaponTubeAllowMissle(1,"Nuke")
-	playerHeadhunter:weaponTubeAllowMissle(4,"Homing")
-	playerHeadhunter:weaponTubeAllowMissle(4,"EMP")
-	playerHeadhunter:weaponTubeAllowMissle(4,"Nuke")
-	playerHeadhunter:setWeaponStorageMax("Mine",4)				--fewer mines (vs 8)
-	playerHeadhunter:setWeaponStorage("Mine", 4)				
-	playerHeadhunter:setWeaponStorageMax("EMP",4)				--more EMPs (vs 0)
-	playerHeadhunter:setWeaponStorage("EMP", 4)					
-	playerHeadhunter:setWeaponStorageMax("Nuke",4)				--fewer Nukes (vs 6)
-	playerHeadhunter:setWeaponStorage("Nuke", 4)				
-	playerHeadhunter:addReputationPoints(50)
-	removeGMFunction("Headhunter")
-end
-function createPlayerShipBlazon()
-	playerBlazon = PlayerSpaceship():setTemplate("Striker"):setFaction("Human Navy"):setCallSign("Blazon")
-	playerBlazon:setTypeName("Stricken")
-	playerBlazon:setRepairCrewCount(2)
-	playerBlazon:setImpulseMaxSpeed(105)					
-	playerBlazon:setRotationMaxSpeed(35)				
-	playerBlazon:setShieldsMax(80,50)
-	playerBlazon:setShields(80,50)
-	playerBlazon:setBeamWeaponTurret(0,60,-15,2)
-	playerBlazon:setBeamWeaponTurret(1,60, 15,2)
-	playerBlazon:setBeamWeapon(2,20,0,1200,6,5)
-	playerBlazon:setWeaponTubeCount(3)
-	playerBlazon:setWeaponTubeDirection(0,-60)
-	playerBlazon:setWeaponTubeDirection(1,60)
-	playerBlazon:setWeaponTubeDirection(2,180)
-	playerBlazon:weaponTubeDisallowMissle(0,"Mine")
-	playerBlazon:weaponTubeDisallowMissle(1,"Mine")
-	playerBlazon:setWeaponTubeExclusiveFor(2,"Mine")
-	playerBlazon:setWeaponStorageMax("Homing",6)
-	playerBlazon:setWeaponStorage("Homing",6)
-	playerBlazon:setWeaponStorageMax("EMP",2)
-	playerBlazon:setWeaponStorage("EMP",2)
-	playerBlazon:setWeaponStorageMax("Nuke",2)
-	playerBlazon:setWeaponStorage("Nuke",2)
-	playerBlazon:setWeaponStorageMax("Mine",4)
-	playerBlazon:setWeaponStorage("Mine",4)
-	playerBlazon:addReputationPoints(50)
-	removeGMFunction("Blazon")
-end
-function createPlayerShipSting()
-	playerSting = PlayerSpaceship():setTemplate("Hathcock"):setFaction("Human Navy"):setCallSign("Sting")
-	playerSting:setTypeName("Surkov")
-	playerSting:setRepairCrewCount(3)	--more repair crew (vs 2)
-	playerSting:setImpulseMaxSpeed(60)	--faster impulse max (vs 50)
-	playerSting:setJumpDrive(false)		--no jump
-	playerSting:setWarpDrive(true)		--add warp
-	playerSting:setWeaponTubeCount(3)	--one more tube for mines, no heavy ordnance
-	playerSting:setWeaponTubeDirection(0, -90)
-	playerSting:weaponTubeDisallowMissle(0,"Mine")
-	playerSting:weaponTubeDisallowMissle(0,"Nuke")
-	playerSting:weaponTubeDisallowMissle(0,"EMP")
-	playerSting:setWeaponStorageMax("Mine",3)
-	playerSting:setWeaponStorage("Mine",3)
-	playerSting:setWeaponStorageMax("Nuke",0)
-	playerSting:setWeaponStorage("Nuke",0)
-	playerSting:setWeaponStorageMax("EMP",0)
-	playerSting:setWeaponStorage("EMP",0)
-	playerSting:setWeaponTubeDirection(1, 90)
-	playerSting:weaponTubeDisallowMissle(1,"Mine")
-	playerSting:weaponTubeDisallowMissle(1,"Nuke")
-	playerSting:weaponTubeDisallowMissle(1,"EMP")
-	playerSting:setWeaponTubeDirection(2,180)
-	playerSting:setWeaponTubeExclusiveFor(2,"Mine")
-	playerSting:addReputationPoints(50)
-	removeGMFunction("Sting")
-end
+--function playerShipGMButtons()
+--	clearGMFunctions()
+--	addGMFunction("Back to main",mainGMButtons)
+--	if playerNarsil == nil then
+--		addGMFunction("Narsil",createPlayerShipNarsil)
+--	end
+--	if playerHeadhunter == nil then
+--		addGMFunction("Headhunter",createPlayerShipHeadhunter)
+--	end
+--	if playerBlazon == nil then
+--		addGMFunction("Blazon",createPlayerShipBlazon)
+--	end
+--	if playerSting == nil then
+--		addGMFunction("Sting",createPlayerShipSting)
+--	end
+--end
+--function createPlayerShipNarsil()
+--	playerNarsil = PlayerSpaceship():setTemplate("Atlantis"):setFaction("Human Navy"):setCallSign("Narsil")
+--	playerNarsil:setTypeName("Proto-Atlantis")
+--	playerNarsil:setRepairCrewCount(4)					--more repair crew (vs 3)
+--	playerNarsil:setImpulseMaxSpeed(70)					--slower impulse max (vs 90)
+--	playerNarsil:setRotationMaxSpeed(14)				--faster spin (vs 10)
+--	playerNarsil:setJumpDrive(false)					--no Jump
+--	playerNarsil:setWarpDrive(true)						--add warp
+--	playerNarsil:setHullMax(200)						--weaker hull (vs 250)
+--	playerNarsil:setHull(200)							
+--	playerNarsil:setShieldsMax(150,150)					--weaker shields (vs 200)
+--	playerNarsil:setShields(150,150)
+--	playerNarsil:setWeaponTubeCount(6)					--one more forward tube, less flexible ordnance
+--	playerNarsil:setWeaponTubeDirection(0,0)			--front facing
+--	playerNarsil:setWeaponTubeExclusiveFor(0,"HVLI")	--HVLI only
+--	playerNarsil:setWeaponTubeDirection(1,-90)			--left facing
+--	playerNarsil:weaponTubeDisallowMissle(1,"Mine")		--all but mine
+--	playerNarsil:setWeaponTubeDirection(2,-90)			--left facing
+--	playerNarsil:setWeaponTubeExclusiveFor(2,"HVLI")	--HVLI only
+--	playerNarsil:setWeaponTubeDirection(3,90)			--right facing
+--	playerNarsil:weaponTubeDisallowMissle(3,"Mine")		--all but mine
+--	playerNarsil:setWeaponTubeDirection(4,90)			--right facing
+--	playerNarsil:setWeaponTubeExclusiveFor(4,"HVLI")	--HVLI only
+--	playerNarsil:setWeaponTubeDirection(5,180)			--rear facing
+--	playerNarsil:setWeaponTubeExclusiveFor(5,"Mine")	--Mine only
+--	playerNarsil:addReputationPoints(50)
+--	removeGMFunction("Narsil")
+--end
+--function createPlayerShipHeadhunter()
+--	playerHeadhunter = PlayerSpaceship():setTemplate("Piranha"):setFaction("Human Navy"):setCallSign("Headhunter")
+--	playerHeadhunter:setTypeName("Redhook")
+--	playerHeadhunter:setRepairCrewCount(4)						--more repair crew (vs 2)
+--	playerHeadhunter:setJumpDriveRange(2000,25000)				--shorter jump drive range (vs 5-50)
+--	playerHeadhunter:setHullMax(140)							--stronger hull (vs 120)
+--	playerHeadhunter:setHull(140)
+--	playerHeadhunter:setShieldsMax(100, 100)					--stronger shields (vs 70, 70)
+--	playerHeadhunter:setShields(100, 100)
+--	playerHeadhunter:setBeamWeapon(0, 10, 0, 1200.0, 4.0, 4)	--one beam (vs 0)
+--	playerHeadhunter:setBeamWeaponTurret(0, 80, 0, 1)			--slow turret 
+--	playerHeadhunter:setWeaponTubeCount(7)						--one fewer mine tube, but EMPs added
+--	playerHeadhunter:setWeaponTubeDirection(6, 180)				--mine tube points straight back
+--	playerHeadhunter:setWeaponTubeExclusiveFor(0,"HVLI")
+--	playerHeadhunter:setWeaponTubeExclusiveFor(1,"HVLI")
+--	playerHeadhunter:setWeaponTubeExclusiveFor(2,"HVLI")
+--	playerHeadhunter:setWeaponTubeExclusiveFor(3,"HVLI")
+--	playerHeadhunter:setWeaponTubeExclusiveFor(4,"HVLI")
+--	playerHeadhunter:setWeaponTubeExclusiveFor(5,"HVLI")
+--	playerHeadhunter:setWeaponTubeExclusiveFor(6,"Mine")
+--	playerHeadhunter:weaponTubeAllowMissle(1,"Homing")
+--	playerHeadhunter:weaponTubeAllowMissle(1,"EMP")
+--	playerHeadhunter:weaponTubeAllowMissle(1,"Nuke")
+--	playerHeadhunter:weaponTubeAllowMissle(4,"Homing")
+--	playerHeadhunter:weaponTubeAllowMissle(4,"EMP")
+--	playerHeadhunter:weaponTubeAllowMissle(4,"Nuke")
+--	playerHeadhunter:setWeaponStorageMax("Mine",4)				--fewer mines (vs 8)
+--	playerHeadhunter:setWeaponStorage("Mine", 4)				
+--	playerHeadhunter:setWeaponStorageMax("EMP",4)				--more EMPs (vs 0)
+--	playerHeadhunter:setWeaponStorage("EMP", 4)					
+--	playerHeadhunter:setWeaponStorageMax("Nuke",4)				--fewer Nukes (vs 6)
+--	playerHeadhunter:setWeaponStorage("Nuke", 4)				
+--	playerHeadhunter:addReputationPoints(50)
+--	removeGMFunction("Headhunter")
+--end
+--function createPlayerShipBlazon()
+--	playerBlazon = PlayerSpaceship():setTemplate("Striker"):setFaction("Human Navy"):setCallSign("Blazon")
+--	playerBlazon:setTypeName("Stricken")
+--	playerBlazon:setRepairCrewCount(2)
+--	playerBlazon:setImpulseMaxSpeed(105)					
+--	playerBlazon:setRotationMaxSpeed(35)				
+--	playerBlazon:setShieldsMax(80,50)
+--	playerBlazon:setShields(80,50)
+--	playerBlazon:setBeamWeaponTurret(0,60,-15,2)
+--	playerBlazon:setBeamWeaponTurret(1,60, 15,2)
+--	playerBlazon:setBeamWeapon(2,20,0,1200,6,5)
+--	playerBlazon:setWeaponTubeCount(3)
+--	playerBlazon:setWeaponTubeDirection(0,-60)
+--	playerBlazon:setWeaponTubeDirection(1,60)
+--	playerBlazon:setWeaponTubeDirection(2,180)
+--	playerBlazon:weaponTubeDisallowMissle(0,"Mine")
+--	playerBlazon:weaponTubeDisallowMissle(1,"Mine")
+--	playerBlazon:setWeaponTubeExclusiveFor(2,"Mine")
+--	playerBlazon:setWeaponStorageMax("Homing",6)
+--	playerBlazon:setWeaponStorage("Homing",6)
+--	playerBlazon:setWeaponStorageMax("EMP",2)
+--	playerBlazon:setWeaponStorage("EMP",2)
+--	playerBlazon:setWeaponStorageMax("Nuke",2)
+--	playerBlazon:setWeaponStorage("Nuke",2)
+--	playerBlazon:setWeaponStorageMax("Mine",4)
+--	playerBlazon:setWeaponStorage("Mine",4)
+--	playerBlazon:addReputationPoints(50)
+--	removeGMFunction("Blazon")
+--end
+--function createPlayerShipSting()
+--	playerSting = PlayerSpaceship():setTemplate("Hathcock"):setFaction("Human Navy"):setCallSign("Sting")
+--	playerSting:setTypeName("Surkov")
+--	playerSting:setRepairCrewCount(3)	--more repair crew (vs 2)
+--	playerSting:setImpulseMaxSpeed(60)	--faster impulse max (vs 50)
+--	playerSting:setJumpDrive(false)		--no jump
+--	playerSting:setWarpDrive(true)		--add warp
+--	playerSting:setWeaponTubeCount(3)	--one more tube for mines, no heavy ordnance
+--	playerSting:setWeaponTubeDirection(0, -90)
+--	playerSting:weaponTubeDisallowMissle(0,"Mine")
+--	playerSting:weaponTubeDisallowMissle(0,"Nuke")
+--	playerSting:weaponTubeDisallowMissle(0,"EMP")
+--	playerSting:setWeaponStorageMax("Mine",3)
+--	playerSting:setWeaponStorage("Mine",3)
+--	playerSting:setWeaponStorageMax("Nuke",0)
+--	playerSting:setWeaponStorage("Nuke",0)
+--	playerSting:setWeaponStorageMax("EMP",0)
+--	playerSting:setWeaponStorage("EMP",0)
+--	playerSting:setWeaponTubeDirection(1, 90)
+--	playerSting:weaponTubeDisallowMissle(1,"Mine")
+--	playerSting:weaponTubeDisallowMissle(1,"Nuke")
+--	playerSting:weaponTubeDisallowMissle(1,"EMP")
+--	playerSting:setWeaponTubeDirection(2,180)
+--	playerSting:setWeaponTubeExclusiveFor(2,"Mine")
+--	playerSting:addReputationPoints(50)
+--	removeGMFunction("Sting")
+--end
 -- GM adjust speed functions
 function adjustSpeedGMButtons()
 	clearGMFunctions()
@@ -5465,7 +5467,7 @@ function handleDockedState()
 						end)
 					end				
 				end
-				if #plotList < 1 then
+				if #plotList < 1 or string.find(mission_choice,"Selectable") then
 					addCommsReply("Move to next region of available missions", function()
 						setCommsMessage(string.format("Dock with station %s for the details of your next assignment. Beware the asteroids",belt1Stations[1]:getCallSign()))
 						playVoice("Pat06")
@@ -8110,7 +8112,7 @@ function healthCheck(delta)
 						crewFate(p,fatalityChance)
 					end
 				else	--no repair crew left
-					if random(1,100) <= (4 - dificulty) then
+					if random(1,100) <= (4 - difficulty) then
 						p:setRepairCrewCount(1)
 						if p:hasPlayerAtPosition("Engineering") then
 							local repairCrewRecovery = "repairCrewRecovery"
@@ -9330,7 +9332,7 @@ function secondRelease(delta)
 				name = name .. " Freighter " .. math.random(1, 5)
 			end
 			local tempShip = CpuShip():setTemplate(name):setFaction('Exuari'):setCommsScript(""):setCommsFunction(commsShip)
-			ship:setCallSign(generateCallSign(nil,"Exuari"))
+			tempShip:setCallSign(generateCallSign(nil,"Exuari"))
 			tempShip:setPosition(tpmx,tpmy):orderDock(tempBase)
 			tempShip.targetDock = tempBase
 			table.insert(secondLostFleet,tempShip)
@@ -9647,7 +9649,7 @@ function marauderSpawn(delta)
 			plotPlayers[defendSpawnBandStation].plot1 = marauderApproach
 		end
 	else
-		plotPlayers[defendSpawnBandStation]:addToShipLog(string.format("Station %s destroyed",protect_station:getCallSign()),"Magenta")
+		plotPlayers[defendSpawnBandStation]:addToShipLog("Station destroyed","Magenta")
 		startDefendSpawnBandStation() --reset plot
 		plotPlayers[defendSpawnBandStation]:addToShipLog(string.format("The Exuari marauders are heading towards %s.",protect_station:getCallSign()),"Magenta")
 	end
@@ -9705,7 +9707,7 @@ function marauderApproach(delta)
 			end
 		end
 	else
-		plotPlayers[defendSpawnBandStation]:addToShipLog(string.format("Station %s destroyed",protect_station:getCallSign()),"Magenta")
+		plotPlayers[defendSpawnBandStation]:addToShipLog("Station destroyed","Magenta")
 		startDefendSpawnBandStation() --reset plot
 		plotPlayers[defendSpawnBandStation]:addToShipLog(string.format("More Exuari marauders have been detected near %s.",protect_station:getCallSign()),"Magenta")
 	end
@@ -9726,7 +9728,7 @@ function marauderVanguard(delta)
 			plotPlayers[defendSpawnBandStation].plot1 = marauderFleetDestroyed
 		end
 	else
-		plotPlayers[defendSpawnBandStation]:addToShipLog(string.format("Station %s destroyed",protect_station:getCallSign()),"Magenta")
+		plotPlayers[defendSpawnBandStation]:addToShipLog("Station destroyed","Magenta")
 		startDefendSpawnBandStation() --reset plot
 		plotPlayers[defendSpawnBandStation]:addToShipLog(string.format("More Exuari marauders have been detected near %s.",protect_station:getCallSign()),"Magenta")
 	end
@@ -10555,11 +10557,11 @@ function setPlayers()
 				modify_player_ships(pobj)
 				pobj.nameAssigned = true
 --				local tempPlayerType = pobj:getTypeName()
---				if p1idx % 2 == 0 then
---					pobj:setPosition(playerSpawn1X,playerSpawn1Y)
---				else
---					pobj:setPosition(playerSpawn2X,playerSpawn2Y)
---				end
+				if p1idx % 2 == 0 then
+					pobj:setPosition(playerSpawn1X,playerSpawn1Y)
+				else
+					pobj:setPosition(playerSpawn2X,playerSpawn2Y)
+				end
 --				if tempPlayerType == "MP52 Hornet" then
 --					if #playerShipNamesForMP52Hornet > 0 then
 --						local ni = math.random(1,#playerShipNamesForMP52Hornet)
