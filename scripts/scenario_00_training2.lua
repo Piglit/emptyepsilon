@@ -40,6 +40,7 @@ function init()
 	pos0x, pos0y = 0, 0
 	player = PlayerSpaceship():setTemplate("Piranha M5P"):setCallSign("Rookie 1"):setFaction("Human Navy"):setPosition(pos0x, pos0y):setHeading(90)
 	rr = player:getLongRangeRadarRange()
+	player:addReputationPoints(40.0)
 
 	--first encounter within sensor range
 	pos1x, pos1y = 0, -rr/2

@@ -30,7 +30,7 @@ function init()
 
 	player = PlayerSpaceship():setTemplate("Hathcock"):setCallSign("Rookie 1"):setFaction("Human Navy"):setPosition(0, 0):setHeading(90)
 	rr = player:getLongRangeRadarRange()
-	player:addReputationPoints(20.0)
+	player:addReputationPoints(140.0)
 
 	enemies = {
 		"Yellow Hornet",
