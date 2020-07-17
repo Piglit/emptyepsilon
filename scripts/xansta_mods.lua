@@ -190,8 +190,6 @@ function init_constants_xansta()
 	playerShipNamesForNautilus = {"October", "Abdiel", "Manxman", "Newcon", "Nusret", "Pluton", "Amiral", "Amur", "Heinkel", "Dornier"}
 	playerShipNamesForHathcock = {"Hayha", "Waldron", "Plunkett", "Mawhinney", "Furlong", "Zaytsev", "Pavlichenko", "Pegahmagabow", "Fett", "Hawkeye", "Hanzo"}
 	playerShipNamesForLeftovers = {"Foregone","Righteous","Masher"}
-	playerShipNamesForMelonidas = {"U.S.S. Koenig Melonidas", "U.S.S. Koenig Melonidas II ", "U.S.S. Koenig Melonidas III"}
-	playerShipNamesForHunter = {"Huntmaster", "Huntmaster II", "Huntmaster III"}
 
 end
 
@@ -209,7 +207,7 @@ function modify_player_ships(pobj)
 			end
 			pobj.shipScore = 7
 			pobj.maxCargo = 3
-			pobj.autoCoolant = false
+			pobj.autoCoolant = true
 --			pobj:setWarpDrive(true)
 		elseif tempPlayerType == "ZX-Lindworm" then
 			if #playerShipNamesForLindworm > 0 and not pobj.nameAssigned then
@@ -220,7 +218,7 @@ function modify_player_ships(pobj)
 			end
 			pobj.shipScore = 8
 			pobj.maxCargo = 3
-			pobj.autoCoolant = false
+			pobj.autoCoolant = true
 --			pobj:setWarpDrive(true)
 		elseif tempPlayerType == "Adder MK7" then
 			if #playerShipNamesForStriker > 0 and not pobj.nameAssigned then
@@ -231,7 +229,7 @@ function modify_player_ships(pobj)
 			end
 			pobj.shipScore = 8
 			pobj.maxCargo = 4
-			pobj.autoCoolant = false
+			pobj.autoCoolant = true
 --			pobj:setJumpDrive(true)
 --			pobj:setJumpDriveRange(3000,40000)
 		elseif tempPlayerType == "Phobos M3P" then

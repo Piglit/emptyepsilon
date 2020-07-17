@@ -32,6 +32,7 @@
 -- Variation[Hard Selectable]: Hard goals and/or enemies, Next mission may be selected
 
 require("utils.lua")
+require("xansta_mods.lua")
 
 function init()
 	server_voices = false
@@ -476,42 +477,44 @@ end
 function setConstants()
 	repeatExitBoundary = 100
 	scarceResources = false
-	--Ship Template Name List
-	stnl = {"MT52 Hornet","MU52 Hornet","Adder MK5","Adder MK4","WX-Lindworm","Adder MK6","Phobos T3","Phobos M3","Piranha F8","Piranha F12","Ranus U","Nirvana R5A","Stalker Q7","Stalker R7","Atlantis X23","Starhammer II","Odin","Fighter","Cruiser","Missile Cruiser","Strikeship","Adv. Striker","Dreadnought","Battlestation","Blockade Runner","Ktlitan Fighter","Ktlitan Breaker","Ktlitan Worker","Ktlitan Drone","Ktlitan Feeder","Ktlitan Scout","Ktlitan Destroyer","Storm"}
-	--Ship Template Score List
-	stsl = {5            ,5            ,7          ,6          ,7            ,8          ,15         ,16         ,15          ,15           ,25       ,20           ,25          ,25          ,50            ,70             ,250   ,6        ,18       ,14               ,30          ,27            ,80           ,100            ,65               ,6                ,45               ,40              ,4              ,48              ,8              ,50                 ,22}
-	-- square grid deployment
-	fleetPosDelta1x = {0,1,0,-1, 0,1,-1, 1,-1,2,0,-2, 0,2,-2, 2,-2,2, 2,-2,-2,1,-1, 1,-1}
-	fleetPosDelta1y = {0,0,1, 0,-1,1,-1,-1, 1,0,2, 0,-2,2,-2,-2, 2,1,-1, 1,-1,2, 2,-2,-2}
-	-- rough hexagonal deployment
-	fleetPosDelta2x = {0,2,-2,1,-1, 1, 1,4,-4,0, 0,2,-2,-2, 2,3,-3, 3,-3,6,-6,1,-1, 1,-1,3,-3, 3,-3,4,-4, 4,-4,5,-5, 5,-5}
-	fleetPosDelta2y = {0,0, 0,1, 1,-1,-1,0, 0,2,-2,2,-2, 2,-2,1,-1,-1, 1,0, 0,3, 3,-3,-3,3,-3,-3, 3,2,-2,-2, 2,1,-1,-1, 1}
-	--Player ship name lists to supplant standard randomized call sign generation
-	playerShipNamesForMP52Hornet = {"Dragonfly","Scarab","Mantis","Yellow Jacket","Jimminy","Flik","Thorny","Buzz"}
-	playerShipNamesForPiranha = {"Razor","Biter","Ripper","Voracious","Carnivorous","Characid","Vulture","Predator"}
-	playerShipNamesForFlaviaPFalcon = {"Ladyhawke","Hunter","Seeker","Gyrefalcon","Kestrel","Magpie","Bandit","Buccaneer"}
-	playerShipNamesForPhobosM3P = {"Blinder","Shadow","Distortion","Diemos","Ganymede","Castillo","Thebe","Retrograde"}
-	playerShipNamesForAtlantis = {"Excaliber","Thrasher","Punisher","Vorpal","Protang","Drummond","Parchim","Coronado"}
-	playerShipNamesForCruiser = {"Excelsior","Velociraptor","Thunder","Kona","Encounter","Perth","Aspern","Panther"}
-	playerShipNamesForMissileCruiser = {"Projectus","Hurlmeister","Flinger","Ovod","Amatola","Nakhimov","Antigone"}
-	playerShipNamesForFighter = {"Buzzer","Flitter","Zippiticus","Hopper","Molt","Stinger","Stripe"}
-	playerShipNamesForBenedict = {"Elizabeth","Ford","Vikramaditya","Liaoning","Avenger","Naruebet","Washington","Lincoln","Garibaldi","Eisenhower"}
-	playerShipNamesForKiriya = {"Cavour","Reagan","Gaulle","Paulo","Truman","Stennis","Kuznetsov","Roosevelt","Vinson","Old Salt"}
-	playerShipNamesForStriker = {"Sparrow","Sizzle","Squawk","Crow","Phoenix","Snowbird","Hawk"}
-	playerShipNamesForLindworm = {"Seagull","Catapult","Blowhard","Flapper","Nixie","Pixie","Tinkerbell"}
-	playerShipNamesForRepulse = {"Fiddler","Brinks","Loomis","Mowag","Patria","Pandur","Terrex","Komatsu","Eitan"}
-	playerShipNamesForEnder = {"Mongo","Godzilla","Leviathan","Kraken","Jupiter","Saturn"}
-	playerShipNamesForNautilus = {"October","Abdiel","Manxman","Newcon","Nusret","Pluton","Amiral","Amur","Heinkel","Dornier"}
-	playerShipNamesForHathcock = {"Hayha","Waldron","Plunkett","Mawhinney","Furlong","Zaytsev","Pavlichenko","Pegahmagabow","Fett","Hawkeye","Hanzo"}
-	playerShipNamesForAtlantisII = {"Spyder", "Shelob", "Tarantula", "Aragog", "Charlotte"}
-	playerShipNamesForProtoAtlantis = {"Narsil", "Blade", "Decapitator", "Trisect", "Sabre"}
-	playerShipNamesForMaverick = {"Angel", "Thunderbird", "Roaster", "Magnifier", "Hedge"}
-	playerShipNamesForCrucible = {"Sling", "Stark", "Torrid", "Kicker", "Flummox"}
-	playerShipNamesForSurkov = {"Sting", "Sneak", "Bingo", "Thrill", "Vivisect"}
-	playerShipNamesForStricken = {"Blazon", "Streaker", "Pinto", "Spear", "Javelin"}
-	playerShipNamesForAtlantisII = {"Spyder", "Shelob", "Tarantula", "Aragog", "Charlotte"}
-	playerShipNamesForRedhook = {"Headhunter", "Thud", "Troll", "Scalper", "Shark"}
-	playerShipNamesForLeftovers = {"Foregone","Righteous","Masher"}
+	init_constants_xansta()
+--	--Ship Template Name List
+--	stnl = {"MT52 Hornet","MU52 Hornet","Adder MK5","Adder MK4","WX-Lindworm","Adder MK6","Phobos T3","Phobos M3","Piranha F8","Piranha F12","Ranus U","Nirvana R5A","Stalker Q7","Stalker R7","Atlantis X23","Starhammer II","Odin","Fighter","Cruiser","Missile Cruiser","Strikeship","Adv. Striker","Dreadnought","Battlestation","Blockade Runner","Ktlitan Fighter","Ktlitan Breaker","Ktlitan Worker","Ktlitan Drone","Ktlitan Feeder","Ktlitan Scout","Ktlitan Destroyer","Storm"}
+--	--Ship Template Score List
+--	stsl = {5            ,5            ,7          ,6          ,7            ,8          ,15         ,16         ,15          ,15           ,25       ,20           ,25          ,25          ,50            ,70             ,250   ,6        ,18       ,14               ,30          ,27            ,80           ,100            ,65               ,6                ,45               ,40              ,4              ,48              ,8              ,50                 ,22}
+--	-- square grid deployment
+--	fleetPosDelta1x = {0,1,0,-1, 0,1,-1, 1,-1,2,0,-2, 0,2,-2, 2,-2,2, 2,-2,-2,1,-1, 1,-1}
+--	fleetPosDelta1y = {0,0,1, 0,-1,1,-1,-1, 1,0,2, 0,-2,2,-2,-2, 2,1,-1, 1,-1,2, 2,-2,-2}
+--	-- rough hexagonal deployment
+--	fleetPosDelta2x = {0,2,-2,1,-1, 1, 1,4,-4,0, 0,2,-2,-2, 2,3,-3, 3,-3,6,-6,1,-1, 1,-1,3,-3, 3,-3,4,-4, 4,-4,5,-5, 5,-5}
+--	fleetPosDelta2y = {0,0, 0,1, 1,-1,-1,0, 0,2,-2,2,-2, 2,-2,1,-1,-1, 1,0, 0,3, 3,-3,-3,3,-3,-3, 3,2,-2,-2, 2,1,-1,-1, 1}
+--	--Player ship name lists to supplant standard randomized call sign generation
+--	playerShipNamesForMP52Hornet = {"Dragonfly","Scarab","Mantis","Yellow Jacket","Jimminy","Flik","Thorny","Buzz"}
+--	playerShipNamesForPiranha = {"Razor","Biter","Ripper","Voracious","Carnivorous","Characid","Vulture","Predator"}
+--	playerShipNamesForFlaviaPFalcon = {"Ladyhawke","Hunter","Seeker","Gyrefalcon","Kestrel","Magpie","Bandit","Buccaneer"}
+--	playerShipNamesForPhobosM3P = {"Blinder","Shadow","Distortion","Diemos","Ganymede","Castillo","Thebe","Retrograde"}
+--	playerShipNamesForAtlantis = {"Excaliber","Thrasher","Punisher","Vorpal","Protang","Drummond","Parchim","Coronado"}
+--	playerShipNamesForCruiser = {"Excelsior","Velociraptor","Thunder","Kona","Encounter","Perth","Aspern","Panther"}
+--	playerShipNamesForMissileCruiser = {"Projectus","Hurlmeister","Flinger","Ovod","Amatola","Nakhimov","Antigone"}
+--	playerShipNamesForFighter = {"Buzzer","Flitter","Zippiticus","Hopper","Molt","Stinger","Stripe"}
+--	playerShipNamesForBenedict = {"Elizabeth","Ford","Vikramaditya","Liaoning","Avenger","Naruebet","Washington","Lincoln","Garibaldi","Eisenhower"}
+--	playerShipNamesForKiriya = {"Cavour","Reagan","Gaulle","Paulo","Truman","Stennis","Kuznetsov","Roosevelt","Vinson","Old Salt"}
+--	playerShipNamesForStriker = {"Sparrow","Sizzle","Squawk","Crow","Phoenix","Snowbird","Hawk"}
+--	playerShipNamesForLindworm = {"Seagull","Catapult","Blowhard","Flapper","Nixie","Pixie","Tinkerbell"}
+--	playerShipNamesForRepulse = {"Fiddler","Brinks","Loomis","Mowag","Patria","Pandur","Terrex","Komatsu","Eitan"}
+--	playerShipNamesForEnder = {"Mongo","Godzilla","Leviathan","Kraken","Jupiter","Saturn"}
+--	playerShipNamesForNautilus = {"October","Abdiel","Manxman","Newcon","Nusret","Pluton","Amiral","Amur","Heinkel","Dornier"}
+--	playerShipNamesForHathcock = {"Hayha","Waldron","Plunkett","Mawhinney","Furlong","Zaytsev","Pavlichenko","Pegahmagabow","Fett","Hawkeye","Hanzo"}
+--	playerShipNamesForAtlantisII = {"Spyder", "Shelob", "Tarantula", "Aragog", "Charlotte"}
+--	playerShipNamesForProtoAtlantis = {"Narsil", "Blade", "Decapitator", "Trisect", "Sabre"}
+--	playerShipNamesForMaverick = {"Angel", "Thunderbird", "Roaster", "Magnifier", "Hedge"}
+--	playerShipNamesForCrucible = {"Sling", "Stark", "Torrid", "Kicker", "Flummox"}
+--	playerShipNamesForSurkov = {"Sting", "Sneak", "Bingo", "Thrill", "Vivisect"}
+--	playerShipNamesForStricken = {"Blazon", "Streaker", "Pinto", "Spear", "Javelin"}
+--	playerShipNamesForAtlantisII = {"Spyder", "Shelob", "Tarantula", "Aragog", "Charlotte"}
+--	playerShipNamesForRedhook = {"Headhunter", "Thud", "Troll", "Scalper", "Shark"}
+--	playerShipNamesForLeftovers = {"Foregone","Righteous","Masher"}
+
 	if server_voices then
 		primusNames = {"Minos","Talos","Primus"}
 		secondusNames = {"Secondus","Aurora","Covenant"}
@@ -8053,41 +8056,42 @@ function spawnEnemies(xOrigin, yOrigin, danger, enemyFaction, perimeter_min, per
 		danger = 1
 	end
 	local enemyStrength = math.max(danger * difficulty * playerPower(),5)
-	local enemyPosition = 0
-	local sp = irandom(400,900)			--random spacing of spawned group
-	local deployConfig = random(1,100)	--randomly choose between squarish formation and hexagonish formation
-	local enemyList = {}
-	-- Reminder: stsl and stnl are ship template score and name list
-	while enemyStrength > 0 do
-		local shipTemplateType = irandom(1,#stsl)
-		while stsl[shipTemplateType] > enemyStrength * 1.1 + 5 do
-			shipTemplateType = irandom(1,#stsl)
-		end		
-		local ship = CpuShip():setFaction(enemyFaction):setTemplate(stnl[shipTemplateType]):orderRoaming()
-		if enemyFaction == "Kraylor" then
-			rawKraylorShipStrength = rawKraylorShipStrength + stsl[shipTemplateType]
-			ship:onDestruction(kraylorVesselDestroyed)
-		elseif enemyFaction == "Human Navy" then
-			rawHumanShipStrength = rawHumanShipStrength + stsl[shipTemplateType]
-			ship:onDestruction(humanVesselDestroyed)
-		elseif enemyFaction == "Exuari" then
-			rawExuariShipStrength = rawExuariShipStrength + stsl[shipTemplateType]
-			ship:onDestruction(exuariVesselDestroyed)
-		elseif enemyFaction == "Arlenians" then
-			rawArlenianShipStrength = rawArlenianShipStrength + stsl[shipTemplateType]
-			ship:onDestruction(arlenianVesselDestroyed)
-		end
-		enemyPosition = enemyPosition + 1
-		if deployConfig < 50 then
-			ship:setPosition(xOrigin+fleetPosDelta1x[enemyPosition]*sp,yOrigin+fleetPosDelta1y[enemyPosition]*sp)
-		else
-			ship:setPosition(xOrigin+fleetPosDelta2x[enemyPosition]*sp,yOrigin+fleetPosDelta2y[enemyPosition]*sp)
-		end
-		ship:setCommsScript(""):setCommsFunction(commsShip)
-		ship:setCallSign(generateCallSign(nil,enemyFaction))
-		table.insert(enemyList, ship)
-		enemyStrength = enemyStrength - stsl[shipTemplateType]
-	end
+	local enemyList = spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction)
+--	local enemyPosition = 0
+--	local sp = irandom(400,900)			--random spacing of spawned group
+--	local deployConfig = random(1,100)	--randomly choose between squarish formation and hexagonish formation
+--	local enemyList = {}
+--	-- Reminder: stsl and stnl are ship template score and name list
+--	while enemyStrength > 0 do
+--		local shipTemplateType = irandom(1,#stsl)
+--		while stsl[shipTemplateType] > enemyStrength * 1.1 + 5 do
+--			shipTemplateType = irandom(1,#stsl)
+--		end		
+--		local ship = CpuShip():setFaction(enemyFaction):setTemplate(stnl[shipTemplateType]):orderRoaming()
+--		if enemyFaction == "Kraylor" then
+--			rawKraylorShipStrength = rawKraylorShipStrength + stsl[shipTemplateType]
+--			ship:onDestruction(kraylorVesselDestroyed)
+--		elseif enemyFaction == "Human Navy" then
+--			rawHumanShipStrength = rawHumanShipStrength + stsl[shipTemplateType]
+--			ship:onDestruction(humanVesselDestroyed)
+--		elseif enemyFaction == "Exuari" then
+--			rawExuariShipStrength = rawExuariShipStrength + stsl[shipTemplateType]
+--			ship:onDestruction(exuariVesselDestroyed)
+--		elseif enemyFaction == "Arlenians" then
+--			rawArlenianShipStrength = rawArlenianShipStrength + stsl[shipTemplateType]
+--			ship:onDestruction(arlenianVesselDestroyed)
+--		end
+--		enemyPosition = enemyPosition + 1
+--		if deployConfig < 50 then
+--			ship:setPosition(xOrigin+fleetPosDelta1x[enemyPosition]*sp,yOrigin+fleetPosDelta1y[enemyPosition]*sp)
+--		else
+--			ship:setPosition(xOrigin+fleetPosDelta2x[enemyPosition]*sp,yOrigin+fleetPosDelta2y[enemyPosition]*sp)
+--		end
+--		ship:setCommsScript(""):setCommsFunction(commsShip)
+--		ship:setCallSign(generateCallSign(nil,enemyFaction))
+--		table.insert(enemyList, ship)
+--		enemyStrength = enemyStrength - stsl[shipTemplateType]
+--	end
 	if perimeter_min ~= nil then
 		local enemy_angle = random(0,360)
 		local circle_increment = 360/#enemyList
@@ -10638,207 +10642,208 @@ function setPlayers()
 				pobj.initialRep = true
 			end
 			if not pobj.nameAssigned then
+				modify_player_ships(pobj)
 				pobj.nameAssigned = true
-				local tempPlayerType = pobj:getTypeName()
-				if p1idx % 2 == 0 then
-					pobj:setPosition(playerSpawn1X,playerSpawn1Y)
-				else
-					pobj:setPosition(playerSpawn2X,playerSpawn2Y)
-				end
-				if tempPlayerType == "MP52 Hornet" then
-					if #playerShipNamesForMP52Hornet > 0 then
-						local ni = math.random(1,#playerShipNamesForMP52Hornet)
-						pobj:setCallSign(playerShipNamesForMP52Hornet[ni])
-						table.remove(playerShipNamesForMP52Hornet,ni)
-					end
-					pobj.shipScore = 7
-					pobj.maxCargo = 3
-					pobj.autoCoolant = false
-					pobj:setWarpDrive(true)
-				elseif tempPlayerType == "Piranha" then
-					if #playerShipNamesForPiranha > 0 then
-						ni = math.random(1,#playerShipNamesForPiranha)
-						pobj:setCallSign(playerShipNamesForPiranha[ni])
-						table.remove(playerShipNamesForPiranha,ni)
-					end
-					pobj.shipScore = 16
-					pobj.maxCargo = 8
-				elseif tempPlayerType == "Flavia P.Falcon" then
-					if #playerShipNamesForFlaviaPFalcon > 0 then
-						ni = math.random(1,#playerShipNamesForFlaviaPFalcon)
-						pobj:setCallSign(playerShipNamesForFlaviaPFalcon[ni])
-						table.remove(playerShipNamesForFlaviaPFalcon,ni)
-					end
-					pobj.shipScore = 13
-					pobj.maxCargo = 15
-				elseif tempPlayerType == "Phobos M3P" then
-					if #playerShipNamesForPhobosM3P > 0 then
-						ni = math.random(1,#playerShipNamesForPhobosM3P)
-						pobj:setCallSign(playerShipNamesForPhobosM3P[ni])
-						table.remove(playerShipNamesForPhobosM3P,ni)
-					end
-					pobj.shipScore = 19
-					pobj.maxCargo = 10
-					pobj:setWarpDrive(true)
-				elseif tempPlayerType == "Atlantis" then
-					if #playerShipNamesForAtlantis > 0 then
-						ni = math.random(1,#playerShipNamesForAtlantis)
-						pobj:setCallSign(playerShipNamesForAtlantis[ni])
-						table.remove(playerShipNamesForAtlantis,ni)
-					end
-					pobj.shipScore = 52
-					pobj.maxCargo = 6
-				elseif tempPlayerType == "Player Cruiser" then
-					if #playerShipNamesForCruiser > 0 then
-						ni = math.random(1,#playerShipNamesForCruiser)
-						pobj:setCallSign(playerShipNamesForCruiser[ni])
-						table.remove(playerShipNamesForCruiser,ni)
-					end
-					pobj.shipScore = 40
-					pobj.maxCargo = 6
-				elseif tempPlayerType == "Player Missile Cr." then
-					if #playerShipNamesForMissileCruiser > 0 then
-						ni = math.random(1,#playerShipNamesForMissileCruiser)
-						pobj:setCallSign(playerShipNamesForMissileCruiser[ni])
-						table.remove(playerShipNamesForMissileCruiser,ni)
-					end
-					pobj.shipScore = 45
-					pobj.maxCargo = 8
-				elseif tempPlayerType == "Player Fighter" then
-					if #playerShipNamesForFighter > 0 then
-						ni = math.random(1,#playerShipNamesForFighter)
-						pobj:setCallSign(playerShipNamesForFighter[ni])
-						table.remove(playerShipNamesForFighter,ni)
-					end
-					pobj.shipScore = 7
-					pobj.maxCargo = 3
-					pobj.autoCoolant = false
-					pobj:setJumpDrive(true)
-					pobj:setJumpDriveRange(3000,40000)
-				elseif tempPlayerType == "Benedict" then
-					if #playerShipNamesForBenedict > 0 then
-						ni = math.random(1,#playerShipNamesForBenedict)
-						pobj:setCallSign(playerShipNamesForBenedict[ni])
-						table.remove(playerShipNamesForBenedict,ni)
-					end
-					pobj.shipScore = 10
-					pobj.maxCargo = 9
-				elseif tempPlayerType == "Kiriya" then
-					if #playerShipNamesForKiriya > 0 then
-						ni = math.random(1,#playerShipNamesForKiriya)
-						pobj:setCallSign(playerShipNamesForKiriya[ni])
-						table.remove(playerShipNamesForKiriya,ni)
-					end
-					pobj.shipScore = 10
-					pobj.maxCargo = 9
-				elseif tempPlayerType == "Striker" then
-					if #playerShipNamesForStriker > 0 then
-						ni = math.random(1,#playerShipNamesForStriker)
-						pobj:setCallSign(playerShipNamesForStriker[ni])
-						table.remove(playerShipNamesForStriker,ni)
-					end
-					if pobj:getImpulseMaxSpeed() == 45 then
-						pobj:setImpulseMaxSpeed(90)
-					end
-					if pobj:getBeamWeaponCycleTime(0) == 6 then
-						local bi = 0
-						repeat
-							local tempArc = pobj:getBeamWeaponArc(bi)
-							local tempDir = pobj:getBeamWeaponDirection(bi)
-							local tempRng = pobj:getBeamWeaponRange(bi)
-							local tempDmg = pobj:getBeamWeaponDamage(bi)
-							pobj:setBeamWeapon(bi,tempArc,tempDir,tempRng,5,tempDmg)
-							bi = bi + 1
-						until(pobj:getBeamWeaponRange(bi) < 1)
-					end
-					pobj.shipScore = 8
-					pobj.maxCargo = 4
-					pobj:setJumpDrive(true)
-					pobj:setJumpDriveRange(3000,40000)
-				elseif tempPlayerType == "ZX-Lindworm" then
-					if #playerShipNamesForLindworm > 0 then
-						ni = math.random(1,#playerShipNamesForLindworm)
-						pobj:setCallSign(playerShipNamesForLindworm[ni])
-						table.remove(playerShipNamesForLindworm,ni)
-					end
-					pobj.shipScore = 8
-					pobj.maxCargo = 3
-					pobj.autoCoolant = false
-					pobj:setWarpDrive(true)
-				elseif tempPlayerType == "Repulse" then
-					if #playerShipNamesForRepulse > 0 then
-						ni = math.random(1,#playerShipNamesForRepulse)
-						pobj:setCallSign(playerShipNamesForRepulse[ni])
-						table.remove(playerShipNamesForRepulse,ni)
-					end
-					pobj.shipScore = 14
-					pobj.maxCargo = 12
-				elseif tempPlayerType == "Ender" then
-					if #playerShipNamesForEnder > 0 then
-						ni = math.random(1,#playerShipNamesForEnder)
-						pobj:setCallSign(playerShipNamesForEnder[ni])
-						table.remove(playerShipNamesForEnder,ni)
-					end
-					pobj.shipScore = 100
-					pobj.maxCargo = 20
-				elseif tempPlayerType == "Nautilus" then
-					if #playerShipNamesForNautilus > 0 then
-						ni = math.random(1,#playerShipNamesForNautilus)
-						pobj:setCallSign(playerShipNamesForNautilus[ni])
-						table.remove(playerShipNamesForNautilus,ni)
-					end
-					pobj.shipScore = 12
-					pobj.maxCargo = 7
-				elseif tempPlayerType == "Hathcock" then
-					if #playerShipNamesForHathcock > 0 then
-						ni = math.random(1,#playerShipNamesForHathcock)
-						pobj:setCallSign(playerShipNamesForHathcock[ni])
-						table.remove(playerShipNamesForHathcock,ni)
-					end
-					pobj.shipScore = 30
-					pobj.maxCargo = 6
-				elseif tempPlayerType == "Atlantis II" then
-					if #playerShipNamesForAtlantisII > 0 then
-						ni = math.random(1,#playerShipNamesForAtlantisII)
-						pobj:setCallSign(playerShipNamesForAtlantisII[ni])
-						table.remove(playerShipNamesForAtlantisII,ni)
-					end
-					pobj.shipScore = 60
-					pobj.maxCargo = 5
-				elseif tempPlayerType == "Proto-Atlantis" then
-					if #playerShipNamesForProtoAtlantis > 0 then
-						ni = math.random(1,#playerShipNamesForProtoAtlantis)
-						pobj:setCallSign(playerShipNamesForProtoAtlantis[ni])
-						table.remove(playerShipNamesForProtoAtlantis,ni)
-					end
-					pobj.shipScore = 40
-					pobj.maxCargo = 4
-				elseif tempPlayerType == "Surkov" then
-					if #playerShipNamesForSurkov > 0 then
-						ni = math.random(1,#playerShipNamesForSurkov)
-						pobj:setCallSign(playerShipNamesForSurkov[ni])
-						table.remove(playerShipNamesForSurkov,ni)
-					end
-					pobj.shipScore = 35
-					pobj.maxCargo = 6
-				elseif tempPlayerType == "Redhook" then
-					if #playerShipNamesForRedhook > 0 then
-						ni = math.random(1,#playerShipNamesForRedhook)
-						pobj:setCallSign(playerShipNamesForRedhook[ni])
-						table.remove(playerShipNamesForRedhook,ni)
-					end
-					pobj.shipScore = 18
-					pobj.maxCargo = 8
-				else
-					if #playerShipNamesForLeftovers > 0 then
-						ni = math.random(1,#playerShipNamesForLeftovers)
-						pobj:setCallSign(playerShipNamesForLeftovers[ni])
-						table.remove(playerShipNamesForLeftovers,ni)
-					end
-					pobj.shipScore = 24
-					pobj.maxCargo = 5
-					pobj:setWarpDrive(true)
-				end
+--				local tempPlayerType = pobj:getTypeName()
+--				if p1idx % 2 == 0 then
+--					pobj:setPosition(playerSpawn1X,playerSpawn1Y)
+--				else
+--					pobj:setPosition(playerSpawn2X,playerSpawn2Y)
+--				end
+--				if tempPlayerType == "MP52 Hornet" then
+--					if #playerShipNamesForMP52Hornet > 0 then
+--						local ni = math.random(1,#playerShipNamesForMP52Hornet)
+--						pobj:setCallSign(playerShipNamesForMP52Hornet[ni])
+--						table.remove(playerShipNamesForMP52Hornet,ni)
+--					end
+--					pobj.shipScore = 7
+--					pobj.maxCargo = 3
+--					pobj.autoCoolant = false
+--					pobj:setWarpDrive(true)
+--				elseif tempPlayerType == "Piranha" then
+--					if #playerShipNamesForPiranha > 0 then
+--						ni = math.random(1,#playerShipNamesForPiranha)
+--						pobj:setCallSign(playerShipNamesForPiranha[ni])
+--						table.remove(playerShipNamesForPiranha,ni)
+--					end
+--					pobj.shipScore = 16
+--					pobj.maxCargo = 8
+--				elseif tempPlayerType == "Flavia P.Falcon" then
+--					if #playerShipNamesForFlaviaPFalcon > 0 then
+--						ni = math.random(1,#playerShipNamesForFlaviaPFalcon)
+--						pobj:setCallSign(playerShipNamesForFlaviaPFalcon[ni])
+--						table.remove(playerShipNamesForFlaviaPFalcon,ni)
+--					end
+--					pobj.shipScore = 13
+--					pobj.maxCargo = 15
+--				elseif tempPlayerType == "Phobos M3P" then
+--					if #playerShipNamesForPhobosM3P > 0 then
+--						ni = math.random(1,#playerShipNamesForPhobosM3P)
+--						pobj:setCallSign(playerShipNamesForPhobosM3P[ni])
+--						table.remove(playerShipNamesForPhobosM3P,ni)
+--					end
+--					pobj.shipScore = 19
+--					pobj.maxCargo = 10
+--					pobj:setWarpDrive(true)
+--				elseif tempPlayerType == "Atlantis" then
+--					if #playerShipNamesForAtlantis > 0 then
+--						ni = math.random(1,#playerShipNamesForAtlantis)
+--						pobj:setCallSign(playerShipNamesForAtlantis[ni])
+--						table.remove(playerShipNamesForAtlantis,ni)
+--					end
+--					pobj.shipScore = 52
+--					pobj.maxCargo = 6
+--				elseif tempPlayerType == "Player Cruiser" then
+--					if #playerShipNamesForCruiser > 0 then
+--						ni = math.random(1,#playerShipNamesForCruiser)
+--						pobj:setCallSign(playerShipNamesForCruiser[ni])
+--						table.remove(playerShipNamesForCruiser,ni)
+--					end
+--					pobj.shipScore = 40
+--					pobj.maxCargo = 6
+--				elseif tempPlayerType == "Player Missile Cr." then
+--					if #playerShipNamesForMissileCruiser > 0 then
+--						ni = math.random(1,#playerShipNamesForMissileCruiser)
+--						pobj:setCallSign(playerShipNamesForMissileCruiser[ni])
+--						table.remove(playerShipNamesForMissileCruiser,ni)
+--					end
+--					pobj.shipScore = 45
+--					pobj.maxCargo = 8
+--				elseif tempPlayerType == "Player Fighter" then
+--					if #playerShipNamesForFighter > 0 then
+--						ni = math.random(1,#playerShipNamesForFighter)
+--						pobj:setCallSign(playerShipNamesForFighter[ni])
+--						table.remove(playerShipNamesForFighter,ni)
+--					end
+--					pobj.shipScore = 7
+--					pobj.maxCargo = 3
+--					pobj.autoCoolant = false
+--					pobj:setJumpDrive(true)
+--					pobj:setJumpDriveRange(3000,40000)
+--				elseif tempPlayerType == "Benedict" then
+--					if #playerShipNamesForBenedict > 0 then
+--						ni = math.random(1,#playerShipNamesForBenedict)
+--						pobj:setCallSign(playerShipNamesForBenedict[ni])
+--						table.remove(playerShipNamesForBenedict,ni)
+--					end
+--					pobj.shipScore = 10
+--					pobj.maxCargo = 9
+--				elseif tempPlayerType == "Kiriya" then
+--					if #playerShipNamesForKiriya > 0 then
+--						ni = math.random(1,#playerShipNamesForKiriya)
+--						pobj:setCallSign(playerShipNamesForKiriya[ni])
+--						table.remove(playerShipNamesForKiriya,ni)
+--					end
+--					pobj.shipScore = 10
+--					pobj.maxCargo = 9
+--				elseif tempPlayerType == "Striker" then
+--					if #playerShipNamesForStriker > 0 then
+--						ni = math.random(1,#playerShipNamesForStriker)
+--						pobj:setCallSign(playerShipNamesForStriker[ni])
+--						table.remove(playerShipNamesForStriker,ni)
+--					end
+--					if pobj:getImpulseMaxSpeed() == 45 then
+--						pobj:setImpulseMaxSpeed(90)
+--					end
+--					if pobj:getBeamWeaponCycleTime(0) == 6 then
+--						local bi = 0
+--						repeat
+--							local tempArc = pobj:getBeamWeaponArc(bi)
+--							local tempDir = pobj:getBeamWeaponDirection(bi)
+--							local tempRng = pobj:getBeamWeaponRange(bi)
+--							local tempDmg = pobj:getBeamWeaponDamage(bi)
+--							pobj:setBeamWeapon(bi,tempArc,tempDir,tempRng,5,tempDmg)
+--							bi = bi + 1
+--						until(pobj:getBeamWeaponRange(bi) < 1)
+--					end
+--					pobj.shipScore = 8
+--					pobj.maxCargo = 4
+--					pobj:setJumpDrive(true)
+--					pobj:setJumpDriveRange(3000,40000)
+--				elseif tempPlayerType == "ZX-Lindworm" then
+--					if #playerShipNamesForLindworm > 0 then
+--						ni = math.random(1,#playerShipNamesForLindworm)
+--						pobj:setCallSign(playerShipNamesForLindworm[ni])
+--						table.remove(playerShipNamesForLindworm,ni)
+--					end
+--					pobj.shipScore = 8
+--					pobj.maxCargo = 3
+--					pobj.autoCoolant = false
+--					pobj:setWarpDrive(true)
+--				elseif tempPlayerType == "Repulse" then
+--					if #playerShipNamesForRepulse > 0 then
+--						ni = math.random(1,#playerShipNamesForRepulse)
+--						pobj:setCallSign(playerShipNamesForRepulse[ni])
+--						table.remove(playerShipNamesForRepulse,ni)
+--					end
+--					pobj.shipScore = 14
+--					pobj.maxCargo = 12
+--				elseif tempPlayerType == "Ender" then
+--					if #playerShipNamesForEnder > 0 then
+--						ni = math.random(1,#playerShipNamesForEnder)
+--						pobj:setCallSign(playerShipNamesForEnder[ni])
+--						table.remove(playerShipNamesForEnder,ni)
+--					end
+--					pobj.shipScore = 100
+--					pobj.maxCargo = 20
+--				elseif tempPlayerType == "Nautilus" then
+--					if #playerShipNamesForNautilus > 0 then
+--						ni = math.random(1,#playerShipNamesForNautilus)
+--						pobj:setCallSign(playerShipNamesForNautilus[ni])
+--						table.remove(playerShipNamesForNautilus,ni)
+--					end
+--					pobj.shipScore = 12
+--					pobj.maxCargo = 7
+--				elseif tempPlayerType == "Hathcock" then
+--					if #playerShipNamesForHathcock > 0 then
+--						ni = math.random(1,#playerShipNamesForHathcock)
+--						pobj:setCallSign(playerShipNamesForHathcock[ni])
+--						table.remove(playerShipNamesForHathcock,ni)
+--					end
+--					pobj.shipScore = 30
+--					pobj.maxCargo = 6
+--				elseif tempPlayerType == "Atlantis II" then
+--					if #playerShipNamesForAtlantisII > 0 then
+--						ni = math.random(1,#playerShipNamesForAtlantisII)
+--						pobj:setCallSign(playerShipNamesForAtlantisII[ni])
+--						table.remove(playerShipNamesForAtlantisII,ni)
+--					end
+--					pobj.shipScore = 60
+--					pobj.maxCargo = 5
+--				elseif tempPlayerType == "Proto-Atlantis" then
+--					if #playerShipNamesForProtoAtlantis > 0 then
+--						ni = math.random(1,#playerShipNamesForProtoAtlantis)
+--						pobj:setCallSign(playerShipNamesForProtoAtlantis[ni])
+--						table.remove(playerShipNamesForProtoAtlantis,ni)
+--					end
+--					pobj.shipScore = 40
+--					pobj.maxCargo = 4
+--				elseif tempPlayerType == "Surkov" then
+--					if #playerShipNamesForSurkov > 0 then
+--						ni = math.random(1,#playerShipNamesForSurkov)
+--						pobj:setCallSign(playerShipNamesForSurkov[ni])
+--						table.remove(playerShipNamesForSurkov,ni)
+--					end
+--					pobj.shipScore = 35
+--					pobj.maxCargo = 6
+--				elseif tempPlayerType == "Redhook" then
+--					if #playerShipNamesForRedhook > 0 then
+--						ni = math.random(1,#playerShipNamesForRedhook)
+--						pobj:setCallSign(playerShipNamesForRedhook[ni])
+--						table.remove(playerShipNamesForRedhook,ni)
+--					end
+--					pobj.shipScore = 18
+--					pobj.maxCargo = 8
+--				else
+--					if #playerShipNamesForLeftovers > 0 then
+--						ni = math.random(1,#playerShipNamesForLeftovers)
+--						pobj:setCallSign(playerShipNamesForLeftovers[ni])
+--						table.remove(playerShipNamesForLeftovers,ni)
+--					end
+--					pobj.shipScore = 24
+--					pobj.maxCargo = 5
+--					pobj:setWarpDrive(true)
+--				end
 				local playerCallSign = pobj:getCallSign()
 				goods[playerCallSign] = {}
 				if pobj.cargo == nil then
