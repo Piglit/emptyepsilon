@@ -17,7 +17,6 @@
 
 require("utils.lua")
 require("xansta_mods.lua")
-require("spawn_fleet.lua")
 
 --[[-----------------------------------------------------------------
       Dynamic map functions 

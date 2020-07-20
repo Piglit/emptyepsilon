@@ -29,7 +29,6 @@
 
 require("utils.lua")
 require("xansta_mods.lua")
-require("spawn_fleet.lua")
 
 -- Create amount of objects of type object_type along arc
 -- Center defined by x and y
