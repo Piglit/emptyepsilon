@@ -102,7 +102,6 @@ end
       Initialization 
 -----------------------------------------------------------------]]--
 function init()
-	spawn_player_fleet()
 	init_constants_xansta()
 	--Ship Template Name List
 		transportList = {}

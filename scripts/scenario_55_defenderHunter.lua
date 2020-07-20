@@ -59,7 +59,6 @@ function init()
 	setMovingAsteroids()
 	setMovingNebulae()
 	setWormArt()
-	spawn_player_fleet()
 	init_constants_xansta()
 	diagnostic = false		
 	helpfulWarningDiagnostic = false

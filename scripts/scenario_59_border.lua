@@ -69,7 +69,6 @@ function init()
 	plot2diagnostic = false
 	endStatDiagnostic = true
 	printDetailedStats = true
-	spawn_player_fleet()
 	setConstants()	--missle type names, template names and scores, deployment directions, player ship names, etc.
 	repeat
 		setGossipSnippets()

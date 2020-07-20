@@ -100,7 +100,6 @@ function init()
 	playerCount = 0
 	transportList = {}
 	transportSpawnDelay = 10	--30
-	spawn_player_fleet()
 	init_constants_xansta()
 	diagnostic = false
 	wfv = "nowhere"		--wolf fence value - used for debugging
