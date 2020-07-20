@@ -67,8 +67,8 @@ template:setTubeSize(1, "small")
 template:setTubeSize(2, "small")
 template:setWeaponStorage("HVLI", 12)
 template:setWeaponStorage("Homing", 3)
-template:setTubeDirection(1,-1):setWeaponTubeExclusiveFor(2, "HVLI")
-template:setTubeDirection(2, 1):setWeaponTubeExclusiveFor(1, "HVLI")
+template:setTubeDirection(1,-1):setWeaponTubeExclusiveFor(1, "HVLI")
+template:setTubeDirection(2, 1):setWeaponTubeExclusiveFor(2, "HVLI")
 --                  Arc, Dir, Range, CycleTime, Dmg
 template:setBeam(0, 10, 180, 700, 6.0, 2)
 --								  Arc, Dir, Rotate speed

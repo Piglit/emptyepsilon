@@ -162,8 +162,8 @@ template:setTubeSize(1, "small")
 template:setTubeSize(2, "small")
 template:setWeaponStorage("HVLI", 6)
 template:setWeaponStorage("Homing", 1)
-template:setTubeDirection(1,-1):setWeaponTubeExclusiveFor(2, "HVLI")
-template:setTubeDirection(2, 1):setWeaponTubeExclusiveFor(1, "HVLI")
+template:setTubeDirection(1,-1):setWeaponTubeExclusiveFor(1, "HVLI")
+template:setTubeDirection(2, 1):setWeaponTubeExclusiveFor(2, "HVLI")
 
 
 for _,color in ipairs({"Green", "Red", "Yellow", "Blue"}) do
