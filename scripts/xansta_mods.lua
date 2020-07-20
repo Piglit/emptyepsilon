@@ -1,8 +1,7 @@
 require("script_formation.lua")
 
 function init_constants_xansta()
-	-- in setConstants
-
+	-- called during or instead of setConstants()
 	missile_types = {'Homing', 'Nuke', 'Mine', 'EMP', 'HVLI'}
 	--Ship Template Name List
 	stl = {
@@ -289,6 +288,7 @@ end
 
 function modify_player_ships(pobj)
 	--called during setPlayers()
+	--TODO in each setPlayers() function: replace pobj.nameAssigned with modsAssigned
 	if not pobj.modsAssigned then
 		pobj.modsAssigned = true
 		local tempPlayerType = pobj:getTypeName()
@@ -372,24 +372,6 @@ function modify_player_ships(pobj)
 			end
 			pobj.shipScore = 52
 			pobj.maxCargo = 6
-		elseif tempPlayerType == "Melonidas" then
-			if #playerShipNamesForMelonidas> 0 and not pobj.nameAssigned then
-				pobj.nameAssigned = true
-				ni = 1
-				pobj:setCallSign(playerShipNamesForMelonidas[ni])
-				table.remove(playerShipNamesForMelonidas,ni)
-			end
-			pobj.shipScore = 52
-			pobj.maxCargo = 6
-		elseif tempPlayerType == "Hunter" then
-			if #playerShipNamesForHunter> 0 and not pobj.nameAssigned then
-				pobj.nameAssigned = true
-				ni = 1
-				pobj:setCallSign(playerShipNamesForHunter[ni])
-				table.remove(playerShipNamesForHunter,ni)
-			end
-			pobj.shipScore = 52
-			pobj.maxCargo = 6
 		elseif tempPlayerType == "Benedict" then
 			if #playerShipNamesForBenedict > 0 and not pobj.nameAssigned then
 				pobj.nameAssigned = true
@@ -451,6 +433,7 @@ end
 
 
 function spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction, customShipNameList, customShipScoreList, strengthIsNumberOfShips)
+	-- called in spawnEnemies()
 
 	if strengthIsNumberOfShips == nil then
 		strengthIsNumberOfShips = false
@@ -515,4 +498,116 @@ function spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction, cu
 	return enemyList, totalStrength
 end
 
+function comms_station()
+	-- called in commsStation()
+	-- TODO check if handleDockedState(), handleUndockedState() are defined
+	-- TODO setPlayers() must still be called from caller
+	if comms_target.comms_data == nil then
+        comms_target.comms_data = {}
+    end
+    mergeTables(comms_target.comms_data, {
+        friendlyness = random(0.0, 100.0),
+        weapons = {
+            Homing = "neutral",
+            HVLI = "neutral",
+            Mine = "neutral",
+            Nuke = "friend",
+            EMP = "friend"
+        },
+        weapon_cost = {
+            Homing = math.random(1,4),
+            HVLI = math.random(1,3),
+            Mine = math.random(2,5),
+            Nuke = math.random(12,18),
+            EMP = math.random(7,13)
+        },
+        services = {
+            supplydrop = "friend",
+            reinforcements = "friend",
+        },
+        service_cost = {
+            supplydrop = math.random(80,120),
+            reinforcements = math.random(125,175),
+            phobosReinforcements = math.random(200,250),
+            stalkerReinforcements = math.random(275,325)
+        },
+        reputation_cost_multipliers = {
+            friend = 1.0,
+            neutral = 3.0
+        },
+        max_weapon_refill_amount = {
+            friend = 1.0,
+            neutral = 0.5
+        }
+    })
+    comms_data = comms_target.comms_data
+	--setPlayers()
+    if comms_source:isEnemy(comms_target) then
+        return false
+    end
+    if comms_target:areEnemiesInRange(5000) then
+        setCommsMessage("We are under attack! No time for chatting!");
+        return true
+    end
+    if not comms_source:isDocked(comms_target) then
+        handleUndockedState()
+    else
+        handleDockedState()
+    end
+    return true
+end
 
+function enemy_comms(comms_data)
+	-- called intead enemyComms()
+	-- if enemy is Exuari, consider using comms_exuari script. Ignores goods, since exuari do not transport any goods.
+	function enemyComms(comms_data)
+	if comms_data.friendlyness > 50 then
+		local faction = comms_target:getFaction()
+		local taunt_option = "We will see to your destruction!"
+		local taunt_success_reply = "Your bloodline will end here!"
+		local taunt_failed_reply = "Your feeble threats are meaningless."
+		if faction == "Kraylor" then
+			setCommsMessage("Ktzzzsss.\nYou will DIEEee weaklingsss!");
+			local kraylorTauntChoice = math.random(1,3)
+			if kraylorTauntChoice == 1 then
+				taunt_option = "We will destroy you"
+				taunt_success_reply = "We think not. It is you who will experience destruction!"
+			elseif kraylorTauntChoice == 2 then
+				taunt_option = "You have no honor"
+				taunt_success_reply = "Your insult has brought our wrath upon you. Prepare to die."
+				taunt_failed_reply = "Your comments about honor have no meaning to us"
+			else
+				taunt_option = "We pity your pathetic race"
+				taunt_success_reply = "Pathetic? You will regret your disparagement!"
+				taunt_failed_reply = "We don't care what you think of us"
+			end
+		elseif faction == "Arlenians" then
+			setCommsMessage("We wish you no harm, but will harm you if we must.\nEnd of transmission.");
+		elseif faction == "Exuari" then
+			setCommsMessage("Stay out of our way, or your death will amuse us extremely!");
+		elseif faction == "Ghosts" then
+			setCommsMessage("One zero one.\nNo binary communication detected.\nSwitching to universal speech.\nGenerating appropriate response for target from human language archives.\n:Do not cross us:\nCommunication halted.");
+			taunt_option = "EXECUTE: SELFDESTRUCT"
+			taunt_success_reply = "Rogue command received. Targeting source."
+			taunt_failed_reply = "External command ignored."
+		elseif faction == "Ktlitans" then
+			setCommsMessage("The hive suffers no threats. Opposition to any of us is opposition to us all.\nStand down or prepare to donate your corpses toward our nutrition.");
+			taunt_option = "<Transmit 'The Itsy-Bitsy Spider' on all wavelengths>"
+			taunt_success_reply = "We do not need permission to pluck apart such an insignificant threat."
+			taunt_failed_reply = "The hive has greater priorities than exterminating pests."
+		else
+			setCommsMessage("Mind your own business!");
+		end
+		comms_data.friendlyness = comms_data.friendlyness - random(0, 10)
+		addCommsReply(taunt_option, function()
+			if random(0, 100) < 30 then
+				comms_target:orderAttack(comms_source)
+				setCommsMessage(taunt_success_reply);
+			else
+				setCommsMessage(taunt_failed_reply);
+			end
+		end)
+		return true
+	end
+	return false
+end
