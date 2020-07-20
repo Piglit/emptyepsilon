@@ -493,6 +493,11 @@ function spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction, cu
 			--kraylor formation
 			formationLeader, formationSecond = script_formation.buildFormationIncremental(ship, enemyPosition, formationLeader, formationSecond)
 		end
+		if enemyFaction == "Exuari" then
+			ship:setCommsScript("comms_exuari.lua"):setCommsFunction()
+		else
+			ship:setCommsScript(""):setCommsFunction(commsShip)
+		end
 		table.insert(enemyList, ship)
 	end
 	return enemyList, totalStrength
