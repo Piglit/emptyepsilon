@@ -557,10 +557,8 @@ function comms_station()
     return true
 end
 
-function enemy_comms(comms_data)
-	-- called intead enemyComms()
-	-- if enemy is Exuari, consider using comms_exuari script. Ignores goods, since exuari do not transport any goods.
-	function enemyComms(comms_data)
+function enemyComms(comms_data)
+	-- called intead enemyComms() of xanstas scenarios, as long it is deleted there.
 	if comms_data.friendlyness > 50 then
 		local faction = comms_target:getFaction()
 		local taunt_option = "We will see to your destruction!"
