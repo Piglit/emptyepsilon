@@ -10553,9 +10553,8 @@ function setPlayers()
 				pobj:addReputationPoints(200-(difficulty*40))
 				pobj.initialRep = true
 			end
-			if not pobj.nameAssigned then
+			if not pobj.modsAssigned then
 				modify_player_ships(pobj)
-				pobj.nameAssigned = true
 --				local tempPlayerType = pobj:getTypeName()
 				if p1idx % 2 == 0 then
 					pobj:setPosition(playerSpawn1X,playerSpawn1Y)

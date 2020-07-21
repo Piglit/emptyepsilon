@@ -194,6 +194,14 @@ function init_constants_xansta()
 	playerShipNamesForEnder = {"Mongo","Godzilla","Leviathan","Kraken","Jupiter","Saturn"}
 	playerShipNamesForNautilus = {"October", "Abdiel", "Manxman", "Newcon", "Nusret", "Pluton", "Amiral", "Amur", "Heinkel", "Dornier"}
 	playerShipNamesForHathcock = {"Hayha", "Waldron", "Plunkett", "Mawhinney", "Furlong", "Zaytsev", "Pavlichenko", "Pegahmagabow", "Fett", "Hawkeye", "Hanzo"}
+	playerShipNamesForAtlantisII = {"Spyder", "Shelob", "Tarantula", "Aragog", "Charlotte"}
+	playerShipNamesForProtoAtlantis = {"Narsil", "Blade", "Decapitator", "Trisect", "Sabre"}
+	playerShipNamesForMaverick = {"Angel", "Thunderbird", "Roaster", "Magnifier", "Hedge"}
+	playerShipNamesForCrucible = {"Sling", "Stark", "Torrid", "Kicker", "Flummox"}
+	playerShipNamesForSurkov = {"Sting", "Sneak", "Bingo", "Thrill", "Vivisect"}
+	playerShipNamesForStricken = {"Blazon", "Streaker", "Pinto", "Spear", "Javelin"}
+	playerShipNamesForAtlantisII = {"Spyder", "Shelob", "Tarantula", "Aragog", "Charlotte"}
+	playerShipNamesForRedhook = {"Headhunter", "Thud", "Troll", "Scalper", "Shark"}
 	playerShipNamesForLeftovers = {"Foregone","Righteous","Masher"}
 	characterNames = {"Frank Brown",
 				  "Joyce Miller",
@@ -368,12 +376,48 @@ function modify_player_ships(pobj)
 			end
 			pobj.shipScore = 13
 			pobj.maxCargo = 15
+		elseif tempPlayerType == "Repulse" then
+			if #playerShipNamesForRepulse > 0 and not pobj.nameAssigned then
+				pobj.nameAssigned = true
+				ni = math.random(1,#playerShipNamesForRepulse)
+				pobj:setCallSign(playerShipNamesForRepulse[ni])
+				table.remove(playerShipNamesForRepulse,ni)
+			end
+			pobj.shipScore = 14
+			pobj.maxCargo = 12
+		elseif tempPlayerType == "Nautilus" then
+			if #playerShipNamesForNautilus > 0 and not pobj.nameAssigned then
+				pobj.nameAssigned = true
+				ni = math.random(1,#playerShipNamesForNautilus)
+				pobj:setCallSign(playerShipNamesForNautilus[ni])
+				table.remove(playerShipNamesForNautilus,ni)
+			end
+			pobj.shipScore = 12
+			pobj.maxCargo = 7
 		elseif tempPlayerType == "Atlantis" then
 			if #playerShipNamesForAtlantis > 0 and not pobj.nameAssigned then
 				pobj.nameAssigned = true
 				ni = math.random(1,#playerShipNamesForAtlantis)
 				pobj:setCallSign(playerShipNamesForAtlantis[ni])
 				table.remove(playerShipNamesForAtlantis,ni)
+			end
+			pobj.shipScore = 52
+			pobj.maxCargo = 6
+		elseif tempPlayerType == "Maverick" then
+			if #playerShipNamesForProtoAtlantis > 0 and not pobj.nameAssigned then
+				pobj.nameAssigned = true
+				ni = math.random(1,#playerShipNamesForProtoAtlantis)
+				pobj:setCallSign(playerShipNamesForProtoAtlantis[ni])
+				table.remove(playerShipNamesForProtoAtlantis,ni)
+			end
+			pobj.shipScore = 52
+			pobj.maxCargo = 6
+		elseif tempPlayerType == "Crucible" then
+			if #playerShipNamesForStricken> 0 and not pobj.nameAssigned then
+				pobj.nameAssigned = true
+				ni = math.random(1,#playerShipNamesForStriken)
+				pobj:setCallSign(playerShipNamesForStriken[ni])
+				table.remove(playerShipNamesForStriken,ni)
 			end
 			pobj.shipScore = 52
 			pobj.maxCargo = 6
@@ -395,15 +439,6 @@ function modify_player_ships(pobj)
 			end
 			pobj.shipScore = 10
 			pobj.maxCargo = 9
-		elseif tempPlayerType == "Repulse" then
-			if #playerShipNamesForRepulse > 0 and not pobj.nameAssigned then
-				pobj.nameAssigned = true
-				ni = math.random(1,#playerShipNamesForRepulse)
-				pobj:setCallSign(playerShipNamesForRepulse[ni])
-				table.remove(playerShipNamesForRepulse,ni)
-			end
-			pobj.shipScore = 14
-			pobj.maxCargo = 12
 		elseif tempPlayerType == "Ender" then
 			if #playerShipNamesForEnder > 0 and not pobj.nameAssigned then
 				pobj.nameAssigned = true
@@ -413,15 +448,6 @@ function modify_player_ships(pobj)
 			end
 			pobj.shipScore = 100
 			pobj.maxCargo = 20
-		elseif tempPlayerType == "Nautilus" then
-			if #playerShipNamesForNautilus > 0 and not pobj.nameAssigned then
-				pobj.nameAssigned = true
-				ni = math.random(1,#playerShipNamesForNautilus)
-				pobj:setCallSign(playerShipNamesForNautilus[ni])
-				table.remove(playerShipNamesForNautilus,ni)
-			end
-			pobj.shipScore = 12
-			pobj.maxCargo = 7
 		else
 			if #playerShipNamesForLeftovers > 0 and not pobj.nameAssigned then
 				pobj.nameAssigned = true

@@ -3485,7 +3485,7 @@ function setPlayers()
 				pobj:addReputationPoints(250-(difficulty*6))
 				pobj.initialRep = true
 			end
-			if not pobj.nameAssigned then
+			if not pobj.modsAssigned then
 				pobj.spinUpgrade = false
 				pobj.beamTimeUpgrade = false
 				pobj.hullUpgrade = false

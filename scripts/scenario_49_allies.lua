@@ -6180,9 +6180,8 @@ function setPlayers()
 				pobj.initialRep = true
 			end
 			if setPlayerDiagnostic then print("set reputation") end
-			if not pobj.nameAssigned then
+			if not pobj.modsAssigned then
 				modify_player_ships(pobj)
-				pobj.nameAssigned = true
 				if pobj.cargo == nil then
 					pobj.cargo = pobj.maxCargo
 					pobj.maxRepairCrew = pobj:getRepairCrewCount()

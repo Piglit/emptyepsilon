@@ -6444,6 +6444,7 @@ function setPlayers()
 	for p1idx=1,16 do
 		pobj = getPlayerShip(p1idx)
 		if pobj ~= nil and pobj:isValid() then
+			modify_player_ships(pobj)
 			concurrentPlayerCount = concurrentPlayerCount + 1
 			if goods[pobj] == nil then
 				goods[pobj] = goodsList
@@ -6770,7 +6771,7 @@ function treatyHolds(delta)
 	for pidx=1,16 do
 		local p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() and p.order1 == nil then
-			if p.nameAssigned then
+			if p.modsAssigned then
 				p:addToShipLog(string.format("Greetings captain and crew of %s. The Human/Kraylor treaty has held for a number of years now, but tensions are rising. Your mission: patrol the border area for Kraylor ships. Do not enter the blue neutral border zone. Good luck",p:getCallSign()),"Magenta")
 				p.order1 = "sent"
 			else
@@ -6805,7 +6806,7 @@ function treatyHolds(delta)
 		for pidx=1,16 do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
-				if not p.nameAssigned then
+				if not p.modsAssigned then
 					setPlayers()
 				end
 				p:addToShipLog(string.format("%s, The Kraylors threaten to break the treaty. We characterize this behavior as mere sabre rattling. Nevertheless, keep a close watch on the neutral border zone. Until war is actually declared, you are not, I repeat, *not* authorized to enter the neutral border zone",p:getCallSign()),"Magenta")
@@ -6838,7 +6839,7 @@ function treatyStressed(delta)
 		for pidx=1,16 do
 			local p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
-				if not p.nameAssigned then
+				if not p.modsAssigned then
 					setPlayers()
 				end
 				p:addToShipLog(string.format("To: Commanding Officer of %s",p:getCallSign()),"Magenta")
@@ -6870,7 +6871,7 @@ function limitedWar(delta)
 		for pidx=1,16 do
 			local p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
-				if not p.nameAssigned then
+				if not p.modsAssigned then
 					setPlayers()
 				end
 				p:addToShipLog(string.format("To: Commanding Officer of %s",p:getCallSign()),"Magenta")
