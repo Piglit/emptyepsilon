@@ -724,9 +724,9 @@ function buildLocalSolarSystem()
 	psy = primusY+ply
 	stationStaticAsteroids = false
 	stationFaction = "Human Navy"				--set station faction
-	si = math.random(1,#placeStation)			--station index
-	pStation = placeStation[si]()				--place selected station
-	table.remove(placeStation,si)				--remove station from placement list
+	--si = math.random(1,#placeStation)			--station index
+	pStation = placeOrgana()-- placeStation[si]()				--place selected station
+	--table.remove(placeStation,si)				--remove station from placement list
 	humanStationStrength = humanStationStrength + setStationStrength(pStation)
 	pStation:onDestruction(humanStationDestroyed)
 	pStation.comms_data.orbit = string.format("orbiting %s at a distance of %.1fU",planetPrimus:getCallSign(),primusMoonOrbit/1000)
@@ -1056,9 +1056,9 @@ function buildLocalSolarSystem()
 	psx = solX+plx
 	psy = solY+ply
 	stationFaction = "Independent"
-	si = math.random(1,#placeStation)			--station index
-	pStation = placeStation[si]()				--place selected station
-	table.remove(placeStation,si)				--remove station from placement list
+	--si = math.random(1,#placeStation)			--station index
+	pStation = placeHayden() --placeStation[si]()				--place selected station
+	--table.remove(placeStation,si)				--remove station from placement list
 	neutralStationStrength = neutralStationStrength + setStationStrength(pStation)
 	pStation:onDestruction(neutralStationDestroyed)
 	pStation.comms_data.orbit = string.format("orbiting %s with the inner asteroids at a distance of %.1fU",planetSol:getCallSign(),beltOrbit1/1000)
@@ -1104,9 +1104,9 @@ function buildLocalSolarSystem()
 	psx = solX+plx
 	psy = solY+ply
 	stationFaction = "Independent"
-	si = math.random(1,#placeStation)			--station index
-	pStation = placeStation[si]()				--place selected station
-	table.remove(placeStation,si)				--remove station from placement list
+--	si = math.random(1,#placeStation)			--station index
+	pStation = placeMayo() --placeStation[si]()				--place selected station
+--	table.remove(placeStation,si)				--remove station from placement list
 	neutralStationStrength = neutralStationStrength + setStationStrength(pStation)
 	pStation:onDestruction(neutralStationDestroyed)
 	pStation.comms_data.orbit = string.format("orbiting %s with the inner asteroids at a distance of %.1fU",planetSol:getCallSign(),beltOrbit1/1000)
@@ -1131,9 +1131,9 @@ function buildLocalSolarSystem()
 	psx = solX+plx
 	psy = solY+ply
 	stationFaction = "Independent"
-	si = math.random(1,#placeStation)			--station index
-	pStation = placeStation[si]()				--place selected station
-	table.remove(placeStation,si)				--remove station from placement list
+--	si = math.random(1,#placeStation)			--station index
+	pStation = placeRipley() --placeStation[si]()				--place selected station
+--	table.remove(placeStation,si)				--remove station from placement list
 	neutralStationStrength = neutralStationStrength + setStationStrength(pStation)
 	pStation:onDestruction(neutralStationDestroyed)
 	pStation.comms_data.orbit = string.format("orbiting %s with the inner asteroids at a distance of %.1fU",planetSol:getCallSign(),beltOrbit1/1000)
@@ -2681,7 +2681,7 @@ function setListOfStations()
 					placeEvondos,			--19
 					placeFeynman,			--20
 					placeGrasberg,			--21
-					placeHayden,			--22
+					--placeHayden,			--22
 					placeHeyes,				--23
 					placeHossam,			--24
 					placeImpala,			--25
@@ -2692,18 +2692,18 @@ function setListOfStations()
 					placeMadison,			--30
 					placeMaiman,			--31
 					placeMarconi,			--32
-					placeMayo,				--33
+					--placeMayo,				--33
 					placeMiller,			--34
 					placeMuddville,			--35
 					placeNexus6,			--36
 					placeOBrien,			--37
 					placeOlympus,			--38
-					placeOrgana,			--39
+					--placeOrgana,			--39
 					placeOutpost15,			--40
 					placeOutpost21,			--41
 					placeOwen,				--42
 					placePanduit,			--43
-					placeRipley,			--44
+					--placeRipley,			--44
 					placeRutherford,		--45
 					placeScience7,			--46
 					placeShawyer,			--47
@@ -4617,7 +4617,6 @@ function placeKrik()
         trade = {	food = true, medicine = true, luxury = random(1,100) < 50 },
         public_relations = true,
         general_information = "The finest shield and armor manufacturer in the quadrant",
-    	history = "We named this station for the pioneering spirit of the 22nd century Starfleet explorer, Captain Jonathan Archer"
 	}
 	local krikGoods = random(1,100)
 	if krikGoods < 10 then
@@ -4936,7 +4935,6 @@ function placeScience4()
         trade = {	food = false, medicine = false, luxury = false },
         public_relations = true,
         general_information = "The finest shield and armor manufacturer in the quadrant",
-    	history = "We named this station for the pioneering spirit of the 22nd century Starfleet explorer, Captain Jonathan Archer"
 	}
 	local stationGoodChoice = math.random(1,3)
 	if stationGoodChoice == 1 then
@@ -5036,7 +5034,6 @@ function placeTandon()
         trade = {	food = false, medicine = false, luxury = false },
         public_relations = true,
         general_information = "The finest shield and armor manufacturer in the quadrant",
-    	history = "We named this station for the pioneering spirit of the 22nd century Starfleet explorer, Captain Jonathan Archer"
 	}
 	local stationGoodChoice = math.random(1,3)
 	if stationGoodChoice == 1 then
