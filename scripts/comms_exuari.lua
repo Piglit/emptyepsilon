@@ -167,7 +167,7 @@ function friendlyDockAt(comms_data, obj)
 		setCommsMessage("Refusing to dock at " .. obj:getCallSign() .. ", since this sounds even more boring.");
 		comms_data.friendlyness = comms_data.friendlyness - random(1, 5)
 		addCommsReply("Back", mainMenu)
-	if comms_data.friendlyness < 60 then
+	elseif comms_data.friendlyness < 60 then
 		setCommsMessage("Docking at " .. obj:getCallSign() .. ".");
 		comms_data.friendlyness = comms_data.friendlyness - random(10, 20)
 		comms_target:orderDock(obj)

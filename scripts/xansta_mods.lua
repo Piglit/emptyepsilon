@@ -511,7 +511,7 @@ function spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction, cu
 
 	-- here other formation or spawn logic is possible. E.g. Hangar code
 	for index,shipTemplateType in ipairs(enemyNameList) do
-		local ship = CpuShip():setFaction(enemyFaction):setTemplate(shipTemplateType):orderRoaming()
+		local ship = CpuShip():setFaction(enemyFaction):setScannedByFaction(enemyFaction, true):setTemplate(shipTemplateType):orderRoaming()
 		enemyPosition = enemyPosition + 1
 		if deployConfig < 50 then
 			ship:setPosition(xOrigin+fleetPosDelta1x[enemyPosition]*sp,yOrigin+fleetPosDelta1y[enemyPosition]*sp)
@@ -523,7 +523,7 @@ function spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction, cu
 			formationLeader, formationSecond = script_formation.buildFormationIncremental(ship, enemyPosition, formationLeader, formationSecond)
 		end
 		if enemyFaction == "Exuari" then
-			ship:setCommsScript("comms_exuari.lua"):setCommsFunction(nil)
+			ship:setCommsScript("comms_exuari.lua")
 		else
 			ship:setCommsScript(""):setCommsFunction(commsShip)
 		end
