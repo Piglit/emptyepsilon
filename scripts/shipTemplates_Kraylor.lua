@@ -189,6 +189,9 @@ template:setBeam(2, 30, 120, 4000.0, 3.0, 10)
 template:setBeam(3, 30, 180, 4000.0, 3.0, 10)
 template:setBeam(4, 30, 240, 4000.0, 3.0, 10)
 template:setBeam(5, 30, 300, 4000.0, 3.0, 10)
+template:setRestocksMissilesDocked(true)
+template:setSharesEnergyWithDocked(true)
+template:setRestocksScanProbes(true)
 --threat level: 6*3.3=20(dps)+(120)/20=6(shields)+1.7(hull) = 20+6+1.7=27.7
 --Key features: stationary. Maybe add a Homing tube as variant.
 
@@ -216,5 +219,8 @@ template:setShields(1200, 1200, 1200, 1200, 1200, 1200)
 --Reputation Score: 920
 template:setSpeed(0, 1, 0)
 template:setDockClasses("Starfighter", "Frigate", "Gunship", "Destroyer", "Striker")
+template:setRestocksMissilesDocked(true)
+template:setSharesEnergyWithDocked(true)
+template:setRestocksScanProbes(true)
 --threat level: 15*3.3=49.5(dps)+32(tubes)+(1200)/20=60(shields)+20(hull) = 49.5+32+60+20=161.5!
 

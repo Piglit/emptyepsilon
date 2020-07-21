@@ -603,7 +603,9 @@ template:setRadarTrace("radar_transport.png")
 template:setJumpDrive(true)
 template:setJumpDriveRange(5000, 100 * 50000) --The jump carrier can jump a 100x longer distance then normal jump drives.
 template:setDockClasses("Starfighter", "Frigate", "Corvette")
---template:setSharesEnergyWithDocked(true)
+template:setRestocksMissilesDocked(true)
+template:setSharesEnergyWithDocked(true)
+template:setRestocksScanProbes(true)
 
 --[[-----------------------Support-----------------------]]
 
@@ -625,6 +627,9 @@ template:setBeam(3, 30, 180, 4000.0, 1.5, 20)
 template:setBeam(4, 30, 240, 4000.0, 1.5, 20)
 template:setBeam(5, 30, 300, 4000.0, 1.5, 20)
 
+template:setRestocksMissilesDocked(true)
+template:setSharesEnergyWithDocked(true)
+template:setRestocksScanProbes(true)
 
 
 

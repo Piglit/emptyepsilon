@@ -284,6 +284,9 @@ template:setShields(250)
 template:setSpeed(20, 1.5, 3)
 template:setDockClasses("Exuari")
 template:setSharesEnergyWithDocked(true)
+template:setRestocksMissilesDocked(true)
+template:setRestocksScanProbes(true)
+
 --threat level: 12(dps)+0(tube)+12(shields)+5(hull)+0.2(speed)+0(maneuver) = 29.2 => 14.6 
 
 variation = template:copy("Fortress")
