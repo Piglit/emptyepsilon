@@ -400,6 +400,7 @@ void ShipAI::runOrders()
         break;
     case AI_Attack:          //Attack [order_target] very specificly.
         if (owner->getOrderTarget())
+		{
             pathPlanner.clear();
         }else{
             owner->orderRoaming();    //We pretty much lost our target, so just start roaming.
