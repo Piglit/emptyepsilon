@@ -14,23 +14,24 @@ function mainMenu()
             EMP = "friend"
         },
         weapon_cost = {
-            Homing = 2,
-            HVLI = 2,
-            Mine = 2,
-            Nuke = 15,
-            EMP = 10
+            Homing = math.random(1,4),
+            HVLI = math.random(1,3),
+            Mine = math.random(2,5),
+            Nuke = math.random(12,18),
+            EMP = math.random(7,13)
         },
         services = {
             supplydrop = "friend",
             reinforcements = "friend",
         },
         service_cost = {
-            supplydrop = 100,
+            supplydrop = math.random(80,120),
             reinforcements = 150,
+			reinforcements_factor = math.random(16,24)
         },
         reputation_cost_multipliers = {
             friend = 1.0,
-            neutral = 2.5
+            neutral = 3.0
         },
         max_weapon_refill_amount = {
             friend = 1.0,

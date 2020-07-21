@@ -10,19 +10,19 @@ function init_constants_xansta()
 			["WX-Lindworm"]= 7,
 			["Adder MK6"]= 8,
 			["Phobos M3"]= 15, --15 as long ai can't use mines
-			["Piranha M5"]= 20,
-			["Nirvana R5M"]= 21,
+			["Piranha M5"]= 17,
+			["Nirvana R5M"]= 18,
 			["Storm"]= 22,
 		},
 		["Mining Corporation"]= {
 			["Yellow Hornet"]= 5,
 			["Yellow Lindworm"]= 7,
-			["Yellow Adder MK5"]= 7,
+			["Yellow Adder MK5"]= 8,
 			["Yellow Adder MK4"]= 6,
 
 			["Phobos Y2"]= 16,	
 			["Piranha F12"]= 15,
-			["Nirvana R5A"]= 20,
+			["Nirvana R5A"]= 17,
 		},
 		["Blue Star Cartell"]= {
 			["Blue Hornet"]= 5,
@@ -34,8 +34,8 @@ function init_constants_xansta()
 			["Phobos Rear-Guard"]= 15, -- 15 as long ai can't use mines
 			["Piranha Vanguard"]= 17,
 			["Piranha Rear-Guard"]= 15, -- 15 as long ai can't use mines
-			["Nirvana Vanguard"]= 20,
-			["Nirvana Rear-Guard"]= 20,
+			["Nirvana Vanguard"]= 17,
+			["Nirvana Rear-Guard"]= 17,
 		},
 		["Criminals"]= {
 			["Red Hornet"]= 5,
@@ -45,7 +45,7 @@ function init_constants_xansta()
 
 			["Phobos Firehawk"]= 16,
 			["Piranha F12.M"]= 17,
-			["Nirvana Thunder Child"]= 21,
+			["Nirvana Thunder Child"]= 18,
 			["Lightning Storm"]= 22,
 		},
 		["Ghosts"]= {
@@ -56,7 +56,7 @@ function init_constants_xansta()
 
 			["Phobos G4"]= 17,
 			["Piranha G4"]= 16,
-			["Nirvana 0x81"]= 22,
+			["Nirvana 0x81"]= 19,
 			["Solar Storm"]= 22,
 		},
 		["Kraylor"]= {
@@ -130,19 +130,17 @@ function init_constants_xansta()
 	psb["Phobos M3P"] = 2
 	psb["Flavia P.Falcon"] = 2
 	psb["Atlantis"] = 2
-	psb["Melonidas"] = 2
-	psb["Player Cruiser"] = 2
-	psb["Player Fighter"] = 2
 	psb["Striker"] = 2
 	psb["ZX-Lindworm"] = 1
-	psb["Ender"] = 12
+	psb["Citadel"] = 12
 	psb["Repulse"] = 2
 	psb["Benedict"] = 2
 	psb["Kiriya"] = 2
 	psb["Nautilus"] = 2
 	psb["Hathcock"] = 4
-	psb["Hunter"] = 1
-	psb["Melonidas"] = 2
+	psb["Piranha M5P"] = 0
+	psb["Crucible"] = 2
+	psb["Maverick"] = 6
 	-- square grid deployment
 	fleetPosDelta1x = {0,1,0,-1, 0,1,-1, 1,-1,2,0,-2, 0,2,-2, 2,-2,2, 2,-2,-2,1,-1, 1,-1}
 	fleetPosDelta1y = {0,0,1, 0,-1,1,-1,-1, 1,0,2, 0,-2,2,-2,-2, 2,1,-1, 1,-1,2, 2,-2,-2}
@@ -566,6 +564,7 @@ function comms_station()
             reinforcements = math.random(125,175),
             phobosReinforcements = math.random(200,250),
             stalkerReinforcements = math.random(275,325)
+			reinforcements_factor = math.random(16,24)
         },
         reputation_cost_multipliers = {
             friend = 1.0,
@@ -645,3 +644,36 @@ function enemyComms(comms_data)
 	end
 	return false
 end
+
+--function addReinforcementsReplies(comms_target)
+--    if isAllowedTo(comms_target.comms_data.services.reinforcements) then
+--		local avail_ships = stl[comms_target:getFaction()]
+--		if avail_ships == nil or len(avail_ships) == 0 then
+--			avail_ships = {["Adder MK5"]=7.5}
+--		end
+--		for ship, value in pairs(avail_ships) do
+--			addCommsReply("Please send "..ship.." reinforcements! ("..math.ceil( value * comms_data.service_cost["reinforcements_factor"]).."rep)", function()
+--				if comms_source:getWaypointCount() < 1 then
+--					setCommsMessage("You need to set a waypoint before you can request reinforcements.");
+--				else
+--					setCommsMessage("To which waypoint should we dispatch the reinforcements?");
+--					for n=1,comms_source:getWaypointCount() do
+--						addCommsReply("WP" .. n, function()	--TODO argh! need curry!
+--							if comms_source:takeReputationPoints(getServiceCost("reinforcements")) then
+--								ship = CpuShip():setFactionId(comms_target:getFactionId()):setPosition(comms_target:getPosition()):setTemplate("Adder MK5"):setScanned(true):orderDefendLocation(comms_source:getWaypoint(n))
+--								ship:setCommsScript(""):setCommsFunction(commsShip):onDestruction(humanVesselDestroyed)
+--								table.insert(friendlyHelperFleet,ship)
+--								setCommsMessage("We have dispatched " .. ship:getCallSign() .. " to assist at WP" .. n);
+--							else
+--								setCommsMessage("Not enough reputation!");
+--							end
+--							addCommsReply("Back", commsStation)
+--						end)
+--					end
+--				end
+--				addCommsReply("Back", commsStation)
+--			end)
+--		end
+--	end
+--end
+
