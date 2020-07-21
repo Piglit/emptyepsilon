@@ -523,7 +523,7 @@ function spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction, cu
 			formationLeader, formationSecond = script_formation.buildFormationIncremental(ship, enemyPosition, formationLeader, formationSecond)
 		end
 		if enemyFaction == "Exuari" then
-			ship:setCommsScript("comms_exuari.lua"):setCommsFunction()
+			ship:setCommsScript("comms_exuari.lua"):setCommsFunction(nil)
 		else
 			ship:setCommsScript(""):setCommsFunction(commsShip)
 		end
@@ -563,7 +563,7 @@ function comms_station()
             supplydrop = math.random(80,120),
             reinforcements = math.random(125,175),
             phobosReinforcements = math.random(200,250),
-            stalkerReinforcements = math.random(275,325)
+            stalkerReinforcements = math.random(275,325),
 			reinforcements_factor = math.random(16,24)
         },
         reputation_cost_multipliers = {

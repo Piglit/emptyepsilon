@@ -675,7 +675,7 @@ function buildLocalSolarSystem()
 	clueStations = {}
 	exuariStationList = {}
 	exuariStationStrength = 0
-	orbitChoice = "random"	--could be lo, hi or random
+	orbitChoice = "lan"	--could be lo, hi or random or lan
 	-- central star (Sol)
 	solX, solY = vectorFromAngle(random(20,70),random(100000,200000))
 	planetSol = Planet():setPosition(solX,solY):setPlanetRadius(1000):setDistanceFromMovementPlane(-2000):setPlanetAtmosphereTexture("planets/star-1.png"):setPlanetAtmosphereColor(1.0,1.0,1.0)
@@ -683,7 +683,7 @@ function buildLocalSolarSystem()
 	-------------------------------
 	-- innermost planet (Primus) --
 	-------------------------------
-	primusOrbit = random(8000,20000)
+	primusOrbit = 18500 --random(8000,20000)
 	pla = random(0,360)
 	plx, ply = vectorFromAngle(pla,primusOrbit)
 	primusRadius = random(800,1200)
@@ -696,6 +696,8 @@ function buildLocalSolarSystem()
 		planetPrimus.orbit_speed = lo/difficulty
 	elseif orbitChoice == "hi" then
 		planetPrimus.orbit_speed = hi/difficulty
+	elseif orbitChoice == "lan" then
+		planetPrimus.orbit_speed = 2000
 	else
 		planetPrimus.orbit_speed = random(lo,hi)/difficulty
 	end
@@ -713,6 +715,8 @@ function buildLocalSolarSystem()
 		planetPrimusMoonOrbitTime = lo/difficulty
 	elseif orbitChoice == "hi" then
 		planetPrimusMoonOrbitTime = hi/difficulty
+	elseif orbitChoice == "lan" then
+		planetPrimusMoonOrbitTime = hi
 	else
 		planetPrimusMoonOrbitTime = random(lo,hi)/difficulty
 	end
@@ -724,6 +728,7 @@ function buildLocalSolarSystem()
 	psy = primusY+ply
 	stationStaticAsteroids = false
 	stationFaction = "Human Navy"				--set station faction
+	stationSize = "Medium Station"
 	--si = math.random(1,#placeStation)			--station index
 	pStation = placeOrgana()-- placeStation[si]()				--place selected station
 	--table.remove(placeStation,si)				--remove station from placement list
@@ -736,12 +741,12 @@ function buildLocalSolarSystem()
 	primusStation = pStation
 	-- player spawn band (5 units wide: 5000)
 	primusOuter = primusOrbit + primusMoonOrbit + primusMoonRadius + 500
-	playerSpawnBand = random(primusOuter, primusOuter + 50000)
+	playerSpawnBand = primusOuter + 25000 --random(primusOuter, primusOuter + 50000)
 	--------------------------------------
 	-- second closest planet (Secondus) --
 	--------------------------------------
 	secondusRadius = random(2500,3500)
-	secondusMoonOrbit = random(6000,10000)
+	secondusMoonOrbit = 6000--random(6000,10000)
 	secondusMoonRadius = random(400,600)
 	if (playerSpawnBand - primusOuter) > ((secondusMoonOrbit*2) + (secondusMoonRadius*2) + 5000) then
 		secondusOrbit = (playerSpawnBand + primusOuter)/2								--players spawn outside Secondus
@@ -759,6 +764,8 @@ function buildLocalSolarSystem()
 		planetSecondus.orbit_speed = lo/difficulty
 	elseif orbitChoice == "hi" then
 		planetSecondus.orbit_speed = hi/difficulty
+	elseif orbitChoice == "lan" then
+		planetSecondus.orbit_speed = hi
 	else
 		planetSecondus.orbit_speed = random(lo,hi)/difficulty
 	end
@@ -774,6 +781,8 @@ function buildLocalSolarSystem()
 		planetSecondusMoonOrbitTime = lo/difficulty
 	elseif orbitChoice == "hi" then
 		planetSecondusMoonOrbitTime = hi/difficulty
+	elseif orbitChoice == "lan" then
+		planetSecondusMoonOrbitTime = hi
 	else
 		planetSecondusMoonOrbitTime = random(lo,hi)/difficulty
 	end
@@ -841,9 +850,12 @@ function buildLocalSolarSystem()
 	else										--players spawn outside Secondus
 		beltOrbit1Width = (playerSpawnBand - 2500) - secondusOuter - 500
 		beltOrbit1 = (secondusOuter + (playerSpawnBand - 2500))/2
-		beltOrbit2 = playerSpawnBand + random(3500,10000)
+		beltOrbit2 = playerSpawnBand + 4000--random(3500,10000)
 		beltOrbit2Width = beltOrbit2 - (playerSpawnBand + 2500)
 	end
+	--XXX Goals: 
+	-- player band -> primus = [1 jump; 2 jump] => primus <-> band = 1 LRS ~= 25u
+	-- primus ->center->band 2*(primus<->band) + 2*(primus orbit) = 50u+2*orbit !<= 100 u => orbit <= 25u
 	--------------------------------
 	-- populate player spawn band --
 	--------------------------------
@@ -1026,6 +1038,8 @@ function buildLocalSolarSystem()
 		belt1OrbitalSpeed = lo/gradient*difficulty
 	elseif orbitChoice == "hi" then
 		belt1OrbitalSpeed = hi/gradient*difficulty
+	elseif orbitChoice == "lan" then
+		belt1OrbitalSpeed = lo/gradient
 	else
 		belt1OrbitalSpeed = math.random(lo,hi)/gradient*difficulty
 	end
@@ -1170,6 +1184,8 @@ function buildLocalSolarSystem()
 		belt2OrbitalSpeed = lo/gradient*difficulty
 	elseif orbitChoice == "hi" then
 		belt2OrbitalSpeed = hi/gradient*difficulty
+	elseif orbitChoice == "lan" then
+		belt2OrbitalSpeed = lo/gradient
 	else
 		belt2OrbitalSpeed = math.random(lo,hi)/gradient*difficulty
 	end
@@ -1312,7 +1328,7 @@ function buildLocalSolarSystem()
 	tertiusAsteroidOrbit = tertiusMoonOrbit + random(2000,4000)
 	tertiusAsteroidOrbitWidth = tertiusAsteroidOrbit - tertiusMoonOrbit - 500
 	tertiusBandWidth = (tertiusAsteroidOrbit + (tertiusAsteroidOrbitWidth/2))*2
-	tertiusOrbit = random(outerBelt2 + tertiusBandWidth + 8000, outerBelt2 + tertiusBandWidth + 50000)
+	tertiusOrbit = outerBelt2 + tertiusBandWidth + 12000--random(outerBelt2 + tertiusBandWidth + 8000, outerBelt2 + tertiusBandWidth + 50000)
 	outerBelt2Spawn = (outerBelt2 + (tertiusOrbit - (tertiusBandWidth/2)))/2
 	outerBelt2SpawnWidth = (tertiusOrbit - tertiusBandWidth/2) - outerBelt2 - 3000
 	lo = 3
@@ -1322,6 +1338,8 @@ function buildLocalSolarSystem()
 		tertiusOrbitalBodyIncrement = lo/gradient*difficulty
 	elseif orbitChoice == "hi" then
 		tertiusOrbitalBodyIncrement = hi/gradient*difficulty
+	elseif orbitChoice == "lan" then
+		tertiusOrbitalBodyIncrement = lo/gradient
 	else
 		tertiusOrbitalBodyIncrement = math.random(lo,hi)/gradient*difficulty
 	end
@@ -1419,6 +1437,8 @@ function buildLocalSolarSystem()
 		differential = lo/800
 	elseif orbitChoice == "hi" then
 		differential = hi/800
+	elseif orbitChoice == "lan" then
+		differential = lo/800
 	else
 		differential = math.random(lo,hi)/200
 	end
@@ -9002,6 +9022,11 @@ function defendPrimusStation(delta)
 	plot1 = checkDefendPrimusStationEvents
 end
 function checkDefendPrimusStationEvents(delta)
+	if not primusStation:isValid() then
+		--migratory headquarters destroyed
+		showEndStats("Critical station destroyed")
+		victory("Exuari")
+	end
 	local perceivePlayer = false
 	local remainingEnemyCount = 0
 	for _, enemy in ipairs(enemyFleet) do
