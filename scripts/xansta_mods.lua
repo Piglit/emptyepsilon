@@ -496,6 +496,7 @@ function spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction, cu
 
 	local formationLeader = nil
 	local formationSecond = nil
+	local smallFormations = {}
 
 	-- Reminder: stsl and stnl are ship template score and name list
 	while enemyStrength > 0 do
@@ -529,6 +530,14 @@ function spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction, cu
 		end
 		if enemyFaction == "Exuari" then
 			ship:setCommsScript("comms_exuari.lua")
+			if smallFormations[shipTemplateType] == nil then
+				smallFormations[shipTemplateType] == {ship, nil, 1}
+			else
+				local leader, second, fidx = smallFormations[shipTemplateType]
+				fidx = fidx + 1
+				leader, second = script_formation.buildFormationIncremental(ship, fidx, leader, second)
+				smallFormations[shipTemplateType] == {leader, second, fidx}
+			end
 		else
 			ship:setCommsScript(""):setCommsFunction(commsShip)
 		end
