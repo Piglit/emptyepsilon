@@ -5276,12 +5276,16 @@ function commsStation()
         services = {
             supplydrop = "friend",
             reinforcements = "friend",
+			fighters = "friend",
         },
         service_cost = {
             supplydrop = math.random(80,120),
             reinforcements = math.random(125,175),
             phobosReinforcements = math.random(200,250),
-            stalkerReinforcements = math.random(275,325)
+            stalkerReinforcements = math.random(275,325),
+			fighterInterceptor = math.random(125,175),
+			fighterBomber = math.random(150,200),
+			fighterScout = math.random(175,225)
         },
         reputation_cost_multipliers = {
             friend = 1.0,
@@ -6343,7 +6347,7 @@ function handleDockedState()
 			if comms_source.primaryOrders == nil then
 				comms_source.primaryOrders = primaryOrders
 			end
-			ordMsg = comms_source.primaryOrders .. "\n" .. secondaryOrders .. optionalOrders	-- TODO: what about secondary and optional Orders?
+			ordMsg = comms_source.primaryOrders .. "\n" .. secondaryOrders .. optionalOrders	-- secondary and optional orders are not present in this mission.
 			if playWithTimeLimit then
 				ordMsg = ordMsg .. string.format("\n   %i Minutes remain in game",math.floor(gameTimeLimit/60))
 			end
@@ -6382,6 +6386,23 @@ function handleDockedState()
 					addCommsReply("Back", commsStation)
 				end)
 			end
+		end
+	    if isAllowedTo(comms_target.comms_data.services.fighters) and comms_source.carrier then
+			addCommsReply("Visit shipyard", function()
+				addCommsReply(string.format("Purchase unmanned MP52 Hornet Interceptor for %i reputation", getServiceCost("fighterInterceptor")), function()
+					if not comms_source:takeReputationPoints(getServiceCost("fighterInterceptor")) then
+						setCommsMessage("Insufficient reputation")
+					else
+						local ship = PlayerSpaceship():setTemplate("MP52 Hornet"):setFactionId(comms_source:getFactionId())
+						setPlayers()
+						ship:setPosition(comms_target:getPosition())
+						setCommsMessage("We have dispatched " .. ship:getCallSign() .. " to be manned by one of your pilots");
+					end
+					addCommsReply("Back", commsStation)
+				end)
+				--TODO add Bomber and Scout
+				addCommsReply("Back", commsStation)
+			end)
 		end
 		showCurrentStats()
 	else	--neutral 
@@ -7279,7 +7300,7 @@ function handleUndockedState()
         end)
     end
     if isAllowedTo(comms_target.comms_data.services.reinforcements) then
-        addCommsReply("Please send Adder MK5 reinforcements! ("..getServiceCost("reinforcements").."rep)", function()
+        addCommsReply("Please send Adder MK6 reinforcements! ("..getServiceCost("reinforcements").."rep)", function()
             if comms_source:getWaypointCount() < 1 then
                 setCommsMessage("You need to set a waypoint before you can request reinforcements.");
             else
@@ -7287,7 +7308,7 @@ function handleUndockedState()
                 for n=1,comms_source:getWaypointCount() do
                     addCommsReply("WP" .. n, function()
 						if comms_source:takeReputationPoints(getServiceCost("reinforcements")) then
-							ship = CpuShip():setFactionId(comms_target:getFactionId()):setPosition(comms_target:getPosition()):setTemplate("Adder MK5"):setScanned(true):orderDefendLocation(comms_source:getWaypoint(n))
+							ship = CpuShip():setFactionId(comms_target:getFactionId()):setPosition(comms_target:getPosition()):setTemplate("Adder MK6"):setScanned(true):orderDefendLocation(comms_source:getWaypoint(n))
 							ship:setCommsScript(""):setCommsFunction(commsShip):onDestruction(humanVesselDestroyed)
 							table.insert(friendlyHelperFleet,ship)
 							setCommsMessage("We have dispatched " .. ship:getCallSign() .. " to assist at WP" .. n);
@@ -7300,7 +7321,7 @@ function handleUndockedState()
             end
             addCommsReply("Back", commsStation)
         end)
-        addCommsReply("Please send Phobos T3 reinforcements! ("..getServiceCost("phobosReinforcements").."rep)", function()
+        addCommsReply("Please send Phobos M3 reinforcements! ("..getServiceCost("phobosReinforcements").."rep)", function()
             if comms_source:getWaypointCount() < 1 then
                 setCommsMessage("You need to set a waypoint before you can request reinforcements.");
             else
@@ -7308,7 +7329,7 @@ function handleUndockedState()
                 for n=1,comms_source:getWaypointCount() do
                     addCommsReply("WP" .. n, function()
 						if comms_source:takeReputationPoints(getServiceCost("phobosReinforcements")) then
-							ship = CpuShip():setFactionId(comms_target:getFactionId()):setPosition(comms_target:getPosition()):setTemplate("Phobos T3"):setScanned(true):orderDefendLocation(comms_source:getWaypoint(n))
+							ship = CpuShip():setFactionId(comms_target:getFactionId()):setPosition(comms_target:getPosition()):setTemplate("Phobos M3"):setScanned(true):orderDefendLocation(comms_source:getWaypoint(n))
 							ship:setCommsScript(""):setCommsFunction(commsShip):onDestruction(humanVesselDestroyed)
 							table.insert(friendlyHelperFleet,ship)
 							setCommsMessage("We have dispatched " .. ship:getCallSign() .. " to assist at WP" .. n);
@@ -7321,27 +7342,27 @@ function handleUndockedState()
             end
             addCommsReply("Back", commsStation)
         end)
-        addCommsReply("Please send Stalker Q7 reinforcements! ("..getServiceCost("stalkerReinforcements").."rep)", function()
-            if comms_source:getWaypointCount() < 1 then
-                setCommsMessage("You need to set a waypoint before you can request reinforcements.");
-            else
-                setCommsMessage("To which waypoint should we dispatch the reinforcements?");
-                for n=1,comms_source:getWaypointCount() do
-                    addCommsReply("WP" .. n, function()
-						if comms_source:takeReputationPoints(getServiceCost("stalkerReinforcements")) then
-							ship = CpuShip():setFactionId(comms_target:getFactionId()):setPosition(comms_target:getPosition()):setTemplate("Stalker Q7"):setScanned(true):orderDefendLocation(comms_source:getWaypoint(n))
-							ship:setCommsScript(""):setCommsFunction(commsShip):onDestruction(humanVesselDestroyed)
-							table.insert(friendlyHelperFleet,ship)
-							setCommsMessage("We have dispatched " .. ship:getCallSign() .. " to assist at WP" .. n);
-						else
-							setCommsMessage("Not enough reputation!");
-						end
-                        addCommsReply("Back", commsStation)
-                    end)
-                end
-            end
-            addCommsReply("Back", commsStation)
-        end)
+--        addCommsReply("Please send Stalker Q7 reinforcements! ("..getServiceCost("stalkerReinforcements").."rep)", function()
+--            if comms_source:getWaypointCount() < 1 then
+--                setCommsMessage("You need to set a waypoint before you can request reinforcements.");
+--            else
+--                setCommsMessage("To which waypoint should we dispatch the reinforcements?");
+--                for n=1,comms_source:getWaypointCount() do
+--                    addCommsReply("WP" .. n, function()
+--						if comms_source:takeReputationPoints(getServiceCost("stalkerReinforcements")) then
+--							ship = CpuShip():setFactionId(comms_target:getFactionId()):setPosition(comms_target:getPosition()):setTemplate("Stalker Q7"):setScanned(true):orderDefendLocation(comms_source:getWaypoint(n))
+--							ship:setCommsScript(""):setCommsFunction(commsShip):onDestruction(humanVesselDestroyed)
+--							table.insert(friendlyHelperFleet,ship)
+--							setCommsMessage("We have dispatched " .. ship:getCallSign() .. " to assist at WP" .. n);
+--						else
+--							setCommsMessage("Not enough reputation!");
+--						end
+--                        addCommsReply("Back", commsStation)
+--                    end)
+--                end
+--            end
+--            addCommsReply("Back", commsStation)
+--        end)
     end
 end
 function getServiceCost(service)
@@ -7997,19 +8018,6 @@ function spawnEnemies(xOrigin, yOrigin, danger, enemyFaction, perimeter_min, per
 --			shipTemplateType = irandom(1,#stsl)
 --		end		
 --		local ship = CpuShip():setFaction(enemyFaction):setTemplate(stnl[shipTemplateType]):orderRoaming()
---		if enemyFaction == "Kraylor" then
---			rawKraylorShipStrength = rawKraylorShipStrength + stsl[shipTemplateType]
---			ship:onDestruction(kraylorVesselDestroyed)
---		elseif enemyFaction == "Human Navy" then
---			rawHumanShipStrength = rawHumanShipStrength + stsl[shipTemplateType]
---			ship:onDestruction(humanVesselDestroyed)
---		elseif enemyFaction == "Exuari" then
---			rawExuariShipStrength = rawExuariShipStrength + stsl[shipTemplateType]
---			ship:onDestruction(exuariVesselDestroyed)
---		elseif enemyFaction == "Arlenians" then
---			rawArlenianShipStrength = rawArlenianShipStrength + stsl[shipTemplateType]
---			ship:onDestruction(arlenianVesselDestroyed)
---		end
 --		enemyPosition = enemyPosition + 1
 --		if deployConfig < 50 then
 --			ship:setPosition(xOrigin+fleetPosDelta1x[enemyPosition]*sp,yOrigin+fleetPosDelta1y[enemyPosition]*sp)
@@ -8021,6 +8029,19 @@ function spawnEnemies(xOrigin, yOrigin, danger, enemyFaction, perimeter_min, per
 --		table.insert(enemyList, ship)
 --		enemyStrength = enemyStrength - stsl[shipTemplateType]
 --	end
+	if enemyFaction == "Kraylor" then
+		rawKraylorShipStrength = rawKraylorShipStrength + stsl[shipTemplateType]
+		ship:onDestruction(kraylorVesselDestroyed)
+	elseif enemyFaction == "Human Navy" then
+		rawHumanShipStrength = rawHumanShipStrength + stsl[shipTemplateType]
+		ship:onDestruction(humanVesselDestroyed)
+	elseif enemyFaction == "Exuari" then
+		rawExuariShipStrength = rawExuariShipStrength + stsl[shipTemplateType]
+		ship:onDestruction(exuariVesselDestroyed)
+	elseif enemyFaction == "Arlenians" then
+		rawArlenianShipStrength = rawArlenianShipStrength + stsl[shipTemplateType]
+		ship:onDestruction(arlenianVesselDestroyed)
+	end
 	if perimeter_min ~= nil then
 		local enemy_angle = random(0,360)
 		local circle_increment = 360/#enemyList
@@ -8041,7 +8062,7 @@ function playerPower()
 	local playerShipScore = 0
 	for p5idx=1,8 do
 		local p5obj = getPlayerShip(p5idx)
-		if p5obj ~= nil and p5obj:isValid() then
+		if p5obj ~= nil and p5obj:isValid() and p5obj:getFaction() ~= "Exuari" and p5obj:getFaction() ~= "Kraylor" then
 			if p5obj.shipScore == nil then
 				playerShipScore = playerShipScore + 24
 			else

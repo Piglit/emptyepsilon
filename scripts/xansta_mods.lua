@@ -399,6 +399,7 @@ function modify_player_ships(pobj)
 				pobj:setCallSign(playerShipNamesForAtlantis[ni])
 				table.remove(playerShipNamesForAtlantis,ni)
 			end
+			pobj.carrier = true
 			pobj.shipScore = 52
 			pobj.maxCargo = 6
 		elseif tempPlayerType == "Maverick" then
@@ -408,6 +409,7 @@ function modify_player_ships(pobj)
 				pobj:setCallSign(playerShipNamesForProtoAtlantis[ni])
 				table.remove(playerShipNamesForProtoAtlantis,ni)
 			end
+			pobj.carrier = true
 			pobj.shipScore = 52
 			pobj.maxCargo = 6
 		elseif tempPlayerType == "Crucible" then
@@ -417,6 +419,7 @@ function modify_player_ships(pobj)
 				pobj:setCallSign(playerShipNamesForStriken[ni])
 				table.remove(playerShipNamesForStriken,ni)
 			end
+			pobj.carrier = true
 			pobj.shipScore = 52
 			pobj.maxCargo = 6
 		elseif tempPlayerType == "Benedict" then
@@ -426,6 +429,7 @@ function modify_player_ships(pobj)
 				pobj:setCallSign(playerShipNamesForBenedict[ni])
 				table.remove(playerShipNamesForBenedict,ni)
 			end
+			pobj.carrier = true
 			pobj.shipScore = 10
 			pobj.maxCargo = 9
 		elseif tempPlayerType == "Kiriya" then
@@ -435,6 +439,7 @@ function modify_player_ships(pobj)
 				pobj:setCallSign(playerShipNamesForKiriya[ni])
 				table.remove(playerShipNamesForKiriya,ni)
 			end
+			pobj.carrier = true
 			pobj.shipScore = 10
 			pobj.maxCargo = 9
 		elseif tempPlayerType == "Ender" then
