@@ -86,5 +86,10 @@ function update(delta)
     if #enemyList == 0 then
         finished(delta)
     end
+	for i, enemy in ipairs(enemyList) do
+		if enemy == nil or not enemy:isValid() then
+			table.remove(enemyList, i)
+		end
+	end
 end
 

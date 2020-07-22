@@ -50,8 +50,8 @@ function script_hangar.update(dt)
 						hangar.nextIndex = nidx +1
 						hangar.nextLeader = leader
 						hangar.nextSecond = second
-						if hangar.onSpawn ~= nil then
-							hangar.onSpawn(ship, ship2, nidx)
+						if hangar.onLaunch ~= nil then
+							hangar.onLaunch(ship, ship2, nidx)
 						end
 					end
 				end
