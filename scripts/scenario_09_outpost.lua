@@ -22,7 +22,7 @@ end
 
 function createMiningFreighter()
     local freighters = {}
-    for cnt=1, 5 do
+    for cnt = 1, 5 do
         table.insert(freighters, "Personnel Freighter "..cnt)
         table.insert(freighters, "Goods Freighter "..cnt)
         table.insert(freighters, "Garbage Freighter "..cnt)
@@ -67,18 +67,18 @@ function init()
     station = SpaceStation():setTemplate("Small Station"):setPosition(0, -500):setRotation(random(0, 360)):setFaction("Mining Corporation"):setCallSign("Mining Outpost")
     enemies = {}
     friends = {}
-    for n=1, 2 do
+    for n = 1, 2 do
         ship = createMiningFrigate():orderDefendTarget(station):setScanned(true)
         setCirclePos(ship, 0, 0, random(0, 360), random(2000, 5000))
         table.insert(friends, ship)
     end
-    for n=1, 2 do
+    for n = 1, 2 do
         ship = createMiningFreighter():orderDock(station):setScanned(true)
         setCirclePos(ship, 0, 0, random(0, 360), random(10000, 20000))
         table.insert(friends, ship)
     end
 
-    for n=1, 5 do
+    for n = 1, 5 do
         ship = createKraylorGunship():orderRoaming()
         setCirclePos(ship, 0, 0, random(0, 360), random(20000, 30000))
         table.insert(enemies, ship)
@@ -92,14 +92,14 @@ function init()
     table.insert(enemies, ship_with_hangar)
     script_hangar.create(ship_with_hangar, "Drone", 3)
 
-    for n=1, 10 do
+    for n = 1, 10 do
         setCirclePos(Mine(), 0, 0, random(0, 360), random(10000, 25000))
     end
 
-    for n=1, 500 do
+    for n = 1, 500 do
         setCirclePos(Asteroid(), 0, 0, random(0, 360), random(10000, 30000))
     end
-    for n=1, 50 do
+    for n = 1, 50 do
         setCirclePos(Asteroid(), 0, 0, random(0, 360), random(2000, 10000))
     end
 end

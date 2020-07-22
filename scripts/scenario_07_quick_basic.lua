@@ -176,7 +176,7 @@ function init()
     -- Randomly scatter nebulae near the players' spawn point.
     local x, y = player:getPosition()
     setCirclePos(Nebula(), x, y, random(0, 360), 15000)
-    for n=1, 5 do
+    for n = 1, 5 do
         setCirclePos(Nebula(), 0, 0, random(0, 360), random(23000, 45000))
     end
 
@@ -196,19 +196,19 @@ function init()
     end)
     
     -- Spawn 1-3 random asteroid belts.
-    for cnt=1, random(1, 3) do
+    for cnt = 1, random(1, 3) do
         a = random(0, 360)
         a2 = random(0, 360)
         d = random(3000, 40000)
         x, y = vectorFromAngle(a, d)
 
-        for acnt=1, 50 do
+        for acnt = 1, 50 do
             dx1, dy1 = vectorFromAngle(a2, random(-1000, 1000))
             dx2, dy2 = vectorFromAngle(a2 + 90, random(-20000, 20000))
             Asteroid():setPosition(x + dx1 + dx2, y + dy1 + dy2):setSize(random(100, 500))
         end
 
-        for acnt=1, 100 do
+        for acnt = 1, 100 do
             dx1, dy1 = vectorFromAngle(a2, random(-1500, 1500))
             dx2, dy2 = vectorFromAngle(a2 + 90, random(-20000, 20000))
             VisualAsteroid():setPosition(x + dx1 + dx2, y + dy1 + dy2)
@@ -216,14 +216,14 @@ function init()
     end
 
     -- Spawn 0-1 random mine fields.
-    for cnt=1, random(0, 1) do
+    for cnt = 1, random(0, 1) do
         a = random(0, 360)
         a2 = random(0, 360)
         d = random(20000, 40000)
         x, y = vectorFromAngle(a, d)
 
-        for nx=-1, 1 do
-            for ny=-5, 5 do
+        for nx =-1, 1 do
+            for ny =-5, 5 do
                 if random(0, 100) < 90 then
                     dx1, dy1 = vectorFromAngle(a2, (nx * 1000) + random(-100, 100))
                     dx2, dy2 = vectorFromAngle(a2 + 90, (ny * 1000) + random(-100, 100))
@@ -234,7 +234,7 @@ function init()
     end
 
     --Create a bunch of neutral stations
-    for n=1, 6 do
+    for n = 1, 6 do
         setCirclePos(SpaceStation():setTemplate("Small Station"):setFaction("Independent"), 0, 0, random(0, 360), random(15000, 30000))
     end
     -- Spawn random neutral transports.
@@ -272,7 +272,7 @@ function startScenario()
     -- enemy waves at distributed random headings and semi-random distances
     -- relative to the players' spawn point.
     if enemy_group_count > 0 then
-        for cnt=1, enemy_group_count do
+        for cnt = 1, enemy_group_count do
             a = getWaveAngle(cnt, enemy_group_count)
             d = getWaveDistance(cnt, enemy_group_count)
             type = random(0, 10)

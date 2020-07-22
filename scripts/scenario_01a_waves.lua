@@ -32,28 +32,28 @@ function init()
 
     --PlayerSpaceship():setFaction("Human Navy"):setTemplate("Atlantis")
 
-    for n=1, 2 do
+    for n = 1, 2 do
         table.insert(friendlyList, SpaceStation():setTemplate(randomStationTemplate()):setFaction("Human Navy"):setPosition(random(-5000, 5000), random(-5000, 5000)))
     end
     friendlyList[1]:addReputationPoints(150.0)
 
     local x, y = vectorFromAngle(random(0, 360), 15000)
-    for n=1, 5 do
+    for n = 1, 5 do
         local xx, yy = vectorFromAngle(random(0, 360), random(2500, 10000))
         Nebula():setPosition(x + xx, y + yy)
     end
 
-    for cnt=1, random(2, 7) do
+    for cnt = 1, random(2, 7) do
         a = random(0, 360)
         a2 = random(0, 360)
         d = random(3000, 15000 + cnt * 5000)
         x, y = vectorFromAngle(a, d)
-        for acnt=1, 25 do
+        for acnt = 1, 25 do
             dx1, dy1 = vectorFromAngle(a2, random(-1000, 1000))
             dx2, dy2 = vectorFromAngle(a2 + 90, random(-10000, 10000))
             Asteroid():setPosition(x + dx1 + dx2, y + dy1 + dy2)
         end
-        for acnt=1, 50 do
+        for acnt = 1, 50 do
             dx1, dy1 = vectorFromAngle(a2, random(-1500, 1500))
             dx2, dy2 = vectorFromAngle(a2 + 90, random(-10000, 10000))
             VisualAsteroid():setPosition(x + dx1 + dx2, y + dy1 + dy2)
@@ -62,7 +62,7 @@ function init()
 
     spawnWave()
 
-    for n=1, 6 do
+    for n = 1, 6 do
         setCirclePos(SpaceStation():setTemplate(randomStationTemplate()):setFaction("Independent"), 0, 0, random(0, 360), random(15000, 30000))
     end
     Script():run("util_random_transports.lua")

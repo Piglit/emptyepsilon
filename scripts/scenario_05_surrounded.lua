@@ -11,11 +11,11 @@ enemy_faction = "Criminals"
 function init()
     SpaceStation():setTemplate("Small Station"):setPosition(0, -500):setRotation(random(0, 360)):setFaction("Independent")
     
-    for n=1, 5 do
+    for n = 1, 5 do
         ship = CpuShip():setTemplate("Phobos T3"):orderRoaming():setFaction(enemy_faction)
         setCirclePos(ship, random(0, 360), random(7000, 10000))
     end
-    for n=1, 2 do
+    for n = 1, 2 do
         ship = CpuShip():setTemplate("Piranha F12"):orderRoaming():setFaction(enemy_faction)
         setCirclePos(ship, random(0, 360), random(7000, 10000))
     end
@@ -38,11 +38,11 @@ function init()
     wingman:orderFlyFormation(ship, 0, 600)
     
     
-    for n=1, 10 do
+    for n = 1, 10 do
         setCirclePos(Mine(), random(0, 360), random(10000, 20000))
     end
     
-    for n=1, 300 do
+    for n = 1, 300 do
         setCirclePos(Asteroid(), random(0, 360), random(10000, 20000))
     end
 end

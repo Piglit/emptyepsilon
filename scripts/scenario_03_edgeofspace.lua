@@ -108,7 +108,7 @@ function init()
     Nebula():setPosition(-33654, -41667)
 
     --Create 50 Asteroids
-    for asteroid_counter=1, 20 do
+    for asteroid_counter = 1, 20 do
         Asteroid():setPosition( random(-10000, 20000), random(-22000, -15000))
         VisualAsteroid():setPosition( random(-10000, 20000), random(-22000, -15000))
 
@@ -395,7 +395,7 @@ We'll retrieve what we can.]]))
 
     --Tech Officer complains about being left behind if the Apollo is not Docked since inspection began.
     if Central_Command.mission_state == 2 then
-        if inspection_init ==1 then
+        if inspection_init == 1 then
             if inspection_complete == 0 then
                 if inspection_progress > 50 then
                     if not Player:isDocked(EOS_Station) then

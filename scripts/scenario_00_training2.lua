@@ -202,7 +202,7 @@ function update(delta)
             end
         elseif not chapter3started then
             spawnBoss()
-        elseif boss ~=nil and not boss:isValid() then
+        elseif boss ~= nil and not boss:isValid() then
             finished(delta)
         end
     end

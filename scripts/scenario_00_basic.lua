@@ -107,7 +107,7 @@ function init()
     local x, y = friendlyList[1]:getPosition()
     setCirclePos(Nebula(), x, y, random(0, 360), 6000)
 
-    for n=1, 5 do
+    for n = 1, 5 do
         setCirclePos(Nebula(), 0, 0, random(0, 360), random(20000, 45000))
     end
 
@@ -184,7 +184,7 @@ function init()
     -- enemy waves at distributed random headings and semi-random distances
     -- relative to the players' spawn point.
     if enemy_group_count > 0 then
-        for cnt=1, enemy_group_count do
+        for cnt = 1, enemy_group_count do
             a = setWaveAngle(cnt, enemy_group_count)
             d = setWaveDistance(enemy_group_count)
             type = random(0, 10)
@@ -193,14 +193,14 @@ function init()
     end
 
     -- Spawn 2-5 random asteroid belts.
-    for cnt=1, random(2, 5) do
+    for cnt = 1, random(2, 5) do
         a = random(0, 360)
         a2 = random(0, 360)
         adiff = math.abs(a2 - a)
         d = random(3000, 40000)
         x, y = vectorFromAngle(a, d)
 
-        for acnt=1, 50 do
+        for acnt = 1, 50 do
             dx1, dy1 = vectorFromAngle(a2, random(-1000, 1000))
             dx2, dy2 = vectorFromAngle(a2 + 90, random(-20000, 20000))
             posx = x + dx1 + dx2
@@ -216,7 +216,7 @@ function init()
             end
         end
 
-        for acnt=1, 100 do
+        for acnt = 1, 100 do
             dx1, dy1 = vectorFromAngle(a2, random(-1500, 1500))
             dx2, dy2 = vectorFromAngle(a2 + 90, random(-20000, 20000))
             VisualAsteroid():setPosition(x + dx1 + dx2, y + dy1 + dy2)
@@ -224,14 +224,14 @@ function init()
     end
 
     -- Spawn 0-3 random mine fields.
-    for cnt=1, random(0, 3) do
+    for cnt = 1, random(0, 3) do
         a = random(0, 360)
         a2 = random(0, 360)
         d = random(20000, 40000)
         x, y = vectorFromAngle(a, d)
 
-        for nx=-1, 1 do
-            for ny=-5, 5 do
+        for nx =-1, 1 do
+            for ny =-5, 5 do
                 if random(0, 100) < 90 then
                     dx1, dy1 = vectorFromAngle(a2, (nx * 1000) + random(-100, 100))
                     dx2, dy2 = vectorFromAngle(a2 + 90, (ny * 1000) + random(-100, 100))

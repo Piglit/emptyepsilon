@@ -18,7 +18,7 @@ require("utils.lua")
 
 --[[
 Rundown of the mission:
-==Phase 1: Test ship systems.
+== Phase 1: Test ship systems.
 * Ship starts docked to the station, with 0 power in all systems.
 * Engineering has to power up all systems to 100%.
 * After that, undocking is possible.
@@ -27,7 +27,7 @@ Rundown of the mission:
 * At the weapons testing area, science needs to scan two dummy ships before they can be destroyed.
 * Destroy the two dummy ships, one can only be destroyed with missile weapons.
 * Have relay open communications to the station for the next objective.
-==Phase 2: Discovery
+== Phase 2: Discovery
 * You first mission will be to investigate a strange signal from a nebula.
 * As the nebula is in the outer space regions, you'll have you use a jump carrier.
 * The jump carrier delivers you to the edge of a nebulea cloud. There are a few kraylor ships here for you to fight.
@@ -35,18 +35,18 @@ Rundown of the mission:
 * In these nebulea, you can also encounter ghost ships. Which are just lost single ships. As well as two "dud" artifacts that are not the source of the signal.
 * When you scan the proper artifact, it gives you 4 readings in the description. Relay needs to pass these readings to the JC-88 or Shipyard before the mission continues.
 * When this is done, the artifact becomes unstable, and becomes a wormhole that sucks in the player.
-==Phase 3: Lost in enemy space...
+== Phase 3: Lost in enemy space...
 * After the wormhole, the player finds himself in Kraylor space.
 * There are warp jammers blocking you from jumping away. And these jammers are well defended. You'll need to navigate or fight you way out of this.
 * I highly recommend navigating. Really. There is some code in place that makes all enemies attack if you engage the jammers.
 * JC88 will be waiting for you outside of the defense line. He will take you back to the shipyard.
 * At the shipyard you will hand in your data, and get your new objective.
-==Phase 4: Nice transport you have there, would be bad if something would happen to it...
+== Phase 4: Nice transport you have there, would be bad if something would happen to it...
 * At this point a transport will be created and flying around the forwards stations of the Kraylor defense line.
 * Your task is to destroy this transport and secure it's cargo.
 * Engaging it at one of the stations will call the whole Kraylor fleet on your ass. So engage the transport between stations.
 * Attacking it between stations will still call a taskforce on your ass, so you need to make haste to secure the cargo and get out of there.
-==Phase 5:...
+== Phase 5:...
 --]]
 
 function createKraylorDestroyer(level)
@@ -213,7 +213,7 @@ Doppler instability: %i]], b20_artifact.beta_radiation, b20_artifact.gravity_dis
         x, y = warp_jammer:getPosition()
         ship = createKraylorDestroyer():setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):orderDefendLocation(x, y)
         table.insert(kraylor_defense_line_ships, ship)
-        for n=1, 3 do
+        for n = 1, 3 do
             ship2 = createKraylorGunship():setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):orderDefendTarget(ship)
             table.insert(kraylor_defense_line_ships, ship2)
         end
@@ -234,7 +234,7 @@ Doppler instability: %i]], b20_artifact.beta_radiation, b20_artifact.gravity_dis
         x, y = station:getPosition()
         ship = createKraylorDestroyer():setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):orderDefendLocation(x, y)
         table.insert(kraylor_defense_line_ships, ship)
-        for n=1, 3 do
+        for n = 1, 3 do
             ship2 = createKraylorGunship():setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):orderDefendTarget(ship)
             table.insert(kraylor_defense_line_ships, ship2)
         end
@@ -704,16 +704,16 @@ Did you find the source of the odd sensor readings?]])
         setCommsMessage([[Great, as our sensor readings are inconclusive. Can you report back your readings to us?
 
 First off, what is the beta radiation reading?]])
-        for beta=1, 10 do
+        for beta = 1, 10 do
             addCommsReply(beta, function()
                 setCommsMessage([[Next up, what is your Ionic phase shift reading?]])
-                for ionic=1, 10 do
+                for ionic = 1, 10 do
                     addCommsReply(ionic, function()
                         setCommsMessage([[Next up, what is your gravity disruption reading?]])
-                        for gravity=1, 10 do
+                        for gravity = 1, 10 do
                             addCommsReply(gravity, function()
                                 setCommsMessage([[Finally, what is your reading on doppler instability?]])
-                                for doppler=1, 10 do
+                                for doppler = 1, 10 do
                                     addCommsReply(doppler, function()
                                         if b20_artifact.beta_radiation == beta and b20_artifact.gravity_disruption == gravity and b20_artifact.ionic_phase_shift == ionic and b20_artifact.doppler_instability == doppler then
                                             if distance(player, b20_artifact) < 2000 then
@@ -743,19 +743,19 @@ Can you move closer to the object to see if you can improve those readings. The 
 end
 
 function scrambleMessage(message)
-    for n=1, 7 do
+    for n = 1, 7 do
         local pos = irandom(1, #message - 3)
         message = message:sub(0, pos) .. "---" .. message:sub(pos + 3)
     end
-    for n=1, 5 do
+    for n = 1, 5 do
         local pos = irandom(1, #message - 1)
         message = message:sub(0, pos) .. "." .. message:sub(pos + 1)
     end
-    for n=1, 3 do
+    for n = 1, 3 do
         local pos = irandom(1, #message - 1)
         message = message:sub(0, pos) .. "*" .. message:sub(pos + 1)
     end
-    for n=1, 3 do
+    for n = 1, 3 do
         local pos = irandom(1, #message - 1)
         message = message:sub(0, pos) .. "$" .. message:sub(pos + 1)
     end

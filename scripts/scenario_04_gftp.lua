@@ -332,7 +332,7 @@ Whatever that means, it cannot be good.]])
         main_mission = 7
         end
         
-        if (hacked==0) then
+        if (hacked == 0) then
         bs114:sendCommsMessage(player, [[After the silence, the Black Site's dispatch comes again :
 
 "The Engineering team identified the payload activated by the unknown ship. It was a mass hacking device which turned our men against us. Even if these ship's relays are down, reverse engineering teams think there is a way to regain control : a near field injection.
@@ -454,10 +454,10 @@ We are both ready to continue our purpose, it seems."]])) then
         if (hacked == 1) and (distance(player, nsa) < 10000) and (stakhanov:sendCommsMessage(player, [[Central Command comes in :
         "Bogeys on their way to NSA, Epsilon. Take care of them."]])) then
         
-        gfighter1=CpuShip():setTemplate("MT52 Hornet"):setCallSign("Z-1"):setFaction("Ghosts"):setPosition(-20000, -10000):orderFlyTowards(5000, 5000)
-        gfighter2=CpuShip():setTemplate("MT52 Hornet"):setCallSign("Z-2"):setFaction("Ghosts"):setPosition(-20000, -10000):orderFlyTowards(5000, 5000)
-        gfighter3=CpuShip():setTemplate("MT52 Hornet"):setCallSign("Z-3"):setFaction("Ghosts"):setPosition(-20000, -11000):orderFlyTowards(5000, 5000)
-        gfighter4=CpuShip():setTemplate("MT52 Hornet"):setCallSign("Z-4"):setFaction("Ghosts"):setPosition(-20000, -11000):orderFlyTowards(5000, 5000)
+        gfighter1 = CpuShip():setTemplate("MT52 Hornet"):setCallSign("Z-1"):setFaction("Ghosts"):setPosition(-20000, -10000):orderFlyTowards(5000, 5000)
+        gfighter2 = CpuShip():setTemplate("MT52 Hornet"):setCallSign("Z-2"):setFaction("Ghosts"):setPosition(-20000, -10000):orderFlyTowards(5000, 5000)
+        gfighter3 = CpuShip():setTemplate("MT52 Hornet"):setCallSign("Z-3"):setFaction("Ghosts"):setPosition(-20000, -11000):orderFlyTowards(5000, 5000)
+        gfighter4 = CpuShip():setTemplate("MT52 Hornet"):setCallSign("Z-4"):setFaction("Ghosts"):setPosition(-20000, -11000):orderFlyTowards(5000, 5000)
         
         main_mission = 10
         end
@@ -467,7 +467,7 @@ We are both ready to continue our purpose, it seems."]])) then
     if (main_mission == 10) then
         
         -- if ktlitan leader found
-        if (hacked==0) and (nsa:getDescription()=="Nosy Sensing Array, an old SIGINT platform. The Ktlitan Commander is located.") and (bs114:sendCommsMessage(player, [[A Black Ops military officer hails the ship :
+        if (hacked == 0) and (nsa:getDescription()=="Nosy Sensing Array, an old SIGINT platform. The Ktlitan Commander is located.") and (bs114:sendCommsMessage(player, [[A Black Ops military officer hails the ship :
 
 "We have the command platform location confirmed in the nebula around H6. All Navy ships, converge on the location. We advise you to deploy probes near the pointed nebula for a better visibility."]])) then
             if euphrates:isValid() then
@@ -487,7 +487,7 @@ We are both ready to continue our purpose, it seems."]])) then
         end    
         
         --if the assault on NSA is repelled
-        if (hacked==1) and (not gfighter1:isValid()) and (not gfighter2:isValid()) and (not gfighter3:isValid()) and (not gfighter4:isValid()) then
+        if (hacked == 1) and (not gfighter1:isValid()) and (not gfighter2:isValid()) and (not gfighter3:isValid()) and (not gfighter4:isValid()) then
         shiva = spawnNuker():setCallSign("HNS Shiva"):setFaction("Human Navy"):setPosition(2000, 2000):orderFlyTowards(-44600, -13800):setScanned(true)
         shiva:sendCommsMessage(player, [[Come in, this is HNS Shiva, here to clean this mess. Your mission for now is to escort us to the compromised site. Let's roll !]])
         CpuShip():setTemplate("MT52 Hornet"):setFaction("Human Navy"):setCallSign("S-1"):setPosition(3000, 3000):orderDefendTarget(shiva):setScanned(true)
