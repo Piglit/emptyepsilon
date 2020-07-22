@@ -5,6 +5,31 @@
 -- 		< 75: excited (wants to attack)
 -- 		>   : frenzied (ignores you)
 
+local anger = {
+	"I don't believe it!",
+	"What a pain!",
+	"Is it possible?",
+	"It really gets on my nerves.",
+	"Damn it.",
+}
+
+local deny = {
+	"Rubbish!",
+	"Shame on you!",
+	"I dont't think that's very clever!",
+	"I can't stand it any longer!",
+	"I could really do without it.",
+	"I'm fed up with it.",
+}
+
+local hangup = {
+	"I'm sick and tired pf you.",
+	"Please, I'm so mad right now I can't talk to you.",
+	"Get out of my way!",
+	"Mind your own buisness!",
+	"I get so irritaded by this I can't be talking to you.",
+}
+
 function mainMenu()
 	if comms_target.comms_data == nil then
 		comms_target.comms_data = {friendlyness = random(0.0, 75.0)}
@@ -24,11 +49,11 @@ function friendlyComms(comms_data)
 	if comms_data.friendlyness < 0 then
 		return false
 	elseif comms_data.friendlyness < 25 then
-		setCommsMessage("A night out here in the black can be boring, right?")
+		setCommsMessage(anger[math.random(1,#anger)] .. "\nSuch a boring night out here.")
 	elseif comms_data.friendlyness < 50 then
 		setCommsMessage("Master, what activity to you suggest?")
 	elseif comms_data.friendlyness < 75 then
-		setCommsMessage("Why are you calling? You are ruining the moment!")
+		setCommsMessage(anger[math.random(1,#anger)] .. "Why are you calling? You are ruining the moment!")
 	else
 		setCommsMessage("KILL!!")
 	end
@@ -68,11 +93,11 @@ end
 
 function friendlyDefendWaypoint(comms_data)
 	if comms_data.friendlyness < 20 then
-		setCommsMessage("Defense? Not Attack? No-no-no, You better suggest something more fun.")
+		setCommsMessage("Defend? " .. deny[math.random(1,#deny)] .. "\nYou better suggest something more fun.")
 		comms_data.friendlyness = comms_data.friendlyness - random(1, 5)
 		addCommsReply("Back", mainMenu)
 	elseif comms_data.friendlyness > 80 then
-		setCommsMessage("NOO! KILL! DEATH!")
+		setCommsMessage(deny[math.random(1,#deny)] .. "\nI'm gonna kill someone dead!")
 		comms_target:orderRoaming()
 		comms_data.friendlyness = comms_data.friendlyness - random(1, 5)
 		return true
@@ -97,7 +122,7 @@ end
 
 function friendlyAssistMe(comms_data)
 	if comms_data.friendlyness < 0 then
-		setCommsMessage("No way. I think your life is as boring as mine.")
+		setCommsMessage(deny[math.random(1,#deny)] .. "\nI think your life is as boring as mine.")
 		return true
 	elseif comms_data.friendlyness < 70 then
 		setCommsMessage("Understood. Heading toward you to join your killing spree.")
@@ -110,7 +135,7 @@ function friendlyAssistMe(comms_data)
 		comms_target:orderAttack(player)
 		return true
 	else
-		setCommsMessage("KILL! DEATH!")
+		setCommsMessage(deny[math.random(1,#deny)] .. "\nI'm gonna kill someone dead!")
 		comms_data.friendlyness = comms_data.friendlyness - random(1, 5)
 		comms_target:orderRoaming()
 		return true
@@ -159,14 +184,14 @@ function friendlyReportStatus(comms_data)
 		setCommsMessage(msg);
 		addCommsReply("Back", mainMenu)
 	else
-		setCommsMessage("Status: KILLING! DYING!!")
+		setCommsMessage("Status: " .. deny[math.random(1,#deny)] .. "\nI'm gonna kill someone dead!")
 		addCommsReply("Back", mainMenu)
 	end
 end
 
 function friendlyDockAt(comms_data, obj)
 	if comms_data.friendlyness < 30 then
-		setCommsMessage("Refusing to dock at " .. obj:getCallSign() .. ", since this sounds even more boring.");
+		setCommsMessage(deny[math.random(1,#deny)] .. "\nThis does sounds even more boring.");
 		comms_data.friendlyness = comms_data.friendlyness - random(1, 5)
 		addCommsReply("Back", mainMenu)
 	elseif comms_data.friendlyness < 60 then
@@ -175,7 +200,7 @@ function friendlyDockAt(comms_data, obj)
 		comms_target:orderDock(obj)
 		addCommsReply("Back", mainMenu)
 	else
-		setCommsMessage("NOO! KILL! DEATH!")
+		setCommsMessage(deny[math.random(1,#deny)] .. "\nI'm gonna kill someone dead!")
 		comms_target:orderRoaming()
 		comms_data.friendlyness = comms_data.friendlyness - random(1, 5)
 		return true
@@ -202,10 +227,10 @@ function enemyComms(comms_data)
 	end
 	comms_target.friendlyness = comms_target.friendlyness + random(1,5)
 	if comms_data.friendlyness < 25 then
-		setCommsMessage("Send us your coordinates, so we can blow holes in your hulk.")
+		setCommsMessage(hangup[math.random(1,#hangup)] .. "\nOr do you suggest blowing holes in your hulk?")
 		change = 100 - 1.5*comms_data.friendlyness	-- [100, 62.5]
 	elseif comms_data.friendlyness < 50 then
-		setCommsMessage("Stay out of our way, or your death will amuse us extremely!")
+		setCommsMessage(hangup[math.random(1,#hangup)] .. "\nBut your death would amuse us extremely!")
 		change = comms_data.friendlyness - 5	-- [20, 45]
 	elseif comms_data.friendlyness < 75 then
 		setCommsMessage("Come closer, so your death will amuse us extremely!")
@@ -240,7 +265,7 @@ function enemyComms(comms_data)
 				if comms_data.friendlyness > 75 then
 					setCommsMessage("DEATH PARTY IS HERE! YOU COME HERE TO DIE!!")
 				else
-					setCommsMessage("Ha-ha. If you truly have a death wish, we should meet at our coordinates.");
+					setCommsMessage(hangup[math.random(1,#hangup)])
 				end
 			end
 		end)
@@ -251,11 +276,11 @@ function neutralComms(comms_data)
 	if comms_data.friendlyness < 0 then
 		return false
 	elseif comms_data.friendlyness < 25 then
-		setCommsMessage("A night out here in the black can be boring, right?")
+		setCommsMessage(anger[math.random(1,#anger)] .. "\nA night out here in the black can be boring, right?")
 	elseif comms_data.friendlyness < 50 then
-		setCommsMessage("Sorry, we have no time to chat with you.\nWe are on an important mission.")
+		setCommsMessage(anger[math.random(1,#anger)] .. "\nWe have no time to chat with you.\nWe are on an important mission.")
 	elseif comms_data.friendlyness < 75 then
-		setCommsMessage("Sorry, we have no time to chat with you.\nWe are on a killing spree.")
+		setCommsMessage(hangup[math.random(1,#hangup)]"\nWe are on a killing spree.")
 	else
 		setCommsMessage("KILL! DEATH!!");
 	end
