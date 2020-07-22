@@ -27,7 +27,7 @@ function init()
     wingman = CpuShip():setTemplate("Nirvana R5M"):setCallSign("Wingman"):setFaction("Human Navy"):setPosition(-800, -1700):setHeading(250):setScannedByFaction("Human Navy", true):orderDefendTarget(station)
 
     station2 = SpaceStation():setTemplate('Small Station'):setCallSign("Civilian Station"):setRotation(random(0, 360)):setFaction("Human Navy"):setPosition(800, -rr*0.5)
-    enemy_station = CpuShip():setTemplate("Ryder"):setFaction("Exuari"):orderDefendLocation(0,-rr*0.9)
+    enemy_station = CpuShip():setTemplate("Ryder"):setFaction("Exuari"):orderDefendLocation(0, -rr*0.9)
     enemy_station:setPosition(0, -rr):setRotation(90):setCallSign("Omega")
 
     script_hangar.create(enemy_station, "Dagger", 3)

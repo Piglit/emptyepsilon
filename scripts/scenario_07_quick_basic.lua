@@ -92,7 +92,7 @@ ship_names = {
 --       to the enemyList. Any number is valid, but only 0.99-9.0 are meaningful.
 -- a: The spawned wave's heading relative to the players' spawn point.
 -- d: The spawned wave's distance from the players' spawn point.
-function addWave(enemyList,type,a,d)
+function addWave(enemyList, type, a, d)
     -- design goal: each type offers a different challenge
     if type < 1.0 then
         -- striker
@@ -101,9 +101,9 @@ function addWave(enemyList,type,a,d)
         -- fighter
         leader = setCirclePos(CpuShip():setTemplate('Rockbreaker'):setRotation(a + 180):orderRoaming(), 0, 0, a + random(-1, 1), d + random(-100, 100))
         table.insert(enemyList, leader)
-        table.insert(enemyList, setCirclePos(CpuShip():setTemplate('Drone'):setRotation(a + 180):orderFlyFormation(leader,-400, 0), 0, 0, a + random(-1, 1), d + random(-100, 100)))
+        table.insert(enemyList, setCirclePos(CpuShip():setTemplate('Drone'):setRotation(a + 180):orderFlyFormation(leader, -400, 0), 0, 0, a + random(-1, 1), d + random(-100, 100)))
         table.insert(enemyList, setCirclePos(CpuShip():setTemplate('Drone'):setRotation(a + 180):orderFlyFormation(leader, 400, 0), 0, 0, a + random(-1, 1), d + random(-100, 100)))
-        table.insert(enemyList, setCirclePos(CpuShip():setTemplate('Drone'):setRotation(a + 180):orderFlyFormation(leader,-400, 400), 0, 0, a + random(-1, 1), d + random(-100, 100)))
+        table.insert(enemyList, setCirclePos(CpuShip():setTemplate('Drone'):setRotation(a + 180):orderFlyFormation(leader, -400, 400), 0, 0, a + random(-1, 1), d + random(-100, 100)))
         table.insert(enemyList, setCirclePos(CpuShip():setTemplate('Drone'):setRotation(a + 180):orderFlyFormation(leader, 400, 400), 0, 0, a + random(-1, 1), d + random(-100, 100)))
     elseif type < 3.0 then
         -- gunship
@@ -121,7 +121,7 @@ function addWave(enemyList,type,a,d)
         -- missile
         leader = setCirclePos(CpuShip():setTemplate('Piranha F12'):setRotation(a + 180):orderRoaming(), 0, 0, a + random(-5, 5), d + random(-100, 100))
         table.insert(enemyList, leader)
-        table.insert(enemyList, setCirclePos(CpuShip():setTemplate('MT52 Hornet'):setRotation(a + 180):orderFlyFormation(leader,-1500, 400), 0, 0, a + random(-1, 1), d + random(-100, 100)))
+        table.insert(enemyList, setCirclePos(CpuShip():setTemplate('MT52 Hornet'):setRotation(a + 180):orderFlyFormation(leader, -1500, 400), 0, 0, a + random(-1, 1), d + random(-100, 100)))
         table.insert(enemyList, setCirclePos(CpuShip():setTemplate('MT52 Hornet'):setRotation(a + 180):orderFlyFormation(leader, 1500, 400), 0, 0, a + random(-1, 1), d + random(-100, 100)))
     elseif type < 7.0 then
         -- cruiser
@@ -141,7 +141,7 @@ end
 -- Returns a semi-random heading.
 -- cnt: A counter, generally between 1 and the number of enemy groups.
 -- enemy_group_count: A number of enemy groups, generally set by the scenario type.
-function getWaveAngle(cnt,enemy_group_count)
+function getWaveAngle(cnt, enemy_group_count)
     return cnt * 360/enemy_group_count + random(-60, 60)
 end
 
@@ -161,7 +161,7 @@ function init()
     else
         player = PlayerSpaceship():setFaction("Human Navy"):setTemplate("Phobos M3P")
     end
-    player:setPosition(random(-2000, 2000), random(-2000, 2000)):setCallSign(ship_names[math.random(1,#ship_names)])
+    player:setPosition(random(-2000, 2000), random(-2000, 2000)):setCallSign(ship_names[math.random(1, #ship_names)])
     player:setJumpDrive(true)
     player:setWarpDrive(false)
 
@@ -196,19 +196,19 @@ function init()
     end)
     
     -- Spawn 1-3 random asteroid belts.
-    for cnt=1,random(1, 3) do
+    for cnt=1, random(1, 3) do
         a = random(0, 360)
         a2 = random(0, 360)
         d = random(3000, 40000)
         x, y = vectorFromAngle(a, d)
 
-        for acnt=1,50 do
+        for acnt=1, 50 do
             dx1, dy1 = vectorFromAngle(a2, random(-1000, 1000))
             dx2, dy2 = vectorFromAngle(a2 + 90, random(-20000, 20000))
             Asteroid():setPosition(x + dx1 + dx2, y + dy1 + dy2):setSize(random(100, 500))
         end
 
-        for acnt=1,100 do
+        for acnt=1, 100 do
             dx1, dy1 = vectorFromAngle(a2, random(-1500, 1500))
             dx2, dy2 = vectorFromAngle(a2 + 90, random(-20000, 20000))
             VisualAsteroid():setPosition(x + dx1 + dx2, y + dy1 + dy2)
@@ -216,14 +216,14 @@ function init()
     end
 
     -- Spawn 0-1 random mine fields.
-    for cnt=1,random(0, 1) do
+    for cnt=1, random(0, 1) do
         a = random(0, 360)
         a2 = random(0, 360)
         d = random(20000, 40000)
         x, y = vectorFromAngle(a, d)
 
-        for nx=-1,1 do
-            for ny=-5,5 do
+        for nx=-1, 1 do
+            for ny=-5, 5 do
                 if random(0, 100) < 90 then
                     dx1, dy1 = vectorFromAngle(a2, (nx * 1000) + random(-100, 100))
                     dx2, dy2 = vectorFromAngle(a2 + 90, (ny * 1000) + random(-100, 100))
@@ -272,7 +272,7 @@ function startScenario()
     -- enemy waves at distributed random headings and semi-random distances
     -- relative to the players' spawn point.
     if enemy_group_count > 0 then
-        for cnt=1,enemy_group_count do
+        for cnt=1, enemy_group_count do
             a = getWaveAngle(cnt, enemy_group_count)
             d = getWaveDistance(cnt, enemy_group_count)
             type = random(0, 10)

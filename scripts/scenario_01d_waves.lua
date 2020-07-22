@@ -47,17 +47,17 @@ function init()
         Nebula():setPosition(x + xx, y + yy)
     end
 
-    for cnt=1,random(2, 7) do
+    for cnt=1, random(2, 7) do
         a = random(0, 360)
         a2 = random(0, 360)
         d = random(3000, 15000 + cnt * 5000)
         x, y = vectorFromAngle(a, d)
-        for acnt=1,25 do
+        for acnt=1, 25 do
             dx1, dy1 = vectorFromAngle(a2, random(-1000, 1000))
             dx2, dy2 = vectorFromAngle(a2 + 90, random(-10000, 10000))
             Asteroid():setPosition(x + dx1 + dx2, y + dy1 + dy2)
         end
-        for acnt=1,50 do
+        for acnt=1, 50 do
             dx1, dy1 = vectorFromAngle(a2, random(-1500, 1500))
             dx2, dy2 = vectorFromAngle(a2 + 90, random(-10000, 10000))
             VisualAsteroid():setPosition(x + dx1 + dx2, y + dy1 + dy2)
@@ -143,7 +143,7 @@ function createEnemyGroup(difficulty)
             ship:setTemplate(tmpl)
             totalScore = totalScore + cost
             dest = dest - cost
-            script_hangar.create(ship, "Drone", 3, function (_,fighter,_)
+            script_hangar.create(ship, "Drone", 3, function (_, fighter, _)
                 table.insert(enemyList, fighter)
             end)
         else
@@ -174,7 +174,7 @@ function spawnWave()
     spawnDistance = 20000
     spawnPointLeader = nil
     spawn_x, spawn_y, spawn_range_x, spawn_range_y = randomSpawnPointInfo(spawnDistance)
-    for _,ship in ipairs(newEnemies) do
+    for _, ship in ipairs(newEnemies) do
         ship:setPosition(random(-spawn_range_x, spawn_range_x) + spawn_x, random(-spawn_range_y, spawn_range_y) + spawn_y);
         ship:orderRoaming()
         table.insert(enemyList, ship);

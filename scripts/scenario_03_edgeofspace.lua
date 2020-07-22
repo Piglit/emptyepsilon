@@ -51,7 +51,7 @@ function init()
     -- Modify the default cruiser into a technical cruiser, which has less weapon power then the normal player cruiser.
     Player:setTypeName("Technician Cruiser")
     --                      # Arc, Dir, Range, CycleTime, Dmg
-    Player:setBeamWeapon(0, 90,-25, 1000.0, 6.0, 10)
+    Player:setBeamWeapon(0, 90, -25, 1000.0, 6.0, 10)
     Player:setBeamWeapon(1, 90, 25, 1000.0, 6.0, 10)
     Player:setWeaponTubeCount(1)
     Player:setWeaponTubeDirection(0, 0)
@@ -62,7 +62,7 @@ function init()
     allowNewPlayerShips(false)
 
     --Create a "Technical Officer" entity hidden in sector Z81 to talk to Relay and prompt the Captain to give the order to return to Central Command.
-    Technical_Officer = CpuShip():setFaction("Human Navy"):setTemplate("Flavia"):setCallSign("Technical Officer"):setPosition(1530000,411000):orderIdle()
+    Technical_Officer = CpuShip():setFaction("Human Navy"):setTemplate("Flavia"):setCallSign("Technical Officer"):setPosition(1530000, 411000):orderIdle()
     Technical_Officer:setCommsScript("") -- Disable the comms script for the Technical Officer station (though really, they should never find it all the way out in sector Z81).
 
     EOS_Station = SpaceStation():setTemplate("Small Station"):setFaction("Human Navy"):setPosition(60500, 42100):setCallSign("E.O.S Scope")
@@ -108,15 +108,15 @@ function init()
     Nebula():setPosition(-33654, -41667)
 
     --Create 50 Asteroids
-    for asteroid_counter=1,20 do
-        Asteroid():setPosition( random(-10000, 20000), random(-22000,-15000))
-        VisualAsteroid():setPosition( random(-10000, 20000), random(-22000,-15000))
+    for asteroid_counter=1, 20 do
+        Asteroid():setPosition( random(-10000, 20000), random(-22000, -15000))
+        VisualAsteroid():setPosition( random(-10000, 20000), random(-22000, -15000))
 
-        Asteroid():setPosition( random( 12000, 40000), random(-25000,-18000))
-        VisualAsteroid():setPosition( random(12000, 40000), random(-25000,-18000))
+        Asteroid():setPosition( random( 12000, 40000), random(-25000, -18000))
+        VisualAsteroid():setPosition( random(12000, 40000), random(-25000, -18000))
 
-        Asteroid():setPosition( random( 35000, 55000), random(-27000,-20000))
-        VisualAsteroid():setPosition( random( 35000, 55000), random(-27000,-20000))
+        Asteroid():setPosition( random( 35000, 55000), random(-27000, -20000))
+        VisualAsteroid():setPosition( random( 35000, 55000), random(-27000, -20000))
     end
 
     --Kraylor Endline ships protecting Eline until something happens
@@ -384,7 +384,7 @@ This shouldn't take long.]]))
         if Player:isDocked(EOS_Station) and inspection_init == 1 then
             if inspection_progress > 30 then
                 if tech_databanks == 0 then
-                    Technical_Officer:sendCommsMessage(Player,_([[It looks like the databanks are still in good working order.
+                    Technical_Officer:sendCommsMessage(Player, _([[It looks like the databanks are still in good working order.
 
 We'll retrieve what we can.]]))
                     tech_databanks = 1

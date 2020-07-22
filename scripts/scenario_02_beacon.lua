@@ -8,7 +8,7 @@ require("utils.lua")
 --   distance(obj1, obj2)
 --      Returns the distance between two objects
 --   placeRandomInLine(object_type, amount, x1, y1, x2, y2, random_amount)
---      Place random objects in a line, from point x1,y1 to x2,y2 with a random distance of random_amount
+--      Place random objects in a line, from point x1, y1 to x2, y2 with a random distance of random_amount
 
 require("script_hangar.lua")
 
@@ -26,18 +26,18 @@ function init()
     enemy_station = CpuShip():setTemplate("Ryder"):setFaction("Exuari"):orderStandGround()
     enemy_station:setPosition(-45600, -15800):setCallSign("Omega")
     neutral_station = SpaceStation():setTemplate("Small Station"):setFaction("Independent")
-    neutral_station:setPosition(9100,-35400):setCallSign("Refugee-X")
+    neutral_station:setPosition(9100, -35400):setCallSign("Refugee-X")
 
     --Nebula that hide the enemy station.
     Nebula():setPosition(-43300,  2200)
     Nebula():setPosition(-34000,  -700)
-    Nebula():setPosition(-32000,-10000)
-    Nebula():setPosition(-24000,-14300)
-    Nebula():setPosition(-28600,-21900)
+    Nebula():setPosition(-32000, -10000)
+    Nebula():setPosition(-24000, -14300)
+    Nebula():setPosition(-28600, -21900)
 
     --Random nebulae in the system
-    Nebula():setPosition( -8000,-38300)
-    Nebula():setPosition( 24000,-30700)
+    Nebula():setPosition( -8000, -38300)
+    Nebula():setPosition( 24000, -30700)
     Nebula():setPosition( 42300,  3100)
     Nebula():setPosition( 49200, 10700)
     Nebula():setPosition(  3750, 31250)
@@ -223,7 +223,7 @@ We also refitted your nukes and EMPs. Awesome job on taking out the Exuari witho
             CpuShip():setTemplate("Nirvana R5"):setFaction("Human Navy"):setPosition(x + 1000, y + 1000):orderDefendTarget(neutral_station):setCommsScript("")
 
             transports = {}
-            for n=1,5 do
+            for n=1, 5 do
                 table.insert(transports, CpuShip():setTemplate("Personnel Freighter 2"):setFaction("Independent"):setPosition(50000 + random(-10000, 10000), -30000 + random(-10000, 10000)))
             end
             transport_target = CpuShip():setTemplate("Personnel Freighter 2"):setFaction("Exuari"):setPosition(50000 + random(-10000, 10000), -30000 + random(-10000, 10000))

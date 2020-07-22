@@ -111,8 +111,8 @@ end
 
 function spawnBoss()
     chapter3started = true
-    local posbx, posby = radialPosition(player, rr*1.5, irandom(80,100))
-    boss = CpuShip():setFaction("Kraylor"):setTemplate("Doombringer"):setCallSign("Omega"):setPosition(posbx, posby):setHeading(-90):orderDefendLocation(posbx,posby)
+    local posbx, posby = radialPosition(player, rr*1.5, irandom(80, 100))
+    boss = CpuShip():setFaction("Kraylor"):setTemplate("Doombringer"):setCallSign("Omega"):setPosition(posbx, posby):setHeading(-90):orderDefendLocation(posbx, posby)
     script_hangar.create(boss, "Drone", 6)
 end
 
@@ -125,7 +125,7 @@ function commsInstr()
         instr2 = true
         player:addToShipLog("[Cmd. Saberhagen] Your science should have detected the enemy convoy by now. Use your jump-drive to approach.", "White")
     end
-    if not instr3 and distance(player, pos1x,pos1y) < 8000 then
+    if not instr3 and distance(player, pos1x, pos1y) < 8000 then
         instr3 = true
         player:addToShipLog("[Cmd. Saberhagen] Escort 1 detected movement in sector "..chi:getSectorName()..". This aint a tutorial, so you should already know how to operate probes.", "White")
     end
@@ -133,7 +133,7 @@ function commsInstr()
         instr3b = true
         player:addToShipLog("[Cmd. Saberhagen] Did you notice that Escort 1 detected movement in sector "..chi:getSectorName()..". If not, check your comms log more carefully.", "White")
     end
-    if not instr4 and distance(player, pos2x,pos2y) < 5000 then
+    if not instr4 and distance(player, pos2x, pos2y) < 5000 then
         instr4 = true
         player:addToShipLog("[Cmd. Saberhagen] The next enemies must be somewhere within "..tostring(rr*2/1000).."u from your current position. Maybe your science detects some life-signs.", "White")
     end
@@ -210,7 +210,7 @@ function update(delta)
     if bonus:isValid() and not bonusEscapes then
         if distance(player, bonus) < 10000.0 then
             bonusEscapes = true
-            bonus:orderFlyTowardsBlind(radialPosition(bonus, 100000, irandom(0,360)))
+            bonus:orderFlyTowardsBlind(radialPosition(bonus, 100000, irandom(0, 360)))
         end
     end
 

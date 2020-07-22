@@ -19,7 +19,7 @@ require("utils.lua")
 --       to the enemyList. Any number is valid, but only 0.99-9.0 are meaningful.
 -- a: The spawned wave's heading relative to the players' spawn point.
 -- d: The spawned wave's distance from the players' spawn point.
-function addWave(enemyList,type,a,d)
+function addWave(enemyList, type, a, d)
     -- design goal: each type offers a different challenge
     if type < 1.0 then
         -- striker
@@ -28,9 +28,9 @@ function addWave(enemyList,type,a,d)
         -- fighter
         leader = setCirclePos(CpuShip():setTemplate('Rockbreaker'):setRotation(a + 180):orderRoaming(), 0, 0, a + random(-1, 1), d + random(-100, 100))
         table.insert(enemyList, leader)
-        table.insert(enemyList, setCirclePos(CpuShip():setTemplate('Drone'):setRotation(a + 180):orderFlyFormation(leader,-400, 0), 0, 0, a + random(-1, 1), d + random(-100, 100)))
+        table.insert(enemyList, setCirclePos(CpuShip():setTemplate('Drone'):setRotation(a + 180):orderFlyFormation(leader, -400, 0), 0, 0, a + random(-1, 1), d + random(-100, 100)))
         table.insert(enemyList, setCirclePos(CpuShip():setTemplate('Drone'):setRotation(a + 180):orderFlyFormation(leader, 400, 0), 0, 0, a + random(-1, 1), d + random(-100, 100)))
-        table.insert(enemyList, setCirclePos(CpuShip():setTemplate('Drone'):setRotation(a + 180):orderFlyFormation(leader,-400, 400), 0, 0, a + random(-1, 1), d + random(-100, 100)))
+        table.insert(enemyList, setCirclePos(CpuShip():setTemplate('Drone'):setRotation(a + 180):orderFlyFormation(leader, -400, 400), 0, 0, a + random(-1, 1), d + random(-100, 100)))
         table.insert(enemyList, setCirclePos(CpuShip():setTemplate('Drone'):setRotation(a + 180):orderFlyFormation(leader, 400, 400), 0, 0, a + random(-1, 1), d + random(-100, 100)))
     elseif type < 3.0 then
         -- gunship
@@ -48,7 +48,7 @@ function addWave(enemyList,type,a,d)
         -- missile
         leader = setCirclePos(CpuShip():setTemplate('Piranha F12'):setRotation(a + 180):orderRoaming(), 0, 0, a + random(-5, 5), d + random(-100, 100))
         table.insert(enemyList, leader)
-        table.insert(enemyList, setCirclePos(CpuShip():setTemplate('MT52 Hornet'):setRotation(a + 180):orderFlyFormation(leader,-1500, 400), 0, 0, a + random(-1, 1), d + random(-100, 100)))
+        table.insert(enemyList, setCirclePos(CpuShip():setTemplate('MT52 Hornet'):setRotation(a + 180):orderFlyFormation(leader, -1500, 400), 0, 0, a + random(-1, 1), d + random(-100, 100)))
         table.insert(enemyList, setCirclePos(CpuShip():setTemplate('MT52 Hornet'):setRotation(a + 180):orderFlyFormation(leader, 1500, 400), 0, 0, a + random(-1, 1), d + random(-100, 100)))
     elseif type < 7.0 then
         -- cruiser
@@ -68,7 +68,7 @@ end
 -- Returns a semi-random heading.
 -- cnt: A counter, generally between 1 and the number of enemy groups.
 -- enemy_group_count: A number of enemy groups, generally set by the scenario type.
-function setWaveAngle(cnt,enemy_group_count)
+function setWaveAngle(cnt, enemy_group_count)
     return cnt * 360/enemy_group_count + random(-60, 60)
 end
 
@@ -113,35 +113,35 @@ function init()
 
     -- GM functions to manually trigger enemy waves.
     addGMFunction("Strikeship wave", function()
-        addWave(enemyList,0,setWaveAngle(math.random(20), math.random(20)),setWaveDistance(math.random(5)))
+        addWave(enemyList, 0, setWaveAngle(math.random(20), math.random(20)), setWaveDistance(math.random(5)))
     end)
 
     addGMFunction("Fighter wave", function()
-        addWave(enemyList,1,setWaveAngle(math.random(20), math.random(20)),setWaveDistance(math.random(5)))
+        addWave(enemyList, 1, setWaveAngle(math.random(20), math.random(20)), setWaveDistance(math.random(5)))
     end)
 
     addGMFunction("Small Gunship wave", function()
-        addWave(enemyList,2,setWaveAngle(math.random(20), math.random(20)),setWaveDistance(math.random(5)))
+        addWave(enemyList, 2, setWaveAngle(math.random(20), math.random(20)), setWaveDistance(math.random(5)))
     end)
 
     addGMFunction("Large Gunship wave", function()
-        addWave(enemyList,3,setWaveAngle(math.random(20), math.random(20)),setWaveDistance(math.random(5)))
+        addWave(enemyList, 3, setWaveAngle(math.random(20), math.random(20)), setWaveDistance(math.random(5)))
     end)
 
     addGMFunction("Dreadnought", function()
-        addWave(enemyList,4,setWaveAngle(math.random(20), math.random(20)),setWaveDistance(math.random(5)))
+        addWave(enemyList, 4, setWaveAngle(math.random(20), math.random(20)), setWaveDistance(math.random(5)))
     end)
 
     addGMFunction("Missile cruiser wave", function()
-        addWave(enemyList,5,setWaveAngle(math.random(20), math.random(20)),setWaveDistance(math.random(5)))
+        addWave(enemyList, 5, setWaveAngle(math.random(20), math.random(20)), setWaveDistance(math.random(5)))
     end)
 
     addGMFunction("Cruiser wave", function()
-        addWave(enemyList,6,setWaveAngle(math.random(20), math.random(20)),setWaveDistance(math.random(5)))
+        addWave(enemyList, 6, setWaveAngle(math.random(20), math.random(20)), setWaveDistance(math.random(5)))
     end)
 
     addGMFunction("Adv. striker wave", function()
-        addWave(enemyList,9,setWaveAngle(math.random(20), math.random(20)),setWaveDistance(math.random(5)))
+        addWave(enemyList, 9, setWaveAngle(math.random(20), math.random(20)), setWaveDistance(math.random(5)))
     end)
 
     -- Let the GM spawn a random enemy wave.
@@ -149,7 +149,7 @@ function init()
         a = setWaveAngle(math.random(20), math.random(20))
         d = setWaveDistance(math.random(20))
         type = random(0, 10)
-        addWave(enemyList,type,a,d)
+        addWave(enemyList, type, a, d)
     end)
 
     -- Let the GM spawn random reinforcements. Their distance from the
@@ -157,7 +157,7 @@ function init()
     addGMFunction("Random friendly", function()
         a = setWaveAngle(math.random(20), math.random(20))
         d = random(15000, 20000 + math.random(20) * 1500)
-        friendlyShip = {'Phobos T3','MU52 Hornet','Piranha F12'}
+        friendlyShip = {'Phobos T3', 'MU52 Hornet', 'Piranha F12'}
         friendlyShipIndex = math.random(#friendlyShip)
         table.insert(friendlyList, setCirclePos(CpuShip():setTemplate(friendlyShip[friendlyShipIndex]):setRotation(a):setFaction("Human Navy"):orderRoaming():setScanned(true), 0, 0, a + random(-5, 5), d + random(-100, 100)))
     end)
@@ -184,7 +184,7 @@ function init()
     -- enemy waves at distributed random headings and semi-random distances
     -- relative to the players' spawn point.
     if enemy_group_count > 0 then
-        for cnt=1,enemy_group_count do
+        for cnt=1, enemy_group_count do
             a = setWaveAngle(cnt, enemy_group_count)
             d = setWaveDistance(enemy_group_count)
             type = random(0, 10)
@@ -193,14 +193,14 @@ function init()
     end
 
     -- Spawn 2-5 random asteroid belts.
-    for cnt=1,random(2, 5) do
+    for cnt=1, random(2, 5) do
         a = random(0, 360)
         a2 = random(0, 360)
         adiff = math.abs(a2 - a)
         d = random(3000, 40000)
         x, y = vectorFromAngle(a, d)
 
-        for acnt=1,50 do
+        for acnt=1, 50 do
             dx1, dy1 = vectorFromAngle(a2, random(-1000, 1000))
             dx2, dy2 = vectorFromAngle(a2 + 90, random(-20000, 20000))
             posx = x + dx1 + dx2
@@ -208,7 +208,7 @@ function init()
             -- Avoid spawning asteroids within 1U of the player start position or
             -- 2U of any station.
             if math.abs(posx) > 1000 and math.abs(posy) > 1000 then
-                for i,station in ipairs(stationList) do
+                for i, station in ipairs(stationList) do
                     if distance(station, posx, posy) > 2000 then
                         Asteroid():setPosition(posx, posy):setSize(random(100, 500))
                     end
@@ -216,7 +216,7 @@ function init()
             end
         end
 
-        for acnt=1,100 do
+        for acnt=1, 100 do
             dx1, dy1 = vectorFromAngle(a2, random(-1500, 1500))
             dx2, dy2 = vectorFromAngle(a2 + 90, random(-20000, 20000))
             VisualAsteroid():setPosition(x + dx1 + dx2, y + dy1 + dy2)
@@ -224,14 +224,14 @@ function init()
     end
 
     -- Spawn 0-3 random mine fields.
-    for cnt=1,random(0, 3) do
+    for cnt=1, random(0, 3) do
         a = random(0, 360)
         a2 = random(0, 360)
         d = random(20000, 40000)
         x, y = vectorFromAngle(a, d)
 
-        for nx=-1,1 do
-            for ny=-5,5 do
+        for nx=-1, 1 do
+            for ny=-5, 5 do
                 if random(0, 100) < 90 then
                     dx1, dy1 = vectorFromAngle(a2, (nx * 1000) + random(-100, 100))
                     dx2, dy2 = vectorFromAngle(a2 + 90, (ny * 1000) + random(-100, 100))
@@ -249,7 +249,7 @@ function init()
     -- but players hate it. Avoid spawning black holes too close to stations.
     spawn_hole = false
     while not spawn_hole do
-        for i,station in ipairs(stationList) do
+        for i, station in ipairs(stationList) do
             if distance(station, x, y) > 3000 then
                 spawn_hole = true
             else

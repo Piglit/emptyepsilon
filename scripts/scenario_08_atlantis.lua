@@ -213,7 +213,7 @@ Doppler instability: %i]], b20_artifact.beta_radiation, b20_artifact.gravity_dis
         x, y = warp_jammer:getPosition()
         ship = createKraylorDestroyer():setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):orderDefendLocation(x, y)
         table.insert(kraylor_defense_line_ships, ship)
-        for n=1,3 do
+        for n=1, 3 do
             ship2 = createKraylorGunship():setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):orderDefendTarget(ship)
             table.insert(kraylor_defense_line_ships, ship2)
         end
@@ -234,7 +234,7 @@ Doppler instability: %i]], b20_artifact.beta_radiation, b20_artifact.gravity_dis
         x, y = station:getPosition()
         ship = createKraylorDestroyer():setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):orderDefendLocation(x, y)
         table.insert(kraylor_defense_line_ships, ship)
-        for n=1,3 do
+        for n=1, 3 do
             ship2 = createKraylorGunship():setPosition(x + random(-1000, 1000), y + random(-1000, 1000)):orderDefendTarget(ship)
             table.insert(kraylor_defense_line_ships, ship2)
         end
@@ -426,7 +426,7 @@ function phase3FindHoleInTheKraylorDefenseLine(delta)
     px, py = player:getPosition()
     if distance(player, -5000, -260000) < 10000 or py > -248000 or px > 75000then
         if py > -248000 or px > 75000 then
-            shipyard_gamma:sendCommsMessage(player, player:getCallSign()..",\nFinally. We thought we lost you. You are not out of the woods yet.\nTry to get to sector ZU5. We are sending JC88 to get you.")
+            shipyard_gamma:sendCommsMessage(player, player:getCallSign()..", \nFinally. We thought we lost you. You are not out of the woods yet.\nTry to get to sector ZU5. We are sending JC88 to get you.")
         else
             shipyard_gamma:sendCommsMessage(player, player:getCallSign()..[[,
 Finally. We thought we lost you. You are not out of the woods yet. Search for a hole in the kraylor defenses.
@@ -704,16 +704,16 @@ Did you find the source of the odd sensor readings?]])
         setCommsMessage([[Great, as our sensor readings are inconclusive. Can you report back your readings to us?
 
 First off, what is the beta radiation reading?]])
-        for beta=1,10 do
+        for beta=1, 10 do
             addCommsReply(beta, function()
                 setCommsMessage([[Next up, what is your Ionic phase shift reading?]])
-                for ionic=1,10 do
+                for ionic=1, 10 do
                     addCommsReply(ionic, function()
                         setCommsMessage([[Next up, what is your gravity disruption reading?]])
-                        for gravity=1,10 do
+                        for gravity=1, 10 do
                             addCommsReply(gravity, function()
                                 setCommsMessage([[Finally, what is your reading on doppler instability?]])
-                                for doppler=1,10 do
+                                for doppler=1, 10 do
                                     addCommsReply(doppler, function()
                                         if b20_artifact.beta_radiation == beta and b20_artifact.gravity_disruption == gravity and b20_artifact.ionic_phase_shift == ionic and b20_artifact.doppler_instability == doppler then
                                             if distance(player, b20_artifact) < 2000 then
@@ -743,19 +743,19 @@ Can you move closer to the object to see if you can improve those readings. The 
 end
 
 function scrambleMessage(message)
-    for n=1,7 do
+    for n=1, 7 do
         local pos = irandom(1, #message - 3)
         message = message:sub(0, pos) .. "---" .. message:sub(pos + 3)
     end
-    for n=1,5 do
+    for n=1, 5 do
         local pos = irandom(1, #message - 1)
         message = message:sub(0, pos) .. "." .. message:sub(pos + 1)
     end
-    for n=1,3 do
+    for n=1, 3 do
         local pos = irandom(1, #message - 1)
         message = message:sub(0, pos) .. "*" .. message:sub(pos + 1)
     end
-    for n=1,3 do
+    for n=1, 3 do
         local pos = irandom(1, #message - 1)
         message = message:sub(0, pos) .. "$" .. message:sub(pos + 1)
     end

@@ -88,7 +88,7 @@ function update(delta)
     end
 
     if bonus:isValid() then
-        local x,y = bonus:getPosition()
+        local x, y = bonus:getPosition()
         if x < -40000 then
             bonus:setWarpDrive(true)
         end
