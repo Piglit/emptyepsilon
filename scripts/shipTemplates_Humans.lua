@@ -84,7 +84,7 @@ color_civil2 = "Blue"  --get civil equipment. Blues like to travel in column for
 --
 --MineLayerCorvette
 --radius: 80, beams: 0, tubes: 0
---TODO
+--Nautilus (player only)
 --
 --HeavyCorvette
 --radius: 80, beams: 0, tubes: 0

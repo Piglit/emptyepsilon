@@ -414,8 +414,7 @@ template:addDoor(10, 2, false)
 
 
 --[[Mine Layer--]]
---TODO model?
-template = ShipTemplate():setName("Nautilus"):setType("playership"):setClass("Frigate","Mine Layer"):setModel("space_tug")
+template = ShipTemplate():setName("Nautilus"):setType("playership"):setClass("Frigate","Mine Layer"):setModel("MineLayerCorvette"..color_player)
 template:setDescription("Small mine laying vessel with minimal armament, shields and hull")
 template:setRadarTrace("radar_tug.png")
 template:setSpeed(100, 10, 20)
