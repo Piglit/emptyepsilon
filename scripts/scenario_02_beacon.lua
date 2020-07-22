@@ -15,57 +15,57 @@ require("script_hangar.lua")
 -- Init is run when the scenario is started. Create your initial world
 function init()
 
-	-- Create the main ship for the players.
-	player = PlayerSpaceship():setFaction("Human Navy"):setTemplate("Atlantis")
-	player:setPosition(22400, 18200):setCallSign("Epsilon")
+    -- Create the main ship for the players.
+    player = PlayerSpaceship():setFaction("Human Navy"):setTemplate("Atlantis")
+    player:setPosition(22400, 18200):setCallSign("Epsilon")
 
-	research_station = SpaceStation():setTemplate("Small Station"):setFaction("Human Navy")
-	research_station:setPosition(23500, 16100):setCallSign("Research-1")
-	main_station = SpaceStation():setTemplate("Medium Station"):setFaction("Human Navy")
-	main_station:setPosition(-25200, 32200):setCallSign("Orion-5")
-	enemy_station = CpuShip():setTemplate("Ryder"):setFaction("Exuari"):orderStandGround()
-	enemy_station:setPosition(-45600, -15800):setCallSign("Omega")
-	neutral_station = SpaceStation():setTemplate("Small Station"):setFaction("Independent")
-	neutral_station:setPosition(9100,-35400):setCallSign("Refugee-X")
+    research_station = SpaceStation():setTemplate("Small Station"):setFaction("Human Navy")
+    research_station:setPosition(23500, 16100):setCallSign("Research-1")
+    main_station = SpaceStation():setTemplate("Medium Station"):setFaction("Human Navy")
+    main_station:setPosition(-25200, 32200):setCallSign("Orion-5")
+    enemy_station = CpuShip():setTemplate("Ryder"):setFaction("Exuari"):orderStandGround()
+    enemy_station:setPosition(-45600, -15800):setCallSign("Omega")
+    neutral_station = SpaceStation():setTemplate("Small Station"):setFaction("Independent")
+    neutral_station:setPosition(9100,-35400):setCallSign("Refugee-X")
 
-	--Nebula that hide the enemy station.
-	Nebula():setPosition(-43300,  2200)
-	Nebula():setPosition(-34000,  -700)
-	Nebula():setPosition(-32000,-10000)
-	Nebula():setPosition(-24000,-14300)
-	Nebula():setPosition(-28600,-21900)
+    --Nebula that hide the enemy station.
+    Nebula():setPosition(-43300,  2200)
+    Nebula():setPosition(-34000,  -700)
+    Nebula():setPosition(-32000,-10000)
+    Nebula():setPosition(-24000,-14300)
+    Nebula():setPosition(-28600,-21900)
 
-	--Random nebulae in the system
-	Nebula():setPosition( -8000,-38300)
-	Nebula():setPosition( 24000,-30700)
-	Nebula():setPosition( 42300,  3100)
-	Nebula():setPosition( 49200, 10700)
-	Nebula():setPosition(  3750, 31250)
-	Nebula():setPosition(-39500, 18700)
+    --Random nebulae in the system
+    Nebula():setPosition( -8000,-38300)
+    Nebula():setPosition( 24000,-30700)
+    Nebula():setPosition( 42300,  3100)
+    Nebula():setPosition( 49200, 10700)
+    Nebula():setPosition(  3750, 31250)
+    Nebula():setPosition(-39500, 18700)
 
-	--Create 50 Asteroids
-	placeRandomInLine(Asteroid, 50, -7500, -10000, -12500, 30000, 2000)
-	placeRandomInLine(VisualAsteroid, 50, -7500, -10000, -12500, 30000, 2000)
+    --Create 50 Asteroids
+    placeRandomInLine(Asteroid, 50, -7500, -10000, -12500, 30000, 2000)
+    placeRandomInLine(VisualAsteroid, 50, -7500, -10000, -12500, 30000, 2000)
 
-	-- Create the defense for the station
-	CpuShip():setTemplate("Guard"):setFaction("Exuari"):setPosition(-44000, -14000):orderDefendTarget(enemy_station)
-	CpuShip():setTemplate("Sentinel"):setFaction("Exuari"):setPosition(-47000, -14000):orderDefendTarget(enemy_station)
-	CpuShip():setTemplate("Warden"):setFaction("Exuari"):setPosition(-46000, -18000):orderDefendTarget(enemy_station)
+    -- Create the defense for the station
+    CpuShip():setTemplate("Guard"):setFaction("Exuari"):setPosition(-44000, -14000):orderDefendTarget(enemy_station)
+    CpuShip():setTemplate("Sentinel"):setFaction("Exuari"):setPosition(-47000, -14000):orderDefendTarget(enemy_station)
+    CpuShip():setTemplate("Warden"):setFaction("Exuari"):setPosition(-46000, -18000):orderDefendTarget(enemy_station)
 
-	script_hangar.create(enemy_station, "Blade", 3)
+    script_hangar.create(enemy_station, "Blade", 3)
 
-	transport_RT4 = CpuShip():setTemplate("Flavia"):setFaction("Human Navy"):setPosition(3750, 31250)
-	transport_RT4:orderIdle():setCallSign("RT-4"):setCommsScript("")
-	transport_RT4:setHull(1):setShieldsMax(1, 1)
+    transport_RT4 = CpuShip():setTemplate("Flavia"):setFaction("Human Navy"):setPosition(3750, 31250)
+    transport_RT4:orderIdle():setCallSign("RT-4"):setCommsScript("")
+    transport_RT4:setHull(1):setShieldsMax(1, 1)
 
-	--Small Exuari strike team, guarding RT-4 in the nebula at G5.
-	exuari_RT4_guard1 = CpuShip():setTemplate("Dagger"):setFaction("Exuari"):setPosition(3550, 31250):setRotation(0)
-	exuari_RT4_guard2 = CpuShip():setTemplate("Dagger"):setFaction("Exuari"):setPosition(3950, 31250):setRotation(180)
-	exuari_RT4_guard1:orderIdle()
-	exuari_RT4_guard2:orderIdle()
+    --Small Exuari strike team, guarding RT-4 in the nebula at G5.
+    exuari_RT4_guard1 = CpuShip():setTemplate("Dagger"):setFaction("Exuari"):setPosition(3550, 31250):setRotation(0)
+    exuari_RT4_guard2 = CpuShip():setTemplate("Dagger"):setFaction("Exuari"):setPosition(3950, 31250):setRotation(180)
+    exuari_RT4_guard1:orderIdle()
+    exuari_RT4_guard2:orderIdle()
 
-	--Start off the mission by sending a transmission to the player
-	research_station:sendCommsMessage(player, _([[Epsilon, please come in?
+    --Start off the mission by sending a transmission to the player
+    research_station:sendCommsMessage(player, _([[Epsilon, please come in?
 
 We lost contact with our transport RT-4. RT-4 is a diplomatic transport ship, transporting the diplomat named J.J.Johnson. They where heading from our research station to Orion-5.
 
@@ -75,43 +75,43 @@ Last contact was before RT-4 entered the nebula at G5, the nebula is blocking ou
 end
 
 function missionStartState(delta)
-	if distance(player, transport_RT4) < 5000 then
-		exuari_RT4_guard1:orderRoaming()
-		exuari_RT4_guard2:orderRoaming()
-		mission_state = missionRT4UnderAttack
-	end
+    if distance(player, transport_RT4) < 5000 then
+        exuari_RT4_guard1:orderRoaming()
+        exuari_RT4_guard2:orderRoaming()
+        mission_state = missionRT4UnderAttack
+    end
 end
 function missionRT4UnderAttack(delta)
-	if not transport_RT4:isValid() then
-		-- RT-4 destroyed, send a transmission to the player, create a supply drop to indicate an escape pod.
-		mission_state = missionRT4EscapeDropped
-		transport_RT4_drop = SupplyDrop():setFaction("Human Navy"):setPosition(3750, 31250)
-		transport_RT4_drop_time = 0.0
+    if not transport_RT4:isValid() then
+        -- RT-4 destroyed, send a transmission to the player, create a supply drop to indicate an escape pod.
+        mission_state = missionRT4EscapeDropped
+        transport_RT4_drop = SupplyDrop():setFaction("Human Navy"):setPosition(3750, 31250)
+        transport_RT4_drop_time = 0.0
         research_station:sendCommsMessage(player, _([[RT-4 has been destroyed! But an escape pod is ejected from the ship.
 
 Lifesigns detected in the pod, please pick up the pod to see if J.J.Johnson made it. His death would be a great blow to the peace negotiations in the region.]]) ..
 _([[
 And destroy those Exuari scum while you are at it!]]))
-	end
-	if not exuari_RT4_guard1:isValid() and not exuari_RT4_guard2:isValid() then
+    end
+    if not exuari_RT4_guard1:isValid() and not exuari_RT4_guard2:isValid() then
         -- Not sure how you did it, but you managed to destroy the two Exauri's before they detroy RT4...
-		transport_RT4:destroy()
-		mission_state = missionRT4EscapeDropped
-		transport_RT4_drop = SupplyDrop():setFaction("Human Navy"):setPosition(3750, 31250)
-		transport_RT4_drop_time = 0.0
+        transport_RT4:destroy()
+        mission_state = missionRT4EscapeDropped
+        transport_RT4_drop = SupplyDrop():setFaction("Human Navy"):setPosition(3750, 31250)
+        transport_RT4_drop_time = 0.0
         research_station:sendCommsMessage(player, _([[RT-4 has been destroyed! But an escape pod is ejected from the ship.
 
 Lifesigns detected in the pod, please pick up the pod to see if J.J.Johnson made it. His death would be a great blow to the peace negotiations in the region.]]))
-	end
+    end
 end
 function missionRT4EscapeDropped(delta)
-	transport_RT4_drop_time = transport_RT4_drop_time + delta
-	if not transport_RT4_drop:isValid() then
-		-- Escape pod picked up, stop the transport_RT4_drop_timer
-		if transport_RT4_drop_time > 60 * 5 then
-			--Spend more then 5 minutes in the escape pod, the diplomat died.
-			jjj_alive = false
-			mission_state = missionRT4Died
+    transport_RT4_drop_time = transport_RT4_drop_time + delta
+    if not transport_RT4_drop:isValid() then
+        -- Escape pod picked up, stop the transport_RT4_drop_timer
+        if transport_RT4_drop_time > 60 * 5 then
+            --Spend more then 5 minutes in the escape pod, the diplomat died.
+            jjj_alive = false
+            mission_state = missionRT4Died
             research_station:sendCommsMessage(player, _([[Sir Johnson seems to have suffocated. This is a great loss for our cause of global peace.
 
 Please deliver his body back to Research-1. We will arrange for you to take over his mission.]]))
@@ -146,16 +146,16 @@ Lately Refugee-X has been under attack by Exuari ships, and some criminals livin
 
 The officers at Orion-5 will gladly make this trade. And they ask you to retrieve the criminals for them at Refugee-X in sector D5.
 To make sure Refugee-X is aware of your peaceful intentions, we have stripped you of Nukes and EMPs. You will get them back once you deliver the criminals.]]))
-		end
-		player.old_nuke_max = player:getWeaponStorageMax("Nuke")
-		player.old_emp_max = player:getWeaponStorageMax("EMP")
-		player:setWeaponStorage("Nuke", 0)
-		player:setWeaponStorage("EMP", 0)
-		player:setWeaponStorageMax("Nuke", 0)
-		player:setWeaponStorageMax("EMP", 0)
+        end
+        player.old_nuke_max = player:getWeaponStorageMax("Nuke")
+        player.old_emp_max = player:getWeaponStorageMax("EMP")
+        player:setWeaponStorage("Nuke", 0)
+        player:setWeaponStorage("EMP", 0)
+        player:setWeaponStorageMax("Nuke", 0)
+        player:setWeaponStorageMax("EMP", 0)
 
-		mission_state = missionRetrieveCriminals
-	end
+        mission_state = missionRetrieveCriminals
+    end
 end
 function missionRT4Died(delta)
     if player:isDocked(research_station) then
@@ -180,14 +180,14 @@ Head back to Orion-5 to deliver the criminals.]]))
     end
 end
 function missionWaitForAmbush(delta)
-	if distance(player, main_station) < 50000 then
-		--We can jump to the Orion-5 station in 1 jump. So ambush the player!
-		x, y = player:getPosition()
-		WarpJammer():setFaction("Exuari"):setPosition(x - 2008, y + 2711)
-		ambush_main = CpuShip():setFaction("Exuari"):setTemplate("Strike"):setScanned(true):setPosition(x - 1667, y + 2611):setRotation(-80):setWarpDrive(false):orderAttack(player)
-		ambush_side1 = CpuShip():setFaction("Exuari"):setTemplate("Jagger"):setScanned(true):setPosition(x - 736, y + 2875):setRotation(-80):setWarpDrive(false):orderAttack(player)
-		ambush_side2 = CpuShip():setFaction("Exuari"):setTemplate("Shooter"):setScanned(true):setPosition(x - 2542, y + 2208):setRotation(-80):setWarpDrive(false):orderAttack(player)
-		mission_state = missionAmbushed
+    if distance(player, main_station) < 50000 then
+        --We can jump to the Orion-5 station in 1 jump. So ambush the player!
+        x, y = player:getPosition()
+        WarpJammer():setFaction("Exuari"):setPosition(x - 2008, y + 2711)
+        ambush_main = CpuShip():setFaction("Exuari"):setTemplate("Strike"):setScanned(true):setPosition(x - 1667, y + 2611):setRotation(-80):setWarpDrive(false):orderAttack(player)
+        ambush_side1 = CpuShip():setFaction("Exuari"):setTemplate("Jagger"):setScanned(true):setPosition(x - 736, y + 2875):setRotation(-80):setWarpDrive(false):orderAttack(player)
+        ambush_side2 = CpuShip():setFaction("Exuari"):setTemplate("Shooter"):setScanned(true):setPosition(x - 2542, y + 2208):setRotation(-80):setWarpDrive(false):orderAttack(player)
+        mission_state = missionAmbushed
 
         ambush_main:sendCommsMessage(player, _([[Sllaaami graa kully fartsy!
 
@@ -195,45 +195,45 @@ Your translator has difficulty translating the message. But it seems to come dow
     end
 end
 function missionAmbushed(delta)
-	if player:isDocked(main_station) then
-		local refilled = false
-		if player.old_nuke_max ~= nil then
-			player:setWeaponStorage("Nuke", player.old_nuke_max)
-			player:setWeaponStorage("EMP", player.old_emp_max)
-			player:setWeaponStorageMax("Nuke", player.old_nuke_max)
-			player:setWeaponStorageMax("EMP", player.old_emp_max)
-			player.old_nuke_max = nil
-			refilled = true
-		end
-		if not ambush_main:isValid() and not ambush_side1:isValid() and not ambush_side2:isValid() then
+    if player:isDocked(main_station) then
+        local refilled = false
+        if player.old_nuke_max ~= nil then
+            player:setWeaponStorage("Nuke", player.old_nuke_max)
+            player:setWeaponStorage("EMP", player.old_emp_max)
+            player:setWeaponStorageMax("Nuke", player.old_nuke_max)
+            player:setWeaponStorageMax("EMP", player.old_emp_max)
+            player.old_nuke_max = nil
+            refilled = true
+        end
+        if not ambush_main:isValid() and not ambush_side1:isValid() and not ambush_side2:isValid() then
             message = _([[Good job on dealing with those Exuari scum. The criminals are safely in our custody now. We'll be sending out a protection detail for Refugee-X
 
 We managed to extract some vital infro from the Exuari. In the next transport convoy towards Research-1 a Exuari death squad is hiding in one of the ships. The transport detail is heading in from D7, seek them out and scan the ships to find the Exuari transport.
 ]])
-			if refilled then
-				message = message .. [[
+            if refilled then
+                message = message .. [[
 
 We also refitted your nukes and EMPs. Awesome job on taking out the Exuari without those.]]
-				refilled = false
-			end
-			main_station:sendCommsMessage(player, message)
+                refilled = false
+            end
+            main_station:sendCommsMessage(player, message)
 
-			x, y = neutral_station:getPosition()
-			CpuShip():setTemplate("Phobos T3"):setFaction("Human Navy"):setPosition(x - 1000, y - 1000):orderDefendTarget(neutral_station):setCommsScript("")
-			CpuShip():setTemplate("Nirvana R5"):setFaction("Human Navy"):setPosition(x + 1000, y + 1000):orderDefendTarget(neutral_station):setCommsScript("")
+            x, y = neutral_station:getPosition()
+            CpuShip():setTemplate("Phobos T3"):setFaction("Human Navy"):setPosition(x - 1000, y - 1000):orderDefendTarget(neutral_station):setCommsScript("")
+            CpuShip():setTemplate("Nirvana R5"):setFaction("Human Navy"):setPosition(x + 1000, y + 1000):orderDefendTarget(neutral_station):setCommsScript("")
 
-			transports = {}
-			for n=1,5 do
-				table.insert(transports, CpuShip():setTemplate("Personnel Freighter 2"):setFaction("Independent"):setPosition(50000 + random(-10000, 10000), -30000 + random(-10000, 10000)))
-			end
-			transport_target = CpuShip():setTemplate("Personnel Freighter 2"):setFaction("Exuari"):setPosition(50000 + random(-10000, 10000), -30000 + random(-10000, 10000))
+            transports = {}
+            for n=1,5 do
+                table.insert(transports, CpuShip():setTemplate("Personnel Freighter 2"):setFaction("Independent"):setPosition(50000 + random(-10000, 10000), -30000 + random(-10000, 10000)))
+            end
+            transport_target = CpuShip():setTemplate("Personnel Freighter 2"):setFaction("Exuari"):setPosition(50000 + random(-10000, 10000), -30000 + random(-10000, 10000))
 
-			mission_state = missionGotoTransport
-		end
-		if refilled then
+            mission_state = missionGotoTransport
+        end
+        if refilled then
             main_station:sendCommsMessage(player, _([[We have refitted your nukes and EMPs. ]]) .. _([[Now to get those Exuaris!]]))
-		end
-	end
+        end
+    end
 end
 function missionGotoTransport(delta)
     if distance(player, transport_target) < 30000 then

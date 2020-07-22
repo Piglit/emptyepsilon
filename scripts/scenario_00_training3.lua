@@ -26,86 +26,86 @@ require "utils.lua"
 require "script_formation.lua"
 
 function init()
-	allowNewPlayerShips(false)
+    allowNewPlayerShips(false)
 
-	player = PlayerSpaceship():setTemplate("Hathcock"):setCallSign("Rookie 1"):setFaction("Human Navy"):setPosition(0, 0):setHeading(90)
-	rr = player:getLongRangeRadarRange()
-	player:addReputationPoints(140.0)
+    player = PlayerSpaceship():setTemplate("Hathcock"):setCallSign("Rookie 1"):setFaction("Human Navy"):setPosition(0, 0):setHeading(90)
+    rr = player:getLongRangeRadarRange()
+    player:addReputationPoints(140.0)
 
-	enemies = {
-		"Yellow Hornet",
-		"Blue Lindworm",
-		"Red Adder MK4",
-		"Phobos M3",
-		"Nirvana Thunder Child",
-		"Solar Storm",
-	}
-	spawnPositions = {
-		{rr, 0},
-		{0, rr},
-		{-rr, 0},
-		{0, -rr},
-		{rr*0.7, rr*0.7},
-		{-rr*0.7, rr*0.7},
-	}
-	enemiesNames = {
-		"Alpha-",
-		"Beta-",
-		"Gamma-",
-		"Rho-",
-		"Sigma-",
-		"Tau-",
-	}
+    enemies = {
+        "Yellow Hornet",
+        "Blue Lindworm",
+        "Red Adder MK4",
+        "Phobos M3",
+        "Nirvana Thunder Child",
+        "Solar Storm",
+    }
+    spawnPositions = {
+        {rr, 0},
+        {0, rr},
+        {-rr, 0},
+        {0, -rr},
+        {rr*0.7, rr*0.7},
+        {-rr*0.7, rr*0.7},
+    }
+    enemiesNames = {
+        "Alpha-",
+        "Beta-",
+        "Gamma-",
+        "Rho-",
+        "Sigma-",
+        "Tau-",
+    }
 
-	enemiesIndex = 1
-	enemyList = {}
-	
-	instr1 = false
-	timer = 0
-	finishedTimer = 5
-	finishedFlag = false
+    enemiesIndex = 1
+    enemyList = {}
+    
+    instr1 = false
+    timer = 0
+    finishedTimer = 5
+    finishedFlag = false
 
-	station = SpaceStation():setTemplate('Small Station'):setCallSign("Maintainance Dock"):setRotation(random(0, 360)):setFaction("Human Navy"):setPosition(-800, 1200)
-	wingman = CpuShip():setTemplate("Nirvana R5M"):setCallSign("Wingman"):setFaction("Human Navy"):setPosition(-800, -1700):setHeading(250):setScannedByFaction("Human Navy", true):orderDefendTarget(station)
-	
-	bonus = CpuShip():setTemplate("Flavia Express"):setCallSign("Bonus"):setFaction("Criminals"):setShieldsMax(200,200):setShields(200,200):setPosition(rr+2000,-rr-2000):setHeading(225):orderFlyTowardsBlind(-rr,rr)
-	
-	createObjectsOnLine(rr/2, rr/4, rr/4, rr/2, 1000, Mine, 2)
-	createRandomAlongArc(Asteroid, 100, 0, 0, rr-2000, 180, 270, 1000)
-	createRandomAlongArc(VisualAsteroid, 100, 0, 0, rr-2000, 180, 270, 1000)
-	placeRandomAroundPoint(Nebula, 4, 10000, 10000, rr*0.75, -rr*0.75)
-	
-	spwanNextWave()
-	instructions()
+    station = SpaceStation():setTemplate('Small Station'):setCallSign("Maintainance Dock"):setRotation(random(0, 360)):setFaction("Human Navy"):setPosition(-800, 1200)
+    wingman = CpuShip():setTemplate("Nirvana R5M"):setCallSign("Wingman"):setFaction("Human Navy"):setPosition(-800, -1700):setHeading(250):setScannedByFaction("Human Navy", true):orderDefendTarget(station)
+    
+    bonus = CpuShip():setTemplate("Flavia Express"):setCallSign("Bonus"):setFaction("Criminals"):setShieldsMax(200,200):setShields(200,200):setPosition(rr+2000,-rr-2000):setHeading(225):orderFlyTowardsBlind(-rr,rr)
+    
+    createObjectsOnLine(rr/2, rr/4, rr/4, rr/2, 1000, Mine, 2)
+    createRandomAlongArc(Asteroid, 100, 0, 0, rr-2000, 180, 270, 1000)
+    createRandomAlongArc(VisualAsteroid, 100, 0, 0, rr-2000, 180, 270, 1000)
+    placeRandomAroundPoint(Nebula, 4, 10000, 10000, rr*0.75, -rr*0.75)
+    
+    spwanNextWave()
+    instructions()
 end
 
 function spwanNextWave()
-	if enemiesIndex > #enemies then
-		return false
-	end
-	
-	local enemyTempl = enemies[enemiesIndex]
-	local name = enemiesNames[enemiesIndex]
-	local pos = spawnPositions[enemiesIndex]
-	local posx, posy = player:getPosition()
-	posx = posx + pos[1]
-	posy = posy + pos[2]
+    if enemiesIndex > #enemies then
+        return false
+    end
+    
+    local enemyTempl = enemies[enemiesIndex]
+    local name = enemiesNames[enemiesIndex]
+    local pos = spawnPositions[enemiesIndex]
+    local posx, posy = player:getPosition()
+    posx = posx + pos[1]
+    posy = posy + pos[2]
 
-	local amount
-	if getScenarioVariation() == "Test Formations" then
-		amount = enemiesIndex + 1
-	else
-		amount = enemiesIndex % 4 + 1
-	end
-	enemyList = script_formation.spawnFormation(enemyTempl, amount, posx, posy, "Criminals", name)
-	enemiesIndex = enemiesIndex + 1
-	return true
+    local amount
+    if getScenarioVariation() == "Test Formations" then
+        amount = enemiesIndex + 1
+    else
+        amount = enemiesIndex % 4 + 1
+    end
+    enemyList = script_formation.spawnFormation(enemyTempl, amount, posx, posy, "Criminals", name)
+    enemiesIndex = enemiesIndex + 1
+    return true
 end
-	
+    
 function instructions()
-	if wingman:isValid() then
-		if enemiesIndex == 2 then
-			wingman:sendCommsMessage(player, [[This is Commander Saberhagen.
+    if wingman:isValid() then
+        if enemiesIndex == 2 then
+            wingman:sendCommsMessage(player, [[This is Commander Saberhagen.
 
 In this combat training you will practise your abilities with a Hathcock battlecruiser.
 The Hathcock is a ship for those who seek close combat. Rely on her beams and the high turn rate.
@@ -117,8 +117,8 @@ Each group will be more difficult then the previous one.
 Engage with your warp drive, when you are ready.
 
 Commander Saberhagen out.]])
-		elseif enemiesIndex == 4 and station:isValid() then
-			wingman:sendCommsMessage(player, [[This is Commander Saberhagen.
+        elseif enemiesIndex == 4 and station:isValid() then
+            wingman:sendCommsMessage(player, [[This is Commander Saberhagen.
 
 Do not forget to restore your energy at the Maintainance Dock.
 If you need repairs, that station will also be of some help.
@@ -129,59 +129,59 @@ The Human Navy is only stong when working together!
 
 Commander Saberhagen out.
 ]])
-		elseif enemiesIndex == 5 then
-			wingman:sendCommsMessage(player, [[This is Commander Saberhagen.
+        elseif enemiesIndex == 5 then
+            wingman:sendCommsMessage(player, [[This is Commander Saberhagen.
 
 Remember to use all of your capabilities to your advantage: Hacking, shield and beam frequencies, the database, energy management, your wingman etc.
 
 Commander Saberhagen out.
 ]])
-		end
-	end
+        end
+    end
 end
 
 
 function finished(delta)
-	if getScenarioVariation() == "Test Formations" then
-		return
-	end
-	finishedTimer = finishedTimer - delta
-	if finishedTimer < 0 then
-		victory("Human Navy")
-	end
-	if finishedFlag == false then
-		finishedFlag = true
-		local bonusString = "escaped."
-		if not bonus:isValid() then
-			bonusString = "destroyed."
-		end
-		globalMessage("Mission Complete. Your Time: "..tostring(math.floor(timer)).."s. Bonus target "..bonusString)
-	end
+    if getScenarioVariation() == "Test Formations" then
+        return
+    end
+    finishedTimer = finishedTimer - delta
+    if finishedTimer < 0 then
+        victory("Human Navy")
+    end
+    if finishedFlag == false then
+        finishedFlag = true
+        local bonusString = "escaped."
+        if not bonus:isValid() then
+            bonusString = "destroyed."
+        end
+        globalMessage("Mission Complete. Your Time: "..tostring(math.floor(timer)).."s. Bonus target "..bonusString)
+    end
 end
 
 
 function update(delta)
-	timer = timer + delta
+    timer = timer + delta
 
-	-- Count all surviving enemies.
-	for i, enemy in ipairs(enemyList) do
-		if not enemy:isValid() then
-			table.remove(enemyList, i)
-			break
-		end
-	end
+    -- Count all surviving enemies.
+    for i, enemy in ipairs(enemyList) do
+        if not enemy:isValid() then
+            table.remove(enemyList, i)
+            break
+        end
+    end
 
-	if #enemyList == 0 or getScenarioVariation() == "Test Formations" then
-		if not spwanNextWave() then
-			finished(delta)
-		else
-			instructions()
-		end
-	end
-	
-	if bonusSpawned and bonus:isValid() and distance(bonus, -rr,rr) < 100 then
-		bonus:setWarpDrive(true)
-		bonus:orderFlyTowardsBlind(-1000*rr, 1000*rr)
-	end
+    if #enemyList == 0 or getScenarioVariation() == "Test Formations" then
+        if not spwanNextWave() then
+            finished(delta)
+        else
+            instructions()
+        end
+    end
+    
+    if bonusSpawned and bonus:isValid() and distance(bonus, -rr,rr) < 100 then
+        bonus:setWarpDrive(true)
+        bonus:orderFlyTowardsBlind(-1000*rr, 1000*rr)
+    end
 end
 
