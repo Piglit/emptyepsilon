@@ -284,6 +284,7 @@ template:setShields(250)
 template:setSpeed(20, 1.5, 3)
 template:setDockClasses("Exuari")
 template:setSharesEnergyWithDocked(true)
+template:setRepairDocked(true)
 template:setRestocksMissilesDocked(true)
 template:setRestocksScanProbes(true)
 

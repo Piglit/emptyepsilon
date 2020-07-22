@@ -656,6 +656,7 @@ template:setJumpDriveRange(5000, 90000)
 template:setRestocksMissilesDocked(true)
 template:setSharesEnergyWithDocked(true)
 template:setRestocksScanProbes(true)
+template:setRepairDocked(true)
 
 template:setRepairCrewCount(6)
 template:addRoomSystem(3,0,2,3, "Reactor")

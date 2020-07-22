@@ -605,6 +605,7 @@ template:setJumpDriveRange(5000, 100 * 50000) --The jump carrier can jump a 100x
 template:setDockClasses("Starfighter", "Frigate", "Corvette")
 template:setRestocksMissilesDocked(true)
 template:setSharesEnergyWithDocked(true)
+template:setRepairDocked(true)
 template:setRestocksScanProbes(true)
 
 --[[-----------------------Support-----------------------]]
@@ -629,6 +630,7 @@ template:setBeam(5, 30, 300, 4000.0, 1.5, 20)
 
 template:setRestocksMissilesDocked(true)
 template:setSharesEnergyWithDocked(true)
+template:setRepairDocked(true)
 template:setRestocksScanProbes(true)
 
 
