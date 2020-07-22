@@ -7,7 +7,7 @@
 
 function mainMenu()
 	if comms_target.comms_data == nil then
-		comms_target.comms_data = {friendlyness = random(25.0, 75.0)}
+		comms_target.comms_data = {friendlyness = random(0.0, 75.0)}
 	end
 	comms_data = comms_target.comms_data
 	
@@ -26,9 +26,9 @@ function friendlyComms(comms_data)
 	elseif comms_data.friendlyness < 25 then
 		setCommsMessage("A night out here in the black can be boring, right?")
 	elseif comms_data.friendlyness < 50 then
-		setCommsMessage("Sir, what activity to you suggest?")
+		setCommsMessage("Master, what activity to you suggest?")
 	elseif comms_data.friendlyness < 75 then
-		setCommsMessage("Why are you ruining the moment?")
+		setCommsMessage("Why are you calling? You are ruining the moment!")
 	else
 		setCommsMessage("KILL!!")
 	end
@@ -55,9 +55,11 @@ function friendlyComms(comms_data)
 				friendlyDockAt(comms_data, obj)
 			end)
 		elseif comms_target:isEnemy(obj) then
-			addCommsReply("Attack " .. obj:getCallSign(), function()
-				friendlyAttack(comms_data, obj)
-			end)
+			if obj.typeName == "SpaceStation" or obj.typeName == "PlayerSpaceship" or obj.typeName == "CpuShip" then
+				addCommsReply("Attack " .. obj:getCallSign(), function()
+					friendlyAttack(comms_data, obj)
+				end)
+			end
 		end
 	end
 	
@@ -66,7 +68,7 @@ end
 
 function friendlyDefendWaypoint(comms_data)
 	if comms_data.friendlyness < 20 then
-		setCommsMessage("Defense? Not Attack? No-no-no, I suggest, you better suggest something more fun.")
+		setCommsMessage("Defense? Not Attack? No-no-no, You better suggest something more fun.")
 		comms_data.friendlyness = comms_data.friendlyness - random(1, 5)
 		addCommsReply("Back", mainMenu)
 	elseif comms_data.friendlyness > 80 then

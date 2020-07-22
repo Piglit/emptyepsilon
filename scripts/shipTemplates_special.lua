@@ -145,3 +145,43 @@ template:setRestocksMissilesDocked(true)
 template:setRestocksScanProbes(true)
 --threat level: 12(dps)+0(tube)+12(shields)+5(hull)+0.2(speed)+0(maneuver) = 29.2 => 14.6 
 
+--[[ Hack-Sat --]]
+template = ShipTemplate():setName("XB-4"):setClass("Satellite", "Relay"):setType("playership")
+template:setModel("SensorBuoyMKI") -- TODO test
+template:setDescription([[
+]])
+template:setRadarTrace("radartrace_smallstation.png")
+template:setShields(20)
+template:setHull(20)
+template:setSpeed(0, 0, 0)
+
+--TODO test
+template:addRoomSystem(1, 0, 2, 1, "Maneuver");
+template:addRoomSystem(1, 1, 2, 1, "BeamWeapons");
+template:addRoom(2, 2, 2, 1);
+template:addRoomSystem(0, 3, 1, 2, "RearShield");
+template:addRoomSystem(1, 3, 2, 2, "Reactor");
+template:addRoomSystem(3, 3, 2, 2, "Warp");
+template:addRoomSystem(5, 3, 1, 2, "JumpDrive");
+template:addRoom(6, 3, 2, 1);
+template:addRoom(6, 4, 2, 1);
+template:addRoomSystem(8, 3, 1, 2, "FrontShield");
+template:addRoom(2, 5, 2, 1);
+template:addRoomSystem(1, 6, 2, 1, "MissileSystem");
+template:addRoomSystem(1, 7, 2, 1, "Impulse");
+
+template:addDoor(1, 1, true);
+template:addDoor(2, 2, true);
+template:addDoor(3, 3, true);
+template:addDoor(1, 3, false);
+template:addDoor(3, 4, false);
+template:addDoor(3, 5, true);
+template:addDoor(2, 6, true);
+template:addDoor(1, 7, true);
+template:addDoor(5, 3, false);
+template:addDoor(6, 3, false);
+template:addDoor(6, 4, false);
+template:addDoor(8, 3, false);
+template:addDoor(8, 4, false);
+
+

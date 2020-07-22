@@ -530,6 +530,7 @@ function spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction, cu
 		end
 		if enemyFaction == "Exuari" then
 			ship:setCommsScript("comms_exuari.lua")
+			--TODO check if multiple onDamage/onDestruction are possible. If true, raise frenzy in combat, otherwise slowly lower
 			if smallFormations[shipTemplateType] == nil then
 				smallFormations[shipTemplateType] == {ship, nil, 1}
 			else
