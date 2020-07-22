@@ -8006,7 +8006,7 @@ function spawnEnemies(xOrigin, yOrigin, danger, enemyFaction, perimeter_min, per
 		danger = 1
 	end
 	local enemyStrength = math.max(danger * difficulty * playerPower(),5)
-	local enemyList = spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction)
+	local enemyList, strength = spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction)
 --	local enemyPosition = 0
 --	local sp = irandom(400,900)			--random spacing of spawned group
 --	local deployConfig = random(1,100)	--randomly choose between squarish formation and hexagonish formation
@@ -8030,17 +8030,24 @@ function spawnEnemies(xOrigin, yOrigin, danger, enemyFaction, perimeter_min, per
 --		enemyStrength = enemyStrength - stsl[shipTemplateType]
 --	end
 	if enemyFaction == "Kraylor" then
-		rawKraylorShipStrength = rawKraylorShipStrength + stsl[shipTemplateType]
-		ship:onDestruction(kraylorVesselDestroyed)
+		rawKraylorShipStrength = rawKraylorShipStrength + strength 
 	elseif enemyFaction == "Human Navy" then
-		rawHumanShipStrength = rawHumanShipStrength + stsl[shipTemplateType]
-		ship:onDestruction(humanVesselDestroyed)
+		rawHumanShipStrength = rawHumanShipStrength + strength 
 	elseif enemyFaction == "Exuari" then
-		rawExuariShipStrength = rawExuariShipStrength + stsl[shipTemplateType]
-		ship:onDestruction(exuariVesselDestroyed)
+		rawExuariShipStrength = rawExuariShipStrength + strength 
 	elseif enemyFaction == "Arlenians" then
-		rawArlenianShipStrength = rawArlenianShipStrength + stsl[shipTemplateType]
-		ship:onDestruction(arlenianVesselDestroyed)
+		rawArlenianShipStrength = rawArlenianShipStrength + strength 
+	end
+	for _, ship in ipairs(enemyList) do
+		if enemyFaction == "Kraylor" then
+			ship:onDestruction(kraylorVesselDestroyed)
+		elseif enemyFaction == "Human Navy" then
+			ship:onDestruction(humanVesselDestroyed)
+		elseif enemyFaction == "Exuari" then
+			ship:onDestruction(exuariVesselDestroyed)
+		elseif enemyFaction == "Arlenians" then
+			ship:onDestruction(arlenianVesselDestroyed)
+		end
 	end
 	if perimeter_min ~= nil then
 		local enemy_angle = random(0,360)
@@ -9028,7 +9035,7 @@ function startDefendPrimusStation()
 	prx, pry = primusStation:getPosition()
 	pla = random(0,360)
 	pmx, pmy = vectorFromAngle(pla,random(8000,12000))
-	enemyFleet = spawnEnemies(prx+pmx,pry+pmy,1,"Exuari")
+	enemyFleet = spawnEnemies(prx+pmx,pry+pmy,1,"Exuari")	--TODO make mission specific
 	for _, enemy in ipairs(enemyFleet) do
 		enemy:orderAttack(primusStation)
 	end

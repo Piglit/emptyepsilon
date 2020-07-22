@@ -87,7 +87,6 @@ function friendlyComms(comms_data)
 			end
 		end
 	end
-	
 	return true
 end
 
@@ -113,7 +112,7 @@ function friendlyDefendWaypoint(comms_data)
 					comms_target:orderDefendLocation(player:getWaypoint(n))
 					setCommsMessage("We are heading to assist at WP" .. n ..".")
 					comms_data.friendlyness = comms_data.friendlyness + random(1, 5)
-					addCommsReply("Back", mainMenu)
+					return true
 				end)
 			end
 		end
@@ -128,7 +127,7 @@ function friendlyAssistMe(comms_data)
 		setCommsMessage("Understood. Heading toward you to join your killing spree.")
 		comms_data.friendlyness = comms_data.friendlyness + random(5, 15)
 		comms_target:orderDefendTarget(player)
-		addCommsReply("Back", mainMenu)
+		return true
 	elseif comms_data.friendlyness < 80 then
 		setCommsMessage("Heading toward you to blast fun-holes in your ship.")
 		comms_data.friendlyness = comms_data.friendlyness - random(1, 5)	-- minus: change to recover
@@ -198,7 +197,7 @@ function friendlyDockAt(comms_data, obj)
 		setCommsMessage("Docking at " .. obj:getCallSign() .. ".");
 		comms_data.friendlyness = comms_data.friendlyness - random(10, 20)
 		comms_target:orderDock(obj)
-		addCommsReply("Back", mainMenu)
+		return true
 	else
 		setCommsMessage(deny[math.random(1,#deny)] .. "\nI'm gonna kill someone dead!")
 		comms_target:orderRoaming()
@@ -211,11 +210,11 @@ function friendlyAttack(comms_data, obj)
 	if comms_data.friendlyness < 70 then
 		setCommsMessage("Heading forward to kill " .. obj:getCallSign() .. ".");
 		comms_data.friendlyness = comms_data.friendlyness + random(10, 20)
-		addCommsReply("Back", mainMenu)
+		return true
 	else
 		setCommsMessage("KILLING " .. obj:getCallSign() .. "!!");
 		comms_data.friendlyness = comms_data.friendlyness + random(10, 20)
-		addCommsReply("Back", mainMenu)
+		return true
 	end
 end
 
@@ -270,6 +269,7 @@ function enemyComms(comms_data)
 			end
 		end)
 	end
+	return true
 end
 
 function neutralComms(comms_data)

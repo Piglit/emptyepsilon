@@ -532,12 +532,12 @@ function spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction, cu
 			ship:setCommsScript("comms_exuari.lua")
 			--TODO check if multiple onDamage/onDestruction are possible. If true, raise frenzy in combat, otherwise slowly lower
 			if smallFormations[shipTemplateType] == nil then
-				smallFormations[shipTemplateType] == {ship, nil, 1}
+				smallFormations[shipTemplateType] = {ship, nil, 1}
 			else
 				local leader, second, fidx = smallFormations[shipTemplateType]
 				fidx = fidx + 1
 				leader, second = script_formation.buildFormationIncremental(ship, fidx, leader, second)
-				smallFormations[shipTemplateType] == {leader, second, fidx}
+				smallFormations[shipTemplateType] = {leader, second, fidx}
 			end
 		else
 			ship:setCommsScript(""):setCommsFunction(commsShip)

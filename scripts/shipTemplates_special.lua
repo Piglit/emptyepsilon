@@ -147,41 +147,36 @@ template:setRestocksScanProbes(true)
 
 --[[ Hack-Sat --]]
 template = ShipTemplate():setName("XB-4"):setClass("Satellite", "Relay"):setType("playership")
-template:setModel("SensorBuoyMKI") -- TODO test
+template:setModel("SensorBuoyMKII")
 template:setDescription([[
 ]])
 template:setRadarTrace("radartrace_smallstation.png")
 template:setShields(20)
 template:setHull(20)
 template:setSpeed(0, 0, 0)
+template:setCanDock(false)
+template:setCanCombatManeuver(false)
 
---TODO test
-template:addRoomSystem(1, 0, 2, 1, "Maneuver");
-template:addRoomSystem(1, 1, 2, 1, "BeamWeapons");
-template:addRoom(2, 2, 2, 1);
-template:addRoomSystem(0, 3, 1, 2, "RearShield");
-template:addRoomSystem(1, 3, 2, 2, "Reactor");
-template:addRoomSystem(3, 3, 2, 2, "Warp");
-template:addRoomSystem(5, 3, 1, 2, "JumpDrive");
-template:addRoom(6, 3, 2, 1);
-template:addRoom(6, 4, 2, 1);
-template:addRoomSystem(8, 3, 1, 2, "FrontShield");
-template:addRoom(2, 5, 2, 1);
-template:addRoomSystem(1, 6, 2, 1, "MissileSystem");
-template:addRoomSystem(1, 7, 2, 1, "Impulse");
+-- Could be improved:
+--	(H)oriz, (V)ert	   HC,VC,HS,VS, system    (C)oordinate (S)ize
+template:addRoomSystem( 0, 1, 1, 2, "Impulse")
+template:addRoomSystem( 1, 0, 2, 1, "RearShield")
+template:addRoomSystem( 1, 1, 2, 2, "JumpDrive")
+template:addRoomSystem( 1, 3, 2, 1, "FrontShield")
+template:addRoomSystem( 3, 0, 2, 1, "Beamweapons")
+template:addRoomSystem( 3, 1, 3, 1, "Warp")
+template:addRoomSystem( 3, 2, 3, 1, "Reactor")
+template:addRoomSystem( 3, 3, 2, 1, "MissileSystem")
+template:addRoomSystem( 6, 1, 1, 2, "Maneuver")
 
-template:addDoor(1, 1, true);
-template:addDoor(2, 2, true);
-template:addDoor(3, 3, true);
-template:addDoor(1, 3, false);
-template:addDoor(3, 4, false);
-template:addDoor(3, 5, true);
-template:addDoor(2, 6, true);
-template:addDoor(1, 7, true);
-template:addDoor(5, 3, false);
-template:addDoor(6, 3, false);
-template:addDoor(6, 4, false);
-template:addDoor(8, 3, false);
-template:addDoor(8, 4, false);
+-- (H)oriz, (V)ert H, V, true = horizontal
+template:addDoor( 1, 1, false)
+template:addDoor( 2, 1, true)
+template:addDoor( 1, 3, true)
+template:addDoor( 3, 2, false)
+template:addDoor( 4, 3, true)
+template:addDoor( 6, 1, false)
+template:addDoor( 4, 2, true)
+template:addDoor( 4, 1, true)
 
 
