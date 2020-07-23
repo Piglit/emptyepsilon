@@ -2,6 +2,16 @@
 -- Type: Mission
 -- Description: Mine Layer Training Course
 ---
+--- Objective: Destroy all enemy ships in the area.
+---
+--- Description:
+--- In this training you will use mines to defeat a carrier ship launching fighters.
+---
+--- Your ship is a Nautilus Mine Layer - a jump-driven cruiser without missiles but multiple mine tubes.
+---
+--- This is a short mission for players who like to lay mines.
+
+---
 
 -- Goal: design an easy training for mine layers:
 -- secondary goal: test multi hangar code
@@ -56,6 +66,8 @@ function init()
 
 In this training you will defend our stations against a carrier ship.
 Your ship will be a Nautilus mine layer.
+Try to defeat all enemies with your mines. Your beam turrets will not help you much here.
+The key to success might be the clever use of your impulse and jump drives.
 
 Commander Saberhagen out.]])
 
@@ -83,13 +95,16 @@ end
 function update(delta)
     script_hangar.update(delta)
     timer = timer + delta
-    if #enemyList == 0 then
-        finished(delta)
-    end
 	for i, enemy in ipairs(enemyList) do
 		if enemy == nil or not enemy:isValid() then
 			table.remove(enemyList, i)
+			-- Note: table.remove() inside iteration causes the next element to be skipped.
+			-- This means in each update-cycle max half of the elements are removed.
+			-- It does not matter here, since update is called regulary.
 		end
 	end
+    if #enemyList == 0 then
+        finished(delta)
+    end
 end
 

@@ -8,7 +8,8 @@
 --- In this training you will face different armed oppenents that you must destroy one by one. The difficulty will start low and will increase slowly with every destroyed enemy.
 ---
 --- Your ship is a Hathcock Battle Cruiser - a warp-driven cruiser with great beam power and few missiles.
---- You will be escorted by a Nirvana Beam Cruiser as wingman.
+---
+--- This is a short mission for inexperienced players who prefer close combat.
 -- Variation[Test Formations]: All enemies (and more stonger ones) are present at the beginning of the scenario. This is for testing formations.
 
 
@@ -167,7 +168,9 @@ function update(delta)
     for i, enemy in ipairs(enemyList) do
         if not enemy:isValid() then
             table.remove(enemyList, i)
-            break
+	    -- Note: table.remove() inside iteration causes the next element to be skipped.
+	    -- This means in each update-cycle max half of the elements are removed.
+	    -- It does not matter here, since update is called regulary.
         end
     end
 

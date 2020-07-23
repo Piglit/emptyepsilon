@@ -9,9 +9,7 @@
 ---
 --- Your ship is a Piranha missile cruiser - a jump-driven cruiser with broadside missiles, but without beam weapons.
 ---
---- Advice:
---- If you completed 'Training: Cruiser' and your science managed to scan all targets, increase the scan complexity.
----    Recommendend radar range: 20-30u
+--- This is a short mission for players who prefer tactical combat.
 -- Variation[Boss]: Skip to the boss battle.
 
 require "utils.lua"
@@ -190,7 +188,9 @@ function update(delta)
     for i, enemy in ipairs(enemyList) do
         if not enemy:isValid() then
             table.remove(enemyList, i)
-            break
+	    -- Note: table.remove() inside iteration causes the next element to be skipped.
+	    -- This means in each update-cycle max half of the elements are removed.
+	    -- It does not matter here, since update is called regulary.
         end
     end
     if #enemyList == 0 then

@@ -9,7 +9,7 @@
 ---
 --- Your ship is a Phobos light cruiser - the most common vessel in the navy.
 ---
---- Advice: set radar range down to 20, otherwise relay will be bored.
+--- This is a short mission for inexperienced players.
 
 function init()
     enemyList = {}
@@ -74,6 +74,9 @@ function update(delta)
     for i, enemy in ipairs(enemyList) do
         if not enemy:isValid() then
             table.remove(enemyList, i)
+	    -- Note: table.remove() inside iteration causes the next element to be skipped.
+	    -- This means in each update-cycle max half of the elements are removed.
+	    -- It does not matter here, since update is called regulary.
         end
     end
     if #enemyList == 0 then
