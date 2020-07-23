@@ -12,15 +12,7 @@
 --- This is a short mission for inexperienced players who prefer close combat.
 -- Variation[Test Formations]: All enemies (and more stonger ones) are present at the beginning of the scenario. This is for testing formations.
 
-
--- Goal: design an easy training for beam cruisers:
--- helm: heavy rotating -> battle against fighters and slowly rotating ships
--- weap: few missiles, focus on beams
--- eng:  beam cruiser
--- sci:  beam freq
--- rel:  hackking, raputation handling
-
--- secondary goal: test formation code
+-- secondary design goal: Test and example for script_formation
 
 
 require "utils.lua"
@@ -156,7 +148,12 @@ function finished(delta)
         if not bonus:isValid() then
             bonusString = "destroyed."
         end
-        globalMessage("Mission Complete. Your Time: "..tostring(math.floor(timer)).."s. Bonus target "..bonusString)
+        globalMessage([[Mission Complete.
+Your Time: ]]..formatTime(timer)..[[
+Bonus target ]]..bonusString..[[
+
+If you feel ready for combat and you liked the ship, play 'the mining outpost'.
+If you want to try another ship, play another training mission.]])
     end
 end
 
@@ -168,9 +165,9 @@ function update(delta)
     for i, enemy in ipairs(enemyList) do
         if not enemy:isValid() then
             table.remove(enemyList, i)
-	    -- Note: table.remove() inside iteration causes the next element to be skipped.
-	    -- This means in each update-cycle max half of the elements are removed.
-	    -- It does not matter here, since update is called regulary.
+			-- Note: table.remove() inside iteration causes the next element to be skipped.
+			-- This means in each update-cycle max half of the elements are removed.
+			-- It does not matter here, since update is called regulary.
         end
     end
 

@@ -63,7 +63,15 @@ function finished(delta)
         if not bonus:isValid() then
             bonusString = "destroyed."
         end
-        globalMessage("Mission Complete. Your Time: "..tostring(math.floor(timer)).."s. Bonus target "..bonusString)
+        globalMessage([[Mission Complete.
+Your Time: ]]..formatTime(timer)..[[
+Bonus target ]]..bonusString..[[
+
+If you feel ready for combat, play scenario 'quick basic'.
+If you want to try another ship, play the next training mission.
+
+If you need more practice, play this training again
+with different stations assigned to your crew members.]])
     end
 end
 

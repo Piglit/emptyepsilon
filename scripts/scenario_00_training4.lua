@@ -11,10 +11,7 @@
 ---
 --- This is a short mission for players who like to lay mines.
 
----
-
--- Goal: design an easy training for mine layers:
--- secondary goal: test multi hangar code
+-- secondary goal: test and example for script_hangar (configuratioin
 
 
 require "utils.lua"
@@ -88,7 +85,12 @@ function finished(delta)
         if not station2:isValid() then
             bonusString = "was destroyed."
         end
-        globalMessage("Mission Complete. Your Time: "..tostring(math.floor(timer)).."s. Civilian Station "..bonusString)
+        globalMessage([[Mission Complete.
+Your Time: ]]..formatTime(timer)..[[
+Civilian Station]]..bonusString..[[
+
+If you feel ready for a challenge and you liked the ship, play 'close the gaps'.
+If you want to try another ship, play another training mission.]])
     end
 end
 

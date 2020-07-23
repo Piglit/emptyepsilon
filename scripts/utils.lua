@@ -299,3 +299,17 @@ function radialPosition(a, b, c, d)
 	return x,y
 end
 
+function formatTime(seconds)
+	local str = ""
+	local minutes = math.floor(seconds / 60) % 60
+	local hours = math.floor(seconds / 60 / 60)
+	seconds = math.floor(seconds % 60)
+	if hours > 0 then
+		str = string.format("%02.f:%02.f:%02.f", hours, minutes, seconds)
+	elseif minutes > 0 then
+		str = string.format("%02.f:%02.f", minutes, seconds)
+	else
+		str = string.format("%02.f", seconds)
+	end
+	return str
+end

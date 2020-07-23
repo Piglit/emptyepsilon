@@ -1,11 +1,13 @@
 -- Name: The Mining Outpost
 -- Description: A mining outpost near the Kraylor border sent an emercency call. Defend the outpost against the Kraylor attack!
---- This mission is designed for any number of player ships.
+--- 
+--- You will be piloting a Hathcock battle cruiser.
+---
+--- This is a short mission designed for one ship, but it can be played with any number of player ships.
+--- 
 -- Type: Basic
 
-
--- This mission also is a test for hangar and fighter formation code.
--- The new Mining Corporation faction and Krylor faction ships are shown in this mission
+-- This mission uses hangar and fighter formation code.
 
 require("utils.lua")
 require("script_hangar.lua")

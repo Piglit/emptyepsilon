@@ -12,6 +12,8 @@
 --- This is a short mission for players who prefer tactical combat.
 -- Variation[Boss]: Skip to the boss battle.
 
+-- secondary goal: Test and example for script_hangar (simple mothership)
+
 require "utils.lua"
 require "script_hangar.lua"
 
@@ -188,9 +190,9 @@ function update(delta)
     for i, enemy in ipairs(enemyList) do
         if not enemy:isValid() then
             table.remove(enemyList, i)
-	    -- Note: table.remove() inside iteration causes the next element to be skipped.
-	    -- This means in each update-cycle max half of the elements are removed.
-	    -- It does not matter here, since update is called regulary.
+			-- Note: table.remove() inside iteration causes the next element to be skipped.
+			-- This means in each update-cycle max half of the elements are removed.
+			-- It does not matter here, since update is called regulary.
         end
     end
     if #enemyList == 0 then
