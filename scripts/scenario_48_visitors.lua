@@ -5418,7 +5418,7 @@ function handleDockedState()
 			end)	--end player requests secondary ordnance comms reply branch
 		end	--end secondary ordnance available from station if branch
 	end	--end missles used on player ship if branch
-	if comms_source.plotChoiceStation == nil then
+	if comms_source.plotChoiceStation == nil or not comms_source.plotChoiceStation:isValid() then
 		comms_source.plotChoiceStation = plotChoiceStation
 	end
 	if comms_target == primusStation and comms_source.plotChoiceStation == primusStation and comms_source.plot1 == nil then
@@ -5463,8 +5463,8 @@ function handleDockedState()
 				if true then
 					for plot_index=1,#plotList do
 						addCommsReply(plotListOrders[plot_index], function()
-							plotChoice = plot_index		-- TODO local plotChoice
-							comms_source.plot1 = plotList[plot_index]	-- TODO s/plot1/comms_source.\0
+							local plotChoice = plot_index
+							comms_source.plot1 = plotList[plot_index]
 							setCommsMessage(plotListMessage[plot_index])
 							if server_voices then
 								if plotChoice == 1 then
@@ -5492,10 +5492,10 @@ function handleDockedState()
 					addCommsReply("Move to next region of available missions", function()
 						setCommsMessage(string.format("Dock with station %s for the details of your next assignment. Beware the asteroids",belt1Stations[1]:getCallSign()))
 						playVoice("Pat06")
-						comms_source.plotChoiceStation = belt1Stations[1]	-- TODO s/plotChoiceStation/comms_source.\0
+						comms_source.plotChoiceStation = belt1Stations[1]
 						plotChoiceStation = belt1Stations[1]
 						mission_region = 2
-						comms_source.primaryOrders = string.format("Dock with station %s",belt1Stations[1]:getCallSign()) -- TODO s/primaryOrders/comms_source.\0
+						comms_source.primaryOrders = string.format("Dock with station %s",belt1Stations[1]:getCallSign())
 						primaryOrders = string.format("Dock with station %s",belt1Stations[1]:getCallSign())
 					end)
 				end
@@ -5617,7 +5617,7 @@ function handleDockedState()
 						primaryOrders = string.format("Dock with station %s",tertiusStation:getCallSign())
 					else
 --						plotChoice = math.random(1,#plotList2)
-						plotChoice = 1
+						local plotChoice = 1
 						comms_source.plot1 = plotList2[plotChoice]
 						setCommsMessage(plotListMessage2[plotChoice])
 						if server_voices then
@@ -9035,7 +9035,7 @@ function startDefendPrimusStation()
 	prx, pry = primusStation:getPosition()
 	pla = random(0,360)
 	pmx, pmy = vectorFromAngle(pla,random(8000,12000))
-	enemyFleet = spawnEnemies(prx+pmx,pry+pmy,1,"Exuari")	--TODO make mission specific
+	enemyFleet = spawnEnemies(prx+pmx,pry+pmy,1,"Exuari")
 	for _, enemy in ipairs(enemyFleet) do
 		enemy:orderAttack(primusStation)
 	end
@@ -9420,7 +9420,7 @@ function startTransportPrimusResearcher()
 			p.planetologistAboard = false
 		end
 --	end
-	enemyFleet = {}
+	enemyFleetTransport = {}
 end
 function transportPrimusResearcher(delta)
 	if setUpTransportPrimusResearcher == nil then
@@ -9462,8 +9462,8 @@ function checkTransportPrimusResearcherEvents(delta)
 				planetologistAssassin = "spawned"
 				prx, pry = p:getPosition()
 				pmx, pmy = primusStation:getPosition()
-				enemyFleet = spawnEnemies((prx+pmx)/2,(pry+pmy)/2,1,"Exuari")
-				for _, enemy in ipairs(enemyFleet) do
+				enemyFleetTransport = spawnEnemies((prx+pmx)/2,(pry+pmy)/2,1,"Exuari")
+				for _, enemy in ipairs(enemyFleetTransport) do
 					enemy:orderAttack(p)
 					if difficulty >= 1 then
 						enemy:setWarpDrive(true)
@@ -9571,7 +9571,7 @@ function startFixSatellites()
 	fixHarassInterval = 300
 	fixHarassTimer = fixHarassInterval
 	fixHarassCount = 0
-	enemyFleet = {}
+	enemyFleetSatellite = {}
 	if fixSatelliteDiagnostic then print("end of start fix satellite") end
 end
 function fixSatellites(delta)
@@ -9582,7 +9582,7 @@ function fixSatellites(delta)
 end
 function checkFixSatelliteEvents(delta)
 	local remainingEnemyCount = 0
-	for _, enemy in ipairs(enemyFleet) do
+	for _, enemy in ipairs(enemyFleetSatellite) do
 		if enemy ~= nil and enemy:isValid() then
 			remainingEnemyCount = remainingEnemyCount + 1
 		end
@@ -9626,8 +9626,8 @@ function checkFixSatelliteEvents(delta)
 			local hps = nearStations(p, secondusStations)
 			prx, pry = p:getPosition()
 			pmx, pmy = vectorFromAngle(hps.angle,random(5100,6000))
-			enemyFleet = spawnEnemies(prx+pmx,pry+pmy,1+(difficulty*fixHarassCount),"Exuari")
-			for _, enemy in ipairs(enemyFleet) do
+			enemyFleetSatellite = spawnEnemies(prx+pmx,pry+pmy,1+(difficulty*fixHarassCount),"Exuari")
+			for _, enemy in ipairs(enemyFleetSatellite) do
 				enemy:orderAttack(p)
 			end
 			fixHarassCount = fixHarassCount + 1
@@ -9960,7 +9960,6 @@ function checkVirusEvents(delta)
 	if station_remaining_count > 0 then
 		virus_timer = virus_timer - delta
 		if virus_timer < 0 then
-			--TODO shutdown one station, reset timer
 			for i=#belt1Stations, 1, -1 do
 				local current_belt1_station = belt1Stations[i]
 				if not current_belt1_station.virus_cure and not current_belt1_station.lockdown then
@@ -10311,6 +10310,7 @@ function startStronghold()
 	psy = solY+esy
 	stationFaction = "Exuari"
 	stationStaticAsteroids = true
+	--TODO station or super carrier?
 	si = math.random(1,#placeEnemyStation)		--station index
 	pStation = placeEnemyStation[si]()			--place selected station
 	table.remove(placeEnemyStation,si)			--remove station from placement list
