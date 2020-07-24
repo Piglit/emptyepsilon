@@ -312,6 +312,8 @@ function modify_player_ships(pobj)
 			end
 			pobj.shipScore = 7
 			pobj.maxCargo = 3
+			pobj:setAutoCoolant(true)
+			pobj:commandSetAutoRepair(true)
 			pobj.autoCoolant = true
 --			pobj:setWarpDrive(true)
 		elseif tempPlayerType == "ZX-Lindworm" then
@@ -323,6 +325,8 @@ function modify_player_ships(pobj)
 			end
 			pobj.shipScore = 8
 			pobj.maxCargo = 3
+			pobj:setAutoCoolant(true)
+			pobj:commandSetAutoRepair(true)
 			pobj.autoCoolant = true
 --			pobj:setWarpDrive(true)
 		elseif tempPlayerType == "Adder MK7" then
@@ -334,6 +338,8 @@ function modify_player_ships(pobj)
 			end
 			pobj.shipScore = 8
 			pobj.maxCargo = 4
+			pobj:setAutoCoolant(true)
+			pobj:commandSetAutoRepair(true)
 			pobj.autoCoolant = true
 --			pobj:setJumpDrive(true)
 --			pobj:setJumpDriveRange(3000,40000)
