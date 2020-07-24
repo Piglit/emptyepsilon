@@ -47,6 +47,7 @@
 --	"#228b22"		Forest green		"34,139,34"
 --	"#b22222"		Firebrick			"178,34,34"
 
+require("ee.lua")
 require("utils.lua")
 require("xansta_mods.lua")
 
@@ -344,7 +345,7 @@ function setMovingAsteroids()
 		xAst = random(-100000,100000)
 		yAst = random(-100000,100000)
 		outRange = true
-		for p2idx=1,16 do
+		for p2idx=1, MAX_PLAYER_SHIPS do
 			p2obj = getPlayerShip(p2idx)
 			if p2obj ~= nil and p2obj:isValid() then
 				if distance(p2obj,xAst,yAst) < 30000 then
@@ -2844,7 +2845,7 @@ function commsStation()
     })
     comms_data = comms_target.comms_data
 	setPlayers()
-	for p3idx=1,16 do
+	for p3idx=1, MAX_PLAYER_SHIPS do
 		p3obj = getPlayerShip(p3idx)
 		if p3obj ~= nil and p3obj:isValid() then
 			if p3obj:isCommsOpening() then
@@ -4151,7 +4152,7 @@ function commsShip()
 	end
 	comms_data = comms_target.comms_data
 	setPlayers()
-	for p4idx=1,16 do
+	for p4idx=1, MAX_PLAYER_SHIPS do
 		p4obj = getPlayerShip(p4idx)
 		if p4obj ~= nil and p4obj:isValid() then
 			if p4obj:isCommsOpening() then
@@ -4462,7 +4463,7 @@ function initialOrders(delta)
 	if initialOrderTimer < 0 then
 		if initialOrdersMsg == nil then
 			foundPlayer = false
-			for pidx=1,16 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() then
 					foundPlayer = true
@@ -4810,7 +4811,7 @@ end
 function cleanupSpinners(delta)
 	plot2name = "cleanupSpinners"
 	noSpinCount = 0
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		pc = getPlayerShip(pidx)
 		if pc ~= nil and pc:isValid() then
 			if not pc.spinUpgrade then
@@ -4897,7 +4898,7 @@ end
 
 function warpJamLineSpring(delta)
 	plot2name = "warpJamLineSpring"
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() and wjCenter:isValid() then
 			if distance(p,wjCenter) < 10000 then
@@ -4985,7 +4986,7 @@ function hunterTransition1(delta)
 	hunterTransition1Timer = hunterTransition1Timer - delta
 	if hunterTransition1Timer < 0 then
 		iuMsg = string.format("The enemy activity has been traced back to enemy bases nearby. Find these bases and stop these incursions. Threat Assessment: %.1f",dangerValue)
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				p:addToShipLog(iuMsg,"Magenta")
@@ -5024,7 +5025,7 @@ function hunterTransition2(delta)
 	if hunterTransition2Timer < 0 then
 		iuMsg = string.format("Kraylor prefect Ghalontor has moved to one of the enemy stations. Destroy that station and the Kraylor incursion will crumble. Threat Assessment: %.1f",dangerValue)
 		playSoundFile("sa_55_Commander2.wav")
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				p:addToShipLog(iuMsg,"Magenta")
@@ -5071,7 +5072,7 @@ function hunterTransition3(delta)
 			enemyInt4 = targetEnemyStation
 		end
 		iuMsg = string.format("Enemy base located in %s. Others expected nearby. Threat Assessment: %.1f",enemyInt4:getSectorName(),dangerValue)
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				p:addToShipLog(iuMsg,"Magenta")
@@ -5118,7 +5119,7 @@ function hunterTransition4(delta)
 			enemyInt5 = targetEnemyStation
 		end
 		iuMsg = string.format("Another enemy base located in %s. Others expected nearby. Threat Assessment: %.1f",enemyInt5:getSectorName(),dangerValue)
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				p:addToShipLog(iuMsg,"Magenta")
@@ -5165,7 +5166,7 @@ function hunterTransition5(delta)
 			enemyInt6 = targetEnemyStation
 		end
 		iuMsg = string.format("Another enemy base located in %s. Others expected nearby. Threat Assessment: %.1f",enemyInt6:getSectorName(),dangerValue)
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				p:addToShipLog(iuMsg,"Magenta")
@@ -5201,7 +5202,7 @@ function hunterTransition6(delta)
 	hunterTransition6Timer = hunterTransition6Timer - delta
 	if hunterTransition6Timer < 0 then
 		iuMsg = string.format("Another enemy base located in %s. Others expected nearby: Threat Assessment: %.1f",targetEnemyStation:getSectorName(),dangerValue)
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				p:addToShipLog(iuMsg,"Magenta")
@@ -5237,7 +5238,7 @@ function hunterTransition7(delta)
 	hunterTransition7Timer = hunterTransition7Timer - delta
 	if hunterTransition7Timer < 0 then
 		iuMsg = string.format("We confirmed Prefect Ghalontor is aboard enemy station %s in %s. Threat Assessment: %.1f",targetEnemyStation:getCallSign(),targetEnemyStation:getSectorName(),dangerValue)
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				p:addToShipLog(iuMsg,"Magenta")
@@ -5452,7 +5453,7 @@ end
 function cleanUpBeamTimers(delta)
 	plot4name = "cleanUpBeamTimers"
 	noBeamTimeCount = 0
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		pc = getPlayerShip(pidx)
 		if pc ~= nil and pc:isValid() then
 			if not pc.beamTimeUpgrade then
@@ -5531,7 +5532,7 @@ end
 function cleanUpHullers(delta)
 	plot4name = "cleanUpHullers"
 	noHullCount = 0
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		pc = getPlayerShip(pidx)
 		if pc ~= nil and pc:isValid() then
 			if not pc.hullUpgrade then
@@ -5605,7 +5606,7 @@ function insertAgentDelay(delta)
 	plot4name = "insertAgentDelay"
 	plot4delayTimer = plot4delayTimer - delta
 	if plot4delayTimer < 0 then
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				p:addToShipLog(string.format("Agent Paul Straight has information on enemies in the area and a proposal. Pick him and his equipment up at station %s",homeStation:getCallSign()),"Magenta")
@@ -5618,7 +5619,7 @@ end
 
 function getAgentStraight(delta)
 	plot4name = "getAgentStraight"
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() and p:isDocked(homeStation) then
 			p.straight = true
@@ -5641,7 +5642,7 @@ end
 function scanEnemyStation(delta)
 	plot4name = "scanEnemyStation"
 	if insertEnemyStation:isValid() then
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() and p.straight then
 				if distance(p,insertEnemyStation) <= 20000 then
@@ -5660,7 +5661,7 @@ function scanEnemyStation(delta)
 			end
 		end
 	else
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() and p.straight then
 				p:addToShipLog("[Paul Straight] It's too bad the station was destroyed","#5f9ea0")
@@ -5676,7 +5677,7 @@ function insertRunDelay(delta)
 	insertRunDelayTimer = insertRunDelayTimer - delta
 	if insertRunDelayTimer < 0 then
 		if insertEnemyStation:isValid() then
-			for pidx=1,16 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() and p.straight then
 					p:addToShipLog(string.format("[Paul Straight] My transporter is ready. I've disguised myself as a Kraylor technician. I need you to take the ship within 2.5U of %s. You don't need to defeat any patrols, but there might be some enemy interest in your ship flying so close to the station. After I am aboard %s, I will gether intelligence and transmit it back. I'm ready to proceed",insertEnemyStation:getCallSign(),insertEnemyStation:getCallSign()),"#5f9ea0")
@@ -5686,7 +5687,7 @@ function insertRunDelay(delta)
 				end
 			end
 		else
-			for pidx=1,16 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() and p.straight then
 					p:addToShipLog("[Paul Straight] It's too bad the station was destroyed","#5f9ea0")
@@ -5701,7 +5702,7 @@ end
 function insertRun(delta)
 	plot4name = "insertRun"
 	if insertEnemyStation:isValid() then
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() and p.straight then
 				if distance(p,insertEnemyStation) <= 2500 then
@@ -5720,7 +5721,7 @@ function insertRun(delta)
 			end
 		end
 	else
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() and p.straight then
 				p:addToShipLog("[Paul Straight] It's too bad the station was destroyed","#5f9ea0")
@@ -5748,7 +5749,7 @@ function resultDelay(delta)
 			plot4 = resultDelay2
 		end
 	else
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() and p.straight then
 				if p:hasPlayerAtPosition("Science") then
@@ -5776,7 +5777,7 @@ function resultDelay2(delta)
 			plot4 = straightExecution
 		end
 	else
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() and p.straight then
 				if p:hasPlayerAtPosition("Science") then
@@ -5804,7 +5805,7 @@ function straightExecution(delta)
 			agentDemiseTimer = random (40,80)
 		end
 	else
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() and p.straight then
 				if p:hasPlayerAtPosition("Science") then
@@ -5826,7 +5827,7 @@ function agentDemise(delta)
 	if insertEnemyStation:isValid() then
 		agentDemiseTimer = agentDemiseTimer - delta
 		if agentDemiseTimer < 0 then
-			for pidx=1,16 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() and p.straight then
 					if p:hasPlayerAtPosition("Science") then
@@ -5842,7 +5843,7 @@ function agentDemise(delta)
 			choooseNextPlot4line()
 		end
 	else
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() and p.straight then
 				if p:hasPlayerAtPosition("Science") then
@@ -5908,7 +5909,7 @@ end
 function transportRepairTechnician()
 	hmsBounty:setSystemHealth("warp",1)
 	hmsBounty:setSystemHealth("impulse",1)
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			if p.transportButton then
@@ -5935,7 +5936,7 @@ function stationShieldDelay(delta)
 				shieldExpertStation = candidate
 			end
 		until(shieldExpertStation ~= nil)
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				p:addToShipLog(string.format("Intelligence analysis shows research on the network that could double the shield strength of station %s. The analysis shows that the technical expert can be found on station %s in sector %s",homeStation:getCallSign(),shieldExpertStation:getCallSign(),shieldExpertStation:getSectorName()),"Magenta")
@@ -5958,7 +5959,7 @@ function visitShieldExpertStation(delta)
 		until(shieldExpertTransport ~= nil)
 	end
 	if shieldExpertStation:isValid() then
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				if p:isDocked(shieldExpertStation) then
@@ -5971,7 +5972,7 @@ function visitShieldExpertStation(delta)
 		end
 	else
 		if shieldExpertTransport:isValid() then
-			for pidx=1,16 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() then
 					p:addToShipLog(string.format("We received word that station %s has been destroyed. However, in some of their final records we see that Maria Shrivner left the station to take a job on freighter %s which was last reported in %s",shieldExpertTransport:getCallSign(),shieldExpertTransport:getSectorName()),"Magenta")
@@ -5980,7 +5981,7 @@ function visitShieldExpertStation(delta)
 				end
 			end
 		else
-			for pidx=1,16 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() then
 					p:addToShipLog("Station %s has been destroyed leaving no hints for shield upgrade followup","Magenta")
@@ -5993,7 +5994,7 @@ end
 
 function meetShieldExportTransport(delta)
 	plot4name = "meetShieldExportTransport"
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			if distance(p,shieldExpertTransport) < 500 then
@@ -6010,7 +6011,7 @@ end
 
 function meetShieldExportTransportHeartbroken(delta)
 	plot4name = "meetShieldExportTransportHeartbroken"
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			if distance(p,shieldExpertTransport) < 500 then
@@ -6029,7 +6030,7 @@ end
 function giftForBeau(delta)
 	plot4name = "giftForBeau"
 	if shieldExpertStation:isValid() then
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				if p:isDocked(shieldExpertStation) then
@@ -6045,7 +6046,7 @@ function giftForBeau(delta)
 			end
 		end
 	else
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				p:addToShipLog(string.format("We were just notified that station %s has been destroyed",shieldExpertStation:getCallSign()),"Magenta")
@@ -6062,7 +6063,7 @@ end
 
 function returnHomeForShields(delta)
 	plot4name = "returnHomeForShields"
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			if p:isDocked(homeStation) then
@@ -6300,7 +6301,7 @@ end
 --evaluate the players for enemy strength and size spawning purposes
 function playerPower()
 	playerShipScore = 0
-	for p5idx=1,16 do
+	for p5idx=1, MAX_PLAYER_SHIPS do
 		p5obj = getPlayerShip(p5idx)
 		if p5obj ~= nil and p5obj:isValid() then
 			if p5obj.shipScore == nil then
@@ -6319,7 +6320,7 @@ function closestPlayerTo(obj)
 	if obj ~= nil and obj:isValid() then
 		local closestDistance = 9999999
 		closestPlayer = nil
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				local currentDistance = distance(p,obj)
@@ -6339,7 +6340,7 @@ function farthestPlayerFrom(obj)
 	if obj ~= nil and obj:isValid() then
 		local farthestDistance = 0
 		farthestPlayer = nil
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				local currentDistance = distance(p,obj)
@@ -6397,7 +6398,7 @@ end
 --set up players with name, goods, cargo space, reputation and either a warp drive or a jump drive if applicable
 function setPlayers()
 	concurrentPlayerCount = 0
-	for p1idx=1,16 do
+	for p1idx=1, MAX_PLAYER_SHIPS do
 		pobj = getPlayerShip(p1idx)
 		if pobj ~= nil and pobj:isValid() then
 			concurrentPlayerCount = concurrentPlayerCount + 1
@@ -6451,7 +6452,7 @@ function healthCheck(delta)
 	healthCheckTimer = healthCheckTimer - delta
 	if healthCheckTimer < 0 then
 		healthCheckCount = healthCheckCount + 1
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				if p:getRepairCrewCount() > 0 then
@@ -6551,7 +6552,7 @@ function autoCoolant(delta)
 		table.insert(disableAutoCoolFunctionList,disableAutoCool7)
 		table.insert(disableAutoCoolFunctionList,disableAutoCool8)
 	end
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			if p.autoCoolant ~= nil then
@@ -6704,7 +6705,7 @@ end
 
 function update(delta)
 	concurrentPlayerCount = 0
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil then
 			concurrentPlayerCount = concurrentPlayerCount + 1

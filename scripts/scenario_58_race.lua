@@ -9,6 +9,7 @@
 -- Variation[Raiders]: Feisty target drones *plus* enemies chase you while you race
 -- Variation[Hazardous]: Feisty drones and raiders *plus* dangers along the course
 
+require("ee.lua")
 require("utils.lua")
 require("xansta_mods.lua")
 --[[-----------------------------------------------------------------
@@ -860,7 +861,7 @@ function commsStation()
         }
     })
     comms_data = comms_target.comms_data
-	for p3idx=1,8 do
+	for p3idx=1, MAX_PLAYER_SHIPS do
 		p3obj = getPlayerShip(p3idx)
 		if p3obj ~= nil and p3obj:isValid() then
 			if p3obj:isCommsOpening() then
@@ -1480,7 +1481,7 @@ function handleUndockedState()
 			if raceStartDelay <= 0 then
 				addCommsReply("Show player goals in race", function()
 					dMsg = "Player goals in race:"
-					for p12idx=1,8 do
+					for p12idx=1, MAX_PLAYER_SHIPS do
 						p12 = getPlayerShip(p12idx)
 						if p12 ~= nil and p12:isValid() then
 							dMsg = dMsg .. string.format("\nPlayer %i: %s goal: %i",p12idx,p12:getCallSign(),p12.goal)
@@ -1576,7 +1577,7 @@ function commsShip()
 		goods[comms_target] = {goodsList[irandom(1,#goodsList)][1], 1, random(20,80)}
 	end
 	comms_data = comms_target.comms_data
-	for p4idx=1,8 do
+	for p4idx=1, MAX_PLAYER_SHIPS do
 		p4obj = getPlayerShip(p4idx)
 		if p4obj ~= nil and p4obj:isValid() then
 			if p4obj:isCommsOpening() then
@@ -1952,7 +1953,7 @@ end
 function update(delta)
 	if delta == 0 then
 		--game paused
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			player = getPlayerShip(pidx)
 			if player ~= nil and player:isValid() then
 				if not player.modsAssigned then
@@ -1973,7 +1974,7 @@ function update(delta)
 	if raceInstructionMessage ~= "sent" then
 		raceInstructionMessage = "sent"
 		primaryOrders = string.format("Start race on time at waypoint 1\nRace Length: %f units",raceLength)
-		for p1idx=1,8 do
+		for p1idx=1, MAX_PLAYER_SHIPS do
 			p1 = getPlayerShip(p1idx)
 			if p1 ~= nil and p1:isValid() then
 				p1:addToShipLog("Race starts in 10 minutes. Be at waypoint 1 on time or forfeit","Magenta")
@@ -1986,7 +1987,7 @@ function update(delta)
 		raceStartDelay = raceStartDelay - delta
 		stationTimer:setCallSign(string.format("%.2f",raceStartDelay))
 		if stationsBuilt == "done" then
-			for p2idx=1,8 do
+			for p2idx=1, MAX_PLAYER_SHIPS do
 				p2 = getPlayerShip(p2idx)
 				if p2 ~= nil and p2:isValid() then
 					if p2:getWaypointCount() < 1 then
@@ -2012,7 +2013,7 @@ function update(delta)
 			startLineCheck = "done"
 			raceTimer = 0
 			primaryOrders = "Complete race. Win if possible."
-			for p4idx=1,8 do
+			for p4idx=1, MAX_PLAYER_SHIPS do
 				p4 = getPlayerShip(p4idx)
 				if p4 ~= nil and p4:isValid() then
 					if distance(p4,racePoint1x,racePoint1y) < 5000 then
@@ -2028,7 +2029,7 @@ function update(delta)
 				end
 			end
 			droneList = {}
-			for p4idx=1,8 do	--make some target drones
+			for p4idx=1, MAX_PLAYER_SHIPS do	--make some target drones
 				p4 = getPlayerShip(p4idx)
 				if p4 ~= nil and p4:isValid() and p4.participant then
 					tdid = p4:getCallSign()
@@ -2062,7 +2063,7 @@ function update(delta)
 					moveHazardPacMines(pacMine850,850)
 				end
 			end
-			for p5idx=1,8 do
+			for p5idx=1, MAX_PLAYER_SHIPS do
 				p5 = getPlayerShip(p5idx)
 				if p5 ~= nil and p5:isValid() and p5.participant and p5.laps < 3 then
 					p5.laptimer = p5.laptimer + delta
@@ -2139,7 +2140,7 @@ function update(delta)
 			end
 			unfinishedRacers = 0
 			playerCount = 0
-			for p7idx=1,8 do
+			for p7idx=1, MAX_PLAYER_SHIPS do
 				p7 = getPlayerShip(p7idx)
 				if p7 ~= nil and p7:isValid() and p7.participant then
 					playerCount = playerCount + 1
@@ -2189,7 +2190,7 @@ end
 
 function calculateTimeRank()
 	playerList = {}
-	for p6idx=1,8 do
+	for p6idx=1, MAX_PLAYER_SHIPS do
 		p6 = getPlayerShip(p6idx)
 		if p6 ~= nil and p6:isValid() and p6.participant then
 			table.insert(playerList,p6)

@@ -27,6 +27,7 @@
 -- Variation[Extended Hard]: Longest time taken, hard goals and/or enemies
 -- Variation[Extended Self-destructive]: Longest time taken, extremely difficult goals and/or enemies
 
+require("ee.lua")
 require("utils.lua")
 require("xansta_mods.lua")
 
@@ -67,12 +68,11 @@ end
 
 -- Return the player ship closest to passed object parameter
 -- Return nil if no valid result
--- Assumes a maximum of 16 player ships
 function closestPlayerTo(obj)
 	if obj ~= nil and obj:isValid() then
 		local closestDistance = 9999999
 		closestPlayer = nil
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				local currentDistance = distance(p,obj)
@@ -185,7 +185,7 @@ end
 
 function setPlayers()
 	concurrentPlayerCount = 0
-	for p1idx=1,16 do
+	for p1idx=1, MAX_PLAYER_SHIPS do
 		pobj = getPlayerShip(p1idx)
 		if pobj ~= nil and pobj:isValid() then
 			concurrentPlayerCount = concurrentPlayerCount + 1
@@ -1497,7 +1497,7 @@ function commsStation()
     })
     comms_data = comms_target.comms_data
 	setPlayers()
-	for p3idx=1,16 do
+	for p3idx=1, MAX_PLAYER_SHIPS do
 		p3obj = getPlayerShip(p3idx)
 		if p3obj ~= nil and p3obj:isValid() then
 			if p3obj:isCommsOpening() then
@@ -2533,7 +2533,7 @@ function handleUndockedState()
 				oMsg = oMsg .. "\nplot11: " .. plot11name
 			end
 			oMsg = oMsg .. "\nwfv: " .. wfv
-			for pidx=1,16 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() then
 					oMsg = oMsg .. string.format("\n%s variables:\n",p:getCallSign())
@@ -2693,7 +2693,7 @@ function handleUndockedState()
 			if plot1 ~= nil and plot1name ~= nil then
 				addCommsReply("Plot1 details", function()
 					oMsg = string.format("Patrol goal: %i  Highest patrol leg: %i  Jump start timer: %f Patrol legs:\n",patrolGoal, highestPatrolLeg, jumpStartTimer)
-					for p5idx=1,16 do
+					for p5idx=1, MAX_PLAYER_SHIPS do
 						p5obj = getPlayerShip(p5idx)
 						if p5obj ~= nil and p5obj:isValid() then
 							oMsg = oMsg .. string.format("%s; Asimov: %i, Utopia Planitia: %i, Armstrong: %i\n",p5obj:getCallSign(),p5obj.patrolLegAsimov,p5obj.patrolLegUtopiaPlanitia,p5obj.patrolLegArmstrong)
@@ -3044,7 +3044,7 @@ function commsShip()
 	end
 	comms_data = comms_target.comms_data
 	setPlayers()
-	for p4idx=1,16 do
+	for p4idx=1, MAX_PLAYER_SHIPS do
 		p4obj = getPlayerShip(p4idx)
 		if p4obj ~= nil and p4obj:isValid() then
 			if p4obj:isCommsOpening() then
@@ -3355,7 +3355,7 @@ function initialOrderMessage(delta)
 	if difficulty > .5 then
 		plot11 = jumpStart
 	end
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			p:addToShipLog(string.format("Welcome to the delta quadrant, %s. The independent stations in the area outnumber the human naval stations, but they all rely on us to protect them.",p:getCallSign()),"Magenta")
@@ -3385,7 +3385,7 @@ function patrolAsimovUtopiaPlanitiaArmstrong(delta)
 	end
 	patrolComplete = false
 	playerCount = 0
-	for p5idx=1,16 do
+	for p5idx=1, MAX_PLAYER_SHIPS do
 		p5obj = getPlayerShip(p5idx)
 		if p5obj ~= nil and p5obj:isValid() then
 			if p5obj:isDocked(stationAsimov) then
@@ -3580,7 +3580,7 @@ function afterPatrol(delta)
 	end	
 	if incursionCount + nuisanceCount + attack1count + attack2count + attack3count == 0 then
 		if missionLength > 3 then
-			for pidx=1,16 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() then
 					p:addToShipLog("Stop patrol and Defend Utopia Planitia","Magenta")
@@ -3670,7 +3670,7 @@ function defendUtopia(delta)
 						closestMidWaveUtopiaPlayer:addCustomButton("Operations",utopiaBreakMsgButtonOps,"|> UTPLNT477",playUtopiaBreakMsg)
 					end
 				end
-				for pidx=1,16 do
+				for pidx=1, MAX_PLAYER_SHIPS do
 					p = getPlayerShip(pidx)
 					if p ~= nil and p:isValid() then
 						p:addToShipLog("Nearest ships cleared. More to come shortly","Magenta")
@@ -3932,7 +3932,7 @@ end
 function getSickMinerFromStation(delta)
 	plot2name = "getSickMinerFromStation"
 	if sickMinerState == "sick on station" then
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() and p:isDocked(sickMinerStation) then
 				p.sickMinerAboard = true
@@ -4206,7 +4206,7 @@ end
 
 function getNabbit(delta)
 	plot3name = "getNabbit"
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			if nabbitStation:isValid() then
@@ -4273,7 +4273,7 @@ function attack1(delta)
 	if attack1Timer < 0 then
 		if longRangeWarning == nil then
 			longRangeWarning = "complete"
-			for pidx=1,16 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() then
 					p:addToShipLog("Stations Asimov, Utopia Planitia and Armstrong say that their long range sensors no longer read properly beyond 30U. This implies enemy activity is preventing accurate sensor readings. We suggest you check with these stations periodically to see if their normal sensors have picked up any enemy activity","Magenta")
@@ -4328,7 +4328,7 @@ end
 
 function getStowaway(delta)
 	plot4name = "getStowaway"
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			if distance(stowawayTransport,p) < 500 then
@@ -4578,7 +4578,7 @@ function attack3(delta)
 		end
 		if asimov8thWarning == nil then
 			asimov8thWarning = "done"
-			for pidx=1,16 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() then
 					p:addToShipLog(string.format("[Asimov] Our sensors show enemies approximately %.2f units away",asimovDistance/1000),"Magenta")
@@ -4595,7 +4595,7 @@ function attack3(delta)
 			end
 			if armstrong8thWarning == nil then
 				armstrong8thWarning = "done"
-				for pidx=1,16 do
+				for pidx=1, MAX_PLAYER_SHIPS do
 					p = getPlayerShip(pidx)
 					if p ~= nil and p:isValid() then
 						p:addToShipLog(string.format("[Armstrong] Our long range sensors show enemies approximately %.2f units away",armstrongDistance/1000),"Magenta")
@@ -4612,7 +4612,7 @@ function attack3(delta)
 			end
 			if utopia8thWarning == nil then
 				utopia8thWarning = "done"
-				for pidx=1,16 do
+				for pidx=1, MAX_PLAYER_SHIPS do
 					p = getPlayerShip(pidx)
 					if p ~= nil and p:isValid() then
 						p:addToShipLog(string.format("[Utopia Planitia] Our long range sensors show enemies approximately %.2f units away",utopiaDistance/1000),"Magenta")
@@ -4655,7 +4655,7 @@ function inheritanceMessage()
 	if messageOnInheritance == nil then
 		messageOnInheritance = "done"
 		if tubeAddStation:isValid() then
-			for pidx=1,16 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() then
 					p:addToShipLog(string.format("Sheila Long, A former naval officer recenly perished. Among her personal effects she left a data store for the academy on station Asimov. Her personal effects are located on station %s in sector %s. Please dock and pick up the data store and transport it to station Asimov",tubeAddStation:getCallSign(),tubeAddStation:getSectorName()),"Magenta")
@@ -4672,7 +4672,7 @@ end
 
 function dockWithTubeAddStation(delta)
 	if tubeAddStation:isValid() then
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() and p:isDocked(tubeAddStation) then
 				p:addToShipLog("Sheila Long's package for station Asimov is aboard","Magenta")
@@ -4688,7 +4688,7 @@ function dockWithTubeAddStation(delta)
 end
 
 function dockWithAsimovForTubeAdd(delta)
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p~= nil and p:isValid() and p:isDocked(stationAsimov) then
 			p:addToShipLog("Sheila Long's package received. The archive curator discovered some research on weapons systems miniaturization in the data store. Utopia Planitia received the information and stated that they believe they can add an extra homing missile weapons tube to any ship in the fleet if the ship will dock with Utopia Planitia","Magenta")
@@ -4708,7 +4708,7 @@ function flakyTube(delta)
 	if flakyTubeTimer < 0 then
 		if flakyTubeVictim == nil then
 			lowestVictim = 999
-			for pidx=1,16 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() and p.addTubeUpgrade then
 					if p.flakyTubeCount < lowestVictim then
@@ -4809,7 +4809,7 @@ end
 function scannedAnchors(delta)
 	plotArtName = "scannedAnchors"
 	trackArtAnchors()
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			if p.artAnchor1 or p.artAnchor2 then
@@ -4841,7 +4841,7 @@ function anchorsAboard(delta)
 	plotArtName = "anchorsAboard"
 	anchorsAboardTimer = anchorsAboardTimer - delta
 	if anchorsAboardTimer < 0 then
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				if p.artAnchor1 or p.artAnchor2 then
@@ -4855,7 +4855,7 @@ end
 
 function bringToStation(delta)
 	plotArtName = "bringToStation"
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			if p:isDocked(stationUtopiaPlanitia) and p.artAnchor1 then
@@ -4867,7 +4867,7 @@ function bringToStation(delta)
 		end
 	end
 	if stationUtopiaPlanitia.artAnchor1 and stationUtopiaPlanitia.artAnchor2 then
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p~= nil and p:isValid() then
 				p:addToShipLog("[Utopia Planitia] We received the artifacts. We can improve ship maneuverability next time you dock","Magenta")
@@ -4884,7 +4884,7 @@ function trackArtAnchors()
 		if closestArt1player == nil then
 			closestArt1player = getPlayerShip(-1)
 		end
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				if p == closestArt1player then
@@ -4900,7 +4900,7 @@ function trackArtAnchors()
 		if closestArt2player == nil then
 			closestArt2player = getPlayerShip(-1)
 		end
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				if p == closestArt2player then
@@ -4990,7 +4990,7 @@ end
 
 function playerPower()
 	playerShipScore = 0
-	for p5idx=1,16 do
+	for p5idx=1, MAX_PLAYER_SHIPS do
 		p5obj = getPlayerShip(p5idx)
 		if p5obj ~= nil and p5obj:isValid() then
 			if p5obj.shipScore == nil then
@@ -5006,7 +5006,7 @@ end
 function healthCheck(delta)
 	healthCheckTimer = healthCheckTimer - delta
 	if healthCheckTimer < 0 then
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				if p:getRepairCrewCount() > 0 then
@@ -5085,7 +5085,7 @@ end
 
 function update(delta)
 	concurrentPlayerCount = 0
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			concurrentPlayerCount = concurrentPlayerCount + 1

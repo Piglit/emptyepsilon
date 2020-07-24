@@ -15,6 +15,7 @@
 -- Variation[Very Hard]: Many powerful enemies
 -- Variation[Very Hard Timed]: Many powerful enemies with a 45 minute time limit
 
+require("ee.lua")
 require("utils.lua")
 require("xansta_mods.lua")
 
@@ -164,7 +165,7 @@ function setVariations()
 end
 
 function setPlayers()
-	for p1idx=1,16 do
+	for p1idx=1, MAX_PLAYER_SHIPS do
 		pobj = getPlayerShip(p1idx)
 		if pobj ~= nil and pobj:isValid() then
 			if goods[pobj] == nil then
@@ -188,7 +189,7 @@ function setMovingAsteroids()
 		xAst = random(-100000,100000)
 		yAst = random(-100000,100000)
 		outRange = true
-		for p2idx=1,16 do
+		for p2idx=1, MAX_PLAYER_SHIPS do
 			p2obj = getPlayerShip(p2idx)
 			if p2obj ~= nil and p2obj:isValid() then
 				if distance(p2obj,xAst,yAst) < 30000 then
@@ -773,7 +774,7 @@ function commsStation()
     })
     comms_data = comms_target.comms_data
 	setPlayers()
-	for p3idx=1,16 do
+	for p3idx=1, MAX_PLAYER_SHIPS do
 		p3obj = getPlayerShip(p3idx)
 		if p3obj ~= nil and p3obj:isValid() then
 			if p3obj:isCommsOpening() then
@@ -1382,7 +1383,7 @@ function handleUndockedState()
 			else
 				dMsg = string.format("Clue message time remaining: %f",clueMessageDelay)
 			end
-			for p12idx=1,16 do
+			for p12idx=1, MAX_PLAYER_SHIPS do
 				p12 = getPlayerShip(p12idx)
 				if p12 ~= nil and p12:isValid() then
 					dMsg = dMsg .. string.format("\nPlayer %i: %s in sector %s",p12idx,p12:getCallSign(),p12:getSectorName())
@@ -1624,7 +1625,7 @@ function commsShip()
 	end
 	comms_data = comms_target.comms_data
 	setPlayers()
-	for p4idx=1,16 do
+	for p4idx=1, MAX_PLAYER_SHIPS do
 		p4obj = getPlayerShip(p4idx)
 		if p4obj ~= nil and p4obj:isValid() then
 			if p4obj:isCommsOpening() then
@@ -2249,7 +2250,7 @@ end
 
 function playerPower()
 	playerShipScore = 0
-	for p5idx=1,16 do
+	for p5idx=1, MAX_PLAYER_SHIPS do
 		p5obj = getPlayerShip(p5idx)
 		if p5obj ~= nil and p5obj:isValid() then
 			if p5obj.shipScore == nil then
@@ -2390,7 +2391,7 @@ function monitorWaves(delta)
 			for _, enemy in ipairs(persistentEnemies) do
 				pecdist = 999999	--player to enemy closest distance
 				if enemy:isValid() then
-					for p6idx=1,16 do
+					for p6idx=1, MAX_PLAYER_SHIPS do
 						p6obj = getPlayerShip(p6idx)
 						if p6obj ~= nil and obj:isValid() then
 							curdist = distance(p6obj,enemy)
@@ -2439,7 +2440,7 @@ function waveNear(enemyWaveList)
 	for _, enemy in pairs(enemyWaveList) do
 		if enemy:isValid() then
 			playerInRange = false -- no warning if a player in range
-			for p7idx=1,16 do
+			for p7idx=1, MAX_PLAYER_SHIPS do
 				p7 = getPlayerShip(p7idx)
 				if p7 ~= nil and p7:isValid() and distance(p7,enemy) < 30000 then
 					playerInRange = true
@@ -2472,7 +2473,7 @@ function waveNear(enemyWaveList)
 				if closestStation ~= nil then
 					distToPlayer = 999999
 					closestPlayer = nil
-					for p8idx=1,16 do
+					for p8idx=1, MAX_PLAYER_SHIPS do
 						p8 = getPlayerShip(p8idx)
 						if p8 ~= nil and p8:isValid() then
 							curDist = distance(p8,closestStation)
@@ -2580,7 +2581,7 @@ end
 
 function undercutOrderMessage(delta)
 	mMsg = string.format("[Vaiken] As a naval operative, Charles Undercut discovered information about enemies in this region. Unfortunately, he was fired for his poor performance as a maintenance technician by his commanding officer before he could file a report. We need his information. His last known location was station %s in sector %s. Go find him and get that information",hideBase:getCallSign(),hideBase:getSectorName()) 
-	for p11idx=1,16 do
+	for p11idx=1, MAX_PLAYER_SHIPS do
 		p11 = getPlayerShip(p11idx)
 		if p11 ~= nil and p11:isValid() then
 			p11:addToShipLog(mMsg,"Magenta")
@@ -2592,7 +2593,7 @@ end
 
 function undercutStation(delta)
 	if hideBase:isValid() then
-		for p9idx=1,16 do
+		for p9idx=1, MAX_PLAYER_SHIPS do
 			p9 = getPlayerShip(p9idx)
 			if p9 ~= nil and p9:isValid() then
 				if p9:isDocked(hideBase) then
@@ -2642,7 +2643,7 @@ function undercutTransport(delta)
 				end
 				if helpHideTransport then
 					playerDistance = 999999
-					for p10idx=1,16 do
+					for p10idx=1, MAX_PLAYER_SHIPS do
 						p10 = getPlayerShip(p10idx)
 						if p10 ~= nil and p10:isValid() then
 							currentDistance = distance(p10,hideTransport)
@@ -2683,7 +2684,7 @@ function undercutEnemyBase(delta)
 		requiredMissionCount = requiredMissionCount + 1
 		secondaryOrders = ""
 		undercutMission = "done"
-		for p30idx=1,16 do
+		for p30idx=1, MAX_PLAYER_SHIPS do
 			p30 = getPlayerShip(p30idx)
 			if p30 ~= nil and p30:isValid() and undercutRep == nil then
 				p30:addReputationPoints(100-(difficulty*5))
@@ -2745,7 +2746,7 @@ function stettorOrderMessage(delta)
 	snsMsg = snsMsg .. "and take these items to station " .. sensorBaseName .. " in sector " .. sensorBaseSector
 	secondaryOrders = string.format("\nGather the following:\n%s\n%s\n%s\nand take to station %s in sector %s",s1part,s2part,s3part,sensorBaseName,sensorBaseSector)
 	if sensorMessage == nil then
-		for p13idx=1,16 do
+		for p13idx=1, MAX_PLAYER_SHIPS do
 			p13 = getPlayerShip(p13idx)
 			if p13 ~= nil and p13:isValid() then
 				p13:addToShipLog(snsMsg,"Magenta")
@@ -2758,7 +2759,7 @@ end
 
 function stettorStation(delta)
 	if sensorBase:isValid() then
-		for p14idx=1,16 do
+		for p14idx=1, MAX_PLAYER_SHIPS do
 			p14 = getPlayerShip(p14idx)
 			if p14 ~= nil and p14:isValid() then
 				if p14:isDocked(sensorBase) then
@@ -2780,7 +2781,7 @@ function stettorEnemyBase(delta)
 		requiredMissionCount = requiredMissionCount + 1
 		secondaryOrders = ""
 		stettorMission = "done"
-		for p31idx=1,16 do
+		for p31idx=1, MAX_PLAYER_SHIPS do
 			p31 = getPlayerShip(p31idx)
 			if p31 ~= nil and p31:isValid() and stettorRep == nil then
 				p31:addReputationPoints(80-(difficulty*5))
@@ -2813,7 +2814,7 @@ function traitorOrderMessage(delta)
 	tMsg = tMsg .. ". Go find out what you can about this spy."
 	secondaryOrders = string.format("\nInvestigate spy reported at station %s in sector %s",traitorBaseName,traitorBaseSector)
 	if traitorMessage == nil then
-		for p14idx=1,16 do
+		for p14idx=1, MAX_PLAYER_SHIPS do
 			p14 = getPlayerShip(p14idx)
 			if p14 ~= nil and p14:isValid() then
 				p14:addToShipLog(tMsg,"Magenta")
@@ -2826,7 +2827,7 @@ end
 
 function traitorStation(delta)
 	if traitorBase:isValid() then
-		for p15idx=1,16 do
+		for p15idx=1, MAX_PLAYER_SHIPS do
 			p15 = getPlayerShip(p15idx)
 			if p15 ~= nil and p15:isValid() then
 				if p15:isDocked(traitorBase) then
@@ -2860,7 +2861,7 @@ end
 
 function sporiskyTransport(delta)
 	if runTransport:isValid() then
-		for p16idx=1,16 do
+		for p16idx=1, MAX_PLAYER_SHIPS do
 			p16 = getPlayerShip(p16idx)
 			if p16 ~= nil and p16:isValid() then
 				if p16.traitorBought == true then
@@ -2876,7 +2877,7 @@ end
 
 function sporiskyQuestioned(delta)
 	if stationVaiken:isValid() then
-		for p17idx=1,16 do
+		for p17idx=1, MAX_PLAYER_SHIPS do
 			p17 = getPlayerShip(p17idx)
 			if p17 ~= nil and p17:isValid() then
 				if p17:isDocked(stationVaiken) then
@@ -2900,7 +2901,7 @@ function sporiskyEnemyBase(delta)
 		requiredMissionCount = requiredMissionCount + 1
 		secondaryOrders = ""
 		sporiskyMission = "done"
-		for p32idx=1,16 do
+		for p32idx=1, MAX_PLAYER_SHIPS do
 			p32 = getPlayerShip(p32idx)
 			if p32 ~= nil and p32:isValid() and sporiskyRep == nil then
 				p32:addReputationPoints(80-(difficulty*5))
@@ -2932,7 +2933,7 @@ function horizonOrderMessage(delta)
 		hMsg = string.format("[Emory] After years or research, we are near a breakthrough on our mobile black hole research. We need some assistance for the next phase. Please bring us some %s and %s type goods.",hr1part,hr2part)
 		secondaryOrders = string.format("\nBring %s and %s to station Emory",hr1part,hr2part)
 		if horizonMessage == nil then
-			for p25idx=1,16 do
+			for p25idx=1, MAX_PLAYER_SHIPS do
 				p25 = getPlayerShip(p25idx)
 				if p25 ~= nil and p25:isValid() then
 					p25:addToShipLog(hMsg,"Magenta")
@@ -2950,7 +2951,7 @@ end
 
 function horizonStationDeliver(delta)
 	if stationEmory:isValid() then
-		for p26idx=1,16 do
+		for p26idx=1, MAX_PLAYER_SHIPS do
 			p26 = getPlayerShip(p26idx)
 			if p26 ~= nil and p26:isValid() then
 				if p26:isDocked(stationEmory) then
@@ -3000,7 +3001,7 @@ function horizonScienceMessage(delta)
 						requiredMissionCount = requiredMissionCount + 1
 						secondaryOrders = ""
 						horizonMission = "done"
-						for p33idx=1,16 do
+						for p33idx=1, MAX_PLAYER_SHIPS do
 							p33 = getPlayerShip(p33idx)
 							if p33 ~= nil and p33:isValid() and horizonRep == nil then
 								p33:addReputationPoints(70-(difficulty*5))
@@ -3071,7 +3072,7 @@ end
 function beamRangeMessage(delta)
 	optionalOrders = string.format("\nOptional: Gather and bring goods to station Marconi: %s, %s, %s",br1part,br2part,br3part)
 	obrMsg = string.format("[Station Marconi] Please bring us some components and materials for a project we are working on: %s, %s, %s",br1part,br2part,br3part)
-	for p18idx=1,16 do
+	for p18idx=1, MAX_PLAYER_SHIPS do
 		p18 = getPlayerShip(p18idx)
 		if p18 ~= nil and p18:isValid() then
 			p18:addToShipLog(obrMsg,"Magenta")
@@ -3082,7 +3083,7 @@ end
 
 function beamRangeUpgrade(delta)
 	if stationMarconi:isValid() then
-		for p19idx=1,16 do
+		for p19idx=1, MAX_PLAYER_SHIPS do
 			p19 = getPlayerShip(p19idx)
 			if p19 ~= nil and p19:isValid() then
 				if p19:isDocked(stationMarconi) then
@@ -3091,7 +3092,7 @@ function beamRangeUpgrade(delta)
 						optionalMissionDelay = delta + random(30,90)
 						beamRangePlot = "done"
 						optionalOrders = ""
-						for p34idx=1,16 do
+						for p34idx=1, MAX_PLAYER_SHIPS do
 							p34 = getPlayerShip(p34idx)
 							if p34 ~= nil and p34:isValid() and beamRangeRep == nil then
 								p34:addReputationPoints(50-(difficulty*5))
@@ -3147,7 +3148,7 @@ end
 function beamDamageMessage(delta)
 	optionalOrders = string.format("\nOptional: Gather and bring goods to station Nefatha: %s, %s, %s",bd1part,bd2part,bd3part)
 	obdMsg = string.format("[Station Nefatha] Please bring us some components and materials for a weapons project we are working on: %s, %s, %s",bd1part,bd2part,bd3part)
-	for p20idx=1,16 do
+	for p20idx=1, MAX_PLAYER_SHIPS do
 		p20 = getPlayerShip(p20idx)
 		if p20 ~= nil and p20:isValid() then
 			p20:addToShipLog(obdMsg,"Magenta")
@@ -3158,7 +3159,7 @@ end
 
 function beamDamageUpgrade(delta)
 	if stationNefatha:isValid() then
-		for p21idx=1,16 do
+		for p21idx=1, MAX_PLAYER_SHIPS do
 			p21 = getPlayerShip(p21idx)
 			if p21 ~= nil and p21:isValid() then
 				if p21:isDocked(stationNefatha) then
@@ -3167,7 +3168,7 @@ function beamDamageUpgrade(delta)
 						optionalMissionDelay = delta + random(30,90)
 						beamDamagePlot = "done"
 						optionalOrders = ""
-						for p35idx=1,16 do
+						for p35idx=1, MAX_PLAYER_SHIPS do
 							p35 = getPlayerShip(p35idx)
 							if p35 ~= nil and p35:isValid() and beamDamageRep == nil then
 								p35:addReputationPoints(50-(difficulty*5))
@@ -3251,7 +3252,7 @@ end
 function spinMessage(delta)
 	optionalOrders = string.format("\nOptional: Bring %s, %s and %s to station %s in sector %s",sp1part,sp2part,sp3part,spinBase:getCallSign(),spinBase:getSectorName())
 	spMsg = string.format("[Station %s, sector %s] Please bring us some goods to help us with a project: %s, %s, %s",spinBase:getCallSign(),spinBase:getSectorName(),sp1part,sp2part,sp3part)
-	for p28idx=1,16 do
+	for p28idx=1, MAX_PLAYER_SHIPS do
 		p28 = getPlayerShip(p28idx)
 		if p28 ~= nil and p28:isValid() then
 			p28:addToShipLog(spMsg,"Magenta")
@@ -3262,7 +3263,7 @@ end
 
 function spinUpgrade(delta)
 	if spinBase:isValid() then
-		for p29idx=1,16 do
+		for p29idx=1, MAX_PLAYER_SHIPS do
 			p29 = getPlayerShip(p29idx)
 			if p29 ~= nil and p29:isValid() then
 				if p29:isDocked(spinBase) then
@@ -3271,7 +3272,7 @@ function spinUpgrade(delta)
 						optionalMissionDelay = delta + random(30,90)
 						spinPlot = "done"
 						optionalOrders = ""
-						for p36idx=1,16 do
+						for p36idx=1, MAX_PLAYER_SHIPS do
 							p36 = getPlayerShip(p36idx)
 							if p36 ~= nil and p36:isValid() and spinRep == nil then
 								p36:addReputationPoints(50-(difficulty*5))
@@ -3329,7 +3330,7 @@ end
 function impulseSpeedMessage(delta)
 	optionalOrders = string.format("\nOptional: Get Nikhil Morrison from station %s in sector %s",morrisonBaseName,morrisonBaseSector)
 	oisMsg = string.format("[Station %s] Research scientist Nikhil Morrison is close to a breakthrough on his project, but needs some assistance. Dock with us if you wish to help.",morrisonBaseName)
-	for p22idx=1,16 do
+	for p22idx=1, MAX_PLAYER_SHIPS do
 		p22 = getPlayerShip(p22idx)
 		if p22 ~= nil and p22:isValid() then
 			p22:addToShipLog(oisMsg,"Magenta")
@@ -3340,7 +3341,7 @@ end
 
 function impulseSpeedPartMessage(delta)
 	if morrisonBase:isValid() then
-		for p23idx=1,16 do
+		for p23idx=1, MAX_PLAYER_SHIPS do
 			p23 = getPlayerShip(p23idx)
 			if p23 ~= nil and p23:isValid() then
 				if p23:isDocked(morrisonBase) then
@@ -3362,7 +3363,7 @@ end
 
 function impulseSpeedUpgrade(delta)
 	if stationCarradine:isValid() then
-		for p24idx=1,16 do
+		for p24idx=1, MAX_PLAYER_SHIPS do
 			p24 = getPlayerShip(p24idx)
 			if p24 ~= nil and p24:isValid() then
 				if p24:isDocked(stationCarradine) then
@@ -3371,7 +3372,7 @@ function impulseSpeedUpgrade(delta)
 						optionalMissionDelay = delta + random(30,90)
 						impulseSpeedPlot = "done"
 						optionalOrders = ""
-						for p37idx=1,16 do
+						for p37idx=1, MAX_PLAYER_SHIPS do
 							p37 = getPlayerShip(p37idx)
 							if p37 ~= nil and p37:isValid() and impulseSpeedRep == nil then
 								p37:addReputationPoints(50-(difficulty*5))
@@ -3395,7 +3396,7 @@ function quantumArtMessage(delta)
 	if stationOrgana:isValid() then
 		optionalOrders = string.format("\nOptional: Retrieve artifact with quantum biometric characteristics and bring to station Organa in sector %s",stationOrgana:getSectorName())
 		qaMsg = string.format("[Station Organa, sector %s] Research scientist Phillip Solo of the royal research academy finished the theoretical research portion of his dissertation. He needs an artifact with quantum biometric characteristics to apply his research. Please retrieve an artifact with quantum biometric characteristics and bring it to Organa station",stationOrgana:getSectorName())
-		for p40idx=1,16 do
+		for p40idx=1, MAX_PLAYER_SHIPS do
 			p40 = getPlayerShip(p40idx)
 			if p40 ~= nil and p40:isValid() then
 				p40:addToShipLog(qaMsg,"Magenta")
@@ -3423,7 +3424,7 @@ function quantumRetrieveArt(delta)
 		end
 		quantumArtHintDelay = quantumArtHintDelay - delta
 		cptad = 999999	-- closest player to artifact distance
-		for p41idx=1,16 do
+		for p41idx=1, MAX_PLAYER_SHIPS do
 			p41 = getPlayerShip(p41idx)
 			if p41 ~= nil and p41:isValid() then
 				clpd = distance(artQ,p41)	-- current loop player distance
@@ -3439,7 +3440,7 @@ function quantumRetrieveArt(delta)
 				quantumArtHint = "delivered"
 			end
 		end
-		for p42idx=1,16 do
+		for p42idx=1, MAX_PLAYER_SHIPS do
 			p42 = getPlayerShip(p42idx)
 			if p42 ~= nil and p42:isValid() then
 				if p42 == closestPlayer then
@@ -3456,7 +3457,7 @@ end
 
 function quantumDeliverArt(delta)
 	if stationOrgana:isValid() then
-		for p44idx=1,16 do
+		for p44idx=1, MAX_PLAYER_SHIPS do
 			p44 = getPlayerShip(p44idx)
 			if p44.artQ then
 				if p44.artQaboardMessage == nil then
@@ -3543,7 +3544,7 @@ function update(delta)
 					clMsg = clMsg .. " You have already destroyed one of them."
 				end
 				primaryOrders = "Defend bases in the area (human navy and independent) from enemy attack and destroy three enemy bases."
-				for p43idx=1,16 do
+				for p43idx=1, MAX_PLAYER_SHIPS do
 					p43 = getPlayerShip(p43idx)
 					if p43 ~= nil and p43:isValid() then
 						p43:addToShipLog(clMsg,"Magenta")

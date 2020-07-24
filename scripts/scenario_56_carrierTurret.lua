@@ -31,6 +31,7 @@
 --	"#228b22"		Forest green		"34,139,34"
 --	"#b22222"		Firebrick			"178,34,34"
 
+require("ee.lua")
 require("utils.lua")
 require("xansta_mods.lua")
 
@@ -2743,7 +2744,7 @@ function commsStation()
     })
     comms_data = comms_target.comms_data
 	setPlayers()
-	for p3idx=1,8 do
+	for p3idx=1, MAX_PLAYER_SHIPS do
 		p3obj = getPlayerShip(p3idx)
 		if p3obj ~= nil and p3obj:isValid() then
 			if p3obj:isCommsOpening() then
@@ -3248,7 +3249,7 @@ function handleDockedState()
 				until(gi > #goods[player])
 				addCommsReply("Back", commsStation)
 			end)
-			for pidx=1,8 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p == comms_target and player:isDocked(p) and p.cargo > 0 then
 					addCommsReply(string.format("Transfer cargo to %s",p:getCallSign()), function()
@@ -3733,7 +3734,7 @@ function handleUndockedState()
 			until(gi > #goods[player])
 			addCommsReply("Back", commsStation)
 		end)
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p == comms_target and distance(p,player) < 1000 and p.cargo > 0 then
 				addCommsReply(string.format("Transfer cargo to %s",p:getCallSign()), function()
@@ -3843,7 +3844,7 @@ function commsShip()
 	end
 	comms_data = comms_target.comms_data
 	setPlayers()
-	for p4idx=1,8 do
+	for p4idx=1, MAX_PLAYER_SHIPS do
 		p4obj = getPlayerShip(p4idx)
 		if p4obj ~= nil and p4obj:isValid() then
 			if p4obj:isCommsOpening() then
@@ -4392,7 +4393,7 @@ function initialOrders(delta)
 	if initialOrderTimer < 0 then
 		if initialOrdersMsg == nil then
 			initialOrdersMsg = "sent"
-			for pidx=1,8 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() then
 					p:addToShipLog(string.format("The Ktlitans keep sending harassing ships. We've decrypted some of their communications - enough to identify their primary base by name if not by location. Find and destroy Ktlitan station %s. Respond to other requests from stations in the area if you wish, but your primary goal is do destroy %s. You're in control of our prototype carrier. As you know, it has minimal weapons and cannot dock with a station. It is in your best interest to protect it since it will significantly shorten the duration of your mission.",targetEnemyStation:getCallSign(),targetEnemyStation:getCallSign()),"Magenta")
@@ -4606,7 +4607,7 @@ function upgradeShipSpin(delta)
 				spinScientistStation = candidate
 			end
 		until(spinScientistStation ~= nil)
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				p:addToShipLog(string.format("Paulina Lindquist, a noted research engineer recently published her latest theories on engine design. We believe her theories have practical applications to our ship maneuvering systems. You may want to talk to her about putting her theories into practice on our naval vessels. She's currently stationed on %s in %s",spinScientistStation:getCallSign(),spinScientistStation:getSectorName()),"Magenta")
@@ -4622,7 +4623,7 @@ function spinScientist(delta)
 	validPlayers = 0
 	spinPlayers = 0
 	if spinUpgradeAvailable then
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				validPlayers = validPlayers + 1
@@ -4643,7 +4644,7 @@ function spinScientist(delta)
 					spinScientistStation = candidate
 				end
 			until(spinScientistStation ~= nil)
-			for pidx=1,8 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() then
 					p:addToShipLog(string.format("Paulina Lindquist, has been reassigned to station %s in %s",spinScientistStation:getCallSign(),spinScientistStation:getSectorName()),"Magenta")
@@ -4664,7 +4665,7 @@ function locateTargetEnemyBase(delta)
 			if candidate:isValid() then
 			end
 		until(friendlyClueStation ~= nil)
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				p:addToShipLog(string.format("Herbert Long believes he has a lead on some information about the enemy base that has been the source of the harassing ships. He's stationed on %s in %s",friendlyClueStation:getCallSign(),friendlyClueStation:getSectorName()),"Magenta")
@@ -4685,7 +4686,7 @@ function rescueDyingScientist(delta)
 	pickScientistStation()
 	pickDoctorStation()
 	placeHullArtifact()
-	for pidx=1,8 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			p:addToShipLog(string.format("[%s in %s] Medical emergency: Engineering research scientist Terrence Forsythe has contracted a rare medical condition. After contacting nearly every station in the area, we found that doctor Geraldine Polaski on %s has the expertise and facilities to help. However, we don't have the necessary transport to get Terrence there in time - he has only a few minutes left to live. Can you take Terrence to %s?",scientistStation:getCallSign(),scientistStation:getSectorName(),doctorStation:getCallSign(),doctorStation:getCallSign()),"95,158,160")
@@ -4723,7 +4724,7 @@ function getSickScientist(delta)
 		scientistDies()
 	end
 	if scientistStation:isValid() then
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() and distance(p,scientistStation) < 1000 then
 				playerWithScientist = p
@@ -4743,7 +4744,7 @@ function getSickScientist(delta)
 			end
 		end
 		if pickupMsg ~= nil then
-			for pidx=1,8 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() and p ~= playerWithScientist then
 					p:addToShipLog(string.format("Terrence Forsyth aboard %s",playerWithScientist:getCallSign()),"Magenta")
@@ -4751,7 +4752,7 @@ function getSickScientist(delta)
 			end
 		end
 	else
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				p:addToShipLog(string.format("%s has been destroyed",scientistStation:getCallSign()),"Magenta")
@@ -4778,7 +4779,7 @@ function deliverSickScientist(delta)
 			betweenPlot2fleet()
 		end
 	else
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				p:addToShipLog(string.format("%s has been destroyed",doctorStation:getCallSign()),"Magenta")
@@ -4794,7 +4795,7 @@ function keyToArtifact(delta)
 		if playerWithScientist:isValid() then
 			playerWithScientist:addToShipLog(keyMsg,"#8a2be2")
 		else
-			for pidx=1,8 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() then
 					p:addToShipLog(keyMsg,"#8a2be2")
@@ -4808,7 +4809,7 @@ function keyToArtifact(delta)
 end
 -- Semi-automated hull repair functions
 function recoverHullArtifact(delta)
-	for pidx=1,8 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			tempPlayerType = p:getTypeName()
@@ -4864,7 +4865,7 @@ function repairHull()
 	end
 end
 function scientistDies()
-	for pidx=1,8 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			p:addToShipLog("Terrence Forsythe has perished","Magenta")
@@ -4949,7 +4950,7 @@ function addTubeToShip(delta)
 		else
 			tubePart = "nanites"
 		end
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				p:addToShipLog(string.format("Retired naval officer, Boris Eggleston has taken his expertise in miniaturization and come up with a way to add a missile tube to naval vessels. He's vacationing on %s in %s",addTubeStation:getCallSign(),addTubeStation:getSectorName()),"Magenta")
@@ -4965,7 +4966,7 @@ function tubeOfficer(delta)
 	if addTubeStation:isValid() then
 		validPlayers = 0
 		tubePlayers = 0
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				validPlayers = validPlayers + 1
@@ -4985,7 +4986,7 @@ function tubeOfficer(delta)
 				addTubeStation = candidate
 			end
 		until(addTubeStation ~= nil)
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				p:addToShipLog(string.format("Boris Eggleston changed his vacation spot to %s in %s",addTubeStation:getCallSign(),addTubeStation:getSectorName()),"Magenta")
@@ -5030,7 +5031,7 @@ function upgradeBeamDamage(delta)
 		else
 			beamPart2 = "robotic"
 		end
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				p:addToShipLog(string.format("There's a physicist turned maintenance technician named Frederico Booker that has developed some innovative beam weapon technology that could increase the damage produced by our beam weapons. He's based on %s in %s",beamDamageStation:getCallSign(),beamDamageStation:getSectorName()),"Magenta")
@@ -5045,7 +5046,7 @@ function beamPhysicist(delta)
 	if beamDamageStation:isValid() then
 		validPlayers = 0
 		beamPlayers = 0
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() and p:getBeamWeaponRange(0) > 0 then
 				validPlayers = validPlayers + 1
@@ -5065,7 +5066,7 @@ function beamPhysicist(delta)
 				beamDamageStation = candidate
 			end
 		until(beamDamageStation ~= nil)
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				p:addToShipLog(string.format("Frederico Booker has moved to station %s in %s",beamDamageStation:getCallSign(),beamDamageStation:getSectorName()),"Magenta")
@@ -5093,7 +5094,7 @@ function tractorDisabledShip(delta)
 			strikeShipNames = {"Cropper","Dunner","Forthwith","Stellar","Trammel","Greeble"}
 			tractorShip = CpuShip():setTemplate("Strikeship"):setFaction("Human Navy"):setPosition(ppx+tpx,ppy+tpy):setScanned(true)
 			tractorShip:setSystemHealth("warp",-.5):setSystemHealth("jumpdrive",-.5):orderStandGround():setCallSign(strikeShipNames[math.random(1,#strikeShipNames)])
-			for pidx=1,8 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() then
 					p:addToShipLog(string.format("[%s] Help requested: Our engines are damaged beyond our ability to repair. We are located in %s",tractorShip:getCallSign(),tractorShip:getSectorName()),"#556b2f")
@@ -5271,7 +5272,7 @@ function awaitRepairs(delta)
 	repairDelayTimer = repairDelayTimer - delta
 	if repairDelayTimer < 0 then
 		tractorShip:setSystemHealth("warp",1):setSystemHealth("jumpdrive",1)
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				p:addToShipLog(string.format("[%s] Our engines have been repaired and we stand ready to assist",tractorShip:getCallSign()),"#556b2f")
@@ -5335,7 +5336,7 @@ end
 -----------------------------------------------------------------]]--
 function setPlayers()
 	concurrentPlayerCount = 0
-	for p1idx=1,8 do
+	for p1idx=1, MAX_PLAYER_SHIPS do
 		pobj = getPlayerShip(p1idx)
 		if pobj ~= nil and pobj:isValid() then
 			concurrentPlayerCount = concurrentPlayerCount + 1
@@ -5386,7 +5387,7 @@ function closestPlayerTo(obj)
 	if obj ~= nil and obj:isValid() then
 		local closestDistance = 9999999
 		closestPlayer = nil
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				local currentDistance = distance(p,obj)
@@ -5406,7 +5407,7 @@ function farthestPlayerFrom(obj)
 	if obj ~= nil and obj:isValid() then
 		local farthestDistance = 0
 		farthestPlayer = nil
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				local currentDistance = distance(p,obj)
@@ -5476,7 +5477,7 @@ end
 --evaluate the players for enemy strength and size spawning purposes
 function playerPower()
 	playerShipScore = 0
-	for p5idx=1,8 do
+	for p5idx=1, MAX_PLAYER_SHIPS do
 		p5obj = getPlayerShip(p5idx)
 		if p5obj ~= nil and p5obj:isValid() then
 			if p5obj.shipScore == nil then
@@ -5495,7 +5496,7 @@ function healthCheck(delta)
 	healthCheckTimer = healthCheckTimer - delta
 	if healthCheckTimer < 0 then
 		healthCheckCount = healthCheckCount + 1
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				if p:getRepairCrewCount() > 0 then
@@ -5649,7 +5650,7 @@ end
 
 function update(delta)
 	concurrentPlayerCount = 0
-	for pidx=1,8 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			concurrentPlayerCount = concurrentPlayerCount + 1

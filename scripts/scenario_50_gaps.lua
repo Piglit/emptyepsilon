@@ -11,6 +11,7 @@
 -- Variation[Timed Hard]: Hard goals and/or enemies, Complete the mission in less than 30 minutes
 -- Variation[Timed Quixotic]: Practically impossible goals and/or enemies, Complete the mission in less than 30 minutes
 
+require("ee.lua")
 require("utils.lua")
 require("xansta_mods.lua")
 
@@ -2141,7 +2142,7 @@ function commsStation()
     })
     comms_data = comms_target.comms_data
 	setPlayers()
-	for p3idx=1,8 do
+	for p3idx=1, MAX_PLAYER_SHIPS do
 		p3obj = getPlayerShip(p3idx)
 		if p3obj ~= nil and p3obj:isValid() then
 			if p3obj:isCommsOpening() then
@@ -3169,7 +3170,7 @@ function commsShip()
 	end
 	comms_data = comms_target.comms_data
 	setPlayers()
-	for p4idx=1,8 do
+	for p4idx=1, MAX_PLAYER_SHIPS do
 		p4obj = getPlayerShip(p4idx)
 		if p4obj ~= nil and p4obj:isValid() then
 			if p4obj:isCommsOpening() then
@@ -3474,7 +3475,7 @@ end
 --set up players with name, goods, cargo space, reputation and either a warp drive or a jump drive if applicable
 function setPlayers()
 	concurrentPlayerCount = 0
-	for p1idx=1,8 do
+	for p1idx=1, MAX_PLAYER_SHIPS do
 		pobj = getPlayerShip(p1idx)
 		if pobj ~= nil and pobj:isValid() then
 			concurrentPlayerCount = concurrentPlayerCount + 1
@@ -3527,7 +3528,7 @@ end
 function healthCheck(delta)
 	healthCheckTimer = healthCheckTimer - delta
 	if healthCheckTimer < 0 then
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				if p:getRepairCrewCount() > 0 then
@@ -3667,7 +3668,7 @@ function checkGaps(delta)
 		end
 		if southMet and northMet and westMet and eastMet then
 			if missionLength > 1 then
-				for pidx=1,8 do
+				for pidx=1, MAX_PLAYER_SHIPS do
 					p = getPlayerShip(pidx)
 					if p ~= nil and p:isValid() then
 						p:addReputationPoints(100)
@@ -4046,7 +4047,7 @@ end
 --evaluate the players for enemy strength and size spawning purposes
 function playerPower()
 	playerShipScore = 0
-	for p5idx=1,8 do
+	for p5idx=1, MAX_PLAYER_SHIPS do
 		p5obj = getPlayerShip(p5idx)
 		if p5obj ~= nil and p5obj:isValid() then
 			if p5obj.shipScore == nil then

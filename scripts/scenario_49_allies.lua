@@ -11,6 +11,7 @@
 -- Variation[Easy One]: Easy goals and/or enemies, only one mission randomly chosen from several possible missions (Default is all missions in random order)
 -- Variation[Hard One]: Hard goals and/or enemies, only one mission randomly chosen from several possible missions (Default is all missions in random order)
 
+require("ee.lua")
 require("utils.lua")
 require("xansta_mods.lua")
 
@@ -3296,7 +3297,7 @@ function commsStation()
     })
     comms_data = comms_target.comms_data
 	setPlayers()
-	for p4idx=1,8 do
+	for p4idx=1, MAX_PLAYER_SHIPS do
 		local p4obj = getPlayerShip(p4idx)
 		if p4obj ~= nil and p4obj:isValid() then
 			if p4obj:isCommsOpening() then
@@ -4464,7 +4465,7 @@ function commsShip()
 	end
 	comms_data = comms_target.comms_data
 	setPlayers()
-	for p4idx=1,8 do
+	for p4idx=1, MAX_PLAYER_SHIPS do
 		local p4obj = getPlayerShip(p4idx)
 		if p4obj ~= nil and p4obj:isValid() then
 			if p4obj:isCommsOpening() then
@@ -4972,7 +4973,7 @@ function closestPlayerTo(obj)
 	if obj ~= nil and obj:isValid() then
 		local closestDistance = 9999999
 		local closestPlayer = nil
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			local p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				local currentDistance = distance(p,obj)
@@ -5024,7 +5025,7 @@ end
 function playerPower()
 --evaluate the players for enemy strength and size spawning purposes
 	local playerShipScore = 0
-	for p5idx=1,8 do
+	for p5idx=1, MAX_PLAYER_SHIPS do
 		local p5obj = getPlayerShip(p5idx)
 		if p5obj ~= nil and p5obj:isValid() then
 			if p5obj.shipScore == nil then
@@ -5051,7 +5052,7 @@ function cargoInventory(delta)
 		table.insert(cargoInventoryList,cargoInventory7)
 		table.insert(cargoInventoryList,cargoInventory8)
 	end
-	for pidx=1,8 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			gi = 1
@@ -5237,7 +5238,7 @@ function cargoInventory8()
 end
 --		Coolant buttons and functions
 function coolantNebulae(delta)
-	for pidx=1,8 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		local p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			local inside_gain_coolant_nebula = false
@@ -5448,7 +5449,7 @@ end
 -----------------------------------------------------------------]]--
 function startDoomsday()
 	setUpDoomsday = "done"
-	for pidx=1,8 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			p:addToShipLog("Intelligence tells us the Exuari have nearly completed a 'doomsday' device. Retired scientist, Gregory Unruh warned us before he retired about this possibility, but we did not take him seriously. He was working on a defense mechanism. Find professor Unruh and get the plans for his defense mechanism","Magenta")
@@ -5551,7 +5552,7 @@ function checkDoomsdayEvents(delta)
 	if doomsdayTimer < halfDoom then
 		if doomsdayWarning == nil then
 			doomsdayWarning = "sent"
-			for pidx=1,8 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() then
 					p:addToShipLog(string.format("Intelligence estimates %i minutes remain before the Exuari deploy the doomsday device. Exuari and Kraylors both seem to be on a pillaging rampage",math.floor(doomsdayTimer/60)),"Magenta")
@@ -5564,7 +5565,7 @@ function checkDoomsdayEvents(delta)
 			primaryOrders = string.format("Get %s, %s and %s to build doomsday defense mechanism",component1,component2,component3)
 			if componentMessage1 == nil then
 				componentMessage1 = "sent"
-				for pidx=1,8 do
+				for pidx=1, MAX_PLAYER_SHIPS do
 					p = getPlayerShip(pidx)
 					if p ~= nil and p:isValid() and p.professor then
 						p:addToShipLog(string.format("The instructions list %s, %s and %s as necessary components",component1,component2,component3),"Magenta")
@@ -5574,14 +5575,14 @@ function checkDoomsdayEvents(delta)
 			end
 			if componentMessage2 == nil and doomsdayTimer < notesMarker then
 				componentMessage2 = "sent"
-				for pidx=1,8 do
+				for pidx=1, MAX_PLAYER_SHIPS do
 					p = getPlayerShip(pidx)
 					if p ~= nil and p:isValid() and p.professor then
 						p:addToShipLog(string.format("Further inspection of Gregory Unruh's plans reveal notes in the margin: %s on %s, %s on %s, %s on %s",component1,component1Base:getCallSign(),component2,component2Base:getCallSign(),component3,component3Base:getCallSign()),"Magenta")
 					end
 				end
 			end
-			for pidx=1,8 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() and p.professor then
 					local gi = 1
@@ -5671,7 +5672,7 @@ function checkDoomsdayEvents(delta)
 			doomsday_status = string.format("%s: %i:%.2i",doomsday_status,doomsday_minutes,doomsday_seconds)
 		end
 	end
-	for pidx=1,8 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		local p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			if p:hasPlayerAtPosition("Engineering") then
@@ -5789,7 +5790,7 @@ end
 -----------------------------------------------------------------]]--
 function startSickArlenianAdmiral()
 	setUpSickArlenianAdmiral = "done"
-	for pidx=1,8 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			p:addToShipLog("Our allies, the Arlenians tell us that Admiral Koshenz has contracted a severe disease. The Arlenian doctors have struggled for days with the disease with minimal change in his condition. They fear he does not have much longer to live. They have asked for assistance from any Human researchers in Arlenian disease. One of their medical team referred to a Dr. Morrigan Thultris who recently published information regarding a disease that shares symptoms and characteristics with the admiral's affliction. Dr. Thultris does not show up on our military registry implying she works in relative seclusion. Search the Human Navy stations and find her and enlist her aid if applicable. Do it quickly, Admiral Koshenz likely does not have long to live","Magenta")
@@ -5842,7 +5843,7 @@ function checkSickArlenianAdmiralEvents(delta)
 	end
 	if admiralTimeToLive < 180 and admiralDyingWarning == nil then
 		admiralDyingWarning = "sent"
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				p:addToShipLog("The Arlenians say that they think the admiral has less than three minutes to live","Magenta")
@@ -5860,7 +5861,7 @@ function checkSickArlenianAdmiralEvents(delta)
 	end
 	if admiralTimeToLive < 225 and kraylorAdmiralWarning == nil then
 		kraylorAdmiralWarning = "sent"
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				p:addToShipLog(string.format("The Kraylors seem to have discovered the location of Admiral Koshenz. We detect Kraylor ships en route to %s",arlenianFleet2base:getCallSign()),"Magenta")
@@ -5878,7 +5879,7 @@ function checkSickArlenianAdmiralEvents(delta)
 		if admiralLocationMessage == nil then
 			admiralLocationMessage = "sent"
 			if arlenianFleet2base ~= nil and arlenianFleet2base:isValid() then
-				for pidx=1,8 do
+				for pidx=1, MAX_PLAYER_SHIPS do
 					p = getPlayerShip(pidx)
 					if p ~= nil and p:isValid() then
 						p:addToShipLog(string.format("Admiral Koshenz is on %s in %s",arlenianFleet2base:getCallSign(),arlenianFleet2base:getSectorName()),"Magenta")
@@ -5887,7 +5888,7 @@ function checkSickArlenianAdmiralEvents(delta)
 				primaryOrders = string.format("Take Dr. Thultris to %s in %s",arlenianFleet2base:getCallSign(),arlenianFleet2base:getSectorName())
 			end
 		end
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() and p.doctorAboard then
 				if p:isDocked(arlenianFleet2base) then
@@ -5915,7 +5916,7 @@ function checkSickArlenianAdmiralEvents(delta)
 	else
 		admiral_status = string.format("%s: %i:%.2i",admiral_status,death_minutes,death_seconds)
 	end
-	for pidx=1,8 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		local p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			if p:hasPlayerAtPosition("Science") then
@@ -5935,7 +5936,7 @@ end
 function startMiningConflict()
 	setUpMiningConflict = "done"
 	removeGMFunction(GMMining)
-	for pidx=1,8 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			p:addToShipLog("Our allies, the Arlenians tell us that the Kraylors are attacking the mining facility around the planet Bespin. We rely heavily on that mineral supply for commerce and military operations. Contact the Arlenians and render assistance","Magenta")
@@ -6020,7 +6021,7 @@ function checkMiningConflictEvents(delta)
 			if exuariMiningWarningTimer < 0 then
 				if exuariMiningWarning == nil then
 					exuariMiningWarning = "sent"
-					for pidx=1,8 do
+					for pidx=1, MAX_PLAYER_SHIPS do
 						p = getPlayerShip(pidx)
 						if p ~= nil and p:isValid() then
 							p:addToShipLog("Looks like the Exuari are taking advantage of the Kraylor mining incident by sending forces against us and the Arlenians","Magenta")
@@ -6036,7 +6037,7 @@ function checkMiningConflictEvents(delta)
 			end
 		end
 		if menaceMiningFleetCount < 1 then
-			for pidx=1,8 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() then
 					p:addToShipLog("The Arlenians thanked us for the help with the Kraylors around Cloud City","Magenta")
@@ -6071,7 +6072,7 @@ function healthCheck(delta)
 	healthCheckTimer = healthCheckTimer - delta
 	if healthCheckTimer < 0 then
 		if healthDiagnostic then print("health check timer expired") end
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			if healthDiagnostic then print("in player loop") end
 			local p = getPlayerShip(pidx)
 			if healthDiagnostic then print("got player ship") end
@@ -6165,7 +6166,7 @@ end--set up players with name, goods, cargo space, reputation and either a warp 
 function setPlayers()
 	local concurrentPlayerCount = 0
 	if setPlayerDiagnostic then print("local concurrent player count: " .. concurrentPlayerCount) end
-	for p1idx=1,8 do
+	for p1idx=1, MAX_PLAYER_SHIPS do
 		pobj = getPlayerShip(p1idx)
 		if pobj ~= nil and pobj:isValid() then
 			if setPlayerDiagnostic then print("valid player") end

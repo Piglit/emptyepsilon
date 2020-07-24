@@ -15,6 +15,7 @@
 -- Station warning of enemies in area (helpful warnings - shuffle stations)
 -- Kraylor ship names for freighters and warships; Human navy ship names for freighters and warships
 
+require("ee.lua")
 require("utils.lua")
 require("xansta_mods.lua")
 
@@ -4578,7 +4579,7 @@ function commsStation()
     })
     comms_data = comms_target.comms_data
 	setPlayers()
-	for p4idx=1,16 do
+	for p4idx=1, MAX_PLAYER_SHIPS do
 		local p4obj = getPlayerShip(p4idx)
 		if p4obj ~= nil and p4obj:isValid() then
 			if p4obj:isCommsOpening() then
@@ -5426,7 +5427,7 @@ function commsShip()
 	end
 	comms_data = comms_target.comms_data
 	setPlayers()
-	for p4idx=1,16 do
+	for p4idx=1, MAX_PLAYER_SHIPS do
 		local p4obj = getPlayerShip(p4idx)
 		if p4obj ~= nil and p4obj:isValid() then
 			if p4obj:isCommsOpening() then
@@ -5933,7 +5934,7 @@ function closestPlayerTo(obj)
 	if obj ~= nil and obj:isValid() then
 		local closestDistance = 9999999
 		local closestPlayer = nil
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			local p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				local currentDistance = distance(p,obj)
@@ -6000,7 +6001,7 @@ end
 --evaluate the players for enemy strength and size spawning purposes
 function playerPower()
 	local playerShipScore = 0
-	for p5idx=1,16 do
+	for p5idx=1, MAX_PLAYER_SHIPS do
 		local p5obj = getPlayerShip(p5idx)
 		if p5obj ~= nil and p5obj:isValid() then
 			if p5obj.shipScore == nil then
@@ -6016,7 +6017,7 @@ function healthCheck(delta)
 	healthCheckTimer = healthCheckTimer - delta
 	if healthCheckTimer < 0 then
 		if healthDiagnostic then print("health check timer expired") end
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			if healthDiagnostic then print("in player loop") end
 			local p = getPlayerShip(pidx)
 			if healthDiagnostic then print("got player ship") end
@@ -6122,7 +6123,7 @@ function cargoInventory(delta)
 		table.insert(cargoInventoryList,cargoInventory7)
 		table.insert(cargoInventoryList,cargoInventory8)
 	end
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			gi = 1
@@ -6332,7 +6333,7 @@ function autoCoolant(delta)
 		table.insert(disableAutoCoolFunctionList,disableAutoCool7)
 		table.insert(disableAutoCoolFunctionList,disableAutoCool8)
 	end
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		local p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			if p.autoCoolant ~= nil then
@@ -6441,7 +6442,7 @@ end
 --set up players with name, goods, cargo space, reputation and either a warp drive or a jump drive if applicable
 function setPlayers()
 	concurrentPlayerCount = 0
-	for p1idx=1,16 do
+	for p1idx=1, MAX_PLAYER_SHIPS do
 		pobj = getPlayerShip(p1idx)
 		if pobj ~= nil and pobj:isValid() then
 			modify_player_ships(pobj)
@@ -6768,7 +6769,7 @@ end
 -----------------------------------------------------------------]]--
 function treatyHolds(delta)
 	primaryOrders = "Treaty holds. Patrol border. Stay out of blue neutral border zone"
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		local p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() and p.order1 == nil then
 			if p.modsAssigned then
@@ -6803,7 +6804,7 @@ function treatyHolds(delta)
 			treatyStressTimer = random(lrr5,urr5)
 		end
 		primaryOrders = "Treaty holds, Kraylors belligerent. Patrol border. Stay out of blue neutral border zone"
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				if not p.modsAssigned then
@@ -6836,7 +6837,7 @@ function treatyStressed(delta)
 			borderZone[i]:setColor(255,0,0)
 		end
 		primaryOrders = "War declared. Destroy any Kraylor vessels. Avoid destruction of Kraylor stations"
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			local p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				if not p.modsAssigned then
@@ -6868,7 +6869,7 @@ function limitedWar(delta)
 	limitedWarTimer = limitedWarTimer - delta
 	if limitedWarTimer < 0 then
 		primaryOrders = "War continues. Atrocities suspected. Destroy any Kraylor vessels or stations"
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			local p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				if not p.modsAssigned then
@@ -6935,7 +6936,7 @@ function evaluateInitialAssets()
 		end
 	end
 	local playerShipNames = {}
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		local p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			table.insert(playerShipNames,p:getCallSign())
@@ -6952,7 +6953,7 @@ function evaluateInitialAssets()
 			print(i .. ": " .. playerShipNames[i])
 		end
 	end
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		local p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			if #playerShipNames > 1 then
@@ -7174,7 +7175,7 @@ function setEnemyStationDefenses()
 	end
 end
 function enemyDefenseCheck(delta)
-	for pidx=1,16 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		local p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			for _, enemyStation in ipairs(kraylorStationList) do
@@ -7425,7 +7426,7 @@ end
 function explosiveTransportCheck(delta)
 	for i=1,#deadlyTransportList do
 		local tdt = deadlyTransportList[i]
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			local p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				local tpx, tpy = p:getPosition()
@@ -7475,7 +7476,7 @@ end
 function enemyDefenseZoneCheck(delta)
 	for i=1,#defensiveZoneList do
 		tz = defensiveZoneList[i]
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			local p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				if tz:isInside(p) then
@@ -7585,7 +7586,7 @@ function personalAmbushDestructCheck(delta)
 			if evalEnemy < paTriggerEval then
 				if paDiagnostic then print("met paDestruct criteria") end
 				local candidate = nil
-				for pidx=1,16 do
+				for pidx=1, MAX_PLAYER_SHIPS do
 					p = getPlayerShip(pidx)
 					if p ~= nil and p:isValid() and p.sprung == nil then
 						local nebulaHuntList = p:getObjectsInRange(20000)
@@ -7626,7 +7627,7 @@ function personalAmbushTimeCheck(delta)
 	if gameTimeLimit < paTriggerTime then
 		if paDiagnostic then print("paGame Time check passed") end
 		candidate = nil
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() and p.sprung == nil then
 				nebulaHuntList = p:getObjectsInRange(20000)
@@ -7665,7 +7666,7 @@ end
 function playerBorderCheck(delta)
 	if treaty then
 		tbz = nil
-		for pidx=1,16 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				playerOutOfBounds = false
