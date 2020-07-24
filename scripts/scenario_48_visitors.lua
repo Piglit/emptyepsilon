@@ -33,6 +33,7 @@
 
 --XXX start server with Easy Random; choose Easy Selectable if something fails
 
+require("ee.lua")
 require("utils.lua")
 require("xansta_mods.lua")
 
@@ -5170,7 +5171,7 @@ end
 -- Inventory button for relay/operations --
 -------------------------------------------
 function cargoInventory(delta)
-	for pidx=1,8 do
+	for pidx=1,MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			local cargoHoldEmpty = true
@@ -7979,11 +7980,10 @@ end
 function closestPlayerTo(obj)
 -- Return the player ship closest to passed object parameter
 -- Return nil if no valid result
--- Assumes a maximum of 8 player ships
 	if obj ~= nil and obj:isValid() then
 		local closestDistance = 9999999
 		local closestPlayer = nil
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			local p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				local currentDistance = distance(p,obj)
@@ -8067,7 +8067,7 @@ end
 function playerPower()
 --evaluate the players for enemy strength and size spawning purposes
 	local playerShipScore = 0
-	for p5idx=1,8 do
+	for p5idx=1, MAX_PLAYER_SHIPS do
 		local p5obj = getPlayerShip(p5idx)
 		if p5obj ~= nil and p5obj:isValid() and p5obj:getFaction() ~= "Exuari" and p5obj:getFaction() ~= "Kraylor" then
 			if p5obj.shipScore == nil then
@@ -8084,7 +8084,7 @@ function healthCheck(delta)
 	healthCheckTimer = healthCheckTimer - delta
 	if healthCheckTimer < 0 then
 		if healthDiagnostic then print("health check timer expired") end
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			if healthDiagnostic then print("in player loop") end
 			local p = getPlayerShip(pidx)
 			if healthDiagnostic then print("got player ship") end
@@ -8241,7 +8241,7 @@ function crewFate(p, fatalityChance)
 end
 -- Gain or lose coolant from nebula functions
 function coolantNebulae(delta)
-	for pidx=1,8 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		local p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			local inside_gain_coolant_nebula = false
@@ -8344,6 +8344,7 @@ function getCoolantGivenPlayer(p)
 	end
 	p.coolant_trigger = true
 end
+-- TODO curry if possible, otherwise copy
 function getCoolant1()
 	local p = getPlayerShip(1)
 	getCoolantGivenPlayer(p)
@@ -9008,7 +9009,7 @@ end
 -- INITIAL PLOT Defend primus station
 function startDefendPrimusStation()
 	setUpDefendPrimusStation = "done"
-	for pidx=1,8 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			p:addToShipLog(string.format("[%s orbiting %s currently in %s] We could use help taking care of nearby Exuari",primusStation:getCallSign(),planetPrimus:getCallSign(),primusStation:getSectorName()),"Magenta")
@@ -9060,7 +9061,7 @@ function checkDefendPrimusStationEvents(delta)
 	for _, enemy in ipairs(enemyFleet) do
 		if enemy ~= nil and enemy:isValid() then
 			remainingEnemyCount = remainingEnemyCount + 1
-			for pidx=1,8 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() then
 					if distance(p,enemy) < 8000 then
@@ -9103,7 +9104,7 @@ function checkDefendPrimusStationEvents(delta)
 		--no enemies remain
 		if missionCloseMessage == nil then
 			missionCloseMessage = "sent"
-			for pidx=1,8 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() then
 					p:addToShipLog(string.format("[%s] All station personnel thank you for your assistance. Dock with us for further orders",primusStation:getCallSign()),"Magenta")
@@ -9138,7 +9139,7 @@ function orbitingArtifact(delta)
 end
 function checkOrbitingArtifactEvents(delta)
 	if astronomerBoardedShip and belt1Artifact:isScannedByFaction("Human Navy") then
---		for pidx=1,8 do
+--		for pidx=1, MAX_PLAYER_SHIPS do
 			p = plotPlayers[orbitingArtifact]
 			if p ~= nil and p:isValid() then
 				if p.astronomer then
@@ -9146,7 +9147,7 @@ function checkOrbitingArtifactEvents(delta)
 						artifact_sensor_data_timer_button = true
 						sensor_data_timer_button = "sensor_data_timer_button"
 						p:addCustomButton("Relay",sensor_data_timer_button,"Polly Scan Time",function()
-							for pidx=1,8 do
+							for pidx=1, MAX_PLAYER_SHIPS do
 								p = getPlayerShip(pidx)
 								if p.astronomer then
 									p:addToShipLog(string.format("%.1f seconds remain to be scanned",artifactSensorReadingTimer),"Yellow")
@@ -9414,7 +9415,7 @@ function startTransportPrimusResearcher()
 	researcherBoardedShip = false
 	lastLocationPlanetologist = "unknown"
 	planetologistChase = 0
---	for pidx=1,8 do
+--	for pidx=1, MAX_PLAYER_SHIPS do
 		p = plotPlayers[transportPrimusResearcher]
 		if p ~= nil and p:isValid() then
 			p.planetologistAboard = false
@@ -9431,7 +9432,7 @@ end
 function checkTransportPrimusResearcherEvents(delta)
 	if researcherBoardedShip then
 		plotPlayers[transportPrimusResearcher].primaryOrders = string.format("Transport planetologist by docking with %s",primusStation:getCallSign())
-		--for pidx=1,8 do
+		--for pidx=1, MAX_PLAYER_SHIPS do
 			p = plotPlayers[transportPrimusResearcher]
 			if p ~= nil then
 				if p:isValid() then
@@ -9593,7 +9594,7 @@ function checkFixSatelliteEvents(delta)
 		mission_complete_count = mission_complete_count + 1
 		--plotChoiceStation = primusStation
 		local reputationPending = true
---		for pidx=1,8 do
+--		for pidx=1, MAX_PLAYER_SHIPS do
 			p = plotPlayers[fixSatellites]
 			if p ~= nil and p:isValid() then
 				p:addToShipLog("[Engineering Technician] For helping to fix their satellites, the satellite station technicians have doubled our impulse engine's top speed","Magenta")
@@ -9616,7 +9617,7 @@ function checkFixSatelliteEvents(delta)
 			fixHarassTimer = delta + fixHarassInterval
 			p = closestPlayerTo(planetSecondus)
 			if p == nil then
-				for pidx=1,8 do
+				for pidx=1, MAX_PLAYER_SHIPS do
 					p = getPlayerShip(pidx)
 					if p ~= nil and p:isValid() then
 						break
@@ -9676,7 +9677,7 @@ end
 function marauderSpawn(delta)
 	if protect_station ~= nil and protect_station:isValid() then
 		local cp = nil
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			local p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				if cp == nil then
@@ -9714,7 +9715,7 @@ function marauderApproach(delta)
 							protect_station.marauder_choice:addToShipLog(string.format("[%s in %s] The Exuari are coming",protect_station:getCallSign(),protect_station:getSectorName()),"Magenta")
 						else
 							local cp = nil
-							for pidx=1,8 do
+							for pidx=1, MAX_PLAYER_SHIPS do
 								local p = getPlayerShip(pidx)
 								if p ~= nil and p:isValid() then
 									if cp == nil then
@@ -9737,7 +9738,7 @@ function marauderApproach(delta)
 				end
 			end
 		end
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			local p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() and distance(p,protect_station) < 25000 then
 				if marauder_station_fleet == nil then
@@ -9815,7 +9816,7 @@ function marauderFleetDestroyed(delta)
 			mission_complete_count = mission_complete_count + 1
 			--plotChoiceStation = primusStation
 			local reputationPending = true
---			for pidx=1,8 do
+--			for pidx=1, MAX_PLAYER_SHIPS do
 				p = plotPlayers[defendSpawnBandStation]
 				if p ~= nil and p:isValid() then
 					p:addToShipLog(string.format("[Engineering Technician] For helping against the Exuari marauders, %s has provided us details on improving our maneuvering speed.",protect_station:getCallSign()),"Magenta")
@@ -9846,7 +9847,7 @@ function startPiracy()
 	for _, enemy in ipairs(piracyFleet) do
 		enemy:orderFlyTowards(tpmx, tpmy)
 	end
-	for pidx=1,8 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			p:addToShipLog(string.format("%s in %s reports Exuari pirates threatening them",protectTransport:getCallSign(),protectTransport:getSectorName()),"Magenta")
@@ -9862,7 +9863,7 @@ function piracyPlot(delta)
 end
 function checkPiracyEvents(delta)
 	if protectTransport == nil or not protectTransport:isValid() then
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				p:addToShipLog("Transport destroyed.","Magenta")
@@ -9884,7 +9885,7 @@ function checkPiracyEvents(delta)
 			plotPlayers[piracyPlot].plot1 = nil
 			mission_complete_count = mission_complete_count + 1
 			--plotChoiceStation = belt1Stations[1]
-			for pidx=1,8 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() then
 					p:addToShipLog(string.format("[%s] Thanks for dealing with those Exuari pirates",protectTransport:getCallSign()),"Magenta")
@@ -9899,7 +9900,7 @@ end
 function startVirus()
 	set_up_virus = "done"
 	local virus_player_count = 0
-	for pidx=1,8 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			p.virus_cure = false
@@ -9922,7 +9923,7 @@ function virusOutbreak(delta)
 	plot1 = checkVirusEvents
 end
 function checkVirusEvents(delta)
-	for pidx=1,8 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			if p:isDocked(belt1Stations[4]) and not p.virus_cure then
@@ -9966,7 +9967,7 @@ function checkVirusEvents(delta)
 					current_belt1_station.lockdown = true
 					current_belt1_station.setCommsFunction(nil)	--TODO test
 					current_belt1_station.setFaction("Empty")	--TODO test
-					for pidx=1,8 do
+					for pidx=1, MAX_PLAYER_SHIPS do
 						p = getPlayerShip(pidx)
 						if p ~= nil and p:isValid() then
 							p:addToShipLog(string.format("[%s Medical Team] Virus outbreak reached pandemic state. Station is under lockdown.",current_belt1_station:getCallSign()),"Magenta")
@@ -9985,7 +9986,7 @@ function checkVirusEvents(delta)
 				if virus_timer < (max_virus_timer - (3 * per_station)) then
 					playVoice("Tracy12")
 				end
-				for pidx=1,8 do
+				for pidx=1, MAX_PLAYER_SHIPS do
 					local p = getPlayerShip(pidx)
 					if p ~= nil and p:isValid() and p.virus_cure then
 						local phx, phy = p:getPosition()
@@ -10004,7 +10005,7 @@ function checkVirusEvents(delta)
 			else
 				virus_status = string.format("%s: %i:%.2i",virus_status,virus_minutes,virus_seconds)
 			end
-			for pidx=1,8 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				local p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() then
 					if p:hasPlayerAtPosition("Science") then
@@ -10029,7 +10030,7 @@ function checkVirusEvents(delta)
 			plotChoiceStation = tertiusStation
 		end
 		primaryOrders = string.format("Dock with %s",plotChoiceStation:getCallSign())
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				if station_fatality_count == 0 then
@@ -10058,6 +10059,7 @@ function checkVirusEvents(delta)
 		playVoice("Tracy07")
 	end
 end
+-- TODO curry if possible, otherwise copy
 function virusStatusP1()
 	local p = getPlayerShip(1)
 	virusStatus(p)
@@ -10111,7 +10113,7 @@ end
 -- BELT STATION PLOT Exuari Target Intelligence
 function startTargetIntel()
 	set_up_target_intel = "done"
---	for pidx=1,8 do
+--	for pidx=1, MAX_PLAYER_SHIPS do
 		p = plotPlayers[targetIntel]
 		if p ~= nil and p:isValid() then
 			p.target_intel = false
@@ -10151,7 +10153,7 @@ function checkTargetIntelEvents(delta)
 		return
 	end
 	local iwpx, iwpy = target_station:getPosition()
---	for pidx=1,8 do
+--	for pidx=1, MAX_PLAYER_SHIPS do
 		local p = plotPlayers[targetIntel]
 		if p ~= nil and p:isValid() then
 			if p:isDocked(intel_station) and p.intel_message == nil then
@@ -10198,7 +10200,7 @@ function checkTargetIntelEvents(delta)
 			plotPlayers[targetIntel].plot1 = nil
 			mission_complete_count = mission_complete_count + 1
 			--plotChoiceStation = belt1Stations[1]
-			for pidx=1,8 do
+			for pidx=1, MAX_PLAYER_SHIPS do
 				local p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() then
 					p:addToShipLog("Looks like you thwarted that Exuari attack","Magenta")
@@ -10218,7 +10220,7 @@ end
 --	docked_with_tertius = true
 --	exterminate_fleet_list = {}
 --	exuari_danger = 1
---	for pidx=1,8 do
+--	for pidx=1, MAX_PLAYER_SHIPS do
 --		local p = getPlayerShip(pidx)
 --		if p ~= nil and p:isValid() then
 --			local plx, ply = p:getPosition()
@@ -10240,7 +10242,7 @@ end
 --	if docked_with_tertius then
 --		if tertiusStation:isValid() then
 --			docked_with_tertius = false
---			for pidx=1,8 do
+--			for pidx=1, MAX_PLAYER_SHIPS do
 --				local p = getPlayerShip(pidx)
 --				if p ~= nil and p:isValid() then
 --					if p:isDocked(tertiusStation) then
@@ -10257,7 +10259,7 @@ end
 --	end
 --	if exterminate_timer < 0 then
 --		exuari_danger = exuari_danger + 1
---		for pidx=1,8 do
+--		for pidx=1, MAX_PLAYER_SHIPS do
 --			local p = getPlayerShip(pidx)
 --			if p ~= nil and p:isValid() then
 --				local plx, ply = p:getPosition()
@@ -10287,7 +10289,7 @@ end
 --	end
 --	if exuari_enemy_count < exuari_danger then
 --		exuari_danger = exuari_danger + 1
---		for pidx=1,8 do
+--		for pidx=1, MAX_PLAYER_SHIPS do
 --			local p = getPlayerShip(pidx)
 --			if p ~= nil and p:isValid() then
 --				plx, ply = p:getPosition()
@@ -10320,7 +10322,7 @@ function startStronghold()
 	stronghold_interval = 300 - 50*difficulty
 	stronghold_timer = stronghold_interval
 	exuari_danger = 1
-	for pidx=1,8 do
+	for pidx=1, MAX_PLAYER_SHIPS do
 		local p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			local plx, ply = p:getPosition()
@@ -10381,7 +10383,7 @@ end
 --	survive_interval = 300 - 50*difficulty
 --	survive_timer = survive_interval
 --	exuari_danger = 1
---	for pidx=1,8 do
+--	for pidx=1, MAX_PLAYER_SHIPS do
 --		local p = getPlayerShip(pidx)
 --		if p ~= nil and p:isValid() then
 --			local plx, ply = p:getPosition()
@@ -10408,7 +10410,7 @@ end
 --		survive_timer = survive_timer - delta
 --		if survive_timer < 0 then
 --			exuari_danger = exuari_danger + 1
---			for pidx=1,8 do
+--			for pidx=1, MAX_PLAYER_SHIPS do
 --				local p = getPlayerShip(pidx)
 --				if p ~= nil and p:isValid() then
 --					local plx, ply = p:getPosition()
@@ -10595,7 +10597,7 @@ function showEndStats(reason)
 end
 function setPlayers()
 	local concurrentPlayerCount = 0
-	for p1idx=1,8 do
+	for p1idx=1, MAX_PLAYER_SHIPS do
 		pobj = getPlayerShip(p1idx)
 		if pobj ~= nil and pobj:isValid() then
 			concurrentPlayerCount = concurrentPlayerCount + 1
@@ -10860,7 +10862,7 @@ function update(delta)
 	if plot1 ~= nil then	--various primary plot lines
 		plot1(delta)
 	end
-	for p1idx=1,8 do
+	for p1idx=1, MAX_PLAYER_SHIPS do
 		pobj = getPlayerShip(p1idx)
 		if pobj ~= nil and pobj:isValid() then
 			if pobj.plot1 ~= nil then
