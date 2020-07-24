@@ -11,6 +11,7 @@ mkdir _build
 cd _build
 cmake .. -DSERIOUS_PROTON_DIR=$(pwd)/../../seriousproton
 make -j4
+#make -j4 package # creates deb package
 cd ..
 mkdir _build_win32
 cd _build_win32
