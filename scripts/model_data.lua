@@ -527,6 +527,7 @@ for sizeName, sizeValues in pairs(sizes) do
     model:addEngineEmitter(-1.4,-0.4, 0.0,  0.5, 0.5, 1.0, 0.6)
 
     model = ModelData()
+    --TODO when Laser Cruiser and Laser Dreadnought are finished, positions may be added
     model:setName("Laser" .. sizeName .. color)
     model:setMesh("LaserCorvette/LaserCorvette.model")
     model:setTexture("LaserCorvette/AlbedoAO/LaserCorvette"..color.."AlbedoAO.png")
