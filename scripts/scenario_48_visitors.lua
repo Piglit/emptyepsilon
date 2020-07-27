@@ -680,7 +680,7 @@ function buildLocalSolarSystem()
 	-- central star (Sol)
 	solX, solY = vectorFromAngle(random(20,70),random(100000,200000))
 	planetSol = Planet():setPosition(solX,solY):setPlanetRadius(1000):setDistanceFromMovementPlane(-2000):setPlanetAtmosphereTexture("planets/star-1.png"):setPlanetAtmosphereColor(1.0,1.0,1.0)
-	planetSol:setCallSign(solNames[math.random(1,#solNames)])
+	planetSol:setCallSign("Tau Ceti")--solNames[math.random(1,#solNames)])
 	-------------------------------
 	-- innermost planet (Primus) --
 	-------------------------------
@@ -733,6 +733,7 @@ function buildLocalSolarSystem()
 	--si = math.random(1,#placeStation)			--station index
 	pStation = placeOrgana()-- placeStation[si]()				--place selected station
 	--table.remove(placeStation,si)				--remove station from placement list
+	stationSize = nil
 	humanStationStrength = humanStationStrength + setStationStrength(pStation)
 	pStation:onDestruction(humanStationDestroyed)
 	pStation.comms_data.orbit = string.format("orbiting %s at a distance of %.1fU",planetPrimus:getCallSign(),primusMoonOrbit/1000)
@@ -854,9 +855,6 @@ function buildLocalSolarSystem()
 		beltOrbit2 = playerSpawnBand + 4000--random(3500,10000)
 		beltOrbit2Width = beltOrbit2 - (playerSpawnBand + 2500)
 	end
-	--XXX Goals: 
-	-- player band -> primus = [1 jump; 2 jump] => primus <-> band = 1 LRS ~= 25u
-	-- primus ->center->band 2*(primus<->band) + 2*(primus orbit) = 50u+2*orbit !<= 100 u => orbit <= 25u
 	--------------------------------
 	-- populate player spawn band --
 	--------------------------------
@@ -1049,9 +1047,11 @@ function buildLocalSolarSystem()
 	psx = solX+plx
 	psy = solY+ply
 	stationFaction = "Human Navy"				--set station faction
-	si = math.random(1,#placeStation)			--station index
-	pStation = placeStation[si]()				--place selected station
-	table.remove(placeStation,si)				--remove station from placement list
+	stationSize = "Medium Station"
+	--si = math.random(1,#placeStation)			--station index
+	pStation = placeMuddville() --placeStation[si]()				--place selected station
+	--table.remove(placeStation,si)				--remove station from placement list
+	stationSize = nil
 	humanStationStrength = humanStationStrength + setStationStrength(pStation)
 	pStation:onDestruction(humanStationDestroyed)
 	pStation.comms_data.orbit = string.format("orbiting %s with the inner asteroids at a distance of %.1fU",planetSol:getCallSign(),beltOrbit1/1000)
@@ -1387,9 +1387,11 @@ function buildLocalSolarSystem()
 	psx = tertiusX+plx
 	psy = tertiusY+ply
 	stationFaction = "Human Navy"
-	si = math.random(1,#placeStation)			--station index
-	pStation = placeStation[si]()				--place selected station
-	table.remove(placeStation,si)				--remove station from placement list
+	stationSize = "Large Station"
+--	si = math.random(1,#placeStation)			--station index
+	pStation = placeUtopiaPlanitia()	--placeStation[si]()				--place selected station
+--	table.remove(placeStation,si)				--remove station from placement list
+	stationSize = nil
 	humanStationStrength = humanStationStrength + setStationStrength(pStation)
 	pStation:onDestruction(humanStationDestroyed)
 	pStation.comms_data.orbit = string.format("orbiting %s with the moons and asteroids at a distance of %.1fU",planetTertius:getCallSign(),tertiusMoonOrbit/1000)
@@ -2221,15 +2223,21 @@ function chooseUpgradeGood(ideal_good,upgrade_station)
 	return required_good
 end
 function payForUpgrade()
-	if	(difficulty == 1 and mission_region < 2) or 
-		(difficulty == 1 and mission_complete_count < 5) or
-		(difficulty < 1 and mission_complete_count < 3) or
-		(difficulty > 1 and mission_region < 3) or
-		(difficulty > 1 and mission_complete_count < 7) then
+	if  (mission_region < 3) or
+		(mission_complete_count < 5) then
 		return true
 	else
 		return false
 	end
+--	if	(difficulty == 1 and mission_region < 2) or 
+--		(difficulty == 1 and mission_complete_count < 5) or
+--		(difficulty < 1 and mission_complete_count < 3) or
+--		(difficulty > 1 and mission_region < 3) or
+--		(difficulty > 1 and mission_complete_count < 7) then
+--		return true
+--	else
+--		return false
+--	end
 end
 function shrinkBeamCycle()
 	if comms_source.shrinkBeamCycleUpgrade == nil then
@@ -2243,6 +2251,7 @@ function shrinkBeamCycle()
 					end
 					if partQuantity > 0 then
 						comms_source.shrinkBeamCycleUpgrade = "done"
+						comms_target.comms_data.characterFunction = "upgradeTaken"
 						comms_source.goods[ctd.characterGood] = comms_source.goods[ctd.characterGood] - 1
 						comms_source.cargo = comms_source.cargo + 1
 						local bi = 0
@@ -2261,6 +2270,7 @@ function shrinkBeamCycle()
 					end
 				else
 					comms_source.shrinkBeamCycleUpgrade = "done"
+					comms_target.comms_data.characterFunction = "upgradeTaken"
 					bi = 0
 					repeat
 						tempArc = comms_source:getBeamWeaponArc(bi)
@@ -2290,6 +2300,7 @@ function increaseSpin()
 				end
 				if partQuantity > 0 then
 					comms_source.increaseSpinUpgrade = "done"
+					comms_target.comms_data.characterFunction = "upgradeTaken"
 					comms_source.goods[ctd.characterGood] = comms_source.goods[ctd.characterGood] - 1
 					comms_source.cargo = comms_source.cargo + 1
 					comms_source:setRotationMaxSpeed(comms_source:getRotationMaxSpeed()*1.5)
@@ -2299,6 +2310,7 @@ function increaseSpin()
 				end
 			else
 				comms_source.increaseSpinUpgrade = "done"
+				comms_target.comms_data.characterFunction = "upgradeTaken"
 				comms_source:setRotationMaxSpeed(player:getRotationMaxSpeed()*1.5)
 				setCommsMessage(string.format("%s: I increased the speed your ship spins by 50%%. Normally, I'd require %s, but seeing as you're going out to take on the Exuari, we worked it out",ctd.character,ctd.characterGood))
 			end
@@ -2320,6 +2332,7 @@ function addAuxTube()
 				end
 				if partQuantity > 0 and luxQuantity > 0 then
 					comms_source.auxTubeUpgrade = "done"
+					comms_target.comms_data.characterFunction = "upgradeTaken"
 					comms_source.goods[ctd.characterGood] = comms_source.goods[ctd.characterGood] - 1
 					comms_source.goods["luxury"] = comms_source.goods["luxury"] - 1
 					comms_source.cargo = comms_source.cargo + 2
@@ -2335,6 +2348,7 @@ function addAuxTube()
 				end
 			else
 				comms_source.auxTubeUpgrade = "done"
+				comms_target.comms_data.characterFunction = "upgradeTaken"
 				originalTubes = comms_source:getWeaponTubeCount()
 				newTubes = originalTubes + 1
 				comms_source:setWeaponTubeCount(newTubes)
@@ -2358,6 +2372,7 @@ function coolBeam()
 					end
 					if partQuantity > 0 then
 						comms_source.coolBeamUpgrade = "done"
+						comms_target.comms_data.characterFunction = "upgradeTaken"
 						comms_source.goods[ctd.characterGood] = comms_source.goods[ctd.characterGood] - 1
 						comms_source.cargo = comms_source.cargo + 1
 						local bi = 0
@@ -2371,6 +2386,7 @@ function coolBeam()
 					end
 				else
 					comms_source.coolBeamUpgrade = "done"
+					comms_target.comms_data.characterFunction = "upgradeTaken"
 					bi = 0
 					repeat
 						comms_source:setBeamWeaponHeatPerFire(bi,comms_source:getBeamWeaponHeatPerFire(bi) * 0.5)
@@ -2401,6 +2417,7 @@ function longerBeam()
 					end
 					if partQuantity > 0 then
 						comms_source.longerBeamUpgrade = "done"
+						comms_target.comms_data.characterFunction = "upgradeTaken"
 						comms_source.goods[ctd.characterGood] = comms_source.goods[ctd.characterGood] - 1
 						comms_source.cargo = comms_source.cargo + 1
 						local bi = 0
@@ -2419,6 +2436,7 @@ function longerBeam()
 					end
 				else
 					comms_source.longerBeamUpgrade = "done"
+					comms_target.comms_data.characterFunction = "upgradeTaken"
 					bi = 0
 					repeat
 						tempArc = comms_source:getBeamWeaponArc(bi)
@@ -2450,6 +2468,7 @@ function damageBeam()
 					end
 					if partQuantity > 0 then
 						comms_source.damageBeamUpgrade = "done"
+						comms_target.comms_data.characterFunction = "upgradeTaken"
 						comms_source.goods[ctd.characterGood] = comms_source.goods[ctd.characterGood] - 1
 						comms_source.cargo = comms_source.cargo + 1
 						local bi = 0
@@ -2468,6 +2487,7 @@ function damageBeam()
 					end
 				else
 					comms_source.damageBeamUpgrade = "done"
+					comms_target.comms_data.characterFunction = "upgradeTaken"
 					bi = 0
 					repeat
 						tempArc = comms_source:getBeamWeaponArc(bi)
@@ -2498,6 +2518,7 @@ function moreMissiles()
 					end
 					if partQuantity > 0 then
 						comms_source.moreMissilesUpgrade = "done"
+						comms_target.comms_data.characterFunction = "upgradeTaken"
 						comms_source.goods[ctd.characterGood] = comms_source.goods[ctd.characterGood] - 1
 						comms_source.cargo = comms_source.cargo + 1
 						local missile_types = {'Homing', 'Nuke', 'Mine', 'EMP', 'HVLI'}
@@ -2510,6 +2531,7 @@ function moreMissiles()
 					end
 				else
 					comms_source.moreMissilesUpgrade = "done"
+					comms_target.comms_data.characterFunction = "upgradeTaken"
 					missile_types = {'Homing', 'Nuke', 'Mine', 'EMP', 'HVLI'}
 					for _, missile_type in ipairs(missile_types) do
 						comms_source:setWeaponStorageMax(missile_type, math.ceil(comms_source:getWeaponStorageMax(missile_type)*1.25))
@@ -2533,6 +2555,7 @@ function fasterImpulse()
 				end
 				if partQuantity > 0 then
 					comms_source.fasterImpulseUpgrade = "done"
+					comms_target.comms_data.characterFunction = "upgradeTaken"
 					comms_source.goods[ctd.characterGood] = comms_source.goods[ctd.characterGood] - 1
 					comms_source.cargo = comms_source.cargo + 1
 					comms_source:setImpulseMaxSpeed(comms_source:getImpulseMaxSpeed()*1.25)
@@ -2542,6 +2565,7 @@ function fasterImpulse()
 				end
 			else
 				comms_source.fasterImpulseUpgrade = "done"
+				comms_target.comms_data.characterFunction = "upgradeTaken"
 				comms_source:setImpulseMaxSpeed(comms_source:getImpulseMaxSpeed()*1.25)
 				setCommsMessage(string.format("%s: Your impulse engines now push you up to 25%% faster. I didn't need %s after all. Go run circles around those blinking Exuari",ctd.character,ctd.characterGood))
 			end
@@ -2559,6 +2583,7 @@ function strongerHull()
 				end
 				if partQuantity > 0 then
 					comms_source.strongerHullUpgrade = "done"
+					comms_target.comms_data.characterFunction = "upgradeTaken"
 					comms_source.goods[ctd.characterGood] = comms_source.goods[ctd.characterGood] - 1
 					comms_source.cargo = comms_source.cargo + 1
 					comms_source:setHullMax(comms_source:getHullMax()*1.5)
@@ -2569,6 +2594,7 @@ function strongerHull()
 				end
 			else
 				comms_source.strongerHullUpgrade = "done"
+				comms_target.comms_data.characterFunction = "upgradeTaken"
 				comms_source:setHullMax(comms_source:getHullMax()*1.5)
 				comms_source:setHull(comms_source:getHullMax())
 				setCommsMessage(string.format("%s: I made your hull 50%% stronger. I scrounged some %s from around here since you are on the Exuari offense team",ctd.character,ctd.characterGood))
@@ -2587,6 +2613,7 @@ function efficientBatteries()
 				end
 				if partQuantity > 0 then
 					comms_source.efficientBatteriesUpgrade = "done"
+					comms_target.comms_data.characterFunction = "upgradeTaken"
 					comms_source.goods[ctd.characterGood] = comms_source.goods[ctd.characterGood] - 1
 					comms_source.cargo = comms_source.cargo + 1
 					comms_source:setMaxEnergy(comms_source:getMaxEnergy()*1.25)
@@ -2597,6 +2624,7 @@ function efficientBatteries()
 				end
 			else
 				comms_source.efficientBatteriesUpgrade = "done"
+				comms_target.comms_data.characterFunction = "upgradeTaken"
 				comms_source:setMaxEnergy(comms_source:getMaxEnergy()*1.25)
 				comms_source:setEnergy(comms_source:getMaxEnergy())
 				setCommsMessage(string.format("%s increased your battery efficiency by 25%% without the need for %s due to the pressing military demands on your ship",ctd.character,ctd.characterGood))
@@ -2615,6 +2643,7 @@ function strongerShields()
 				end
 				if partQuantity > 0 then
 					comms_source.strongerShieldsUpgrade = "done"
+					comms_target.comms_data.characterFunction = "upgradeTaken"
 					comms_source.goods[ctd.characterGood] = comms_source.goods[ctd.characterGood] - 1
 					comms_source.cargo = comms_source.cargo + 1
 					if comms_source:getShieldCount() == 1 then
@@ -2628,6 +2657,7 @@ function strongerShields()
 				end
 			else
 				comms_source.strongerShieldsUpgrade = "done"
+				comms_target.comms_data.characterFunction = "upgradeTaken"
 				if comms_source:getShieldCount() == 1 then
 					comms_source:setShieldsMax(comms_source:getShieldMax(0)*1.2)
 				else
@@ -2637,6 +2667,9 @@ function strongerShields()
 			end
 		end)
 	end
+end
+function upgradeTaken()
+	setCommsMessage(string.format("The upgrade %s could provide was already installed on another ship.",comms_target.comms_data.character))
 end
 function setGoodsList()
 	--list of goods available to buy, sell or trade (sell still under development)
@@ -2715,7 +2748,7 @@ function setListOfStations()
 					placeMarconi,			--32
 					--placeMayo,				--33
 					placeMiller,			--34
-					placeMuddville,			--35
+					--placeMuddville,			--35
 					placeNexus6,			--36
 					placeOBrien,			--37
 					placeOlympus,			--38
@@ -2733,7 +2766,7 @@ function setListOfStations()
 					placeTiberius,			--50
 					placeTokra,				--51
 					placeToohie,			--52
-					placeUtopiaPlanitia,	--53
+					--placeUtopiaPlanitia,	--53
 					placeVactel,			--54
 					placeVeloquan,			--55
 					placeZefram}			--56
@@ -6222,6 +6255,9 @@ function handleDockedState()
 			end
 			if ctd.characterFunction == "strongerShields" then
 				strongerShields()
+			end
+			if ctd.characterFunction == "upgradeTaken" then
+				upgradeTaken()
 			end
 			addCommsReply("Back", commsStation)
 		end)
