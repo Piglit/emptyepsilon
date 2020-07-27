@@ -465,17 +465,53 @@ for sizeName, sizeValues in pairs(sizes) do
     model:addEngineEmitter(-1.1,-0.7, 0.0,  0.5, 0.5, 1.0, 0.4)
     model:addEngineEmitter(-1.1,-1.05, 0.0,  0.5, 0.5, 1.0, 0.4)
 
-    --variation with side beams and frontal tubes
-    --model:addBeamPosition(-0.0, -1.3, -0)
-    --model:addBeamPosition(-0.0,  1.3, -0)
-    --model:addBeamPosition(-0.8, -1.3, -0)
-    --model:addBeamPosition(-0.8,  1.3, -0)
-    --model:addTubePosition(2.1, -0, 0)
-    --model:addTubePosition(1, -0.4, 0)
-    --model:addTubePosition(1,  0.4, 0)
-    --model:addTubePosition(-1, 0, 0) --Mine tube
+	model = ModelData()
+    model:setName("AtlasLaser" .. sizeName .. color)
+    model:setMesh("AtlasHeavyFighter/AtlasHeavyFighterHull.model")
+    model:setTexture("AtlasHeavyFighter/AlbedoAO/AtlasHeavyFighter"..color.."AlbedoAO.png")
+    model:setSpecular("AtlasHeavyFighter/AtlasHeavyFighterPBRSpecular.png")
+    model:setIllumination("AtlasHeavyFighter/AtlasHeavyFighterIllumination.png")
+    model:setScale(sizeValues[1])
+    model:setRadius(sizeValues[2])
 
-    model = ModelData()
+	--variation with more beams 
+    model:addBeamPosition(2.4, 0.0, -0.25)
+    model:addBeamPosition(1.0,-0.4,  0.0)
+    model:addBeamPosition(1.0, 0.4,  0.0)
+    model:addBeamPosition(0.0, -1.2, 0.0)
+    model:addBeamPosition(0.0,  1.2, 0.0)
+    model:addBeamPosition(-1, 0.0, 0.0)
+    model:addTubePosition(-0.5, -1.2, 0)
+    model:addTubePosition(-0.5,  1.2, 0)
+    model:addTubePosition(-1, 0, 0) --Mine tube
+    model:addEngineEmitter(-1.1, 0.7, 0.0,  0.5, 0.5, 1.0, 0.4)
+    model:addEngineEmitter(-1.1, 1.05, 0.0,  0.5, 0.5, 1.0, 0.4)
+    model:addEngineEmitter(-1.1,-0.7, 0.0,  0.5, 0.5, 1.0, 0.4)
+    model:addEngineEmitter(-1.1,-1.05, 0.0,  0.5, 0.5, 1.0, 0.4)
+
+	model = ModelData()
+    model:setName("AtlasMissile" .. sizeName .. color)
+    model:setMesh("AtlasHeavyFighter/AtlasHeavyFighterHull.model")
+    model:setTexture("AtlasHeavyFighter/AlbedoAO/AtlasHeavyFighter"..color.."AlbedoAO.png")
+    model:setSpecular("AtlasHeavyFighter/AtlasHeavyFighterPBRSpecular.png")
+    model:setIllumination("AtlasHeavyFighter/AtlasHeavyFighterIllumination.png")
+    model:setScale(sizeValues[1])
+    model:setRadius(sizeValues[2])
+
+    --variation with side tubes and frontal beams
+    model:addBeamPosition(2.4,-0.1, -0.25)
+    model:addBeamPosition(2.4, 0.1, -0.25)
+    model:addTubePosition(1.8,-0.4, -0.3)
+    model:addTubePosition(1.8, 0.4, -0.3)
+    model:addTubePosition(-0.5, -1.2, 0)
+    model:addTubePosition(-0.5,  1.2, 0)
+    model:addTubePosition(-1, 0, 0) --Mine tube
+    model:addEngineEmitter(-1.1, 0.7, 0.0,  0.5, 0.5, 1.0, 0.4)
+    model:addEngineEmitter(-1.1, 1.05, 0.0,  0.5, 0.5, 1.0, 0.4)
+    model:addEngineEmitter(-1.1,-0.7, 0.0,  0.5, 0.5, 1.0, 0.4)
+    model:addEngineEmitter(-1.1,-1.05, 0.0,  0.5, 0.5, 1.0, 0.4)
+
+	model = ModelData()
     model:setName("Lindwurm" .. sizeName .. color)
     model:setMesh("LindwurmFighter/LindwurmFighterHull.model")
     model:setTexture("LindwurmFighter/AlbedoAO/LindwurmFighter"..color.."AlbedoAO.png")
