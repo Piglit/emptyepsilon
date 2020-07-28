@@ -2669,7 +2669,7 @@ function strongerShields()
 	end
 end
 function upgradeTaken()
-	setCommsMessage(string.format("The upgrade %s could provide was already installed on another ship.",comms_target.comms_data.character))
+	setCommsMessage(string.format("The upgrade %s could provide is no longer available since it is already installed on a ship.",comms_target.comms_data.character))
 end
 function setGoodsList()
 	--list of goods available to buy, sell or trade (sell still under development)
