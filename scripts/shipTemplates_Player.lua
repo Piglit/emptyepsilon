@@ -1,12 +1,16 @@
 --This file contains player variations of human ships
 --For better readability, the original templates are copied
 
+require("shipSystems.lua") -- contains addSystems*
+
 color_player = "White" --change it if you want another style
+
 
 
 --[[Starfighter--]]
 
-template = ShipTemplate():setName("MP52 Hornet"):setClass("Starfighter", "Interceptor"):setModel("WespeFighter"..color_player):setType("playership")
+template = ShipTemplate():setName("MP52 Hornet"):setClass("Starfighter", "Interceptor"):setType("playership")
+template:setModel("WespeFighter"..color_player)
 template:setRadarTrace("radar_fighter.png")
 template:setDescription([[The Hornet is a basic interceptor found in many corners of the galaxy. 
 The MP52 Hornet is a significantly upgraded version of MU52 Hornet, with nearly twice the hull strength, nearly three times the shielding, better acceleration, impulse boosters, and a second laser cannon. Combat maneuver systems are included.]])
@@ -30,25 +34,7 @@ template:setCanCombatManeuver(false)
 template:setCanLaunchProbe(false)
 template:setCanSelfDestruct(false)
 
-template:addRoomSystem(3, 0, 1, 1, "Maneuver");
-template:addRoomSystem(1, 0, 2, 1, "BeamWeapons");
-template:addRoomSystem(0, 1, 1, 2, "RearShield");
-template:addRoomSystem(1, 1, 2, 2, "Reactor");
-template:addRoomSystem(3, 1, 2, 1, "Warp");
-template:addRoomSystem(3, 2, 2, 1, "JumpDrive");
-template:addRoomSystem(5, 1, 1, 2, "FrontShield");
-template:addRoomSystem(1, 3, 2, 1, "MissileSystem");
-template:addRoomSystem(3, 3, 1, 1, "Impulse");
-
-template:addDoor(2, 1, true);
-template:addDoor(3, 1, true);
-template:addDoor(1, 1, false);
-template:addDoor(3, 1, false);
-template:addDoor(3, 2, false);
-template:addDoor(3, 3, true);
-template:addDoor(2, 3, true);
-template:addDoor(5, 1, false);
-template:addDoor(5, 2, false);
+addSystemsWespe(template)
 
 --[[Bomber--]]
 
@@ -85,28 +71,7 @@ template:setCanDock(true)
 template:setCanCombatManeuver(false)
 template:setCanLaunchProbe(false)
 template:setCanSelfDestruct(false)
-
-template:addRoomSystem(0,0,1,3,"RearShield")
-template:addRoomSystem(1,1,3,1,"MissileSystem")
-template:addRoomSystem(4,1,2,1,"Beamweapons")
-template:addRoomSystem(3,2,2,1,"Reactor")
-template:addRoomSystem(2,3,2,1,"Warp")
-template:addRoomSystem(4,3,5,1,"JumpDrive")
-template:addRoomSystem(0,4,1,3,"Impulse")
-template:addRoomSystem(3,4,2,1,"Maneuver")
-template:addRoomSystem(1,5,3,1,"FrontShield")
-template:addRoom(4,5,2,1)
-
-template:addDoor(1,1,false)
-template:addDoor(1,5,false)
-template:addDoor(3,2,true)
-template:addDoor(4,2,true)
-template:addDoor(3,3,true)
-template:addDoor(4,3,true)
-template:addDoor(3,4,true)
-template:addDoor(4,4,true)
-template:addDoor(3,5,true)
-template:addDoor(4,5,true)
+addSystemsLindwurm(template)
 
 --[[Scout--]]
 template = ShipTemplate():setName("Adder MK7"):setClass("Starfighter", "Scout"):setType("playership")
@@ -136,27 +101,7 @@ template:setCanDock(true)
 template:setCanCombatManeuver(false)
 template:setCanLaunchProbe(true)
 template:setCanSelfDestruct(false)
-
-template:addRoomSystem(3, 0, 1, 1, "Maneuver");
-template:addRoomSystem(1, 0, 2, 1, "BeamWeapons");
-template:addRoomSystem(0, 1, 1, 2, "RearShield");
-template:addRoomSystem(1, 1, 2, 2, "Reactor");
-template:addRoomSystem(3, 1, 2, 1, "Warp");
-template:addRoomSystem(3, 2, 2, 1, "JumpDrive");
-template:addRoomSystem(5, 1, 1, 2, "FrontShield");
-template:addRoomSystem(1, 3, 2, 1, "MissileSystem");
-template:addRoomSystem(3, 3, 1, 1, "Impulse");
-
-template:addDoor(2, 1, true);
-template:addDoor(3, 1, true);
-template:addDoor(1, 1, false);
-template:addDoor(3, 1, false);
-template:addDoor(3, 2, false);
-template:addDoor(3, 3, true);
-template:addDoor(2, 3, true);
-template:addDoor(5, 1, false);
-template:addDoor(5, 2, false);
-
+addSystemsAdler(template)
 
 --[[ Player Light Cruiser--]]
 template = ShipTemplate():setName("Phobos M3P"):setClass("Frigate", "Light Cruiser"):setType("playership")
@@ -181,35 +126,7 @@ template:setWeaponStorage("Nuke", 2)
 template:setWeaponStorage("Mine", 4)
 template:setWeaponStorage("EMP", 3)
 template:setJumpDrive(true)
-
-template:addRoomSystem(4, 2, 2, 1, "Maneuver");
-template:addRoomSystem(2, 1, 2, 1, "BeamWeapons");
-template:addRoom(2, 2, 2, 1);
-template:addRoomSystem(0, 3, 1, 2, "RearShield");
-template:addRoomSystem(1, 3, 2, 2, "Reactor");
-template:addRoomSystem(3, 3, 2, 2, "Warp");
-template:addRoomSystem(5, 3, 1, 2, "JumpDrive");
-template:addRoom(6, 3, 2, 1);
-template:addRoom(6, 4, 2, 1);
-template:addRoomSystem(8, 3, 1, 2, "FrontShield");
-template:addRoom(2, 5, 2, 1);
-template:addRoomSystem(2, 6, 2, 1, "MissileSystem");
-template:addRoomSystem(4, 5, 2, 1, "Impulse");
-
-template:addDoor(4, 3, true);
-template:addDoor(2, 2, true);
-template:addDoor(3, 3, true);
-template:addDoor(1, 3, false);
-template:addDoor(3, 4, false);
-template:addDoor(3, 5, true);
-template:addDoor(2, 6, true);
-template:addDoor(4, 5, true);
-template:addDoor(5, 3, false);
-template:addDoor(6, 3, false);
-template:addDoor(6, 4, false);
-template:addDoor(8, 3, false);
-template:addDoor(8, 4, false);
-
+addSystemsMulitGun(template)
 
 --[[ Player Laser Battlecruiser --]]
 template = ShipTemplate():setName("Hathcock"):setClass("Frigate", "Battlecruiser"):setType("playership") 
@@ -234,35 +151,7 @@ template:setTubeDirection(1,  90)
 template:setWarpSpeed(500)
 
 template:setRepairCrewCount(2)
---	(H)oriz, (V)ert	   HC,VC,HS,VS, system    (C)oordinate (S)ize
-template:addRoomSystem( 0, 3, 2, 2, "Impulse")
-template:addRoomSystem( 2, 3, 2, 2, "Reactor")
-template:addRoomSystem( 2, 0, 2, 2, "JumpDrive")
-template:addRoomSystem( 2, 6, 2, 2, "Warp")
-template:addRoomSystem( 4, 5, 2, 1, "RearShield")
-template:addRoomSystem( 4, 2, 2, 1, "MissileSystem")
-template:addRoomSystem( 6, 3, 2, 1, "Maneuver")
-template:addRoomSystem( 8, 2, 2, 4, "Beamweapons")
-template:addRoomSystem(10, 3, 1, 2, "FrontShield")
-template:addRoom( 1, 2, 3, 1)
-template:addRoom( 1, 5, 3, 1)
-template:addRoom( 4, 3, 2, 2)
-template:addRoom( 6, 4, 2, 1)
-
---(H)oriz, (V)ert H, V, true = horizontal
-template:addDoor( 2, 2, true)
-template:addDoor( 1, 3, true)
-template:addDoor( 1, 5, true)
-template:addDoor( 3, 6, true)
-template:addDoor( 4, 5, true)
-template:addDoor( 6, 4, true)
-template:addDoor( 2, 4, false)
-template:addDoor( 4, 2, false)
-template:addDoor( 4, 5, false)
-template:addDoor( 6, 4, false)
-template:addDoor( 8, 4, false)
-template:addDoor(10, 4, false)
-
+addSystemsLaserAlt(template)
 
 --[[Player Missile Cruiser--]]
 template = ShipTemplate():setName("Piranha M5P"):setClass("Frigate", "Missile Cruiser"):setType("playership")
@@ -291,29 +180,7 @@ template:setSpeed(60, 10, 16)
 template:setCombatManeuver(200, 150)
 template:setJumpDrive(true)
 template:setRepairCrewCount(2)
-
-template:addRoomSystem(0, 2, 2, 1, "BeamWeapons");
-template:addRoomSystem(4, 2, 2, 1, "FrontShield");
-template:addRoom(2, 2, 2, 1);
-template:addRoomSystem(0, 3, 2, 2, "Impulse");
-template:addRoomSystem(2, 3, 1, 2, "Warp");
-template:addRoomSystem(3, 3, 2, 2, "Reactor");
-template:addRoomSystem(5, 3, 2, 2, "JumpDrive");
-template:addRoomSystem(7, 3, 1, 2, "Maneuver");
-template:addRoom(2, 5, 2, 1);
-template:addRoomSystem(4, 5, 2, 1, "MissileSystem");
-template:addRoomSystem(0, 5, 2, 1, "RearShield");
-template:addDoor(1, 3, true);
-template:addDoor(4, 3, true);
-template:addDoor(3, 3, true);
-template:addDoor(2, 3, false);
-template:addDoor(3, 4, false);
-template:addDoor(3, 5, true);
-template:addDoor(4, 5, true);
-template:addDoor(1, 5, true);
-template:addDoor(5, 3, false);
-template:addDoor(7, 3, false);
-template:addDoor(7, 4, false);
+addSystemsHeavy(template)
 
 --[[Player Transport--]]
 template = ShipTemplate():setName("Flavia P.Falcon"):setClass("Frigate", "Light transport"):setType("playership")
@@ -339,32 +206,7 @@ template:setWeaponStorage("Homing", 3)
 template:setWeaponStorage("Mine", 1)
 template:setWeaponStorage("Nuke", 1)
 template:setRepairCrewCount(8)
-
-template:addRoom(1, 0, 6, 1)
-template:addRoom(1, 5, 6, 1)
-template:addRoomSystem(0, 1, 2, 2, "RearShield")
-template:addRoomSystem(0, 3, 2, 2, "MissileSystem")
-template:addRoomSystem(2, 1, 2, 2, "Beamweapons")
-template:addRoomSystem(2, 3, 2, 2, "Reactor")
-template:addRoomSystem(4, 1, 2, 2, "Warp")
-template:addRoomSystem(4, 3, 2, 2, "JumpDrive")
-template:addRoomSystem(6, 1, 2, 2, "Impulse")
-template:addRoomSystem(6, 3, 2, 2, "Maneuver")
-template:addRoomSystem(8, 2, 2, 2, "FrontShield")
-
-template:addDoor(1, 1, true)
-template:addDoor(3, 1, true)
-template:addDoor(4, 1, true)
-template:addDoor(6, 1, true)
-template:addDoor(4, 3, true)
-template:addDoor(5, 3, true)
-template:addDoor(8, 2, false)
-template:addDoor(8, 3, false)
-template:addDoor(1, 5, true)
-template:addDoor(2, 5, true)
-template:addDoor(5, 5, true)
-template:addDoor(6, 5, true)
-
+addSystemsLight(template)
 
 template = ShipTemplate():setName("Repulse"):setClass("Frigate", "Armored Transport"):setModel("LightCorvette"..color_player):setType("playership")
 template:setRadarTrace("radar_tug.png")
@@ -387,31 +229,7 @@ template:setWeaponStorage("HVLI", 6)
 template:setWeaponStorage("Homing", 4)
 
 template:setRepairCrewCount(8)
---	(H)oriz, (V)ert	   HC,VC,HS,VS, system    (C)oordinate (S)ize
-template:addRoomSystem( 0, 1, 2, 4, "Impulse")
-template:addRoomSystem( 2, 0, 2, 2, "RearShield")
-template:addRoomSystem( 2, 2, 2, 2, "Warp")
-template:addRoom( 2, 4, 2, 2)
-template:addRoomSystem( 4, 1, 1, 4, "Maneuver")
-template:addRoom( 5, 0, 2, 2)
-template:addRoomSystem( 5, 2, 2, 2, "JumpDrive")
-template:addRoomSystem( 5, 4, 2, 2, "Beamweapons")
-template:addRoomSystem( 7, 1, 3, 2, "Reactor")
-template:addRoomSystem( 7, 3, 3, 2, "MissileSystem")
-template:addRoomSystem(10, 2, 2, 2, "FrontShield")
-
-template:addDoor( 2, 2, false)
-template:addDoor( 2, 4, false)
-template:addDoor( 3, 2, true)
-template:addDoor( 4, 3, false)
-template:addDoor( 5, 2, false)
-template:addDoor( 5, 4, true)
-template:addDoor( 7, 3, false)
-template:addDoor( 7, 1, false)
-template:addDoor( 8, 3, true)
-template:addDoor(10, 2, false)
-
-
+addSystemsLight(template)
 
 --[[Mine Layer--]]
 template = ShipTemplate():setName("Nautilus"):setType("playership"):setClass("Frigate","Mine Layer"):setModel("MineLayerCorvette"..color_player)
@@ -436,27 +254,7 @@ template:setTubeDirection(2, 180)
 template:setWeaponStorage("Mine", 12)
 
 template:setRepairCrewCount(4)
---	(H)oriz, (V)ert	   HC,VC,HS,VS, system    (C)oordinate (S)ize
-template:addRoomSystem( 0, 1, 1, 2, "Impulse")
-template:addRoomSystem( 1, 0, 2, 1, "RearShield")
-template:addRoomSystem( 1, 1, 2, 2, "JumpDrive")
-template:addRoomSystem( 1, 3, 2, 1, "FrontShield")
-template:addRoomSystem( 3, 0, 2, 1, "Beamweapons")
-template:addRoomSystem( 3, 1, 3, 1, "Warp")
-template:addRoomSystem( 3, 2, 3, 1, "Reactor")
-template:addRoomSystem( 3, 3, 2, 1, "MissileSystem")
-template:addRoomSystem( 6, 1, 1, 2, "Maneuver")
-
--- (H)oriz, (V)ert H, V, true = horizontal
-template:addDoor( 1, 1, false)
-template:addDoor( 2, 1, true)
-template:addDoor( 1, 3, true)
-template:addDoor( 3, 2, false)
-template:addDoor( 4, 3, true)
-template:addDoor( 6, 1, false)
-template:addDoor( 4, 2, true)
-template:addDoor( 4, 1, true)
-
+addSystemsMineLayer(template)
 
 --[[Corvette--]]
 template = ShipTemplate():setName("Atlantis"):setClass("Corvette", "Destroyer"):setModel("AtlasHeavyDreadnought"..color_player):setType("playership")
@@ -485,35 +283,7 @@ template:setTubeDirection(2,  90)
 template:setTubeDirection(3,  90)
 template:setTubeDirection(4, 180):setWeaponTubeExclusiveFor(4, "Mine")
 template:setDockClasses("Starfighter")
-
-template:addRoomSystem(1, 0, 2, 1, "Maneuver");
-template:addRoomSystem(1, 1, 2, 1, "BeamWeapons");
-template:addRoom(2, 2, 2, 1);
-template:addRoomSystem(0, 3, 1, 2, "RearShield");
-template:addRoomSystem(1, 3, 2, 2, "Reactor");
-template:addRoomSystem(3, 3, 2, 2, "Warp");
-template:addRoomSystem(5, 3, 1, 2, "JumpDrive");
-template:addRoom(6, 3, 2, 1);
-template:addRoom(6, 4, 2, 1);
-template:addRoomSystem(8, 3, 1, 2, "FrontShield");
-template:addRoom(2, 5, 2, 1);
-template:addRoomSystem(1, 6, 2, 1, "MissileSystem");
-template:addRoomSystem(1, 7, 2, 1, "Impulse");
-template:addDoor(1, 1, true);
-template:addDoor(2, 2, true);
-template:addDoor(3, 3, true);
-template:addDoor(1, 3, false);
-template:addDoor(3, 4, false);
-template:addDoor(3, 5, true);
-template:addDoor(2, 6, true);
-template:addDoor(1, 7, true);
-template:addDoor(5, 3, false);
-template:addDoor(6, 3, false);
-template:addDoor(6, 4, false);
-template:addDoor(8, 3, false);
-template:addDoor(8, 4, false);
- 
-
+addSystemsAtlasAlt(template)
 
 --[[Missile Corvette--]]
 template = ShipTemplate():setName("Crucible"):setLocaleName(_("Crucible")):setClass(_("Corvette"),_("Popper")):setModel("AtlasMissileDreadnought"..color_player):setType("playership")
@@ -549,27 +319,7 @@ template:setWeaponTubeExclusiveFor(4, "Mine")
 template:setDockClasses("Starfighter")
 
 template:setRepairCrewCount(4)
-
-template:addRoomSystem(2, 0, 2, 1, "Maneuver");
-template:addRoomSystem(1, 1, 2, 1, "BeamWeapons");
-template:addRoomSystem(0, 2, 3, 2, "RearShield");
-template:addRoomSystem(1, 4, 2, 1, "Reactor");
-template:addRoomSystem(2, 5, 2, 1, "Warp");
-template:addRoomSystem(3, 1, 3, 2, "JumpDrive");
-template:addRoomSystem(3, 3, 3, 2, "FrontShield");
-template:addRoom(6, 2, 6, 2);
-template:addRoomSystem(9, 1, 2, 1, "MissileSystem");
-template:addRoomSystem(9, 4, 2, 1, "Impulse");
-
-template:addDoor(2, 1, true)
-template:addDoor(1, 2, true)
-template:addDoor(1, 4, true)
-template:addDoor(2, 5, true)
-template:addDoor(3, 2, false)
-template:addDoor(4, 3, true)
-template:addDoor(6, 3, false)
-template:addDoor(9, 2, true)
-template:addDoor(10,4, true)
+addSystemsAtlas(template)
 
 --[[Beam Corvette--]]
 template = ShipTemplate():setName("Maverick"):setLocaleName(_("Maverick")):setClass(_("Corvette"),_("Gunner")):setModel("AtlasLaserDreadnought"..color_player):setType("playership")
@@ -605,28 +355,7 @@ template:setWeaponTubeExclusiveFor(2, "Mine")
 
 template:setDockClasses("Starfighter")
 template:setRepairCrewCount(4)
-
-template:addRoomSystem(2, 0, 2, 1, "Maneuver");
-template:addRoomSystem(1, 1, 2, 1, "BeamWeapons");
-template:addRoomSystem(0, 2, 3, 2, "RearShield");
-template:addRoomSystem(1, 4, 2, 1, "Reactor");
-template:addRoomSystem(2, 5, 2, 1, "Warp");
-template:addRoomSystem(3, 1, 3, 2, "JumpDrive");
-template:addRoomSystem(3, 3, 3, 2, "FrontShield");
-template:addRoom(6, 2, 6, 2);
-template:addRoomSystem(9, 1, 2, 1, "MissileSystem");
-template:addRoomSystem(9, 4, 2, 1, "Impulse");
-
-template:addDoor(2, 1, true)
-template:addDoor(1, 2, true)
-template:addDoor(1, 4, true)
-template:addDoor(2, 5, true)
-template:addDoor(3, 2, false)
-template:addDoor(4, 3, true)
-template:addDoor(6, 3, false)
-template:addDoor(9, 2, true)
-template:addDoor(10,4, true)
-
+addSystemsAtlas(template)
  
 --[[---------------------Carrier------------------------]]
 template = ShipTemplate():setName("Benedict"):setClass("Corvette", "Freighter"):setModel("transport_4_2")
@@ -653,26 +382,9 @@ template:setRestocksMissilesDocked(true)
 template:setSharesEnergyWithDocked(true)
 template:setRestocksScanProbes(true)
 template:setRepairDocked(true)
+addSystemsTransport(template)
 
 template:setRepairCrewCount(6)
-template:addRoomSystem(3,0,2,3, "Reactor")
-template:addRoomSystem(3,3,2,3, "Warp")
-template:addRoomSystem(6,0,2,3, "JumpDrive")
-template:addRoomSystem(6,3,2,3, "MissileSystem")
-template:addRoomSystem(5,2,1,2, "Maneuver")
-template:addRoomSystem(2,2,1,2, "RearShield")
-template:addRoomSystem(0,1,2,4, "Beamweapons")
-template:addRoomSystem(8,2,1,2, "FrontShield")
-template:addRoomSystem(9,1,2,4, "Impulse")
-template:addDoor(3, 3, true)
-template:addDoor(6, 3, true)
-template:addDoor(5, 2, false)
-template:addDoor(6, 3, false)
-template:addDoor(3, 2, false)
-template:addDoor(2, 3, false)
-template:addDoor(8, 2, false)
-template:addDoor(9, 3, false)
-
 var2 = template:copy("Kiriya")
 var2:setDescription("Kiriya is an improved warp drive version of the Jump Carrier")
 var2:setJumpDrive(false)
