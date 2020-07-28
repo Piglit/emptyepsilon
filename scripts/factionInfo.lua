@@ -103,6 +103,9 @@ reds:setEnemy(Hive)
 reds:setEnemy(GITM)
 reds:setDescription([[Despite appearing as a faction, criminals are distinguished primarily by having no strong affiliation with any faction at all. Pirates, outlaws and fugitives are considered criminals.]])
 
+empty = FactionInfo():setName("Black Ops")
+empty:setGMColor(70, 70, 70)
+empty:setDescription([[Seems to be an independend freighter.]])
 
 empty = FactionInfo():setName("Empty")
 empty:setGMColor(70, 70, 70)

@@ -6881,6 +6881,9 @@ function limitedWar(delta)
 				p:addToShipLog("    Intelligence reports Kraylors targeting civillian assets.","Magenta")
 				p:addToShipLog("    All Kraylor targets may be destroyed.","Magenta")
 				p:addToShipLog("End official dispatch","Magenta")
+				if p:getFaction() == "Black Ops" then
+					p:setFaction() == "Human Navy"
+				end
 			end
 		end
 		if GMFullWar ~= nil then
@@ -6942,8 +6945,6 @@ function evaluateInitialAssets()
 			table.insert(playerShipNames,p:getCallSign())
 			p:addToShipLog(string.format("To: Commanding officer of %s",p:getCallSign()),"Magenta")
 			p:addToShipLog("From: Human Navy Headquarters","Magenta")
-			p:addToShipLog("    Admiral Mini relieved of fleet command duties.","Magenta")
-			p:addToShipLog("    Admiral Pat is granted fleet authority.","Magenta")
 			p:addToShipLog("    Fleet assets know to respond to your Relay officer's directives.","Magenta")
 			p:addToShipLog("    Prepare for imminent Kraylor intrusion.","Magenta")
 		end
@@ -7529,6 +7530,7 @@ function spawnFighterFleet(originX, originY, fighterCount, faction)
 	local fighterScores = {["MT52 Hornet"]=5, ["MU52 Hornet"]=5, ["WX-Lindworm"]=7, ["Adder MK5"]=7, ["Adder MK4"]=6}
 	local fleetList = {}
 	local fleetPower = 0
+	--TODO test
 	fleetList, fleetPower = spawn_enemies_faction(originX, originY, fighterCount, faction, fighterNames, fighterScores, true)
 	
 	if enemyFaction == "Kraylor" then
@@ -7693,14 +7695,14 @@ function playerBorderCheck(delta)
 		if tbz ~= nil then
 			if playerOutOfBounds then
 				if tbz.playerDetected == nil then
-					tbz.playerDetected = 1
+					tbz.playerDetected = 0
 				else
 					if tbz.playerDetected >= 10 then
 						missionVictory = false
 						finalTimer = 2
 						plotPB = displayDefeatResults
 					else
-						tbz.playerDetected = tbz.playerDetected + 1
+						tbz.playerDetected = tbz.playerDetected + delta
 					end
 				end
 			else
@@ -7710,7 +7712,7 @@ function playerBorderCheck(delta)
 					if tbz.playerDetected <= 0 then
 						tbz.playerDetected = 0
 					else
-						tbz.playerDetected = tbz.playerDetected - 1
+						tbz.playerDetected = tbz.playerDetected - delta
 					end
 				end
 			end
