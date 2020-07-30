@@ -6910,7 +6910,7 @@ function limitedWar(delta)
 				p:addToShipLog("    All Kraylor targets may be destroyed.","Magenta")
 				p:addToShipLog("End official dispatch","Magenta")
 				if p:getFaction() == "Black Ops" then
-					p:setFaction() == "Human Navy"
+					p:setFaction("Human Navy")
 				end
 			end
 		end
