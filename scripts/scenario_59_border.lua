@@ -24,6 +24,9 @@ require("xansta_mods.lua")
 -----------------------------------------------------------------]]--
 function init()
 	print(_VERSION)
+	transport_faction = "Transport"
+	transport_faction_allied = "Blue Star Cartell"
+	industrial_faction = "Mining Corporation"
 	defaultGameTimeLimitInMinutes = 30	--final: 30 (lowered for test)
 	rawKraylorShipStrength = 0
 	rawHumanShipStrength = 0
@@ -1463,6 +1466,7 @@ function placeArcher()
 		else
 			goods[stationArcher] = {{"food",math.random(5,10),1},{"shield",5,90}}
 			tradeMedicine[stationArcher] = true
+			station$:setFaction(industrial_faction)
 		end
 	else
 		goods[stationArcher] = {{"shield",5,90}}
@@ -1484,6 +1488,7 @@ function placeArchimedes()
 		else
 			goods[stationArchimedes] = {{"food",math.random(5,10),1},{"beam",5,80}}
 			tradeMedicine[stationArchimedes] = true
+			station$:setFaction(industrial_faction)
 		end
 	else
 		goods[stationArchimedes] = {{"beam",5,80}}
@@ -1504,6 +1509,7 @@ function placeArmstrong()
 			goods[stationArmstrong] = {{"food",math.random(5,10),1},{"medicine",5,5},{"repulsor",5,62}}
 		else
 			goods[stationArmstrong] = {{"food",math.random(5,10),1},{"repulsor",5,62}}
+			station$:setFaction(industrial_faction)
 		end
 	else
 		goods[stationArmstrong] = {{"repulsor",5,62}}
@@ -1542,6 +1548,7 @@ function placeBarclay()
 		else
 			goods[stationBarclay] = {{"food",math.random(5,10),1},{"communication",5,58}}
 			tradeMedicine[stationBarclay] = true
+			station$:setFaction(industrial_faction)
 		end
 	else
 		goods[stationBarclay] = {{"communication",5,58}}
@@ -1574,6 +1581,7 @@ function placeBroeck()
 			goods[stationBroeck] = {{"food",math.random(5,10),1},{"warp",5,130}}		
 			if random(1,100) < 53 then tradeMedicine[stationBroeck] = true end
 			if random(1,100) < 62 then tradeLuxury[stationBroeck] = true end
+			station$:setFaction(industrial_faction)
 		end
 	else
 		goods[stationBroeck] = {{"warp",5,130}}
@@ -1590,6 +1598,7 @@ function placeCalifornia()
 	--California
 	stationCalifornia = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
 	stationCalifornia:setPosition(psx,psy):setCallSign("California"):setDescription("Mining station")
+	station$:setFaction(industrial_faction)
 	if stationFaction == "Human Navy" then
 		if random(1,5) <= 1 then
 			goods[stationCalifornia] = {{"food",math.random(5,10),1},{"medicine",5,5},{"gold",5,25},{"dilithium",2,25}}
@@ -1636,6 +1645,7 @@ function placeCavor()
 			else
 				tradeLuxury[stationCavor] = true
 			end
+			station$:setFaction(industrial_faction)
 		end
 	else
 		goods[stationCavor] = {{"filament",5,42}}
@@ -1681,6 +1691,7 @@ function placeCoulomb()
 		else
 			goods[stationCoulomb] = {{"food",math.random(5,10),1},{"circuit",5,50}}		
 			if random(1,100) < 27 then tradeMedicine[stationCoulomb] = true end
+			station$:setFaction(industrial_faction)
 		end
 	else
 		goods[stationCoulomb] = {{"circuit",5,50}}		
@@ -1703,6 +1714,7 @@ function placeCyrus()
 		else
 			goods[stationCyrus] = {{"food",math.random(5,10),1},{"impulse",5,124}}		
 			if random(1,100) < 34 then tradeMedicine[stationCyrus] = true end
+			station$:setFaction(industrial_faction)
 		end
 	else
 		goods[stationCyrus] = {{"impulse",5,124}}		
@@ -1745,6 +1757,7 @@ function placeDeer()
 		else
 			goods[stationDeer] = {{"food",math.random(5,10),1},{"tractor",5,90},{"repulsor",5,95}}		
 			tradeMedicine[stationDeer] = true
+			station$:setFaction(industrial_faction)
 		end
 	else
 		goods[stationDeer] = {{"tractor",5,90},{"repulsor",5,95}}		
@@ -1809,6 +1822,7 @@ function placeFeynman()
 			goods[stationFeynman] = {{"food",math.random(5,10),1},{"medicine",5,5},{"nanites",5,79},{"software",5,115}}
 		else
 			goods[stationFeynman] = {{"food",math.random(5,10),1},{"nanites",5,79},{"software",5,115}}		
+			station$:setFaction(industrial_faction)
 		end
 	else
 		goods[stationFeynman] = {{"nanites",5,79},{"software",5,115}}		
@@ -1830,6 +1844,7 @@ function placeGrasberg()
 	stationGrasberg.generalInformation = "We mine nearby asteroids for precious minerals and process them for sale"
 	stationGrasberg.stationHistory = "This station's name is inspired by a large gold mine on Earth in Indonesia. The station builders hoped to have a similar amount of minerals found amongst these asteroids"
 	grasbergGoods = random(1,100)
+	station$:setFaction(industrial_faction)
 	if stationFaction == "Human Navy" then
 		if random(1,5) <= 1 then
 			if grasbergGoods < 20 then
@@ -1934,6 +1949,7 @@ function placeImpala()
 	stationImpala.publicRelations = true
 	stationImpala.generalInformation = "We mine nearby asteroids for precious minerals"
 	impalaGoods = random(1,100)
+	station$:setFaction(industrial_faction)
 	if stationFaction == "Human Navy" then
 		if random(1,5) <= 1 then
 			if impalaGoods < 20 then
@@ -2006,6 +2022,7 @@ function placeKrak()
 	xNegAngleKrak, yNegAngleKrak = vectorFromAngle(negAxisKrak, negKrak)
 	negKrakEnd = random(40,80)
 	createRandomAlongArc(Asteroid, 30+negKrakEnd, psx+xNegAngleKrak, psy+yNegAngleKrak, negKrak, posAxisKrak, posAxisKrak+negKrakEnd, spreadKrak)
+	station$:setFaction(industrial_faction)
 	if random(1,100) < 50 then tradeFood[stationKrak] = true end
 	if random(1,100) < 50 then tradeLuxury[stationKrak] = true end
 	krakGoods = random(1,100)
@@ -2046,6 +2063,7 @@ function placeKruk()
 	xNegAngleKruk, yNegAngleKruk = vectorFromAngle(negAxisKruk, negKruk)
 	negKrukEnd = random(40,80)
 	createRandomAlongArc(Asteroid, 30+negKrukEnd, psx+xNegAngleKruk, psy+yNegAngleKruk, negKruk, posAxisKruk, posAxisKruk+negKrukEnd, spreadKruk)
+	station$:setFaction(industrial_faction)
 	krukGoods = random(1,100)
 	if krukGoods < 10 then
 		goods[stationKruk] = {{"nickel",5,20},{"platinum",5,70},{"tritanium",5,50},{"dilithium",5,50}}
@@ -2121,6 +2139,7 @@ function placeMaiman()
 		else
 			goods[stationMaiman] = {{"food",math.random(5,10),1},{"beam",5,70}}		
 			tradeMedicine[stationMaiman] = true 
+			station$:setFaction(industrial_faction)
 		end
 	else
 		goods[stationMaiman] = {{"beam",5,70}}		
@@ -2141,6 +2160,7 @@ function placeMarconi()
 		else
 			goods[stationMarconi] = {{"food",math.random(5,10),1},{"beam",5,80}}		
 			tradeMedicine[stationMarconi] = true 
+			station$:setFaction(industrial_faction)
 		end
 	else
 		goods[stationMarconi] = {{"beam",5,80}}		
@@ -2279,6 +2299,7 @@ function placeOutpost15()
 	stationOutpost15:setPosition(psx,psy):setCallSign("Outpost-15"):setDescription("Mining and trade")
 	tradeFood[stationOutpost15] = true
 	outpost15Goods = random(1,100)
+	station$:setFaction(industrial_faction)
 	if stationFaction == "Human Navy" then
 		if random(1,5) <= 1 then
 			if outpost15Goods < 20 then
@@ -2322,6 +2343,7 @@ function placeOutpost21()
 	stationOutpost21:setPosition(psx,psy):setCallSign("Outpost-21"):setDescription("Mining and gambling")
 	placeRandomAroundPoint(Asteroid,15,1,15000,psx,psy)
 	outpost21Goods = random(1,100)
+	station$:setFaction(industrial_faction)
 	if stationFaction == "Human Navy" then
 		if random(1,5) <= 1 then
 			if outpost21Goods < 20 then
@@ -2435,6 +2457,7 @@ function placeRutherford()
 		else
 			goods[stationRutherford] = {{"food",math.random(5,10),1},{"shield",5,90}}		
 			tradeMedicine[stationRutherford] = true 
+			station$:setFaction(industrial_faction)
 		end
 	else
 		goods[stationRutherford] = {{"shield",5,90}}		
@@ -2464,6 +2487,7 @@ function placeShawyer()
 		else
 			goods[stationShawyer] = {{"food",math.random(5,10),1},{"impulse",5,100}}		
 			tradeMedicine[stationShawyer] = true 
+			station$:setFaction(industrial_faction)
 		end
 	else
 		goods[stationShawyer] = {{"impulse",5,100}}		
@@ -2485,6 +2509,7 @@ function placeShree()
 		else
 			goods[stationShree] = {{"food",math.random(5,10),1},{"tractor",5,90},{"repulsor",5,95}}		
 			tradeMedicine[stationShree] = true 
+			station$:setFaction(industrial_faction)
 		end
 	else
 		goods[stationShree] = {{"tractor",5,90},{"repulsor",5,95}}		
@@ -2569,6 +2594,7 @@ function placeToohie()
 		else
 			goods[stationToohie] = {{"food",math.random(5,10),1},{"shield",5,90}}		
 			if random(1,100) < 25 then tradeMedicine[stationToohie] = true end
+			station$:setFaction(industrial_faction)
 		end
 	else
 		goods[stationToohie] = {{"shield",5,90}}		
@@ -2589,6 +2615,7 @@ function placeUtopiaPlanitia()
 			goods[stationUtopiaPlanitia] = {{"food",math.random(5,10),1},{"medicine",5,5},{"warp",5,167}}
 		else
 			goods[stationUtopiaPlanitia] = {{"food",math.random(5,10),1},{"warp",5,167}}
+			station$:setFaction(industrial_faction)
 		end
 	else
 		goods[stationUtopiaPlanitia] = {{"warp",5,167}}
@@ -2646,6 +2673,7 @@ function placeZefram()
 		else
 			goods[stationZefram] = {{"food",math.random(5,10),1},{"warp",5,140}}		
 			if random(1,100) < 27 then tradeMedicine[stationZefram] = true end
+			station$:setFaction(industrial_faction)
 		end
 	else
 		goods[stationZefram] = {{"warp",5,140}}		
@@ -6662,7 +6690,7 @@ function independentTransportPlot(delta)
 				else
 					name = name .. " Freighter " .. irandom(1, 5)
 				end
-				obj = CpuShip():setTemplate(name):setFaction('Independent'):setCommsScript(""):setCommsFunction(commsShip)
+				obj = CpuShip():setTemplate(name):setFaction(transport_faction):setCommsScript(""):setCommsFunction(commsShip)
 				obj.target = target
 				obj.undock_delay = irandom(1,4)
 				rifl = math.floor(random(1,#goodsList))	-- random item from list
@@ -6745,7 +6773,7 @@ function friendlyTransportPlot(delta)
 					fSize = irandom(1, 5)
 					name = name .. " Freighter " .. fSize
 				end
-				obj = CpuShip():setTemplate(name):setFaction('Human Navy'):setCommsScript(""):setCommsFunction(commsShip)
+				obj = CpuShip():setTemplate(name):setFaction(transport_faction_allied):setCommsScript(""):setCommsFunction(commsShip)
 				obj.target = target
 				obj.undock_delay = irandom(1,4)
 				local rifl = math.floor(random(1,#goodsList))	-- random item from list

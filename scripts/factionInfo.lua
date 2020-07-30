@@ -110,3 +110,16 @@ empty:setDescription([[Seems to be an independend freighter.]])
 empty = FactionInfo():setName("Empty")
 empty:setGMColor(70, 70, 70)
 empty:setDescription([[Does not belong to a faction. Abandoned stations or ships can be empty.]])
+
+tau = FactionInfo():setName("Tau Ceti")
+tau:setGMColor(128, 128, 128)
+tau:setDescription([[Inhabitants of the Tau Ceti system.
+Some of them are human, but Tau Ceti is a cultural melting pot of different exotic species.]])
+tau:setEnemy(exuari)
+
+transporter = FactionInfo():setName("Transport")
+transporter:setGMColor(128, 128, 128)
+transporter:setDescription([[Ships performing the carrying business]])
+transporter:setFriendly(blues)
+transporter:setEnemy(exuari)
+

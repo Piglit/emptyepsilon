@@ -38,6 +38,7 @@ require("utils.lua")
 require("xansta_mods.lua")
 
 function init()
+	independent_faction = "Tau Ceti"
 	server_voices = false
 	if server_voices then
 		voice_queue = {}
@@ -877,7 +878,7 @@ function buildLocalSolarSystem()
 		if random(1,100) < 15 then
 			stationFaction = "Human Navy"				--set station faction
 		else
-			stationFaction = "Independent"				--set station faction
+			stationFaction = independent_faction				--set station faction
 		end
 		si = math.random(1,#placeStation)			--station index
 		pStation = placeStation[si]()				--place selected station
@@ -900,7 +901,7 @@ function buildLocalSolarSystem()
 		if random(1,100) < 15 then
 			stationFaction = "Human Navy"				--set station faction
 		else
-			stationFaction = "Independent"				--set station faction
+			stationFaction = independent_faction				--set station faction
 		end
 		si = math.random(1,#placeStation)			--station index
 		pStation = placeStation[si]()				--place selected station
@@ -1070,7 +1071,7 @@ function buildLocalSolarSystem()
 	plx, ply = vectorFromAngle(beltStationAngle,beltOrbit1)
 	psx = solX+plx
 	psy = solY+ply
-	stationFaction = "Independent"
+	stationFaction = independent_faction
 	--si = math.random(1,#placeStation)			--station index
 	pStation = placeHayden() --placeStation[si]()				--place selected station
 	--table.remove(placeStation,si)				--remove station from placement list
@@ -1097,7 +1098,7 @@ function buildLocalSolarSystem()
 	plx, ply = vectorFromAngle(beltStationAngle,beltOrbit1)
 	psx = solX+plx
 	psy = solY+ply
-	stationFaction = "Independent"
+	stationFaction = independent_faction
 	si = math.random(1,#placeStation)			--station index
 	pStation = placeStation[si]()				--place selected station
 	table.remove(placeStation,si)				--remove station from placement list
@@ -1118,7 +1119,7 @@ function buildLocalSolarSystem()
 	plx, ply = vectorFromAngle(beltStationAngle,beltOrbit1)
 	psx = solX+plx
 	psy = solY+ply
-	stationFaction = "Independent"
+	stationFaction = independent_faction
 --	si = math.random(1,#placeStation)			--station index
 	pStation = placeMayo() --placeStation[si]()				--place selected station
 --	table.remove(placeStation,si)				--remove station from placement list
@@ -1145,7 +1146,7 @@ function buildLocalSolarSystem()
 	plx, ply = vectorFromAngle(beltStationAngle,beltOrbit1)
 	psx = solX+plx
 	psy = solY+ply
-	stationFaction = "Independent"
+	stationFaction = independent_faction
 --	si = math.random(1,#placeStation)			--station index
 	pStation = placeRipley() --placeStation[si]()				--place selected station
 --	table.remove(placeStation,si)				--remove station from placement list
@@ -1215,7 +1216,7 @@ function buildLocalSolarSystem()
 	plx, ply = vectorFromAngle(beltStationAngle,beltOrbit2)
 	psx = solX+plx
 	psy = solY+ply
-	stationFaction = "Independent"
+	stationFaction = independent_faction
 	si = math.random(1,#placeStation)			--station index
 	pStation = placeStation[si]()				--place selected station
 	table.remove(placeStation,si)				--remove station from placement list
@@ -1242,7 +1243,7 @@ function buildLocalSolarSystem()
 	plx, ply = vectorFromAngle(beltStationAngle,beltOrbit2)
 	psx = solX+plx
 	psy = solY+ply
-	stationFaction = "Independent"
+	stationFaction = independent_faction
 	si = math.random(1,#placeStation)			--station index
 	pStation = placeStation[si]()				--place selected station
 	table.remove(placeStation,si)				--remove station from placement list
@@ -1263,7 +1264,7 @@ function buildLocalSolarSystem()
 	plx, ply = vectorFromAngle(beltStationAngle,beltOrbit2)
 	psx = solX+plx
 	psy = solY+ply
-	stationFaction = "Independent"
+	stationFaction = independent_faction
 	si = math.random(1,#placeStation)			--station index
 	pStation = placeStation[si]()				--place selected station
 	table.remove(placeStation,si)				--remove station from placement list
@@ -1290,7 +1291,7 @@ function buildLocalSolarSystem()
 	plx, ply = vectorFromAngle(beltStationAngle,beltOrbit2)
 	psx = solX+plx
 	psy = solY+ply
-	stationFaction = "Independent"
+	stationFaction = independent_faction
 	si = math.random(1,#placeStation)			--station index
 	pStation = placeStation[si]()				--place selected station
 	table.remove(placeStation,si)				--remove station from placement list
@@ -1476,7 +1477,7 @@ function buildLocalSolarSystem()
 	plx, ply = vectorFromAngle(beltStationAngle,tertiusAsteroidOrbit)
 	psx = tertiusX+plx
 	psy = tertiusY+ply
-	stationFaction = "Independent"
+	stationFaction = independent_faction
 	si = math.random(1,#placeStation)			--station index
 	pStation = placeStation[si]()				--place selected station
 	table.remove(placeStation,si)				--remove station from placement list
@@ -1498,7 +1499,7 @@ function buildLocalSolarSystem()
 	plx, ply = vectorFromAngle(beltStationAngle,tertiusAsteroidOrbit)
 	psx = tertiusX+plx
 	psy = tertiusY+ply
-	stationFaction = "Independent"
+	stationFaction = independent_faction
 	si = math.random(1,#placeStation)			--station index
 	pStation = placeStation[si]()				--place selected station
 	table.remove(placeStation,si)				--remove station from placement list
@@ -1520,7 +1521,7 @@ function buildLocalSolarSystem()
 	plx, ply = vectorFromAngle(beltStationAngle,tertiusAsteroidOrbit)
 	psx = tertiusX+plx
 	psy = tertiusY+ply
-	stationFaction = "Independent"
+	stationFaction = independent_faction
 	si = math.random(1,#placeStation)			--station index
 	pStation = placeStation[si]()				--place selected station
 	table.remove(placeStation,si)				--remove station from placement list
@@ -1542,7 +1543,7 @@ function buildLocalSolarSystem()
 	plx, ply = vectorFromAngle(beltStationAngle,tertiusAsteroidOrbit)
 	psx = tertiusX+plx
 	psy = tertiusY+ply
-	stationFaction = "Independent"
+	stationFaction = independent_faction
 	si = math.random(1,#placeStation)			--station index
 	pStation = placeStation[si]()				--place selected station
 	table.remove(placeStation,si)				--remove station from placement list
@@ -1564,7 +1565,7 @@ function buildLocalSolarSystem()
 	plx, ply = vectorFromAngle(beltStationAngle,tertiusAsteroidOrbit)
 	psx = tertiusX+plx
 	psy = tertiusY+ply
-	stationFaction = "Independent"
+	stationFaction = independent_faction
 	si = math.random(1,#placeStation)			--station index
 	pStation = placeStation[si]()				--place selected station
 	table.remove(placeStation,si)				--remove station from placement list
@@ -1590,7 +1591,7 @@ function buildLocalSolarSystem()
 		if random(1,100) < 12 then
 			stationFaction = "Human Navy"				--set station faction
 		else
-			stationFaction = "Independent"				--set station faction
+			stationFaction = independent_faction				--set station faction
 		end
 		si = math.random(1,#placeStation)			--station index
 		pStation = placeStation[si]()				--place selected station
@@ -1618,7 +1619,7 @@ function buildLocalSolarSystem()
 		if random(1,100) < 12 then
 			stationFaction = "Human Navy"				--set station faction
 		else
-			stationFaction = "Independent"				--set station faction
+			stationFaction = independent_faction				--set station faction
 		end
 		si = math.random(1,#placeStation)			--station index
 		pStation = placeStation[si]()				--place selected station
@@ -1646,7 +1647,7 @@ function buildLocalSolarSystem()
 		if random(1,100) < 12 then
 			stationFaction = "Human Navy"				--set station faction
 		else
-			stationFaction = "Independent"				--set station faction
+			stationFaction = independent_faction				--set station faction
 		end
 		si = math.random(1,#placeStation)			--station index
 		pStation = placeStation[si]()				--place selected station
@@ -8501,7 +8502,7 @@ function getFactionPrefix(faction)
 		faction_prefix = ghosts_names[ghosts_name_choice]
 		table.remove(ghosts_names,ghosts_name_choice)
 	end
-	if faction == "Independent" then
+	if faction == independent_faction then
 		if independent_names == nil then
 			setIndependentNames()
 		else
@@ -9276,12 +9277,12 @@ function checkOrbitingArtifactEvents(delta)
 						else
 							name = name .. " Freighter " .. math.random(1, 5)
 						end
-						local tempShip = CpuShip():setTemplate(name):setFaction('Independent'):setCommsScript(""):setCommsFunction(commsShip)
+						local tempShip = CpuShip():setTemplate(name):setFaction(independent_faction):setCommsScript(""):setCommsFunction(commsShip)
 						tempShip:setPosition(tpmx,tpmy):orderDock(tempBase)
 						tempShip.targetDock = tempBase
 						table.insert(lostIndependentFleet,tempShip)
 					end
-					tempShip = CpuShip():setTemplate("Adder MK4"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsShip):setPosition(tpmx,tpmy):orderDock(tempBase)
+					tempShip = CpuShip():setTemplate("Adder MK4"):setFaction(independent_faction):setCommsScript(""):setCommsFunction(commsShip):setPosition(tpmx,tpmy):orderDock(tempBase)
 					tempShip.targetDock = tempBase
 					table.insert(lostIndependentFleet,tempShip)
 					releaseMessageTimer = delta + 5
@@ -9389,12 +9390,12 @@ function secondRelease(delta)
 			else
 				name = name .. " Freighter " .. math.random(1, 5)
 			end
-			local tempShip = CpuShip():setTemplate(name):setFaction('Independent'):setCommsScript(""):setCommsFunction(commsShip)
+			local tempShip = CpuShip():setTemplate(name):setFaction(independent_faction):setCommsScript(""):setCommsFunction(commsShip)
 			tempShip:setPosition(tpmx,tpmy):orderDock(tempBase)
 			tempShip.targetDock = tempBase
 			table.insert(secondLostFleet,tempShip)
 		end
-		tempShip = CpuShip():setTemplate("Adder MK4"):setFaction("Independent"):setCommsScript(""):setCommsFunction(commsShip):setPosition(tpmx,tpmy):orderDock(tempBase)
+		tempShip = CpuShip():setTemplate("Adder MK4"):setFaction(independent_faction):setCommsScript(""):setCommsFunction(commsShip):setPosition(tpmx,tpmy):orderDock(tempBase)
 		tempShip.targetDock = tempBase
 		table.insert(secondLostFleet,tempShip)
 		for i=1,4 do
