@@ -533,7 +533,39 @@ function setConstants()
 	commonGoods = {"food","medicine","nickel","platinum","gold","dilithium","tritanium","luxury","cobalt","impulse","warp","shield","tractor","repulsor","beam","optic","robotic","filament","transporter","sensor","communication","autodoc","lifter","android","nanites","software","circuit","battery"}
 	componentGoods = {"impulse","warp","shield","tractor","repulsor","beam","optic","robotic","filament","transporter","sensor","communication","autodoc","lifter","android","nanites","software","circuit","battery"}
 	mineralGoods = {"nickel","platinum","gold","dilithium","tritanium","cobalt"}
-	virus_status_functions = {virusStatusP1,virusStatusP2,virusStatusP3,virusStatusP4,virusStatusP5,virusStatusP6,virusStatusP7,virusStatusP8}
+	virus_status_functions =   {virusStatusP1,
+								virusStatusP2,
+								virusStatusP3,
+								virusStatusP4,
+								virusStatusP5,
+								virusStatusP6,
+								virusStatusP7,
+								virusStatusP8
+								virusStatusP9,
+								virusStatusP10,
+								virusStatusP11,
+								virusStatusP12,
+								virusStatusP13,
+								virusStatusP14,
+								virusStatusP15,
+								virusStatusP16,
+								virusStatusP17,
+								virusStatusP18,
+								virusStatusP19,
+								virusStatusP20,
+								virusStatusP21,
+								virusStatusP22,
+								virusStatusP23,
+								virusStatusP24
+								virusStatusP25,
+								virusStatusP26,
+								virusStatusP27,
+								virusStatusP28,
+								virusStatusP29,
+								virusStatusP30,
+								virusStatusP31,
+								virusStatusP32}
+							
 	--				short clip name		length in seconds
 	voice_clips = {	
 					["Avery01"] = 					0.971,
@@ -709,7 +741,6 @@ function setConstants()
 	table.insert(get_coolant_function,getCoolant30)
 	table.insert(get_coolant_function,getCoolant31)
 	table.insert(get_coolant_function,getCoolant32)
-
 end
 function buildLocalSolarSystem()
 	stationList = {}
@@ -10358,7 +10389,6 @@ function checkVirusEvents(delta)
 		playVoice("Tracy07")
 	end
 end
--- TODO curry if possible, otherwise copy
 function virusStatusP1()
 	local p = getPlayerShip(1)
 	virusStatus(p)
@@ -10391,6 +10421,103 @@ function virusStatusP8()
 	local p = getPlayerShip(8)
 	virusStatus(p)
 end
+function virusStatusP9()
+	local p = getPlayerShip(9)
+	virusStatus(p)
+end
+function virusStatusP10()
+	local p = getPlayerShip(10)
+	virusStatus(p)
+end
+function virusStatusP11()
+	local p = getPlayerShip(11)
+	virusStatus(p)
+end
+function virusStatusP12()
+	local p = getPlayerShip(12)
+	virusStatus(p)
+end
+function virusStatusP13()
+	local p = getPlayerShip(13)
+	virusStatus(p)
+end
+function virusStatusP14()
+	local p = getPlayerShip(14)
+	virusStatus(p)
+end
+function virusStatusP15()
+	local p = getPlayerShip(15)
+	virusStatus(p)
+end
+function virusStatusP16()
+	local p = getPlayerShip(16)
+	virusStatus(p)
+end
+function virusStatusP17()
+	local p = getPlayerShip(17)
+	virusStatus(p)
+end
+function virusStatusP18()
+	local p = getPlayerShip(18)
+	virusStatus(p)
+end
+function virusStatusP19()
+	local p = getPlayerShip(19)
+	virusStatus(p)
+end
+function virusStatusP20()
+	local p = getPlayerShip(20)
+	virusStatus(p)
+end
+function virusStatusP21()
+	local p = getPlayerShip(21)
+	virusStatus(p)
+end
+function virusStatusP22()
+	local p = getPlayerShip(22)
+	virusStatus(p)
+end
+function virusStatusP23()
+	local p = getPlayerShip(23)
+	virusStatus(p)
+end
+function virusStatusP24()
+	local p = getPlayerShip(24)
+	virusStatus(p)
+end
+function virusStatusP25()
+	local p = getPlayerShip(25)
+	virusStatus(p)
+end
+function virusStatusP26()
+	local p = getPlayerShip(26)
+	virusStatus(p)
+end
+function virusStatusP27()
+	local p = getPlayerShip(27)
+	virusStatus(p)
+end
+function virusStatusP28()
+	local p = getPlayerShip(28)
+	virusStatus(p)
+end
+function virusStatusP29()
+	local p = getPlayerShip(29)
+	virusStatus(p)
+end
+function virusStatusP30()
+	local p = getPlayerShip(30)
+	virusStatus(p)
+end
+function virusStatusP31()
+	local p = getPlayerShip(31)
+	virusStatus(p)
+end
+function virusStatusP32()
+	local p = getPlayerShip(32)
+	virusStatus(p)
+end
+
 function virusStatus(p)
 	local virus_minutes = math.floor(virus_timer / 60)
 	local status_message = "Next virus fatality in"
