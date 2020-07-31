@@ -6168,14 +6168,20 @@ function cargoInventory(delta)
 				if p:hasPlayerAtPosition("Relay") then
 					if p.inventoryButton == nil then
 						local tbi = "inventory" .. p:getCallSign()
-						p:addCustomButton("Relay",tbi,"Inventory",cargoInventoryList[pidx])
+--						p:addCustomButton("Relay",tbi,"Inventory",cargoInventoryList[pidx])
+						p:addCustomButton("Relay",tbi,"Inventory", function ()
+							cargoInventoryN(pidx)
+						end)
 						p.inventoryButton = true
 					end
 				end
 				if p:hasPlayerAtPosition("Operations") then
 					if p.inventoryButton == nil then
 						local tbi = "inventoryOp" .. p:getCallSign()
-						p:addCustomButton("Operations",tbi,"Inventory",cargoInventoryList[pidx])
+--						p:addCustomButton("Operations",tbi,"Inventory",cargoInventoryList[pidx])
+						p:addCustomButton("Operations",tbi,"Inventory", function ()
+							cargoInventoryN(pidx)
+						end)
 						p.inventoryButton = true
 					end
 				end
@@ -6183,6 +6189,27 @@ function cargoInventory(delta)
 		end
 	end
 end
+--TODO test
+function cargoInventoryN(pidx)
+	local p = getPlayerShip(pidx)
+	p:addToShipLog(string.format("%s Current cargo:",p:getCallSign()),"Yellow")
+	gi = 1
+	local cargoHoldEmpty = true
+	repeat
+		local playerGoodsType = goods[p][gi][1]
+		local playerGoodsQuantity = goods[p][gi][2]
+		if playerGoodsQuantity > 0 then
+			p:addToShipLog(string.format("     %s: %i",playerGoodsType,playerGoodsQuantity),"Yellow")
+			cargoHoldEmpty = false
+		end
+		gi = gi + 1
+	until(gi > #goods[p])
+	if cargoHoldEmpty then
+		p:addToShipLog("     Empty\n","Yellow")
+	end
+	p:addToShipLog(string.format("Available space: %i",p.cargo),"Yellow")
+end
+
 function cargoInventory1()
 	local p = getPlayerShip(1)
 	p:addToShipLog(string.format("%s Current cargo:",p:getCallSign()),"Yellow")
