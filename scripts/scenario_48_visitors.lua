@@ -652,6 +652,30 @@ function setConstants()
 	table.insert(cargoInventoryList,cargoInventory6)
 	table.insert(cargoInventoryList,cargoInventory7)
 	table.insert(cargoInventoryList,cargoInventory8)
+	table.insert(cargoInventoryList,cargoInventory9)
+	table.insert(cargoInventoryList,cargoInventory10)
+	table.insert(cargoInventoryList,cargoInventory11)
+	table.insert(cargoInventoryList,cargoInventory12)
+	table.insert(cargoInventoryList,cargoInventory13)
+	table.insert(cargoInventoryList,cargoInventory14)
+	table.insert(cargoInventoryList,cargoInventory15)
+	table.insert(cargoInventoryList,cargoInventory16)
+	table.insert(cargoInventoryList,cargoInventory17)
+	table.insert(cargoInventoryList,cargoInventory18)
+	table.insert(cargoInventoryList,cargoInventory19)
+	table.insert(cargoInventoryList,cargoInventory20)
+	table.insert(cargoInventoryList,cargoInventory21)
+	table.insert(cargoInventoryList,cargoInventory22)
+	table.insert(cargoInventoryList,cargoInventory23)
+	table.insert(cargoInventoryList,cargoInventory24)
+	table.insert(cargoInventoryList,cargoInventory25)
+	table.insert(cargoInventoryList,cargoInventory26)
+	table.insert(cargoInventoryList,cargoInventory27)
+	table.insert(cargoInventoryList,cargoInventory28)
+	table.insert(cargoInventoryList,cargoInventory29)
+	table.insert(cargoInventoryList,cargoInventory30)
+	table.insert(cargoInventoryList,cargoInventory31)
+	table.insert(cargoInventoryList,cargoInventory32)
 	get_coolant_function = {}
 	table.insert(get_coolant_function,getCoolant1)
 	table.insert(get_coolant_function,getCoolant2)
@@ -661,6 +685,31 @@ function setConstants()
 	table.insert(get_coolant_function,getCoolant6)
 	table.insert(get_coolant_function,getCoolant7)
 	table.insert(get_coolant_function,getCoolant8)
+	table.insert(get_coolant_function,getCoolant9)
+	table.insert(get_coolant_function,getCoolant10)
+	table.insert(get_coolant_function,getCoolant11)
+	table.insert(get_coolant_function,getCoolant12)
+	table.insert(get_coolant_function,getCoolant13)
+	table.insert(get_coolant_function,getCoolant14)
+	table.insert(get_coolant_function,getCoolant15)
+	table.insert(get_coolant_function,getCoolant16)
+	table.insert(get_coolant_function,getCoolant17)
+	table.insert(get_coolant_function,getCoolant18)
+	table.insert(get_coolant_function,getCoolant19)
+	table.insert(get_coolant_function,getCoolant20)
+	table.insert(get_coolant_function,getCoolant21)
+	table.insert(get_coolant_function,getCoolant22)
+	table.insert(get_coolant_function,getCoolant23)
+	table.insert(get_coolant_function,getCoolant24)
+	table.insert(get_coolant_function,getCoolant25)
+	table.insert(get_coolant_function,getCoolant26)
+	table.insert(get_coolant_function,getCoolant27)
+	table.insert(get_coolant_function,getCoolant28)
+	table.insert(get_coolant_function,getCoolant29)
+	table.insert(get_coolant_function,getCoolant30)
+	table.insert(get_coolant_function,getCoolant31)
+	table.insert(get_coolant_function,getCoolant32)
+
 end
 function buildLocalSolarSystem()
 	stationList = {}
@@ -5284,6 +5333,103 @@ function cargoInventory8()
 	local p = getPlayerShip(8)
 	cargoInventoryGivenShip(p)
 end
+function cargoInventory9()
+	local p = getPlayerShip(9)
+	cargoInventoryGivenShip(p)
+end
+function cargoInventory10()
+	local p = getPlayerShip(10)
+	cargoInventoryGivenShip(p)
+end
+function cargoInventory11()
+	local p = getPlayerShip(11)
+	cargoInventoryGivenShip(p)
+end
+function cargoInventory12()
+	local p = getPlayerShip(12)
+	cargoInventoryGivenShip(p)
+end
+function cargoInventory13()
+	local p = getPlayerShip(13)
+	cargoInventoryGivenShip(p)
+end
+function cargoInventory14()
+	local p = getPlayerShip(14)
+	cargoInventoryGivenShip(p)
+end
+function cargoInventory15()
+	local p = getPlayerShip(15)
+	cargoInventoryGivenShip(p)
+end
+function cargoInventory16()
+	local p = getPlayerShip(16)
+	cargoInventoryGivenShip(p)
+end
+function cargoInventory17()
+	local p = getPlayerShip(17)
+	cargoInventoryGivenShip(p)
+end
+function cargoInventory18()
+	local p = getPlayerShip(18)
+	cargoInventoryGivenShip(p)
+end
+function cargoInventory19()
+	local p = getPlayerShip(19)
+	cargoInventoryGivenShip(p)
+end
+function cargoInventory20()
+	local p = getPlayerShip(20)
+	cargoInventoryGivenShip(p)
+end
+function cargoInventory21()
+	local p = getPlayerShip(21)
+	cargoInventoryGivenShip(p)
+end
+function cargoInventory22()
+	local p = getPlayerShip(22)
+	cargoInventoryGivenShip(p)
+end
+function cargoInventory23()
+	local p = getPlayerShip(23)
+	cargoInventoryGivenShip(p)
+end
+function cargoInventory24()
+	local p = getPlayerShip(24)
+	cargoInventoryGivenShip(p)
+end
+function cargoInventory25()
+	local p = getPlayerShip(25)
+	cargoInventoryGivenShip(p)
+end
+function cargoInventory26()
+	local p = getPlayerShip(26)
+	cargoInventoryGivenShip(p)
+end
+function cargoInventory27()
+	local p = getPlayerShip(27)
+	cargoInventoryGivenShip(p)
+end
+function cargoInventory28()
+	local p = getPlayerShip(28)
+	cargoInventoryGivenShip(p)
+end
+function cargoInventory29()
+	local p = getPlayerShip(29)
+	cargoInventoryGivenShip(p)
+end
+function cargoInventory30()
+	local p = getPlayerShip(30)
+	cargoInventoryGivenShip(p)
+end
+function cargoInventory31()
+	local p = getPlayerShip(31)
+	cargoInventoryGivenShip(p)
+end
+function cargoInventory32()
+	local p = getPlayerShip(32)
+	cargoInventoryGivenShip(p)
+end
+
 ----------------------------
 -- Station communications --
 ----------------------------
@@ -6434,11 +6580,32 @@ function handleDockedState()
 						local ship = PlayerSpaceship():setTemplate("MP52 Hornet"):setFactionId(comms_source:getFactionId())
 						setPlayers()
 						ship:setPosition(comms_target:getPosition())
-						setCommsMessage("We have dispatched " .. ship:getCallSign() .. " to be manned by one of your pilots");
+						setCommsMessage("We have dispatched " .. ship:getCallSign() .. " to be manned by one of your pilots")
 					end
 					addCommsReply("Back", commsStation)
 				end)
-				--TODO add Bomber and Scout
+				addCommsReply(string.format("Purchase unmanned ZX-Lindworm Bomber for %i reputation", getServiceCost("fighterBomber")), function()
+					if not comms_source:takeReputationPoints(getServiceCost("fighterBomber")) then
+						setCommsMessage("Insufficient reputation")
+					else
+						local ship = PlayerSpaceship():setTemplate("ZX-Lindworm"):setFactionId(comms_source:getFactionId())
+						setPlayers()
+						ship:setPosition(comms_target:getPosition())
+						setCommsMessage("We have dispatched " .. ship:getCallSign() .. " to be manned by one of your pilots")
+					end
+					addCommsReply("Back", commsStation)
+				end)
+				addCommsReply(string.format("Purchase unmanned Adder MK7 Scout for %i reputation", getServiceCost("fighterScout")), function()
+					if not comms_source:takeReputationPoints(getServiceCost("fighterScout")) then
+						setCommsMessage("Insufficient reputation")
+					else
+						local ship = PlayerSpaceship():setTemplate("Adder MK7"):setFactionId(comms_source:getFactionId())
+						setPlayers()
+						ship:setPosition(comms_target:getPosition())
+						setCommsMessage("We have dispatched " .. ship:getCallSign() .. " to be manned by one of your pilots")
+					end
+					addCommsReply("Back", commsStation)
+				end)
 				addCommsReply("Back", commsStation)
 			end)
 		end
@@ -8381,7 +8548,6 @@ function getCoolantGivenPlayer(p)
 	end
 	p.coolant_trigger = true
 end
--- TODO curry if possible, otherwise copy
 function getCoolant1()
 	local p = getPlayerShip(1)
 	getCoolantGivenPlayer(p)
@@ -8412,6 +8578,102 @@ function getCoolant7()
 end
 function getCoolant8()
 	local p = getPlayerShip(8)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant9()
+	local p = getPlayerShip(9)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant10()
+	local p = getPlayerShip(10)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant11()
+	local p = getPlayerShip(11)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant12()
+	local p = getPlayerShip(12)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant13()
+	local p = getPlayerShip(13)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant14()
+	local p = getPlayerShip(14)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant15()
+	local p = getPlayerShip(15)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant16()
+	local p = getPlayerShip(16)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant17()
+	local p = getPlayerShip(17)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant18()
+	local p = getPlayerShip(18)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant19()
+	local p = getPlayerShip(19)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant20()
+	local p = getPlayerShip(20)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant21()
+	local p = getPlayerShip(21)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant22()
+	local p = getPlayerShip(22)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant23()
+	local p = getPlayerShip(23)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant24()
+	local p = getPlayerShip(24)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant25()
+	local p = getPlayerShip(25)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant26()
+	local p = getPlayerShip(26)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant27()
+	local p = getPlayerShip(27)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant28()
+	local p = getPlayerShip(28)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant29()
+	local p = getPlayerShip(29)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant30()
+	local p = getPlayerShip(30)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant31()
+	local p = getPlayerShip(31)
+	getCoolantGivenPlayer(p)
+end
+function getCoolant32()
+	local p = getPlayerShip(32)
 	getCoolantGivenPlayer(p)
 end
 ------------------------------------
