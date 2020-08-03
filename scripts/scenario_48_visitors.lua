@@ -540,7 +540,7 @@ function setConstants()
 								virusStatusP5,
 								virusStatusP6,
 								virusStatusP7,
-								virusStatusP8
+								virusStatusP8,
 								virusStatusP9,
 								virusStatusP10,
 								virusStatusP11,
@@ -556,7 +556,7 @@ function setConstants()
 								virusStatusP21,
 								virusStatusP22,
 								virusStatusP23,
-								virusStatusP24
+								virusStatusP24,
 								virusStatusP25,
 								virusStatusP26,
 								virusStatusP27,
@@ -5674,6 +5674,7 @@ function handleDockedState()
 --				else
 				if true then
 					for plot_index=1,#plotList do
+						print(comms_source)
 						addCommsReply(plotListOrders[plot_index], function()
 							local plotChoice = plot_index
 							comms_source.plot1 = plotList[plot_index]
@@ -8297,6 +8298,7 @@ function spawnEnemies(xOrigin, yOrigin, danger, enemyFaction, perimeter_min, per
 			enemy_angle = enemy_angle + circle_increment
 		end
 	end
+	print(enemyList)
 	return enemyList
 end
 function playerPower()
@@ -9366,8 +9368,8 @@ function startDefendPrimusStation()
 	prx, pry = primusStation:getPosition()
 	pla = random(0,360)
 	pmx, pmy = vectorFromAngle(pla,random(8000,12000))
-	enemyFleet = spawnEnemies(prx+pmx,pry+pmy,1,"Exuari")
-	for _, enemy in ipairs(enemyFleet) do
+	enemyFleetPrimus = spawnEnemies(prx+pmx,pry+pmy,1,"Exuari")
+	for _, enemy in ipairs(enemyFleetPrimus) do
 		enemy:orderAttack(primusStation)
 	end
 	reinforcementInterval = 60
@@ -9388,7 +9390,7 @@ function checkDefendPrimusStationEvents(delta)
 	end
 	local perceivePlayer = false
 	local remainingEnemyCount = 0
-	for _, enemy in ipairs(enemyFleet) do
+	for _, enemy in ipairs(enemyFleetPrimus) do
 		if enemy ~= nil and enemy:isValid() then
 			remainingEnemyCount = remainingEnemyCount + 1
 			for pidx=1, MAX_PLAYER_SHIPS do
@@ -9411,7 +9413,7 @@ function checkDefendPrimusStationEvents(delta)
 			if reinforcementTimer < 0 then
 				if reinforcementCount > 0 then
 					if reinforcementCount == 3 then
-						for _, enemy in ipairs(enemyFleet) do
+						for _, enemy in ipairs(enemyFleetPrimus) do
 							enemy:orderAttack(p)
 						end
 					else
@@ -9420,7 +9422,7 @@ function checkDefendPrimusStationEvents(delta)
 						local tempFleet = spawnEnemies(prx+pmx,pry+pmy,1,"Exuari")
 						for _, enemy in ipairs(tempFleet) do
 							enemy:orderAttack(p)
-							table.insert(enemyFleet,enemy)
+							table.insert(enemyFleetPrimus,enemy)
 						end
 					end
 					reinforcementCount = reinforcementCount - 1
