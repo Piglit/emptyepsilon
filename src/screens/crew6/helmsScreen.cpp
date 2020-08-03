@@ -62,8 +62,8 @@ HelmsScreen::HelmsScreen(GuiContainer* owner)
             heading_hint->hide();
         }
     );
-    radar->setAutoRotating(PreferencesManager::get("helms_radar_lock","0")=="1");
-
+    radar->setAutoRotating(PreferencesManager::get("helms_radar_lock","1")=="1");
+    
     heading_hint = new GuiLabel(this, "HEADING_HINT", "", 30);
     heading_hint->setAlignment(ACenter)->setSize(0, 0);
 

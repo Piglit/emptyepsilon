@@ -60,7 +60,7 @@ TacticalScreen::TacticalScreen(GuiContainer* owner)
                 my_spaceship->commandTargetRotation(sf::vector2ToAngle(position - my_spaceship->getPosition()));
         }
     );
-    radar->setAutoRotating(PreferencesManager::get("tactical_radar_lock","0")=="1");
+    radar->setAutoRotating(PreferencesManager::get("tactical_radar_lock","1")=="1");
 
     GuiAutoLayout* stats = new GuiAutoLayout(this, "STATS", GuiAutoLayout::LayoutVerticalTopToBottom);
     stats->setPosition(20, 100, ATopLeft)->setSize(240, 160);
