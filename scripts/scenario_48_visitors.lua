@@ -5674,10 +5674,10 @@ function handleDockedState()
 --				else
 				if true then
 					for plot_index=1,#plotList do
-						print(comms_source)
 						addCommsReply(plotListOrders[plot_index], function()
-							local plotChoice = plot_index
-							comms_source.plot1 = plotList[plot_index]
+							plotChoice = plot_index
+							currentPlayer = comms_source
+							currentPlayer.plot1 = plotList[plotChoice]
 							setCommsMessage(plotListMessage[plot_index])
 							if server_voices then
 								if plotChoice == 1 then
@@ -5693,8 +5693,8 @@ function handleDockedState()
 									playVoice("Pat04")
 								end
 							end
-							comms_source.primaryOrders = plotListOrders[plot_index]
-							plotPlayers[comms_source.plot1] = comms_source 
+							currentPlayer.primaryOrders = plotListOrders[plotChoice]
+							plotPlayers[currentPlayer.plot1] = currentPlayer 
 							table.remove(plotList,plot_index)
 							table.remove(plotListMessage,plot_index)
 							table.remove(plotListOrders,plot_index)
@@ -9368,7 +9368,7 @@ function startDefendPrimusStation()
 	prx, pry = primusStation:getPosition()
 	pla = random(0,360)
 	pmx, pmy = vectorFromAngle(pla,random(8000,12000))
-	enemyFleetPrimus = spawnEnemies(prx+pmx,pry+pmy,1,"Exuari")
+	enemyFleetPrimus = {}--spawnEnemies(prx+pmx,pry+pmy,1,"Exuari") -- TODO this was for testing
 	for _, enemy in ipairs(enemyFleetPrimus) do
 		enemy:orderAttack(primusStation)
 	end
