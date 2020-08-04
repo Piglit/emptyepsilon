@@ -6605,6 +6605,7 @@ function handleDockedState()
 		end
 	    if isAllowedTo(comms_target.comms_data.services.fighters) and comms_source.carrier then
 			addCommsReply("Visit shipyard", function()
+				setCommsMessage("Here you can start fighters that can be taken by your pilots. You do have a fighter pilot waiting, do you?")
 				addCommsReply(string.format("Purchase unmanned MP52 Hornet Interceptor for %i reputation", getServiceCost("fighterInterceptor")), function()
 					if not comms_source:takeReputationPoints(getServiceCost("fighterInterceptor")) then
 						setCommsMessage("Insufficient reputation")
@@ -10918,11 +10919,11 @@ function setPlots()
 				 targetIntel,
 				 virusOutbreak}
 	plotListMessage2 = {"A transport reports Exuari pirates threatening them",
-						string.format("Stations %s, %s, %s, %s and %s all report outbreaks of a variant of Rathgar's space virus. %s has developed an effective anti-virus, but it needs to be delivered to all the stations quickly",belt1Stations[1]:getCallSign(),belt1Stations[2]:getCallSign(),belt1Stations[3]:getCallSign(),belt1Stations[4]:getCallSign(),belt1Stations[5]:getCallSign(),belt1Stations[4]:getCallSign()),
-						string.format("Station %s in %s has intelligence on where the Exuari are attacking next",playerSpawnBandStations[1]:getCallSign(),playerSpawnBandStations[1]:getSectorName())}
+						string.format("Station %s in %s has intelligence on where the Exuari are attacking next",playerSpawnBandStations[1]:getCallSign(),playerSpawnBandStations[1]:getSectorName()),
+						string.format("Stations %s, %s, %s, %s and %s all report outbreaks of a variant of Rathgar's space virus. %s has developed an effective anti-virus, but it needs to be delivered to all the stations quickly",belt1Stations[1]:getCallSign(),belt1Stations[2]:getCallSign(),belt1Stations[3]:getCallSign(),belt1Stations[4]:getCallSign(),belt1Stations[5]:getCallSign(),belt1Stations[4]:getCallSign())}
 	plotListOrders2 = {"Protect transport from Exuari pirates",
-						string.format("Dock with %s to pick up anti-virus",belt1Stations[4]:getCallSign()),
-						string.format("Dock with %s in %s for Exuari intelligence",playerSpawnBandStations[1]:getCallSign(),playerSpawnBandStations[1]:getSectorName())}
+						string.format("Dock with %s in %s for Exuari intelligence",playerSpawnBandStations[1]:getCallSign(),playerSpawnBandStations[1]:getSectorName()),
+						string.format("Dock with %s to pick up anti-virus",belt1Stations[4]:getCallSign())}
 	piracy = "available"
 	plotCI = cargoInventory			--manage button on relay/operations to show cargo inventory
 	plotPlayers = {}
