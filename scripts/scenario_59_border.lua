@@ -6170,7 +6170,7 @@ function cargoInventory(delta)
 						local tbi = "inventory" .. p:getCallSign()
 --						p:addCustomButton("Relay",tbi,"Inventory",cargoInventoryList[pidx])
 						p:addCustomButton("Relay",tbi,"Inventory", function ()
-							cargoInventoryN(getPlayerShip(pidx))
+							cargoInventoryN(pidx)
 						end)
 						p.inventoryButton = true
 					end
@@ -6180,7 +6180,7 @@ function cargoInventory(delta)
 						local tbi = "inventoryOp" .. p:getCallSign()
 --						p:addCustomButton("Operations",tbi,"Inventory",cargoInventoryList[pidx])
 						p:addCustomButton("Operations",tbi,"Inventory", function ()
-							cargoInventoryN(getPlayerShip(pidx))
+							cargoInventoryN(pidx)
 						end)
 						p.inventoryButton = true
 					end
@@ -6190,8 +6190,8 @@ function cargoInventory(delta)
 	end
 end
 --TODO test
-function cargoInventoryN(p)--idx)
---	local p = getPlayerShip(pidx)
+function cargoInventoryN(pidx)
+	local p = getPlayerShip(pidx)
 	p:addToShipLog(string.format("%s Current cargo:",p:getCallSign()),"Yellow")
 	gi = 1
 	local cargoHoldEmpty = true
