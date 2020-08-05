@@ -771,7 +771,7 @@ function buildLocalSolarSystem()
 	primusRadius = random(800,1200)
 	planetPrimus = Planet():setPosition(solX+plx,solY+ply):setPlanetRadius(primusRadius):setAxialRotationTime(random(200,250)):setDistanceFromMovementPlane(-primusRadius/2)
 	planetPrimus:setPlanetSurfaceTexture("planets/planet-2.png"):setPlanetAtmosphereTexture("planets/atmosphere.png"):setPlanetAtmosphereColor(0.2,0.2,0.1)
-	planetPrimus:setCallSign(primusNames[math.random(1,#primusNames)])
+	planetPrimus:setCallSign("Minotaur")--primusNames[math.random(1,#primusNames)])
 	lo = 400
 	hi = 500
 	if orbitChoice == "lo" then
@@ -8299,7 +8299,6 @@ function spawnEnemies(xOrigin, yOrigin, danger, enemyFaction, perimeter_min, per
 			enemy_angle = enemy_angle + circle_increment
 		end
 	end
-	print(enemyList)
 	return enemyList
 end
 function playerPower()
@@ -9369,7 +9368,7 @@ function startDefendPrimusStation()
 	prx, pry = primusStation:getPosition()
 	pla = random(0,360)
 	pmx, pmy = vectorFromAngle(pla,random(8000,12000))
-	enemyFleetPrimus = {}--spawnEnemies(prx+pmx,pry+pmy,1,"Exuari") -- TODO this was for testing
+	enemyFleetPrimus = spawnEnemies(prx+pmx,pry+pmy,1,"Exuari")
 	for _, enemy in ipairs(enemyFleetPrimus) do
 		enemy:orderAttack(primusStation)
 	end
@@ -10245,7 +10244,7 @@ function startVirus()
 		belt1Stations[i].virus_cure = false
 		belt1Stations[i].lockdown = false
 	end
-	virus_timer = (720 - difficulty*120)/virus_player_count
+	virus_timer = (720 - difficulty*120)/2 --/virus_player_count
 	max_virus_timer = virus_timer
 	virus_harass = false
 end
@@ -10298,15 +10297,15 @@ function checkVirusEvents(delta)
 				local current_belt1_station = belt1Stations[i]
 				if not current_belt1_station.virus_cure and not current_belt1_station.lockdown then
 					current_belt1_station.lockdown = true
-					current_belt1_station.setCommsFunction(nil)	--TODO test
-					current_belt1_station.setFaction("Empty")	--TODO test
+					current_belt1_station:setCommsFunction(nil)
+					current_belt1_station:setFaction("Empty")
 					for pidx=1, MAX_PLAYER_SHIPS do
 						p = getPlayerShip(pidx)
 						if p ~= nil and p:isValid() then
 							p:addToShipLog(string.format("[%s Medical Team] Virus outbreak reached pandemic state. Station is under lockdown.",current_belt1_station:getCallSign()),"Magenta")
 						end
 					end
-					virus_timer = virus_timer + 60.0
+					virus_timer = virus_timer + 120.0
 					--playVoice("Tracy13")
 					break
 				end

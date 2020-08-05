@@ -541,6 +541,9 @@ function spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction, cu
 				smallFormations[shipTemplateType] = {ship, nil, 1}
 			else
 				local leader, second, fidx = smallFormations[shipTemplateType]
+				if fidx == nil then
+					fidx = 1
+				end
 				fidx = fidx + 1
 				leader, second = script_formation.buildFormationIncremental(ship, fidx, leader, second)
 				smallFormations[shipTemplateType] = {leader, second, fidx}
