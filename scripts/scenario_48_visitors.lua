@@ -533,9 +533,6 @@ function setConstants()
 		tertiusNames = {"Cat's Eye","Tertius","Dagoba","Pitcairn","Tl'ho","Megas","Amateru","Tadmore","Brahe"}
 		solNames = {"Sol","Sun","Groombridge 34","Tau Ceti","Wolf 1061","Gliese 876","Barnard"}
 	end
-	commonGoods = {"food","medicine","nickel","platinum","gold","dilithium","tritanium","luxury","cobalt","impulse","warp","shield","tractor","repulsor","beam","optic","robotic","filament","transporter","sensor","communication","autodoc","lifter","android","nanites","software","circuit","battery"}
-	componentGoods = {"impulse","warp","shield","tractor","repulsor","beam","optic","robotic","filament","transporter","sensor","communication","autodoc","lifter","android","nanites","software","circuit","battery"}
-	mineralGoods = {"nickel","platinum","gold","dilithium","tritanium","cobalt"}
 	virus_status_functions =   {virusStatusP1,
 								virusStatusP2,
 								virusStatusP3,

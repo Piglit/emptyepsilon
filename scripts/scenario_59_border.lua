@@ -4782,12 +4782,15 @@ function spawnEnemyFleet(xOrigin, yOrigin, power, danger, enemyFaction, fleetNam
 	enemyList, fleetPower = spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction)
 	if enemyFaction == "Kraylor" then
 		rawKraylorShipStrength = rawKraylorShipStrength + fleetPower
-		ship:onDestruction(enemyVesselDestroyed)
 	elseif enemyFaction == "Human Navy" then
 		rawHumanShipStrength = rawHumanShipStrength + fleetPower
-		ship:onDestruction(friendlyVesselDestroyed)
 	end
 	for _, ship in ipairs(enemyList) do
+		if enemyFaction == "Kraylor" then
+			ship:onDestruction(enemyVesselDestroyed)
+		elseif enemyFaction == "Human Navy" then
+			ship:onDestruction(friendlyVesselDestroyed)
+		end
 		ship:setCallSign(generateCallSign(nil,enemyFaction))
 		if fleetName ~= nil then
 			ship.fleet = fleetName
