@@ -8937,14 +8937,20 @@ function cargoInventory(delta)
 				if p:hasPlayerAtPosition("Relay") then
 					if p.inventoryButton == nil then
 						local tbi = "inventory" .. p:getCallSign()
-						p:addCustomButton("Relay",tbi,"Inventory",cargoInventoryList[pidx])
+						p:addCustomButton("Relay",tbi,"Inventory", function()
+							cargoInventoryGivenShip(p)
+						end)
+						--cargoInventoryList[pidx])
 						p.inventoryButton = true
 					end
 				end
 				if p:hasPlayerAtPosition("Operations") then
 					if p.inventoryButton == nil then
 						local tbi = "inventoryOp" .. p:getCallSign()
-						p:addCustomButton("Operations",tbi,"Inventory",cargoInventoryList[pidx])
+						p:addCustomButton("Operations",tbi,"Inventory", function()
+							cargoInventoryGivenShip(p)
+						end)
+						--	cargoInventoryList[pidx])
 						p.inventoryButton = true
 					end
 				end
@@ -8968,7 +8974,7 @@ function cargoInventoryGivenShip(p)
 	end
 	p:addToShipLog(string.format("Available space: %i",p.cargo),"Yellow")
 end
--- TODO
+-- TODO test above code
 function cargoInventory1()
 	local p = getPlayerShip(1)
 	cargoInventoryGivenShip(p)
@@ -9002,7 +9008,7 @@ function cargoInventory8()
 	cargoInventoryGivenShip(p)
 end
 --      Enable and disable auto-cooling on a ship functions
---      TODO
+--      TODO test
 function autoCoolant(delta)
 	if enableAutoCoolFunctionList == nil then
 		enableAutoCoolFunctionList = {}
@@ -9033,18 +9039,34 @@ function autoCoolant(delta)
 				if p:hasPlayerAtPosition("Engineering") then
 					if p.autoCoolButton == nil then
 						local tbi = "enableAutoCool" .. p:getCallSign()
-						p:addCustomButton("Engineering",tbi,"Auto cool",enableAutoCoolFunctionList[pidx])
+						p:addCustomButton("Engineering",tbi,"Auto cool", function()
+							p:setAutoCoolant(true)
+							p.autoCoolant = true
+						end)
+								--enableAutoCoolFunctionList[pidx])
 						tbi = "disableAutoCool" .. p:getCallSign()
-						p:addCustomButton("Engineering",tbi,"Manual cool",disableAutoCoolFunctionList[pidx])
+						p:addCustomButton("Engineering",tbi,"Manual cool", function()
+							p:setAutoCoolant(false)
+							p.autoCoolant = false
+						end)
+								--disableAutoCoolFunctionList[pidx])
 						p.autoCoolButton = true
 					end
 				end
 				if p:hasPlayerAtPosition("Engineering+") then
 					if p.autoCoolButton == nil then
 						tbi = "enableAutoCoolPlus" .. p:getCallSign()
-						p:addCustomButton("Engineering+",tbi,"Auto cool",enableAutoCoolFunctionList[pidx])
+						p:addCustomButton("Engineering+",tbi,"Auto cool", function()
+							p:setAutoCoolant(true)
+							p.autoCoolant = true
+						end)
+						--enableAutoCoolFunctionList[pidx])
 						tbi = "disableAutoCoolPlus" .. p:getCallSign()
-						p:addCustomButton("Engineering+",tbi,"Manual cool",disableAutoCoolFunctionList[pidx])
+						p:addCustomButton("Engineering+",tbi,"Manual cool", function()
+							p:setAutoCoolant(false)
+							p.autoCoolant = false
+						end)
+						--disableAutoCoolFunctionList[pidx])
 						p.autoCoolButton = true
 					end
 				end
@@ -9052,7 +9074,7 @@ function autoCoolant(delta)
 		end
 	end
 end
--- TODO
+-- TODO test code above
 function enableAutoCool1()
 	local p = getPlayerShip(1)
 	p:setAutoCoolant(true)
