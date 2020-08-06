@@ -1,4 +1,5 @@
 require("script_formation.lua")
+require("script_hangar")
 
 function init_constants_xansta()
 	-- called during or instead of setConstants()
@@ -523,7 +524,7 @@ function spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction)
 		if enemyFaction == "Exuari" then
 			ship:setCommsScript("comms_exuari.lua")
 			--TODO check if multiple onDamage/onDestruction are possible. If true, raise frenzy in combat, otherwise slowly lower
-			-- no, it is not possible.
+			--Update: no, it is not possible.
 			if smallFormations[shipTemplateType] == nil then
 				smallFormations[shipTemplateType] = {ship, nil, 1}
 			else
@@ -534,6 +535,15 @@ function spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction)
 				fidx = fidx + 1
 				leader, second = script_formation.buildFormationIncremental(ship, fidx, leader, second)
 				smallFormations[shipTemplateType] = {leader, second, fidx}
+			end
+			if shipTemplateType == "Ryder" then
+				local fighterTemplate = enemyFactionNameList[ irandom(1,5) ]
+				script_hangar.create(ship, fighterTemplate, 3)
+			elseif shipTemplateType == "Fortress" then
+				local fighterTemplate = enemyFactionNameList[ irandom(1,5) ]
+				script_hangar.create(ship, fighterTemplate, 3)
+				fighterTemplate = enemyFactionNameList[ irandom(1,5) ]
+				script_hangar.append(ship, fighterTemplate, 3)
 			end
 		else
 			ship:setCommsScript(""):setCommsFunction(commsShip)

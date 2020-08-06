@@ -18,6 +18,7 @@
 require("ee.lua")
 require("utils.lua")
 require("xansta_mods.lua")
+require("script_hangar.lua")
 
 --[[-----------------------------------------------------------------
       Dynamic map functions 
@@ -123,6 +124,7 @@ function init()
 	plotW = monitorWaves
 	helpWarnDelay = 30
 	plotH = helpWarn
+	plotHangar = script_hangar.update
 	primaryOrders = "Defend bases in the area (human navy and independent) from enemy attack."
 	secondaryOrders = ""
 	optionalOrders = ""
@@ -3637,6 +3639,9 @@ function update(delta)
 	end
 	if plotW ~= nil then
 		plotW(delta)	--waves
+	end
+	if plotHangar ~= nil then
+		plotHangar(delta)	--script_hangar
 	end
 	if plotH ~= nil then
 		plotH(delta)	--help warning

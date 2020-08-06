@@ -36,6 +36,7 @@
 require("ee.lua")
 require("utils.lua")
 require("xansta_mods.lua")
+require("script_hangar.lua")
 
 function init()
 	independent_faction = "Tau Ceti"
@@ -70,6 +71,7 @@ function init()
 	plotT = workingTransports
 	plotCN = coolantNebulae
 	plotH = healthCheck				--Damage to ship can kill repair crew members
+	plotHangar = script_hangar.update 
 	healthCheckTimer = 5
 	healthCheckTimerInterval = 5
 	mission_complete_count = 0
@@ -11343,6 +11345,10 @@ function update(delta)
 	if updateDiagnostic then print("plot3") end
 	if plot3 ~= nil then	--transport cleanup
 		plot3(delta)
+	end
+	if updateDiagnostic then print("plotHangar") end
+	if plotHangar ~= nil then	--script_hangar
+		plotHangar(delta)
 	end
 	if updateDiagnostic then print("plotT") end
 	if plotT ~= nil then	--working transports 
