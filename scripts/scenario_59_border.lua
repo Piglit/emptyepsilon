@@ -33,7 +33,7 @@
 
 require("utils.lua")
 require("ee.lua")
-require("xanstas_mods.lua")
+require("xansta_mods.lua")
 require("script_formation.lua")
 
 --------------------
