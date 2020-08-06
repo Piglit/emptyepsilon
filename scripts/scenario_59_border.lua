@@ -16,6 +16,7 @@
 require("utils.lua")
 require("ee.lua")
 require("xanstas_mods.lua")
+require("script_formation.lua")
 
 --------------------
 -- Initialization --
@@ -10496,12 +10497,13 @@ function spawnFighterFleet(originX, originY, fighterCount, faction)
 	end
 	--Ship Template Name List
 	local fighterNames  = {"Red Hornet", "Red Lindworm", "Red Adder MK5", "Red Adder MK4"} -- hired criminal ships
+	local templ = fighterNames[math.random(1,#fighterNames)]
 	--Ship Template Score List
 	local fighterScores = stl["Criminals"]
+	local fleetPower = fighterCount * fighterScores[templ]
 	local fleetList = {}
-	local fleetPower = 0
 	--TODO test
-	fleetList, fleetPower = spawn_enemies_faction(originX, originY, fighterCount, faction, fighterNames, fighterScores, true)
+	fleetList = script_formation.spawnFormation(templ, fighterCount, originX, originY)
 	if faction == "Kraylor" then
 		rawKraylorShipStrength = rawKraylorShipStrength + fleetPower
 		ship:onDestruction(enemyVesselDestroyed)
@@ -10521,12 +10523,13 @@ function spawnJammerFleet(originX, originY)
 	end
 	--Ship Template Name List
 	local jammerNames  = stln["Criminals"] -- hired criminal ships
+	local templ = jammerNames[math.random(1,#jammerNames)]
 	--Ship Template Score List
 	local jammerScores = stl["Criminals"]
+	local fleetPower = shipSpawnCount * jammerScores[templ]
 	local fleetList = {}
-	local fleetPower = 0
 	--TODO test
-	fleetList, fleetPower = spawn_enemies_faction(originX, originY, fighterCount, faction, jammerNames, jammerScores, true)
+	fleetList = script_formation.spawnFormation(templ, shipSpawnCount, originX, originY)
 	if faction == "Kraylor" then
 		rawKraylorShipStrength = rawKraylorShipStrength + fleetPower
 		ship:onDestruction(enemyVesselDestroyed)

@@ -472,12 +472,9 @@ function modify_player_ships(pobj)
 end
 
 
-function spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction, customShipNameList, customShipScoreList, strengthIsNumberOfShips)
+function spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction)
 	-- called in spawnEnemies()
 
-	if strengthIsNumberOfShips == nil then
-		strengthIsNumberOfShips = false
-	end
 	local enemyFactionScoreList = stl[enemyFaction]
 	local enemyFactionNameList = stln[enemyFaction]
 	if stl[enemyFaction] == nil then
@@ -485,13 +482,6 @@ function spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction, cu
 		enemyFactionNameList = stln["other"]
 	end
 
-	if customShipNameList ~= nil then
-		enemyFactionNameList = customShipNameList
-	end
-	if customShipScoreList ~= nil then
-		enemyFactionScoreList = customShipScoreList
-	end
-	
 	local totalStrength = 0
 	local enemyNameList = {}
 	local enemyList = {}
@@ -507,14 +497,10 @@ function spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction, cu
 	-- Reminder: stsl and stnl are ship template score and name list
 	while enemyStrength > 0 do
 		local shipTemplateType = enemyFactionNameList[ irandom(1,#enemyFactionNameList) ]
-		if strengthIsNumberOfShips then
-			enemyStrength = enemyStrength -1
-		else
-			while enemyFactionScoreList[shipTemplateType] > enemyStrength * 1.1 + 5 do
-				shipTemplateType = enemyFactionNameList[ irandom(1,#enemyFactionNameList) ]
-			end		
-			enemyStrength = enemyStrength - enemyFactionScoreList[shipTemplateType]
-		end
+		while enemyFactionScoreList[shipTemplateType] > enemyStrength * 1.1 + 5 do
+			shipTemplateType = enemyFactionNameList[ irandom(1,#enemyFactionNameList) ]
+		end		
+		enemyStrength = enemyStrength - enemyFactionScoreList[shipTemplateType]
 		table.insert(enemyNameList, shipTemplateType)
 		if enemyFactionScoreList[shipTemplateType] ~= nil then
 			totalStrength = totalStrength + enemyFactionScoreList[shipTemplateType]
@@ -537,6 +523,7 @@ function spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction, cu
 		if enemyFaction == "Exuari" then
 			ship:setCommsScript("comms_exuari.lua")
 			--TODO check if multiple onDamage/onDestruction are possible. If true, raise frenzy in combat, otherwise slowly lower
+			-- no, it is not possible.
 			if smallFormations[shipTemplateType] == nil then
 				smallFormations[shipTemplateType] = {ship, nil, 1}
 			else
@@ -554,66 +541,6 @@ function spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction, cu
 		table.insert(enemyList, ship)
 	end
 	return enemyList, totalStrength
-end
-
-function comms_station()
-	-- called in commsStation()
-	-- TODO check if handleDockedState(), handleUndockedState() are defined
-	-- TODO setPlayers() must still be called from caller
-	if comms_target.comms_data == nil then
-        comms_target.comms_data = {}
-    end
-    mergeTables(comms_target.comms_data, {
-        friendlyness = random(0.0, 100.0),
-        weapons = {
-            Homing = "neutral",
-            HVLI = "neutral",
-            Mine = "neutral",
-            Nuke = "friend",
-            EMP = "friend"
-        },
-        weapon_cost = {
-            Homing = math.random(1,4),
-            HVLI = math.random(1,3),
-            Mine = math.random(2,5),
-            Nuke = math.random(12,18),
-            EMP = math.random(7,13)
-        },
-        services = {
-            supplydrop = "friend",
-            reinforcements = "friend",
-        },
-        service_cost = {
-            supplydrop = math.random(80,120),
-            reinforcements = math.random(125,175),
-            phobosReinforcements = math.random(200,250),
-            stalkerReinforcements = math.random(275,325),
-			reinforcements_factor = math.random(16,24)
-        },
-        reputation_cost_multipliers = {
-            friend = 1.0,
-            neutral = 3.0
-        },
-        max_weapon_refill_amount = {
-            friend = 1.0,
-            neutral = 0.5
-        }
-    })
-    comms_data = comms_target.comms_data
-	--setPlayers()
-    if comms_source:isEnemy(comms_target) then
-        return false
-    end
-    if comms_target:areEnemiesInRange(5000) then
-        setCommsMessage("We are under attack! No time for chatting!");
-        return true
-    end
-    if not comms_source:isDocked(comms_target) then
-        handleUndockedState()
-    else
-        handleDockedState()
-    end
-    return true
 end
 
 function enemyComms(comms_data)
@@ -668,36 +595,4 @@ function enemyComms(comms_data)
 	end
 	return false
 end
-
---function addReinforcementsReplies(comms_target)
---    if isAllowedTo(comms_target.comms_data.services.reinforcements) then
---		local avail_ships = stl[comms_target:getFaction()]
---		if avail_ships == nil or len(avail_ships) == 0 then
---			avail_ships = {["Adder MK5"]=7.5}
---		end
---		for ship, value in pairs(avail_ships) do
---			addCommsReply("Please send "..ship.." reinforcements! ("..math.ceil( value * comms_data.service_cost["reinforcements_factor"]).."rep)", function()
---				if comms_source:getWaypointCount() < 1 then
---					setCommsMessage("You need to set a waypoint before you can request reinforcements.");
---				else
---					setCommsMessage("To which waypoint should we dispatch the reinforcements?");
---					for n=1,comms_source:getWaypointCount() do
---						addCommsReply("WP" .. n, function()	--TODO argh! need curry!
---							if comms_source:takeReputationPoints(getServiceCost("reinforcements")) then
---								ship = CpuShip():setFactionId(comms_target:getFactionId()):setPosition(comms_target:getPosition()):setTemplate("Adder MK5"):setScanned(true):orderDefendLocation(comms_source:getWaypoint(n))
---								ship:setCommsScript(""):setCommsFunction(commsShip):onDestruction(humanVesselDestroyed)
---								table.insert(friendlyHelperFleet,ship)
---								setCommsMessage("We have dispatched " .. ship:getCallSign() .. " to assist at WP" .. n);
---							else
---								setCommsMessage("Not enough reputation!");
---							end
---							addCommsReply("Back", commsStation)
---						end)
---					end
---				end
---				addCommsReply("Back", commsStation)
---			end)
---		end
---	end
---end
 
