@@ -84,41 +84,35 @@ template:setHull(30)
 template:setShields(30)
 --Reputation Score: 6
 template:setSpeed(120, 30, 25)
-template:setDefaultAI('fighter')	-- set fighter AI, which dives at the enemy, and then flies off, doing attack runs instead of "hanging in your face".
---threat level: 1(dps)+0(tube)+1.5(shields)+1.5(hull)+1.2(speed)+3(maneuver) = 1+1.5+1.5+1.2+3=8.2 => 4.1
+template:setDefaultAI('fighter')
 
 variation = template:copy("Blade")
 variation:setClass("Exuari", "Starfighter - Interceptor")
 variation:setModel("dark_fighter_6")
 variation:setDescription("The Exuari interceptor 'Blade' is a improved fighter, originaly designed to hunt down rougue fighters. Nowadays Blades are often seen as the first attack wave of a larger assault, closely followed by Daggers. Blade pilots are often considered as fearless, but most of them are just consumed by their instinct for hunting.")
---                  Arc, Dir, Range, CycleTime, Dmg
 variation:setBeam(0, 60, 0, 1000.0, 4.0, 4)
 variation:setBeam(1, 60, 0, 1000.0, 4.0, 4)
 variation:setSpeed(130, 35, 30)
---threat level: 2(dps)+0(tube)+1.5(shields)+1.5(hull)+1.3(speed)+3(maneuver) = 2+1.5+1.5+1.3+3=9.3 => 4.7
 
 template = ShipTemplate():setName("Gunner"):setClass("Exuari", "Starfighter - Light Bomber")
 template:setModel("small_fighter_1")
 template:setRadarTrace("radar_exuari_fighter.png")
 template:setDescription("The Exuari light bomber 'Gunner' is a single-seated spacecraft, designed to circumvent their enemies defense lines and bring its deadly load to slow moving targets. Gunners are not as agile as other fighters, but still faster than most capitol ships. A group of Gunners can do a lot of damage to a single stationary target if not destroyed before their target is inside their weapons range. Piloting a Gunner is considered to be a recreational (and often lethal) activity within the Exuari society, so don't expect experienced pilots.")
---                  Arc, Dir, Range, CycleTime, Dmg
 template:setBeam(0, 60, 0, 1000.0, 4.0, 4)
 template:setHull(40)
 template:setShields(30)
 --Reputation Score: 7
 template:setSpeed(70, 20, 15)
-template:setDefaultAI('fighter')	-- set fighter AI, which dives at the enemy, and then flies off, doing attack runs instead of "hanging in your face".
+template:setDefaultAI('fighter')
 template:setTubes(1, 60.0)
 template:setTubeSize(0, "small")
 template:setWeaponStorage("HVLI", 1)
---threat level: 1(dps)+1(tube)+1.5(shields)+2(hull)+.7(speed)+2(maneuver) = 8.2 => 4.1
 
 variation = template:copy("Shooter")
 variation:setClass("Exuari", "Starfighter - Bomber")
 variation:setDescription("The Exuari bomber 'Shooter' carries two rounds of HVLIs. To keep the vessel at low costs, it has no automatic missile recharge system, so the single pilot has to load the second round manually. Shooter pilots tend to stay on the battlefield, even without ammunition and enjoy death spreading. Due to it's long reload cycle a Shooter may easily be destroyed between its attack runs.")
 variation:setTubeSize(0, "medium")
 variation:setWeaponStorage("HVLI", 2)
---threat level: 1(dps)+2(tube)+1.5(shields)+2(hull)+.7(speed)+2(maneuver) = 9.2 => 4.7
 
 variation = template:copy("Jagger")
 variation:setClass("Exuari", "Starfighter - Heavy Bomber")
@@ -138,7 +132,6 @@ template:setShields(50, 30)
 --Reputation Score: 13
 template:setSpeed(70, 12, 12)
 template:setWarpSpeed(600)
---threat level: 2(dps)+0(tube)+2(shields)+2.5(hull)+5+0.7(speed)+1.2(maneuver) = 13.4 => 6.7
 
 variation = template:copy("Hunter")
 variation:setDescription("The Exuari beta striker 'Hunter' is a warp-drive equipped reinforement fighter. This spacecraft runs on a small crew and is often sent into battle to aid other Exuari ships when they engage in combat. It has an extra pair of striker beams and improved front shields. It's fast, it's agile, and can clean up what is left of the enemies fleet after an initial strike.")
@@ -148,7 +141,6 @@ variation:setBeam(3, 50, 15, 1000.0, 6.0, 6)
 variation:setShields(80, 30)
 --Reputation Score: 16
 variation:setWarpSpeed(400)
---threat level: 4(dps)+0(tube)+2.5(shields)+2.5(hull)+4+0.7(speed)+1.2(maneuver) = 14.9 = 7.5
 
 variation = template:copy("Strike")
 variation:setDescription("The Exuari gamma striker 'Strike' is a warp-drive equipped tactical bomber build for quick strikes against strong shielded targets. This spacecraft runs on a small crew and is equipped with HVLIs and an EMP. It's fast, it's agile, and can do a great amount of damage in short time.")
@@ -157,7 +149,6 @@ variation:setTubes(1, 10.0)
 variation:setWeaponStorage("EMP", 1)
 variation:setWeaponStorage("HVLI", 2)
 variation:setWarpSpeed(300)
---threat level: 2(dps)+3(tube)+2(shields)+2.5(hull)+2.5+0.7(speed)+1.2(maneuver) = 13.9 => 6.5
 
 variation = template:copy("Dash")
 variation:setDescription("The Exuari delta striker 'Dash' is a warp-drive equipped endurance bomber build for prolonged strikes. This spacecraft runs on a small crew and combines reinforced front shields with a good amount of HVLIs. It's fast, it's agile, and can take some damage.")
@@ -168,11 +159,10 @@ variation:setHull(70)
 variation:setShields(80, 30)
 --Reputation Score: 18
 variation:setWarpSpeed(200)
---threat level: 2(dps)+4(tube)+2.5(shields)+3.5(hull)+1.5+0.7(speed)+1.2(maneuver) = 15.4 => 7.7
 
 --[[ Frigates--]]
 --Frigates are non-warp capable ships, mostly used to defend bases or to build the rear line in an assault.
-
+--TODO: replace models (transorts should not be used here)
 template = ShipTemplate():setName("Guard"):setClass("Exuari", "Frigate")
 template:setModel("transport_1_1"):setRadarTrace("radar_exuari_frigate_1.png")
 template:setDescription([[The Exuari Guard is not impressive, trying to be a alround escort or defense vessel. It has powering problems, causing the reload cycle of beams and missiles to take longer than expected. The Guard is equipped with turret beams and a large stock of different missiles, including homing missiles and mines.]])
@@ -191,7 +181,6 @@ template:setWeaponStorage("Homing", 6)
 template:setTubeDirection(0, -1):weaponTubeDisallowMissle(0, "Mine")
 template:setTubeDirection(1,  1):weaponTubeDisallowMissle(1, "Mine")
 template:setTubeDirection(2,  180):setWeaponTubeExclusiveFor(2, "Mine")
---threat level: 2(dps)+12(tube)+2.5(shields)+3.5(hull)+0.5(speed)+1(maneuver) = 21.5 => 10.8
 
 template = ShipTemplate():setName("Sentinel"):setClass("Exuari", "Frigate")
 template:setModel("transport_3_1"):setRadarTrace("radar_exuari_frigate_2.png")
@@ -208,7 +197,6 @@ template:setHull(70)
 template:setShields(50, 40)
 --Reputation Score: 16
 template:setSpeed(70, 15, 10)
---threat level: 4(dps)+0(tube)+2.5(shields)+3.5(hull)+0.7(speed)+1.5(maneuver) = 12.2 => 6.1
 
 template = ShipTemplate():setName("Warden"):setClass("Exuari", "Frigate")
 template:setModel("transport_4_1"):setRadarTrace("radar_exuari_frigate_3.png")
@@ -227,7 +215,6 @@ template:setTubeDirection(1, -1)
 template:setTubeDirection(2,  1)
 template:setTubeDirection(3, -2)
 template:setTubeDirection(4,  2)
---threat level: 1(dps)+15(tube)+1.5(shields)+2.5(hull)+0.4(speed)+.6(maneuver) = 21 => 10.5
 
 --[[ Artillery--]]
 --Artillery are non-warp capable ships, mostly used to delivers Nukes to their enemies. They may be disguised as Transport ships (or are refurbished freighters). 
@@ -242,7 +229,6 @@ template:setTubes(3, 25.0)
 template:weaponTubeDisallowMissle(1, "Nuke"):weaponTubeDisallowMissle(2, "Nuke")
 template:setWeaponStorage("Homing", 6)
 template:setWeaponStorage("Nuke", 2)
---threat level: 0(dps)+16(tube)+1(shields)+1.5(hull)+0.5(speed)+.6(maneuver) = 19.6 => 9.8
 
 variation = template:copy("Ranger")
 variation:setDescription([[The Exuari Ranger is a special sniper, built to deal large amounts of damage over a large area and from a distance before escaping. It's a basic frigate that carries nuclear weapons, even though it's also one of the smallest of all frigate-class ships.]])
@@ -258,7 +244,6 @@ variation:setSpeed(50, 6, 20)
 variation:setTubes(1, 15.0)
 variation:setTubeSize(0, "large")
 variation:setWeaponStorage("Nuke", 1)
-
 
 --[[ Station/Transport--]]
 -- The battle station is a huge ship with many defensive features. It can be docked by smaller ships.
@@ -288,8 +273,6 @@ template:setRepairDocked(true)
 template:setRestocksMissilesDocked(true)
 template:setRestocksScanProbes(true)
 
---threat level: 12(dps)+0(tube)+12(shields)+5(hull)+0.2(speed)+0(maneuver) = 29.2 => 14.6 
-
 variation = template:copy("Fortress")
 variation:setDescription("The Exuari Fortress is a huge carrier with many defensive features. It can be docked by smaller ships to refuel or carry them. Unlike a station it is equipped with a slow impulse drive. The shields of this base carrier are saied to be undestroyable.")
 --                  Arc, Dir, Range, CycleTime, Dmg
@@ -307,10 +290,9 @@ variation:setBeam(10, 20,  90, 2400.0, 6.1, 4):setBeamWeaponTurret(10, 160,  90,
 variation:setBeam(11, 20,  90, 2400.0, 6.0, 4):setBeamWeaponTurret(11, 160,  90, 5)
 variation:setShields(2500)
 --Reputation Score: 260
---threat level: 12(dps)+0(tube)+120(shields)+5(hull)+0.2(speed)+0(maneuver) = 137.2 => 68
 
 --[[
-Tech details:
+Component details used for designing the ships above:
  Beams
   Exuari Fighter beam: rng 1000, cycle 4, dmg 4, dps 1
   Exuari Striker beam: rng 1000, cycle 6, dmg 6, dps 1
