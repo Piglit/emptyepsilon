@@ -4523,7 +4523,9 @@ function setFleets()
 	local f1bx, f1by = enemyFleet1base:getPosition()
 	local enemyFleet1, enemyFleet1Power = spawnEnemyFleet(f1bx, f1by, random(90,130))
 	for _, enemy in ipairs(enemyFleet1) do
-		enemy:orderDefendTarget(enemyFleet1base)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderDefendTarget(enemyFleet1base)
+		end
 	end
 	table.insert(enemyFleetList,enemyFleet1)
 	table.insert(enemyDefensiveFleetList,enemyFleet1)
@@ -4544,7 +4546,9 @@ function setFleets()
 	local f2bx, f2by = enemyFleet2base:getPosition()
 	enemyFleet2, enemyFleet2Power = spawnEnemyFleet(f2bx, f2by, enemyFleet2Power)
 	for _, enemy in ipairs(enemyFleet2) do
-		enemy:orderDefendTarget(enemyFleet2base)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderDefendTarget(enemyFleet2base)
+		end
 	end
 	table.insert(enemyFleetList,enemyFleet2)
 	table.insert(enemyDefensiveFleetList,enemyFleet2)
@@ -4565,7 +4569,9 @@ function setFleets()
 	local f3bx, f3by = enemyFleet3base:getPosition()
 	enemyFleet3, enemyFleet3Power = spawnEnemyFleet(f3bx, f3by, enemyFleet3Power)
 	for _, enemy in ipairs(enemyFleet3) do
-		enemy:orderDefendTarget(enemyFleet3base)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderDefendTarget(enemyFleet3base)
+		end
 	end
 	table.insert(enemyFleetList,enemyFleet3)
 	table.insert(enemyDefensiveFleetList,enemyFleet3)
@@ -4581,7 +4587,9 @@ function setFleets()
 	local f4bx, f4by = enemyFleet4base:getPosition()
 	enemyFleet4, enemyFleet4Power = spawnEnemyFleet(f4bx, f4by, enemyResource/2)
 	for _, enemy in ipairs(enemyFleet4) do
-		enemy:orderDefendTarget(enemyFleet4base)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderDefendTarget(enemyFleet4base)
+		end
 	end
 	table.insert(enemyFleetList,enemyFleet4)
 	table.insert(enemyDefensiveFleetList,enemyFleet4)
@@ -4597,7 +4605,9 @@ function setFleets()
 	local f5bx, f5by = enemyFleet5base:getPosition()
 	enemyFleet5, enemyFleet5Power = spawnEnemyFleet(f5bx, f5by, enemyResource)
 	for _, enemy in ipairs(enemyFleet5) do
-		enemy:orderDefendTarget(enemyFleet5base)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderDefendTarget(enemyFleet5base)
+		end
 	end
 	table.insert(enemyFleetList,enemyFleet5)
 	table.insert(enemyDefensiveFleetList,enemyFleet5)
@@ -4616,7 +4626,10 @@ function setFleets()
 	local fleetName = friendlyFleet1base:getCallSign() .. " defensive fleet"
 	local friendlyFleet1, friendlyFleet1Power = spawnEnemyFleet(f1bx, f1by, random(90,130), 1, "Human Navy", fleetName)
 	for _, enemy in ipairs(friendlyFleet1) do
-		enemy:orderDefendTarget(friendlyFleet1base):setScanned(true)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderDefendTarget(friendlyFleet1base)
+		end
+		enemy:setScanned(true)
 	end
 	table.insert(friendlyFleetList,friendlyFleet1)
 	friendlyDefensiveFleetList[fleetName] = friendlyFleet1
@@ -4636,7 +4649,10 @@ function setFleets()
 	fleetName = friendlyFleet2base:getCallSign() .. " defensive fleet"
 	friendlyFleet2, friendlyFleet2Power = spawnEnemyFleet(f2bx, f2by, friendlyFleet2Power, 1, "Human Navy", fleetName)
 	for _, enemy in ipairs(friendlyFleet2) do
-		enemy:orderDefendTarget(friendlyFleet2base):setScanned(true)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderDefendTarget(friendlyFleet2base)
+		end
+		enemy:setScanned(true)
 	end
 	table.insert(friendlyFleetList,friendlyFleet2)
 	friendlyDefensiveFleetList[fleetName] = friendlyFleet2
@@ -4656,7 +4672,10 @@ function setFleets()
 	fleetName = friendlyFleet3base:getCallSign() .. " defensive fleet"
 	friendlyFleet3, friendlyFleet3Power = spawnEnemyFleet(f3bx, f3by, friendlyFleet3Power, 1, "Human Navy", fleetName)
 	for _, enemy in ipairs(friendlyFleet3) do
-		enemy:orderDefendTarget(friendlyFleet3base):setScanned(true)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderDefendTarget(friendlyFleet3base)
+		end
+		enemy:setScanned(true)
 	end
 	table.insert(friendlyFleetList,friendlyFleet3)
 	friendlyDefensiveFleetList[fleetName] = friendlyFleet3
@@ -4671,7 +4690,10 @@ function setFleets()
 	fleetName = friendlyFleet4base:getCallSign() .. " defensive fleet"
 	friendlyFleet4, friendlyFleet4Power = spawnEnemyFleet(f4bx, f4by, friendlyResource/2, 1, "Human Navy", fleetName)
 	for _, enemy in ipairs(friendlyFleet4) do
-		enemy:orderDefendTarget(friendlyFleet4base):setScanned(true)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderDefendTarget(friendlyFleet4base)
+		end
+		enemy:setScanned(true)
 	end
 	table.insert(friendlyFleetList,friendlyFleet4)
 	friendlyDefensiveFleetList[fleetName] = friendlyFleet4
@@ -4686,7 +4708,10 @@ function setFleets()
 	fleetName = friendlyFleet5base:getCallSign() .. " defensive fleet"
 	friendlyFleet5, friendlyFleet5Power = spawnEnemyFleet(f5bx, f5by, friendlyResource, 1, "Human Navy", fleetName)
 	for _, enemy in ipairs(friendlyFleet5) do
-		enemy:orderDefendTarget(friendlyFleet5base):setScanned(true)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderDefendTarget(friendlyFleet5base)
+		end
+		enemy:setScanned(true)
 	end
 	table.insert(friendlyFleetList,friendlyFleet5)
 	friendlyDefensiveFleetList[fleetName] = friendlyFleet5
@@ -9943,7 +9968,9 @@ function initialAttack(delta)
 	if plot3diagnostic then print("initial attack") end
 	local enemyInitialFleet = spawnEnemies(kraylorCentroidX, kraylorCentroidY, 1.3, "Kraylor")
 	for _, enemy in ipairs(enemyInitialFleet) do
-		enemy:orderFlyTowards(humanCentroidX, humanCentroidY)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderFlyTowards(humanCentroidX, humanCentroidY)
+		end
 		enemy.initialFleetMember = true
 	end
 	if plot3diagnostic then print("initial fleet created") end
@@ -9999,14 +10026,14 @@ function pincerAttack(delta)
 		rightPincerX, rightPincerY = vectorFromAngle(rightPincerAngle,pincerSize)
 		if plot3diagnostic then print(string.format("Angles: Pincer: %.1f, Left: %.1f, Right: %.1f",pincerAngle,leftPincerAngle,rightPincerAngle)) end
 		local enemyLeftPincerFleet = spawnEnemies(referenceStartX+leftPincerX,referenceStartY+leftPincerY,1.5,"Kraylor")
-		for _, enemy in ipairs(enemyLeftPincerFleet) do
-			enemy:orderRoaming()
-		end
+--		for _, enemy in ipairs(enemyLeftPincerFleet) do
+--			enemy:orderRoaming()
+--		end
 		table.insert(enemyFleetList,enemyLeftPincerFleet)
 		local enemyRightPincerFleet = spawnEnemies(referenceStartX+rightPincerX,referenceStartY+rightPincerY,1.5,"Kraylor")
-		for _, enemy in ipairs(enemyRightPincerFleet) do
-			enemy:orderRoaming()
-		end
+--		for _, enemy in ipairs(enemyRightPincerFleet) do
+--			enemy:orderRoaming()
+--		end
 		table.insert(enemyFleetList,enemyRightPincerFleet)
 		if playWithTimeLimit then
 			vengenceTimer = random(lrr1,urr1)
@@ -10140,7 +10167,9 @@ function enemyDefenseCheck(delta)
 							esx, esy = enemyStation:getPosition()
 							local ef, efp = spawnFighterFleet(esx, esy, difficulty*4, "Kraylor")
 							for _, enemy in ipairs(ef) do
-								enemy:orderDefendTarget(enemyStation)
+								if enemy:getOrder() == "Roaming" then
+									enemy:orderDefendTarget(enemyStation)
+								end
 							end
 							table.insert(enemyFleetList,ef)
 							enemyStation.defenseDeployed = true
@@ -10202,7 +10231,9 @@ function enemyDefenseCheck(delta)
 							esx, esy = nearestStation:getPosition()
 							local ef, efp = spawnEnemies(esx, esy, 1, "Kraylor")
 							for _, enemy in ipairs(ef) do
-								enemy:orderAttack(p)
+								if enemy:getOrder() == "Roaming" then
+									enemy:orderAttack(p)
+								end
 							end
 							table.insert(enemyFleetList,ef)
 							enemyStation.defenseDeployed = true
@@ -10282,7 +10313,9 @@ function enemyDefenseCheck(delta)
 							esx, esy = enemyStation:getPosition()
 							local ef, efp = spawnDroneFleet(esx, esy, difficulty*6, "Kraylor")
 							for _, enemy in ipairs(ef) do
-								enemy:orderDefendLocation(esx, esy)
+								if enemy:getOrder() == "Roaming" then
+									enemy:orderDefendLocation(esx, esy)
+								end
 							end
 							table.insert(enemyFleetList,ef)
 							enemyStation.defenseDeployed = true
@@ -10346,7 +10379,9 @@ function warpJammerOrbit(delta)
 				if distance(wjx, wjy, tj.originX, tj.originY) > tj.triggerDistance then
 					ef, efp = spawnJammerFleet(esx, esy)
 					for _, enemy in ipairs(ef) do
-						enemy:orderDefendLocation(tj.originX,tj.originY)
+						if enemy:getOrder() == "Roaming" then
+							enemy:orderDefendLocation(tj.originX,tj.originY)
+						end
 					end
 					table.insert(enemyFleetList,ef)
 					tj.orbit = true
@@ -10467,31 +10502,28 @@ function enemyDefenseZoneCheck(delta)
 	end
 end
 function spawnDroneFleet(originX, originY, droneCount, faction)
+	-- TODO test
 	if faction == nil then
 		faction = "Kraylor"
 	end
-	local fleetList = {}
-	local deploySpacing = random(300,800)
-	local deployConfig = random(1,100)
-	for i=1,droneCount do
-		ship = CpuShip():setFaction(faction):setTemplate("Ktlitan Drone"):orderRoaming():setCommsScript(""):setCommsFunction(commsShip)
+	local fleetList = script_formation.spawnFormation("Drone", droneCount, originX, originY, faction)
+	local fleetPower = droneCount * 5
+	if faction == "Kraylor" then
+		rawKraylorShipStrength = rawKraylorShipStrength + fleetPower 
+	elseif faction == "Human Navy" then
+		rawHumanShipStrength = rawHumanShipStrength + fleetPower 
+	end
+	for _, ship in ipairs(fleetList) do
 		if faction == "Kraylor" then
-			rawKraylorShipStrength = rawKraylorShipStrength + 4
 			ship:onDestruction(enemyVesselDestroyed)
 		elseif faction == "Human Navy" then
-			rawHumanShipStrength = rawHumanShipStrength + 4
 			ship:onDestruction(friendlyVesselDestroyed)
 		end
-		if deployConfig < 50 then
-			ship:setPosition(originX+fleetPosDelta1x[i]*deploySpacing,originY+fleetPosDelta1y[i]*deploySpacing)
-		else
-			ship:setPosition(originX+fleetPosDelta2x[i]*deploySpacing,originY+fleetPosDelta2y[i]*deploySpacing)
-		end
-		table.insert(fleetList,ship)
 	end
-	return fleetList, droneCount*4
+	return fleetList, fleetPower
 end
 function spawnFighterFleet(originX, originY, fighterCount, faction)
+	-- TODO test
 	if faction == nil then
 		faction = "Kraylor"
 	end
@@ -10501,19 +10533,23 @@ function spawnFighterFleet(originX, originY, fighterCount, faction)
 	--Ship Template Score List
 	local fighterScores = stl["Criminals"]
 	local fleetPower = fighterCount * fighterScores[templ]
-	local fleetList = {}
-	--TODO test
-	fleetList = script_formation.spawnFormation(templ, fighterCount, originX, originY)
+	local fleetList = script_formation.spawnFormation(templ, fighterCount, originX, originY, faction)
 	if faction == "Kraylor" then
 		rawKraylorShipStrength = rawKraylorShipStrength + fleetPower
-		ship:onDestruction(enemyVesselDestroyed)
 	elseif faction == "Human Navy" then
 		rawHumanShipStrength = rawHumanShipStrength + fleetPower
-		ship:onDestruction(friendlyVesselDestroyed)
+	end
+	for _, ship in ipairs(fleetList) do
+		if faction == "Kraylor" then
+			ship:onDestruction(enemyVesselDestroyed)
+		elseif faction == "Human Navy" then
+			ship:onDestruction(friendlyVesselDestroyed)
+		end
 	end
 	return fleetList, fleetPower
 end
 function spawnJammerFleet(originX, originY)
+	-- TODO test
 	faction = "Kraylor"
 	local shipSpawnCount = 3
 	if difficulty < 1 then
@@ -10527,15 +10563,18 @@ function spawnJammerFleet(originX, originY)
 	--Ship Template Score List
 	local jammerScores = stl["Criminals"]
 	local fleetPower = shipSpawnCount * jammerScores[templ]
-	local fleetList = {}
-	--TODO test
-	fleetList = script_formation.spawnFormation(templ, shipSpawnCount, originX, originY)
+	local fleetList = script_formation.spawnFormation(templ, shipSpawnCount, originX, originY, faction)
 	if faction == "Kraylor" then
 		rawKraylorShipStrength = rawKraylorShipStrength + fleetPower
-		ship:onDestruction(enemyVesselDestroyed)
 	elseif faction == "Human Navy" then
 		rawHumanShipStrength = rawHumanShipStrength + fleetPower
-		ship:onDestruction(friendlyVesselDestroyed)
+	end
+	for _, ship in ipairs(fleetList) do
+		if faction == "Kraylor" then
+			ship:onDestruction(enemyVesselDestroyed)
+		elseif faction == "Human Navy" then
+			ship:onDestruction(friendlyVesselDestroyed)
+		end
 	end
 	return fleetList, fleetPower
 end
@@ -10599,7 +10638,9 @@ function personalAmbushDestructCheck(delta)
 					local efx, efy = candidate:getPosition()
 					enemyAmbushFleet = spawnEnemies(efx,efy,1,"Kraylor")
 					for _, enemy in ipairs(enemyAmbushFleet) do
-						enemy:orderAttack(p)
+						if enemy:getOrder() == "Roaming" then
+							enemy:orderAttack(p)
+						end
 					end
 					table.insert(enemyFleetList,enemyAmbushFleet)
 					p.sprung = true
@@ -10639,7 +10680,9 @@ function personalAmbushTimeCheck(delta)
 			efx, efy = candidate:getPosition()
 			enemyAmbushFleet = spawnEnemies(efx,efy,1,"Kraylor")
 			for _, enemy in ipairs(enemyAmbushFleet) do
-				enemy:orderAttack(p)
+				if enemy:getOrder() == "Roaming" then
+					enemy:orderAttack(p)
+				end
 			end
 			table.insert(enemyFleetList,enemyAmbushFleet)
 			p.sprung = true
@@ -10794,7 +10837,9 @@ function enemyReinforcements(delta)
 					local fpx, fpy = p:getPosition()
 					local tempFleet = spawnEnemies(fpx+dirx,fpy+diry,enemyReinforcementSchedule[1][2],"Kraylor")
 					for _, enemy in ipairs(tempFleet) do
-						enemy:orderAttack(p)
+						if enemy:getOrder() == "Roaming" then
+							enemy:orderAttack(p)
+						end
 					end
 					table.insert(enemyFleetList,tempFleet)
 					table.remove(enemyReinforcementSchedule,1)
@@ -10858,7 +10903,10 @@ function muckAndFlies(delta)
 			end
 			local stench = spawnEnemies(px+stx,py+sty,1,"Kraylor",playerShipScore)
 			for i, enemy in ipairs(stench) do
-				enemy:orderAttack(p):setCallSign(string.format("MS%s%i%i",string.char(math.random(65,90)),i,muckFlyCounter))
+				if enemy:getOrder() == "Roaming" then
+					enemy:orderAttack(p)
+				end
+				enemy:setCallSign(string.format("MS%s%i%i",string.char(math.random(65,90)),i,muckFlyCounter))
 			end
 			table.insert(enemyFleetList,stench)
 			if difficulty >= 1 then
