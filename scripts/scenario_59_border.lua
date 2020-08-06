@@ -9193,12 +9193,18 @@ function coolantNebulae(delta)
 				else
 					if p:hasPlayerAtPosition("Engineering") then
 						p.get_coolant_button = "get_coolant_button"
-						p:addCustomButton("Engineering",p.get_coolant_button,"Get Coolant",get_coolant_function[pidx])
+						p:addCustomButton("Engineering",p.get_coolant_button,"Get Coolant", function ()
+							getCoolantGivenPlayer(p)
+						end)
+						--get_coolant_function[pidx])
 						p.get_coolant = true
 					end
 					if p:hasPlayerAtPosition("Engineering+") then
 						p.get_coolant_button_plus = "get_coolant_button_plus"
-						p:addCustomButton("Engineering+",p.get_coolant_button_plus,"Get Coolant",get_coolant_function[pidx])
+						p:addCustomButton("Engineering+",p.get_coolant_button_plus,"Get Coolant", function ()
+							getCoolantGivenPlayer(p)
+						end)
+						--get_coolant_function[pidx])
 						p.get_coolant = true
 					end
 				end
