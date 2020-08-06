@@ -481,6 +481,7 @@ end
 function setConstants()
 	repeatExitBoundary = 100
 	scarceResources = false
+	exuari_stronghold = nil
 	init_constants_xansta()
 --	--Ship Template Name List
 --	stnl = {"MT52 Hornet","MU52 Hornet","Adder MK5","Adder MK4","WX-Lindworm","Adder MK6","Phobos T3","Phobos M3","Piranha F8","Piranha F12","Ranus U","Nirvana R5A","Stalker Q7","Stalker R7","Atlantis X23","Starhammer II","Odin","Fighter","Cruiser","Missile Cruiser","Strikeship","Adv. Striker","Dreadnought","Battlestation","Blockade Runner","Ktlitan Fighter","Ktlitan Breaker","Ktlitan Worker","Ktlitan Drone","Ktlitan Feeder","Ktlitan Scout","Ktlitan Destroyer","Storm"}
@@ -5885,6 +5886,7 @@ function handleDockedState()
 				playVoice("Hayden04")
 				addCommsReply("Confirm", function()
 					comms_source.plot1 = stronghold
+					plotPlayers[comms_source.plot1] = comms_source 
 					setCommsMessage("Good luck")
 					playVoice("Hayden05")
 					comms_source.primaryOrders = "Find and eliminate the Exuari station that is sending all these ships after us"
@@ -6558,16 +6560,20 @@ function handleDockedState()
 			end)
 		end
 		addCommsReply("What are my current orders?", function()
-			setOptionalOrders()
-			setSecondaryOrders()
-			if comms_source.primaryOrders == nil then
-				comms_source.primaryOrders = primaryOrders
+			if comms_source.getFaction() == "Exuari" then
+				setCommsMessage("Bring death and joy to those humans.")
+			else
+				setOptionalOrders()
+				setSecondaryOrders()
+				if comms_source.primaryOrders == nil then
+					comms_source.primaryOrders = primaryOrders
+				end
+				ordMsg = comms_source.primaryOrders .. "\n" .. secondaryOrders .. optionalOrders	-- secondary and optional orders are not present in this mission.
+				if playWithTimeLimit then
+					ordMsg = ordMsg .. string.format("\n   %i Minutes remain in game",math.floor(gameTimeLimit/60))
+				end
+				setCommsMessage(ordMsg)
 			end
-			ordMsg = comms_source.primaryOrders .. "\n" .. secondaryOrders .. optionalOrders	-- secondary and optional orders are not present in this mission.
-			if playWithTimeLimit then
-				ordMsg = ordMsg .. string.format("\n   %i Minutes remain in game",math.floor(gameTimeLimit/60))
-			end
-			setCommsMessage(ordMsg)
 			addCommsReply("Back", commsStation)
 		end)
 		if math.random(1,5) <= (3 - difficulty) then
@@ -6861,8 +6867,10 @@ function handleDockedState()
 		addCommsReply("Back",commsStation)
 	end)	
 	local goodCount = 0
-	for good, goodData in pairs(ctd.goods) do
-		goodCount = goodCount + 1
+	if ctd.goods ~= nil then
+		for good, goodData in pairs(ctd.goods) do
+			goodCount = goodCount + 1
+		end
 	end
 	if goodCount > 0 then
 		addCommsReply("Buy, sell, trade", function()
@@ -7174,19 +7182,19 @@ function showCurrentStats()
 					addCommsReply("Back", commsStation)
 				end)
 			end
-			if #kraylorVesselDestroyedNameList ~= nil and #kraylorVesselDestroyedNameList > 0 then
-				addCommsReply("Kraylor Vessels Destroyed",function()
-					local vessel_stats = ""
-					local vessel_strength = 0
-					for i=1,#kraylorVesselDestroyedNameList do
-						vessel_stats = vessel_stats .. string.format("\n%s, %s, %i",kraylorVesselDestroyedNameList[i],kraylorVesselDestroyedType[i],kraylorVesselDestroyedValue[i])
-						vessel_strength = vessel_strength + kraylorVesselDestroyedValue[i]
-					end
-					vessel_stats = string.format("Count: %i, Total strength: %i\n   Vessel Name, Type, Strength",#kraylorVesselDestroyedNameList,vessel_strength) .. vessel_stats
-					setCommsMessage(vessel_stats)
-					addCommsReply("Back", commsStation)
-				end)
-			end
+--			if #kraylorVesselDestroyedNameList ~= nil and #kraylorVesselDestroyedNameList > 0 then
+--				addCommsReply("Kraylor Vessels Destroyed",function()
+--					local vessel_stats = ""
+--					local vessel_strength = 0
+--					for i=1,#kraylorVesselDestroyedNameList do
+--						vessel_stats = vessel_stats .. string.format("\n%s, %s, %i",kraylorVesselDestroyedNameList[i],kraylorVesselDestroyedType[i],kraylorVesselDestroyedValue[i])
+--						vessel_strength = vessel_strength + kraylorVesselDestroyedValue[i]
+--					end
+--					vessel_stats = string.format("Count: %i, Total strength: %i\n   Vessel Name, Type, Strength",#kraylorVesselDestroyedNameList,vessel_strength) .. vessel_stats
+--					setCommsMessage(vessel_stats)
+--					addCommsReply("Back", commsStation)
+--				end)
+--			end
 			if #exuariVesselDestroyedNameList ~= nil and #exuariVesselDestroyedNameList > 0 then
 				addCommsReply("Exuari Vessels Destroyed",function()
 					local vessel_stats = ""
@@ -7200,19 +7208,19 @@ function showCurrentStats()
 					addCommsReply("Back", commsStation)
 				end)
 			end
-			if #arlenianVesselDestroyedNameList ~= nil and #arlenianVesselDestroyedNameList > 0 then
-				addCommsReply("Arlenian Vessels Destroyed",function()
-					local vessel_stats = ""
-					local vessel_strength = 0
-					for i=1,#arlenianVesselDestroyedNameList do
-						vessel_stats = vessel_stats .. string.format("\n%s, %s, %i",arlenianVesselDestroyedNameList[i],arlenianVesselDestroyedType[i],arlenianVesselDestroyedValue[i])
-						vessel_strength = vessel_strength + arlenianVesselDestroyedValue[i]
-					end
-					vessel_stats = string.format("Count: %i, Total strength: %i\n   Vessel Name, Type, Strength",#arlenianVesselDestroyedNameList,vessel_strength) .. vessel_stats
-					setCommsMessage(vessel_stats)
-					addCommsReply("Back", commsStation)
-				end)
-			end
+--			if #arlenianVesselDestroyedNameList ~= nil and #arlenianVesselDestroyedNameList > 0 then
+--				addCommsReply("Arlenian Vessels Destroyed",function()
+--					local vessel_stats = ""
+--					local vessel_strength = 0
+--					for i=1,#arlenianVesselDestroyedNameList do
+--						vessel_stats = vessel_stats .. string.format("\n%s, %s, %i",arlenianVesselDestroyedNameList[i],arlenianVesselDestroyedType[i],arlenianVesselDestroyedValue[i])
+--						vessel_strength = vessel_strength + arlenianVesselDestroyedValue[i]
+--					end
+--					vessel_stats = string.format("Count: %i, Total strength: %i\n   Vessel Name, Type, Strength",#arlenianVesselDestroyedNameList,vessel_strength) .. vessel_stats
+--					setCommsMessage(vessel_stats)
+--					addCommsReply("Back", commsStation)
+--				end)
+--			end
 			addCommsReply("Missions completed",function()
 				if mission_complete_count > 0 then
 					setCommsMessage(string.format("Missions completed so far: %i",mission_complete_count))
@@ -10764,13 +10772,12 @@ function startStronghold()
 	psy = solY+esy
 	stationFaction = "Exuari"
 	stationStaticAsteroids = true
-	--TODO station or super carrier?
-	si = math.random(1,#placeEnemyStation)		--station index
-	pStation = placeEnemyStation[si]()			--place selected station
-	table.remove(placeEnemyStation,si)			--remove station from placement list
-	table.insert(stationList,pStation)			--save station in general station list
-	table.insert(exuariStationList,pStation)	--save station in exuari station list
-	exuari_stronghold = pStation
+--	si = math.random(1,#placeEnemyStation)		--station index
+--	pStation = placeEnemyStation[si]()			--place selected station
+--	table.remove(placeEnemyStation,si)			--remove station from placement list
+--	table.insert(stationList,pStation)			--save station in general station list
+--	table.insert(exuariStationList,pStation)	--save station in exuari station list
+	exuari_stronghold = CpuShip():setFaction(stationFaction):setCallsign("Empok Nor"):setScannedByFaction(stationFaction, true):setTemplate("Fortress"):orderDefendLocation(psx, psy):setPosition(psx,psy):setCommsFunction(commsStation)
 	stronghold_interval = 300 - 50*difficulty
 	stronghold_timer = stronghold_interval
 	exuari_danger = 1
@@ -10792,6 +10799,7 @@ function stronghold(delta)
 		startStronghold()
 	end
 	plot1 = checkStrongholdEvents
+	plotPlayers[stronghold].plot1 = nil 
 end
 function checkStrongholdEvents(delta)
 	if exuari_stronghold == nil or not exuari_stronghold:isValid() then
@@ -11014,17 +11022,17 @@ function showEndStats(reason)
 	else
 		stat_message = stat_message .. "none"
 	end
-	stat_message = stat_message .. "\nKraylor vessels destroyed: "
-	if #kraylorVesselDestroyedNameList ~= nil and #kraylorVesselDestroyedNameList > 0 then
-		stat_message = stat_message .. #kraylorVesselDestroyedNameList
-		station_strength = 0
-		for i=1,#kraylorVesselDestroyedNameList do
-			station_strength = station_strength + kraylorVesselDestroyedValue[i]
-		end
-		stat_message = stat_message .. string.format(" (total strength: %i)",station_strength)
-	else
-		stat_message = stat_message .. "none"
-	end
+--	stat_message = stat_message .. "\nKraylor vessels destroyed: "
+--	if #kraylorVesselDestroyedNameList ~= nil and #kraylorVesselDestroyedNameList > 0 then
+--		stat_message = stat_message .. #kraylorVesselDestroyedNameList
+--		station_strength = 0
+--		for i=1,#kraylorVesselDestroyedNameList do
+--			station_strength = station_strength + kraylorVesselDestroyedValue[i]
+--		end
+--		stat_message = stat_message .. string.format(" (total strength: %i)",station_strength)
+--	else
+--		stat_message = stat_message .. "none"
+--	end
 	stat_message = stat_message .. "\n\n\n\nExuari vessels destroyed: "
 	if #exuariVesselDestroyedNameList ~= nil and #exuariVesselDestroyedNameList > 0 then
 		stat_message = stat_message .. #exuariVesselDestroyedNameList
@@ -11036,17 +11044,17 @@ function showEndStats(reason)
 	else
 		stat_message = stat_message .. "none"
 	end
-	stat_message = stat_message .. "\nArlenian vessels destroyed: "
-	if #arlenianVesselDestroyedNameList ~= nil and #arlenianVesselDestroyedNameList > 0 then
-		stat_message = stat_message .. #arlenianVesselDestroyedNameList
-		station_strength = 0
-		for i=1,#arlenianVesselDestroyedNameList do
-			station_strength = station_strength + arlenianVesselDestroyedValue[i]
-		end
-		stat_message = stat_message .. string.format(" (total strength: %i)",station_strength)
-	else
-		stat_message = stat_message .. "none"
-	end
+--	stat_message = stat_message .. "\nArlenian vessels destroyed: "
+--	if #arlenianVesselDestroyedNameList ~= nil and #arlenianVesselDestroyedNameList > 0 then
+--		stat_message = stat_message .. #arlenianVesselDestroyedNameList
+--		station_strength = 0
+--		for i=1,#arlenianVesselDestroyedNameList do
+--			station_strength = station_strength + arlenianVesselDestroyedValue[i]
+--		end
+--		stat_message = stat_message .. string.format(" (total strength: %i)",station_strength)
+--	else
+--		stat_message = stat_message .. "none"
+--	end
 	stat_message = stat_message .. string.format("\nMissions completed: %i",mission_complete_count)
 	if reason ~= nil then
 		stat_message = stat_message .. "\n" .. reason
