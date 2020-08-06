@@ -9370,7 +9370,9 @@ function startDefendPrimusStation()
 	pmx, pmy = vectorFromAngle(pla,random(8000,12000))
 	enemyFleetPrimus = spawnEnemies(prx+pmx,pry+pmy,1,"Exuari")
 	for _, enemy in ipairs(enemyFleetPrimus) do
-		enemy:orderAttack(primusStation)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderAttack(primusStation)
+		end
 	end
 	reinforcementInterval = 60
 	reinforcementTimer = reinforcementInterval
@@ -9421,7 +9423,9 @@ function checkDefendPrimusStationEvents(delta)
 						pmx, pmy = vectorFromAngle(random(0,360),random(6000,8000))
 						local tempFleet = spawnEnemies(prx+pmx,pry+pmy,1,"Exuari")
 						for _, enemy in ipairs(tempFleet) do
-							enemy:orderAttack(p)
+							if enemy:getOrder() == "Roaming" then
+								enemy:orderAttack(p)
+							end
 							table.insert(enemyFleetPrimus,enemy)
 						end
 					end
@@ -9666,9 +9670,9 @@ function exuariInterest(delta)
 			end
 		end
 		local tempFleet = spawnEnemies(pmx, pmy, 2, "Exuari")
-		for _, enemy in ipairs(tempFleet) do
-			enemy:orderRoaming()
-		end
+--		for _, enemy in ipairs(tempFleet) do
+--			enemy:orderRoaming()
+--		end
 	end
 end
 function secondRelease(delta)
@@ -9736,9 +9740,9 @@ function secondExuariInterest(delta)
 			end
 		end
 		local tempFleet = spawnEnemies(tpmx, tpmy, 5, "Exuari")
-		for _, enemy in ipairs(tempFleet) do
-			enemy:orderRoaming()
-		end
+--		for _, enemy in ipairs(tempFleet) do
+--			enemy:orderRoaming()
+--		end
 	end
 end
 -- PRIMUS STATION PLOT Transport Primus researcher
@@ -9797,7 +9801,9 @@ function checkTransportPrimusResearcherEvents(delta)
 				pmx, pmy = primusStation:getPosition()
 				enemyFleetTransport = spawnEnemies((prx+pmx)/2,(pry+pmy)/2,1,"Exuari")
 				for _, enemy in ipairs(enemyFleetTransport) do
-					enemy:orderAttack(p)
+					if enemy:getOrder() == "Roaming" then
+						enemy:orderAttack(p)
+					end
 					if difficulty >= 1 then
 						enemy:setWarpDrive(true)
 					end
@@ -9961,7 +9967,9 @@ function checkFixSatelliteEvents(delta)
 			pmx, pmy = vectorFromAngle(hps.angle,random(5100,6000))
 			enemyFleetSatellite = spawnEnemies(prx+pmx,pry+pmy,1+(difficulty*fixHarassCount),"Exuari")
 			for _, enemy in ipairs(enemyFleetSatellite) do
-				enemy:orderAttack(p)
+				if enemy:getOrder() == "Roaming" then
+					enemy:orderAttack(p)
+				end
 			end
 			fixHarassCount = fixHarassCount + 1
 		end
@@ -10027,7 +10035,9 @@ function marauderSpawn(delta)
 			local sx, sy = protect_station:getPosition()
 			initial_marauder_fleet = spawnEnemies((px+sx)/2,(py+sy)/2,1,"Exuari")
 			for _, enemy in ipairs(initial_marauder_fleet) do
-				enemy:orderAttack(protect_station)
+				if enemy:getOrder() == "Roaming" then
+					enemy:orderAttack(protect_station)
+				end
 			end
 			plotPlayers[defendSpawnBandStation].plot1 = marauderApproach
 		end
@@ -10078,11 +10088,15 @@ function marauderApproach(delta)
 					local sx, sy = protect_station:getPosition()
 					marauder_station_fleet = spawnEnemies((px+sx)/2,(py+sy)/2,1,"Exuari")
 					for _, enemy in ipairs(marauder_station_fleet) do
-						enemy:orderAttack(protect_station)
+						if enemy:getOrder() == "Roaming" then
+							enemy:orderAttack(protect_station)
+						end
 					end
 					marauder_player_fleet = spawnEnemies((px+sx)/2,(py+sy)/2,1,"Exuari")
 					for _, enemy in ipairs(marauder_player_fleet) do
-						enemy:orderAttack(p)
+						if enemy:getOrder() == "Roaming" then
+							enemy:orderAttack(p)
+						end
 					end
 				end
 				plotPlayers[defendSpawnBandStation].plot1 = marauderVanguard
@@ -10106,7 +10120,9 @@ function marauderVanguard(delta)
 			local sx, sy = protect_station:getPosition()
 			vanguard_fleet = spawnEnemies(vx+sx,vy+sy,2*difficulty,"Exuari")
 			for _, enemy in ipairs(vanguard_fleet) do
-				enemy:orderFlyTowards(sx,sy)
+				if enemy:getOrder() == "Roaming" then
+					enemy:orderFlyTowards(sx,sy)
+				end
 			end
 			plotPlayers[defendSpawnBandStation].plot1 = marauderFleetDestroyed
 		end
@@ -10177,7 +10193,9 @@ function startPiracy()
 	local pirx, piry = vectorFromAngle(random(0,360),random(10000,20000)-(3000*difficulty))
 	piracyFleet = spawnEnemies(tpmx+pirx, tpmy+piry, 1, "Exuari")
 	for _, enemy in ipairs(piracyFleet) do
-		enemy:orderFlyTowards(tpmx, tpmy)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderFlyTowards(tpmx, tpmy)
+		end
 	end
 	for pidx=1, MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
@@ -10323,8 +10341,10 @@ function checkVirusEvents(delta)
 					if p ~= nil and p:isValid() and p.virus_cure then
 						local phx, phy = p:getPosition()
 						local virus_fleet = spawnEnemies(phx, phy, 1, "Exuari", 2000 - difficulty*100, 4000)
-						for enemy in pairs(virus_fleet) do
-							enemy:orderAttack(p)
+						for _, enemy in ipairs(virus_fleet) do
+							if enemy:getOrder() == "Roaming" then
+								enemy:orderAttack(p)
+							end
 						end
 					end
 				end
@@ -10599,11 +10619,15 @@ function checkTargetIntelEvents(delta)
 					local plx, ply = p:getPosition()
 					intel_fleet_player = spawnEnemies((plx+iwpx)/2, (ply+iwpy)/2, 1, "Exuari")
 					for _, enemy in ipairs(intel_fleet_player) do
-						enemy:orderFlyTowards(plx,ply)
+						if enemy:getOrder() == "Roaming" then
+							enemy:orderFlyTowards(plx,ply)
+						end
 					end
 					intel_fleet_station = spawnEnemies((plx+iwpx)/2 + 1000, (ply+iwpy)/2 + 1000, 1, "Exuari")
 					for _, enemy in ipairs(intel_fleet_station) do
-						enemy:orderFlyTowards(iwpx,iwpy)
+						if enemy:getOrder() == "Roaming" then
+							enemy:orderFlyTowards(iwpx,iwpy)
+						end
 					end
 					intel_attack = true
 				end
@@ -10756,7 +10780,9 @@ function startStronghold()
 			local plx, ply = p:getPosition()
 			local eFleet = spawnEnemies(plx,ply,exuari_danger,"Exuari",4000,6000)
 			for _, enemy in ipairs(eFleet) do
-				enemy:orderAttack(p)
+				if enemy:getOrder() == "Roaming" then
+					enemy:orderAttack(p)
+				end
 			end
 		end
 	end
@@ -10781,7 +10807,9 @@ function checkStrongholdEvents(delta)
 			if random(1,100) < 50 then
 				local eFleet = spawnEnemies(plx,ply,exuari_danger,"Exuari",4000,6000)
 				for _, enemy in ipairs(eFleet) do
-					enemy:orderAttack(p)
+					if enemy:getOrder() == "Roaming" then
+						enemy:orderAttack(p)
+					end
 				end
 				if random(1,100) < 50 then
 					WarpJammer():setRange(8000):setPosition(plx+3000,ply+3000):setFaction("Exuari")
@@ -10789,15 +10817,17 @@ function checkStrongholdEvents(delta)
 			else
 				local esx, esy = exuari_stronghold:getPosition()
 				eFleet = spawnEnemies((plx+esx)/2,(ply+esy)/2,exuari_danger,"Exuari")
-				for _, enemy in ipairs(eFleet) do
-					enemy:orderRoaming()
-				end
+--				for _, enemy in ipairs(eFleet) do
+--					enemy:orderRoaming()
+--				end
 			end
 		else
 			local plx, ply = exuari_stronghold:getPosition()
 			local eFleet = spawnEnemies(plx,ply,exuari_danger,"Exuari",4000,6000)
 			for _, enemy in ipairs(eFleet) do
-				enemy:orderStandGround()
+				if enemy:getOrder() == "Roaming" then
+					enemy:orderStandGround()
+				end
 			end
 		end
 		exuari_danger = exuari_danger + 1
