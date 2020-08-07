@@ -249,7 +249,7 @@ function setConstants()
 	table.insert(get_coolant_function,getCoolant6)
 	table.insert(get_coolant_function,getCoolant7)
 	table.insert(get_coolant_function,getCoolant8)
-	show_player_info = true
+	show_player_info = false 
 	show_only_player_name = true
 	info_choice = 0
 	info_choice_max = 5
@@ -8637,13 +8637,16 @@ function spawnEnemies(xOrigin, yOrigin, danger, enemyFaction, enemyStrength)
 	local prefix = generateCallSignPrefix(1)
 	if enemyFaction == "Kraylor" then
 		rawKraylorShipStrength = rawKraylorShipStrength + fleetPower
-		ship:onDestruction(enemyVesselDestroyed)
 	elseif enemyFaction == "Human Navy" then
 		rawHumanShipStrength = rawHumanShipStrength + fleetPower
-		ship:onDestruction(friendlyVesselDestroyed)
 	end
 	for _, ship in ipairs(enemyList) do
 		ship:setCallSign(generateCallSign(nil,enemyFaction))
+		if enemyFaction == "Kraylor" then
+			ship:onDestruction(enemyVesselDestroyed)
+		elseif enemyFaction == "Human Navy" then
+			ship:onDestruction(friendlyVesselDestroyed)
+		end
 	end
 	return enemyList
 end
@@ -9975,6 +9978,9 @@ function limitedWar(delta)
 				if not p.modsAssigned then
 					setPlayers()
 				end
+				if p:getFaction() == "Black Ops" then
+					p:setFaction("Human Navy")
+				end
 				p:addToShipLog(string.format("To: Commanding Officer of %s",p:getCallSign()),"Magenta")
 				p:addToShipLog("From: Human Navy Headquarters","Magenta")
 				p:addToShipLog("    War continues on Kraylors.","Magenta")
@@ -10531,15 +10537,15 @@ function artifactToMinefield(delta)
 			if tam.mineCount == nil then
 				tam.mineCount = 0
 			end
-			if tam.mineCount < 150 then
+			if tam.mineCount < 75 then
 				wang = tam.travelAngle + 360
 				if tam.mineCount == 0 then
 					mdx, mdy = vectorFromAngle(wang,tam.triggerDistance)
 					Mine():setPosition(tam.originX+mdx,tam.originY+mdy)
 				else
-					mdx, mdy = vectorFromAngle(wang+tam.mineCount,tam.triggerDistance)
+					mdx, mdy = vectorFromAngle(wang+2*tam.mineCount,tam.triggerDistance)
 					Mine():setPosition(tam.originX+mdx,tam.originY+mdy)
-					mdx, mdy = vectorFromAngle(wang-tam.mineCount,tam.triggerDistance)
+					mdx, mdy = vectorFromAngle(wang-2*tam.mineCount,tam.triggerDistance)
 					Mine():setPosition(tam.originX+mdx,tam.originY+mdy)
 				end
 				tam.mineCount = tam.mineCount + 1
@@ -10551,9 +10557,8 @@ function artifactToMinefield(delta)
 			tam:setPosition(amx+tDeltax,amy+tDeltay)
 		end
 	end
-	for i=1,#artMineList do
-		tam = artMineList[i]
-		if tam.deleteMe then
+	for i, tam in ipairs(artMineList) do
+		if tam ~=nil and tam.deleteMe then
 			table.remove(artMineList,i)
 			tam:destroy()
 		end
@@ -10862,7 +10867,9 @@ function playerBorderCheck(delta)
 						if p.playerDetected >= 10 then
 							for p2idx=1,MAX_PLAYER_SHIPS do
 								p2 = getPlayerShip(p2idx)
-								p2:addToShipLog(p:getCallSign() .. " violated treaty terms by crossing neutral border zone. " .. p:getCallSign() .. " is treated as criminal now.", "Magenta")
+								if p2 ~=nil and p2:isValid() then
+									p2:addToShipLog(p:getCallSign() .. " violated treaty terms by crossing neutral border zone. " .. p:getCallSign() .. " is treated as criminal now.", "Magenta")
+								end
 							end
 							p:setFaction("Criminals")
 						else
