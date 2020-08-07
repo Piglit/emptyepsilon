@@ -2590,7 +2590,7 @@ end
 function placeMaverick()
 	--Maverick
 	stationMaverick = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
-	stationMaverick:setPosition(psx,psy):setCallSign("Maverick"):setDescription("Gambling and resupply")
+	stationMaverick:setPosition(psx,psy):setCallSign("Moverick"):setDescription("Gambling and resupply")
 	stationGoodChoice = math.random(1,3)
 	if stationGoodChoice == 1 then
 		goods[stationMaverick] = {{"luxury",5,math.random(68,81)}}

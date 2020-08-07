@@ -1859,7 +1859,7 @@ end
 function placeMaverick()
 	--Maverick
 	stationMaverick = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
-	stationMaverick:setPosition(psx,psy):setCallSign("Maverick"):setDescription("Gambling and resupply")
+	stationMaverick:setPosition(psx,psy):setCallSign("Moverick"):setDescription("Gambling and resupply")
 	stationMaverick.publicRelations = true
 	stationMaverick.generalInformation = "Relax and meet some interesting players"
 	return stationMaverick
