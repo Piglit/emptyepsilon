@@ -45,7 +45,10 @@ function init()
 	--random range 4 final: 240, 540 (lowered for test) treaty for game with no time limit
 	lrr5 = 240
 	urr5 = 540
-	
+
+	factions_forbidden_in_neutral_zone = {"Human Navy", "Black Ops"}
+	factions_forbidden_in_enemy_zone = {"Human Navy", "Blue Star Cartell", "Mining Corporation"}
+
 	--end of game victory/defeat values
 	enemyDestructionVictoryCondition = 70		--final: 70
 	friendlyDestructionDefeatCondition = 50		--final: 50
@@ -10730,17 +10733,30 @@ function playerBorderCheck(delta)
 				playerOutOfBounds = false
 				tbz = outerZone
 				if tbz:isInside(p) then
-					if p:getFaction() == "Human Navy" then
-						--allow 'black ops' jumping over neutral zone
-						playerOutOfBounds = true
+					--allow 'black ops' jumping over neutral zone
+					for _, faction in ipairs(factions_forbidden_in_enemy_zone) do
+						if p:getFaction() == faction then
+							playerOutOfBounds = true
+							break
+						end
+					end
+					if playerOutOfBounds then
 						break
 					end
 				end
 				for i=1,#borderZone do
 					tbz = borderZone[i]
 					if tbz:isInside(p) then
-						playerOutOfBounds = true
-						break
+						--allow 'neutrals' in neutral zone
+						for _, faction in ipairs(factions_forbidden_in_neutral_zone) do
+							if p:getFaction() == faction then
+								playerOutOfBounds = true
+								break
+							end
+						end
+						if playerOutOfBounds then
+							break
+						end
 					end
 				end
 				if playerOutOfBounds then
