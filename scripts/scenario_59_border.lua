@@ -8941,7 +8941,7 @@ function cargoInventory(delta)
 					if p.inventoryButton == nil then
 						local tbi = "inventory" .. p:getCallSign()
 						p:addCustomButton("Relay",tbi,"Inventory", function()
-							cargoInventoryGivenShip(p)
+							cargoInventoryGivenShip(pidx)
 						end)
 						--cargoInventoryList[pidx])
 						p.inventoryButton = true
@@ -8951,7 +8951,7 @@ function cargoInventory(delta)
 					if p.inventoryButton == nil then
 						local tbi = "inventoryOp" .. p:getCallSign()
 						p:addCustomButton("Operations",tbi,"Inventory", function()
-							cargoInventoryGivenShip(p)
+							cargoInventoryGivenShip(pidx)
 						end)
 						--	cargoInventoryList[pidx])
 						p.inventoryButton = true
@@ -8961,7 +8961,8 @@ function cargoInventory(delta)
 		end
 	end
 end
-function cargoInventoryGivenShip(p)
+function cargoInventoryGivenShip(pidx)
+	p = getPlayerShip(pidx)
 	p:addToShipLog(string.format("%s Current cargo:",p:getCallSign()),"Yellow")
 	local cargoHoldEmpty = true
 	if p.goods ~= nil then
