@@ -13,6 +13,18 @@
 
 -- Station warning of enemies in area (helpful warnings - shuffle stations)
 
+-- Stations on Human side of border: Human Navy or Mining Corp
+-- Stations inside border: Independent or Mining Corp
+-- Stations on Kraylor side of border: Kraylor
+-- Transport ships between Station on Human side: Blue Star
+-- Transport ships inside border: Transport
+-- Transport ships on Kraylor side: Kraylor
+-- Infos for Mining Corp: many stations need medicine, provide components
+-- Mining can have station in neutral zone
+-- Blue Star does not have bases, but are allied with transport ships
+-- Mining and Blues can enter neutral zone but not Kraylor Territory
+-- Black Ops can enter Kraylor Territory but not neutral Zone
+
 require("utils.lua")
 require("ee.lua")
 require("xanstas_mods.lua")
@@ -11345,34 +11357,28 @@ function listStatuses()
 	return friendlySurvivedCount, friendlySurvivedValue, fpct1, fpct2, enemySurvivedCount, enemySurvivedValue, epct1, epct2, neutralSurvivedCount, neutralSurvivedValue, npct1, npct2, friendlyShipSurvivedValue, fpct, enemyShipSurvivedValue, epct
 end
 function stationStatus()
-	tp = getPlayerShip(-1)
-	if tp == nil then
-		return nil
-	end
 	local friendlySurvivedCount = 0
 	local friendlySurvivedValue = 0
+	for _, station in ipairs(humanStationList) do
+		if station:isValid() then
+			friendlySurvivedCount = friendlySurvivedCount + 1
+			friendlySurvivedValue = friendlySurvivedValue + station.strength
+		end
+	end
 	local enemySurvivedCount = 0
 	local enemySurvivedValue = 0
+	for _, station in ipairs(kraylorStationList) do
+		if station:isValid() then
+			enemySurvivedCount = enemySurvivedCount + 1
+			enemySurvivedValue = enemySurvivedValue + station.strength
+		end
+	end
 	local neutralSurvivedCount = 0
 	local neutralSurvivedValue = 0
-	for _, station in pairs(stationList) do
-		if tp ~= nil then
-			if station:isFriendly(tp) then
-				if station:isValid() then
-					friendlySurvivedCount = friendlySurvivedCount + 1
-					friendlySurvivedValue = friendlySurvivedValue + station.strength
-				end
-			elseif station:isEnemy(tp) then
-				if station:isValid() then
-					enemySurvivedCount = enemySurvivedCount + 1
-					enemySurvivedValue = enemySurvivedValue + station.strength
-				end
-			else
-				if station:isValid() then
-					neutralSurvivedCount = neutralSurvivedCount + 1
-					neutralSurvivedValue = neutralSurvivedValue + station.strength
-				end
-			end
+	for _, station in ipairs(neutralStationList) do
+		if station:isValid() then
+			neutralSurvivedCount = neutralSurvivedCount + 1
+			neutralSurvivedValue = neutralSurvivedValue + station.strength
 		end
 	end
 	if originalHumanStationCount == nil then
