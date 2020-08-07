@@ -5761,11 +5761,15 @@ function commsStation()
         services = {
             supplydrop = "friend",
             reinforcements = "friend",
-            preorder = "friend"
+            preorder = "friend",
+			fighters = "friend"
         },
         service_cost = {
             supplydrop = math.random(80,120),
-            reinforcements = math.random(125,175)
+            reinforcements = math.random(125,175),
+			fighterInterceptor = math.random(125,175),
+			fighterBomber = math.random(150,200),
+			fighterScout = math.random(175,225)
         },
         reputation_cost_multipliers = {
             friend = 1.0,
@@ -6055,6 +6059,45 @@ function handleDockedState()
 				end)
 			end
 		end
+	end
+	if isAllowedTo(comms_target.comms_data.services.fighters) and comms_source.carrier then
+		addCommsReply("Visit shipyard", function()
+			setCommsMessage("Here you can start fighters that can be taken by your pilots. You do have a fighter pilot waiting, do you?")
+			addCommsReply(string.format("Purchase unmanned MP52 Hornet Interceptor for %i reputation", getServiceCost("fighterInterceptor")), function()
+				if not comms_source:takeReputationPoints(getServiceCost("fighterInterceptor")) then
+					setCommsMessage("Insufficient reputation")
+				else
+					local ship = PlayerSpaceship():setTemplate("MP52 Hornet"):setFactionId(comms_source:getFactionId())
+					setPlayers()
+					ship:setPosition(comms_target:getPosition())
+					setCommsMessage("We have dispatched " .. ship:getCallSign() .. " to be manned by one of your pilots")
+				end
+				addCommsReply("Back", commsStation)
+			end)
+			addCommsReply(string.format("Purchase unmanned ZX-Lindworm Bomber for %i reputation", getServiceCost("fighterBomber")), function()
+				if not comms_source:takeReputationPoints(getServiceCost("fighterBomber")) then
+					setCommsMessage("Insufficient reputation")
+				else
+					local ship = PlayerSpaceship():setTemplate("ZX-Lindworm"):setFactionId(comms_source:getFactionId())
+					setPlayers()
+					ship:setPosition(comms_target:getPosition())
+					setCommsMessage("We have dispatched " .. ship:getCallSign() .. " to be manned by one of your pilots")
+				end
+				addCommsReply("Back", commsStation)
+			end)
+			addCommsReply(string.format("Purchase unmanned Adder MK7 Scout for %i reputation", getServiceCost("fighterScout")), function()
+				if not comms_source:takeReputationPoints(getServiceCost("fighterScout")) then
+					setCommsMessage("Insufficient reputation")
+				else
+					local ship = PlayerSpaceship():setTemplate("Adder MK7"):setFactionId(comms_source:getFactionId())
+					setPlayers()
+					ship:setPosition(comms_target:getPosition())
+					setCommsMessage("We have dispatched " .. ship:getCallSign() .. " to be manned by one of your pilots")
+				end
+				addCommsReply("Back", commsStation)
+			end)
+			addCommsReply("Back", commsStation)
+		end)
 	end
 	addCommsReply("Visit cartography office", function()
 		if comms_target.cartographer_description == nil then
