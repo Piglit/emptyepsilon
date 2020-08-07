@@ -57,6 +57,7 @@ function friendlyComms(comms_data)
 	else
 		setCommsMessage("KILL!!")
 	end
+	comms_data.friendlyness = comms_data.friendlyness - random(0, 10)	--reduce friendlyness after each interaction
 
 	addCommsReply("Defend a waypoint", function() 
 		friendlyDefendWaypoint(comms_data)
@@ -284,6 +285,7 @@ function neutralComms(comms_data)
 	else
 		setCommsMessage("KILL! DEATH!!");
 	end
+	comms_data.friendlyness = comms_data.friendlyness - random(0, 10)	--reduce friendlyness after each interaction
 	return true
 end
 
