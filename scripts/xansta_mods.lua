@@ -1,5 +1,5 @@
 require("script_formation.lua")
-require("script_hangar")
+require("script_hangar.lua")
 
 function init_constants_xansta()
 	-- called during or instead of setConstants()
@@ -410,21 +410,21 @@ function modify_player_ships(pobj)
 			pobj.shipScore = 52
 			pobj.maxCargo = 6
 		elseif tempPlayerType == "Maverick" then
-			if #playerShipNamesForProtoAtlantis > 0 and not pobj.nameAssigned then
+			if #playerShipNamesForMaverick > 0 and not pobj.nameAssigned then
 				pobj.nameAssigned = true
-				ni = math.random(1,#playerShipNamesForProtoAtlantis)
-				pobj:setCallSign(playerShipNamesForProtoAtlantis[ni])
-				table.remove(playerShipNamesForProtoAtlantis,ni)
+				ni = math.random(1,#playerShipNamesForMaverick)
+				pobj:setCallSign(playerShipNamesForMaverick[ni])
+				table.remove(playerShipNamesForMaverick,ni)
 			end
 			pobj.carrier = true
 			pobj.shipScore = 52
 			pobj.maxCargo = 6
 		elseif tempPlayerType == "Crucible" then
-			if #playerShipNamesForStricken> 0 and not pobj.nameAssigned then
+			if #playerShipNamesForCrucible > 0 and not pobj.nameAssigned then
 				pobj.nameAssigned = true
-				ni = math.random(1,#playerShipNamesForStriken)
-				pobj:setCallSign(playerShipNamesForStriken[ni])
-				table.remove(playerShipNamesForStriken,ni)
+				ni = math.random(1,#playerShipNamesForCrucible)
+				pobj:setCallSign(playerShipNamesForCrucible[ni])
+				table.remove(playerShipNamesForCrucible,ni)
 			end
 			pobj.carrier = true
 			pobj.shipScore = 52
@@ -512,10 +512,12 @@ function spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction)
 	for index,shipTemplateType in ipairs(enemyNameList) do
 		local ship = CpuShip():setFaction(enemyFaction):setScannedByFaction(enemyFaction, true):setTemplate(shipTemplateType):orderRoaming()
 		enemyPosition = enemyPosition + 1
-		if deployConfig < 50 then
+		if deployConfig < 50 and enemyPosition <= #fleetPosDelta1x then
 			ship:setPosition(xOrigin+fleetPosDelta1x[enemyPosition]*sp,yOrigin+fleetPosDelta1y[enemyPosition]*sp)
-		else 
+		elseif enemyPosition <= #fleetPosDelta2x then
 			ship:setPosition(xOrigin+fleetPosDelta2x[enemyPosition]*sp,yOrigin+fleetPosDelta2y[enemyPosition]*sp)
+		else
+			ship:setPosition(xOrigin, yOrigin)
 		end
 		if enemyFaction == "Kraylor" then
 			--kraylor formation
@@ -528,10 +530,10 @@ function spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction)
 			if smallFormations[shipTemplateType] == nil then
 				smallFormations[shipTemplateType] = {ship, nil, 1}
 			else
-				local leader, second, fidx = smallFormations[shipTemplateType]
-				if fidx == nil then
-					fidx = 1
-				end
+				local pack = smallFormations[shipTemplateType]
+				local leader = pack[1]
+				local second = pack[2]
+				local fidx = pack[3]
 				fidx = fidx + 1
 				leader, second = script_formation.buildFormationIncremental(ship, fidx, leader, second)
 				smallFormations[shipTemplateType] = {leader, second, fidx}

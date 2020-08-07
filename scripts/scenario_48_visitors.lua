@@ -4814,6 +4814,7 @@ function placeMaverick()
 	stationMaverick = SpaceStation():setTemplate(szt()):setFaction(stationFaction)
 	setStationComms(stationMaverick)
 	stationMaverick:setPosition(psx,psy):setCallSign("Moverick"):setDescription("Gambling and resupply")
+	--adjusted name to differ from ship type for reasons
     stationMaverick.comms_data = {
     	friendlyness = random(0,100),
         weapons = 			{Homing = "neutral",					HVLI = "neutral", 						Mine = "neutral",						Nuke = "friend", 						EMP = "friend"},
@@ -10766,6 +10767,7 @@ end
 --end
 -- TERTIUS PLOT Eliminate Exuari stronghold
 function startStronghold()
+	print("start stronghold")
 	set_up_stronghold = "done"
 	primaryOrders = "Find and eliminate the Exuari station that is sending all these ships after us"
 	plotChoiceStation = nil
@@ -10779,7 +10781,7 @@ function startStronghold()
 --	table.remove(placeEnemyStation,si)			--remove station from placement list
 --	table.insert(stationList,pStation)			--save station in general station list
 --	table.insert(exuariStationList,pStation)	--save station in exuari station list
-	exuari_stronghold = CpuShip():setFaction(stationFaction):setCallsign("Empok Nor"):setScannedByFaction(stationFaction, true):setTemplate("Fortress"):orderDefendLocation(psx, psy):setPosition(psx,psy):setCommsFunction(commsStation)
+	exuari_stronghold = CpuShip():setTemplate("Fortress"):setFaction(stationFaction):setCallSign("Empok Nor"):setScannedByFaction(stationFaction, true):orderDefendLocation(psx, psy):setPosition(psx,psy):setCommsFunction(commsStation)
 	stronghold_interval = 300 - 50*difficulty
 	stronghold_timer = stronghold_interval
 	exuari_danger = 1
