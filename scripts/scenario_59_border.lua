@@ -25,6 +25,12 @@
 -- Mining and Blues can enter neutral zone but not Kraylor Territory
 -- Black Ops can enter Kraylor Territory but not neutral Zone
 
+--Some goals:
+-- Navy: defend and beat some kraylor
+-- Kraylor: attack and reduce humans and maybe neutrals
+-- blue: yellows shall loose stations
+-- yellows: keep stations
+
 require("utils.lua")
 require("ee.lua")
 require("xanstas_mods.lua")
@@ -10455,7 +10461,7 @@ function artifactToPlatform(delta)
 			if enemyDefensePlatformList == nil then
 				enemyDefensePlatformList = {}
 			end
-			twp = CpuShip():setTemplate("Defense platform"):setFaction("Kraylor"):setPosition(apx,apy):orderRoaming()
+			twp = CpuShip():setTemplate("Battlestation"):setFaction("Kraylor"):setPosition(apx,apy):orderRoaming()
 			twp.distance = tap.triggerDistance
 			twp.originX = tap.originX
 			twp.originY = tap.originY
@@ -10816,22 +10822,19 @@ end
 -- Plot PB player border zone checks
 function playerBorderCheck(delta)
 	if treaty then
-		tbz = nil
 		for pidx=1,MAX_PLAYER_SHIPS do
+			tbz = nil
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
-				playerOutOfBounds = false
+				p.playerOutOfBounds = false
 				tbz = outerZone
 				if tbz:isInside(p) then
 					--allow 'black ops' jumping over neutral zone
 					for _, faction in ipairs(factions_forbidden_in_enemy_zone) do
 						if p:getFaction() == faction then
-							playerOutOfBounds = true
+							p.playerOutOfBounds = true
 							break
 						end
-					end
-					if playerOutOfBounds then
-						break
 					end
 				end
 				for i=1,#borderZone do
@@ -10840,55 +10843,52 @@ function playerBorderCheck(delta)
 						--allow 'neutrals' in neutral zone
 						for _, faction in ipairs(factions_forbidden_in_neutral_zone) do
 							if p:getFaction() == faction then
-								playerOutOfBounds = true
+								p.playerOutOfBounds = true
 								break
 							end
 						end
-						if playerOutOfBounds then
+						if p.playerOutOfBounds then
 							break
 						end
 					end
 				end
-				if playerOutOfBounds then
-					break
-				end
-			end
-		end
-		if tbz ~= nil then
-			if playerOutOfBounds then
-				if tbz.playerDetected == nil then
-					tbz.playerDetected = 0
-				else
-					if tbz.playerDetected >= 10 then
-						missionVictory = false
-						finalTimer = 2
-						plotPB = displayDefeatResults
+				if p.playerOutOfBounds then
+					if p.playerDetected == nil then
+						p.playerDetected = 0
 					else
-						tbz.playerDetected = tbz.playerDetected + delta
+						if p.playerDetected >= 10 then
+							for p2idx=1,MAX_PLAYER_SHIPS do
+								p2 = getPlayerShip(p2idx)
+								p2:addToShipLog(p:getCallSign() .. " violated treaty terms by crossing neutral border zone. " .. p:getCallSign() .. " is treated as criminal now.", "Magenta")
+							end
+							p:setFaction("Criminals")
+						else
+							p.playerDetected = p.playerDetected + delta
+						end
 					end
-				end
-			else
-				if tbz.playerDetected == nil then
-					tbz.playerDetected = 0
 				else
-					if tbz.playerDetected <= 0 then
-						tbz.playerDetected = 0
+					if p.playerDetected == nil then
+						p.playerDetected = 0
 					else
-						tbz.playerDetected = tbz.playerDetected - delta
+						if p.playerDetected <= 0 then
+							p.playerDetected = 0
+						else
+							p.playerDetected = p.playerDetected - delta
+						end
 					end
 				end
 			end
 		end
 	end
 end
-function displayDefeatResults(delta)
-	finalTimer = finalTimer - delta
-	if finalTimer < 0 then
-		missionCompleteReason = "Player violated treaty terms by crossing neutral border zone"
-		endStatistics()
-		victory("Kraylor")
-	end
-end
+--function displayDefeatResults(delta)
+--	finalTimer = finalTimer - delta
+--	if finalTimer < 0 then
+--
+--		endStatistics()
+--		victory("Kraylor")
+--	end
+--end
 function playerWarCrimeCheck(delta)
 	if not treaty and not targetKraylorStations and initialAssetsEvaluated then
 		local friendlySurvivedCount, friendlySurvivedValue, fpct1, fpct2, enemySurvivedCount, enemySurvivedValue, epct1, epct2, neutralSurvivedCount, neutralSurvivedValue, npct1, npct2 = stationStatus()
