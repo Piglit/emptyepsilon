@@ -48,6 +48,8 @@ function init()
 
 	factions_forbidden_in_neutral_zone = {"Human Navy", "Black Ops"}
 	factions_forbidden_in_enemy_zone = {"Human Navy", "Blue Star Cartell", "Mining Corporation"}
+	faction_transporter_neutral = "Transport"
+	faction_transporter_friendly= "Blue Star Cartell"
 
 	--end of game victory/defeat values
 	enemyDestructionVictoryCondition = 70		--final: 70
@@ -2302,6 +2304,7 @@ function placeAlcaleica()
 			stationAlcaleica.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationAlcaleica.comms_data.trade.medicine = true
+			stationAlcaleica:setFaction("Mining Corporation")
 		end
 	else
 		stationAlcaleica.comms_data.trade.medicine = true
@@ -2359,6 +2362,7 @@ function placeArcher()
 			stationArcher.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationArcher.comms_data.trade.medicine = true
+			stationArcher:setFaction("Mining Corporation")
 		end
 	else
 		stationArcher.comms_data.trade.medicine = true
@@ -2388,6 +2392,7 @@ function placeArchimedes()
 			stationArchimedes.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationArchimedes.comms_data.trade.medicine = true
+			stationArchimedes:setFaction("Mining Corporation")
 		end
 	else
 		stationArchimedes.comms_data.trade.food = true
@@ -2418,6 +2423,7 @@ function placeArmstrong()
 		if random(1,5) <= 1 then
 			stationArmstrong.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		end
+		stationArmstrong:setFaction("Mining Corporation")
 	end
 	return stationArmstrong
 end
@@ -2470,6 +2476,7 @@ function placeBarclay()
 			stationBarclay.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationBarclay.comms_data.trade.medicine = true
+			stationBarclay:setFaction("Mining Corporation")
 		end
 	else
 		stationBarclay.comms_data.trade.medicine = true
@@ -2521,6 +2528,7 @@ function placeBroeck()
 			stationBroeck.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationBroeck.comms_data.trade.medicine = random(1,100) < 53
+			stationBroeck:setFaction("Mining Corporation")
 		end
 	else
 		stationBroeck.comms_data.trade.medicine = random(1,100) < 53
@@ -2550,6 +2558,7 @@ function placeCalifornia()
 			stationCalifornia.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		end
 	end
+	stationCalifornia:setFaction("Mining Corporation")
 	return stationCalifornia
 end
 function placeCalvin()
@@ -2575,6 +2584,7 @@ function placeCalvin()
 		if random(1,5) <= 1 then
 			stationCalvin.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		end
+		stationCalvin:setFaction("Mining Corporation")
 	else
 		stationCalvin.comms_data.trade.food = random(1,100) < 8
 	end
@@ -2605,6 +2615,7 @@ function placeCavor()
 		else
 			if random(1,100) < 50 then
 				stationCavor.comms_data.trade.medicine = true
+				stationCavor:setFaction("Mining Corporation")
 			else
 				stationCavor.comms_data.trade.luxury = true
 			end
@@ -2670,6 +2681,7 @@ function placeCoulomb()
 			stationCoulomb.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationCoulomb.comms_data.trade.medicine = random(1,100) < 27
+			stationCoulomb:setFaction("Mining Corporation")
 		end
 	else
 		stationCoulomb.comms_data.trade.medicine = random(1,100) < 27
@@ -2700,6 +2712,7 @@ function placeCyrus()
 			stationCyrus.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationCyrus.comms_data.trade.medicine = random(1,100) < 34
+			stationCyrus:setFaction("Mining Corporation")
 		end
 	else
 		stationCyrus.comms_data.trade.medicine = random(1,100) < 34
@@ -2761,6 +2774,7 @@ function placeDeer()
 			stationDeer.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationDeer.comms_data.trade.medicine = true
+			stationDeer:setFaction("Mining Corporation")
 		end
 	else
 		stationDeer.comms_data.trade.medicine = true
@@ -2791,6 +2805,7 @@ function placeErickson()
 			stationErickson.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationErickson.comms_data.trade.medicine = true
+			stationErickson:setFaction("Mining Corporation")
 		end
 	else
 		stationErickson.comms_data.trade.medicine = true
@@ -2850,6 +2865,7 @@ function placeFeynman()
 		if random(1,5) <= 1 then
 			stationFeynman.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		end
+		stationFeynman:setFaction("Mining Corporation")
 	else
 		stationFeynman.comms_data.trade.medicine = true
 		stationFeynman.comms_data.trade.food = random(1,100) < 26
@@ -2883,6 +2899,7 @@ function placeGrasberg()
 	else
 		stationGrasberg.comms_data.trade.food = true
 	end
+	stationGrasberg:setFaction("Mining Corporation")
 	local grasbergGoods = random(1,100)
 	if grasbergGoods < 20 then
 		stationGrasberg.comms_data.goods.gold = {quantity = 5, cost = 25}
@@ -2944,6 +2961,7 @@ function placeHeyes()
 		if random(1,5) <= 1 then
 			stationHeyes.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		end
+		stationHeyes:setFaction("Mining Corporation")
 	end
 	return stationHeyes
 end
@@ -3016,6 +3034,7 @@ function placeImpala()
 	else
 		stationImpala.comms_data.trade.food = true
 	end
+	stationImpala:setFaction("Mining Corporation")
 	return stationImpala
 end
 function placeKomov()
@@ -3063,6 +3082,7 @@ function placeKrak()
         trade = {	food = random(1,100) < 50, medicine = true, luxury = random(1,100) < 50 },
 		buy =	{	[randomComponent()] = math.random(40,200)	}
 	}
+	stationKrak:setFaction("Mining Corporation")
 	local posAxisKrak = random(0,360)
 	local posKrak = random(10000,60000)
 	local negKrak = random(10000,60000)
@@ -3120,6 +3140,7 @@ function placeKruk()
         trade = {	food = random(1,100) < 50, medicine = random(1,100) < 50, luxury = true },
 		buy =	{	[randomComponent()] = math.random(40,200)	}
 	}
+	stationKruk:setFaction("Mining Corporation")
 	local posAxisKruk = random(0,360)
 	local posKruk = random(10000,60000)
 	local negKruk = random(10000,60000)
@@ -3242,6 +3263,7 @@ function placeMaiman()
 			stationMaiman.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationMaiman.comms_data.trade.medicine = true
+			stationMaiman:setFaction("Mining Corporation")
 		end
 	else
 		stationMaiman.comms_data.trade.medicine = true
@@ -3271,6 +3293,7 @@ function placeMarconi()
 			stationMarconi.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationMarconi.comms_data.trade.medicine = true
+			stationMarconi:setFaction("Mining Corporation")
 		end
 	else
 		stationMarconi.comms_data.trade.medicine = true
@@ -3403,6 +3426,7 @@ function placeOBrien()
 			stationOBrien.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationOBrien.comms_data.trade.medicine = random(1,100) < 34
+			stationOBrien:setFaction("Mining Corporation")
 		end
 	else
 		stationOBrien.comms_data.trade.medicine = true
@@ -3495,6 +3519,7 @@ function placeOutpost15()
 	else
 		stationOutpost15.comms_data.trade.food = true
 	end
+	stationOutpost15:setFaction("Mining Corporation")
 	placeRandomAsteroidsAroundPoint(15,1,15000,psx,psy)
 	return stationOutpost15
 end
@@ -3535,6 +3560,7 @@ function placeOutpost21()
 		stationOutpost21.comms_data.trade.food = true
 		stationOutpost21.comms_data.trade.medicine = random(1,100) < 50
 	end
+	stationOutpost21:setFaction("Mining Corporation")
 	return stationOutpost21
 end
 function placeOwen()
@@ -3559,6 +3585,7 @@ function placeOwen()
 		if random(1,5) <= 1 then
 			stationOwen.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		end
+		stationOwen:setFaction("Mining Corporation")
 	else
 		stationOwen.comms_data.trade.food = true
 	end
@@ -3587,6 +3614,7 @@ function placePanduit()
 			stationPanduit.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationPanduit.comms_data.trade.medicine = random(1,100) < 33
+			stationPanduit:setFaction("Mining Corporation")
 		end
 	else
 		stationPanduit.comms_data.trade.medicine = random(1,100) < 33
@@ -3647,6 +3675,7 @@ function placeRutherford()
 			stationRutherford.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationRutherford.comms_data.trade.medicine = true
+			stationRutherford:setFaction("Mining Corporation")
 		end
 	else
 		stationRutherford.comms_data.trade.food = true
@@ -3693,6 +3722,7 @@ function placeShawyer()
 			stationShawyer.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationShawyer.comms_data.trade.medicine = true
+			stationShawyer:setFaction("Mining Corporation")
 		end
 	else
 		stationShawyer.comms_data.trade.medicine = true
@@ -3723,6 +3753,7 @@ function placeShree()
 			stationShree.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationShree.comms_data.trade.medicine = true
+			stationShree:setFaction("Mining Corporation")
 		end
 	else
 		stationShree.comms_data.trade.medicine = true
@@ -3840,6 +3871,7 @@ function placeToohie()
 			stationToohie.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationToohie.comms_data.trade.medicine = random(1,100) < 25
+			stationToohie:setFaction("Mining Corporation")
 		end
 	else
 		stationToohie.comms_data.trade.medicine = random(1,100) < 25
@@ -3892,6 +3924,7 @@ function placeVactel()
 		if random(1,5) <= 1 then
 			stationVactel.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		end
+		stationVactel:setFaction("Mining Corporation")
 	end
 	return stationVactel
 end
@@ -3948,6 +3981,7 @@ function placeZefram()
 			stationZefram.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationZefram.comms_data.trade.medicine = random(1,100) < 27
+			stationZefram:setFaction("Mining Corporation")
 		end
 	else
 		stationZefram.comms_data.trade.medicine = random(1,100) < 27
@@ -9723,7 +9757,7 @@ function independentTransportPlot(delta)
 				else
 					name = name .. " Freighter " .. irandom(1, 5)
 				end
-				obj = CpuShip():setTemplate(name):setFaction('Independent'):setCommsScript(""):setCommsFunction(commsShip)
+				obj = CpuShip():setTemplate(name):setFaction(faction_transporter_neutral):setCommsScript(""):setCommsFunction(commsShip)
 				obj.target = target
 				obj.undock_delay = irandom(1,4)
 				obj:orderDock(obj.target)
@@ -9799,7 +9833,7 @@ function friendlyTransportPlot(delta)
 					fSize = irandom(1, 5)
 					name = name .. " Freighter " .. fSize
 				end
-				obj = CpuShip():setTemplate(name):setFaction('Human Navy'):setCommsScript(""):setCommsFunction(commsShip)
+				obj = CpuShip():setTemplate(name):setFaction(faction_transporter_friendly):setCommsScript(""):setCommsFunction(commsShip)
 				obj.target = target
 				obj.undock_delay = irandom(1,4)
 				obj:orderDock(obj.target)
