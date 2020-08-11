@@ -9,34 +9,41 @@ end
 enemy_faction = "Criminals"
 
 function init()
+    player = PlayerSpaceship():setFaction("Human Navy"):setTemplate("Piranha M5P")
     SpaceStation():setTemplate("Small Station"):setPosition(0, -500):setRotation(random(0, 360)):setFaction("Independent")
+    enemies = {}
     
     for n = 1, 5 do
         ship = CpuShip():setTemplate("Phobos T3"):orderRoaming():setFaction(enemy_faction)
         setCirclePos(ship, random(0, 360), random(7000, 10000))
+        table.insert(enemies, ship)
     end
     for n = 1, 2 do
         ship = CpuShip():setTemplate("Piranha F12"):orderRoaming():setFaction(enemy_faction)
         setCirclePos(ship, random(0, 360), random(7000, 10000))
+        table.insert(enemies, ship)
     end
     
     a = random(0, 360)
     d = 9000
     ship = CpuShip():setTemplate("Atlantis X23"):setRotation(a + 180):orderRoaming():setFaction(enemy_faction)
     setCirclePos(ship, a, d)
+	table.insert(enemies, ship)
 
     wingman = CpuShip():setTemplate("MT52 Hornet"):setRotation(a + 180):setFaction(enemy_faction)
     setCirclePos(wingman, a - 5, d + 100)
     wingman:orderFlyFormation(ship, 500, 100)
+	table.insert(enemies, wingman)
 
     wingman = CpuShip():setTemplate("MT52 Hornet"):setRotation(a + 180):setFaction(enemy_faction)
     setCirclePos(wingman, a + 5, d + 100)
     wingman:orderFlyFormation(ship, -500, 100)
+	table.insert(enemies, wingman)
 
     wingman = CpuShip():setTemplate("MT52 Hornet"):setRotation(a + 180):setFaction(enemy_faction)
     setCirclePos(wingman, a + random(-5, 5), d - 500)
     wingman:orderFlyFormation(ship, 0, 600)
-    
+	table.insert(enemies, wingman)
     
     for n = 1, 10 do
         setCirclePos(Mine(), random(0, 360), random(10000, 20000))
@@ -48,5 +55,17 @@ function init()
 end
 
 function update(delta)
-    --No victory condition
+
+    --victory condition
+    enemy_count = 0
+    -- Count all surviving enemies.
+    for _, enemy in ipairs(enemies) do
+        if enemy:isValid() then
+            enemy_count = enemy_count + 1
+        end
+    end
+
+    if enemy_count == 0 then
+        victory("Human Navy")
+    end
 end
