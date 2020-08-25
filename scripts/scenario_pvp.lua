@@ -6,6 +6,11 @@
 ---             The Human Navy's HNS Gallipoli and Kraylor's Crusader Naa'Tvek face off in an all-out battle for Shangri-La.
 -- Type: PvP
 
+require("utils.lua")
+-- For this scenario, utils.lua provides:
+--   placeRandomAroundPoint(object_type, amount, dist_min, dist_max, x0, y0)
+--     create amount of object_type, at a distance between dist_min and dist_max around the point (x0, y0)
+
 function init()
 	humanTroops = {}
 	kraylorTroops = {}
@@ -40,9 +45,9 @@ function init()
 	kraylor_points = 0
 
 	-- Create terrain
-	create(Asteroid, 20, 5000, 10000, 10000, 10000)
-	create(VisualAsteroid, 10, 5000, 10000, 10000, 10000)
-	create(Mine, 10, 5000, 10000, 10000, 10000)
+	placeRandomAroundPoint(Asteroid, 20, 5000, 10000, 10000, 10000)
+	placeRandomAroundPoint(VisualAsteroid, 10, 5000, 10000, 10000, 10000)
+	placeRandomAroundPoint(Mine, 10, 5000, 10000, 10000, 10000)
 	
 	-- Brief the players
 	human_shipyard:sendCommsMessage(gallipoli, [[Captain, it seems that the Kraylor are moving to take the Shangri-La station in sector F5!
@@ -290,14 +295,3 @@ function spawnTransport()
 	return ship
 end
 
--- Create amount of object_type, at a distance between dist_min and dist_max
--- around the point (x0, y0)
-function create(object_type, amount, dist_min, dist_max, x0, y0)
-        for n=1,amount do
-		local r = random(0, 360)
-		local distance = random(dist_min, dist_max)
-		x = x0 + math.cos(r / 180 * math.pi) * distance
-		y = y0 + math.sin(r / 180 * math.pi) * distance
-		object_type():setPosition(x, y)
-	end
-end

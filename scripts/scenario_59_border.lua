@@ -13,7 +13,28 @@
 
 -- Station warning of enemies in area (helpful warnings - shuffle stations)
 
+-- Stations on Human side of border: Human Navy or Mining Corp
+-- Stations inside border: Independent or Mining Corp
+-- Stations on Kraylor side of border: Kraylor
+-- Transport ships between Station on Human side: Blue Star
+-- Transport ships inside border: Transport
+-- Transport ships on Kraylor side: Kraylor
+-- Infos for Mining Corp: many stations need medicine, provide components
+-- Mining can have station in neutral zone
+-- Blue Star does not have bases, but are allied with transport ships
+-- Mining and Blues can enter neutral zone but not Kraylor Territory
+-- Black Ops can enter Kraylor Territory but not neutral Zone
+
+--Some goals:
+-- Navy: defend and beat some kraylor
+-- Kraylor: attack and reduce humans and maybe neutrals
+-- blue: yellows shall loose stations
+-- yellows: keep stations
+
 require("utils.lua")
+require("ee.lua")
+require("xansta_mods.lua")
+require("script_formation.lua")
 
 --------------------
 -- Initialization --
@@ -42,7 +63,12 @@ function init()
 	--random range 4 final: 240, 540 (lowered for test) treaty for game with no time limit
 	lrr5 = 240
 	urr5 = 540
-	
+
+	factions_forbidden_in_neutral_zone = {"Human Navy", "Black Ops"}
+	factions_forbidden_in_enemy_zone = {"Human Navy", "Blue Star Cartell", "Mining Corporation"}
+	faction_transporter_neutral = "Transport"
+	faction_transporter_friendly= "Blue Star Cartell"
+
 	--end of game victory/defeat values
 	enemyDestructionVictoryCondition = 70		--final: 70
 	friendlyDestructionDefeatCondition = 50		--final: 50
@@ -193,189 +219,7 @@ function setVariations()
 	end
 end
 function setConstants()
-	missile_types = {'Homing', 'Nuke', 'Mine', 'EMP', 'HVLI'}
-	--Ship Template Name List
-	stnl = {"MT52 Hornet","MU52 Hornet","Adder MK5","Adder MK4","WX-Lindworm","Adder MK6","Phobos T3","Phobos M3","Piranha F8","Piranha F12","Ranus U","Nirvana R5A","Stalker Q7","Stalker R7","Atlantis X23","Starhammer II","Odin","Fighter","Cruiser","Missile Cruiser","Strikeship","Adv. Striker","Dreadnought","Battlestation","Blockade Runner","Ktlitan Fighter","Ktlitan Breaker","Ktlitan Worker","Ktlitan Drone","Ktlitan Feeder","Ktlitan Scout","Ktlitan Destroyer","Storm"}
-	--Ship Template Score List
-	stsl = {5            ,5            ,7          ,6          ,7            ,8          ,15         ,16         ,15          ,15           ,25       ,20           ,25          ,25          ,50            ,70             ,250   ,6        ,18       ,14               ,30          ,27            ,80           ,100            ,65               ,6                ,45               ,40              ,4              ,48              ,8              ,50                 ,22}
-	-- square grid deployment
-	fleetPosDelta1x = {0,1,0,-1, 0,1,-1, 1,-1,2,0,-2, 0,2,-2, 2,-2,2, 2,-2,-2,1,-1, 1,-1,0, 0,3,-3,1, 1,3,-3,-1,-1, 3,-3,2, 2,3,-3,-2,-2, 3,-3,3, 3,-3,-3,4,0,-4, 0,4,-4, 4,-4,-4,-4,-4,-4,-4,-4,4, 4,4, 4,4, 4, 1,-1, 2,-2, 3,-3,1,-1,2,-2,3,-3,5,-5,0, 0,5, 5,-5,-5,-5,-5,-5,-5,-5,-5,-5,-5,5, 5,5, 5,5, 5,5, 5, 1,-1, 2,-2, 3,-3, 4,-4,1,-1,2,-2,3,-3,4,-4}
-	fleetPosDelta1y = {0,0,1, 0,-1,1,-1,-1, 1,0,2, 0,-2,2,-2,-2, 2,1,-1, 1,-1,2, 2,-2,-2,3,-3,0, 0,3,-3,1, 1, 3,-3,-1,-1,3,-3,2, 2, 3,-3,-2,-2,3,-3, 3,-3,0,4, 0,-4,4,-4,-4, 4, 1,-1, 2,-2, 3,-3,1,-1,2,-2,3,-3,-4,-4,-4,-4,-4,-4,4, 4,4, 4,4, 4,0, 0,5,-5,5,-5, 5,-5, 1,-1, 2,-2, 3,-3, 4,-4,1,-1,2,-2,3,-3,4,-4,-5,-5,-5,-5,-5,-5,-5,-5,5, 5,5, 5,5, 5,5, 5}
-	-- rough hexagonal deployment
-	fleetPosDelta2x = {0,2,-2,1,-1, 1,-1,4,-4,0, 0,2,-2,-2, 2,3,-3, 3,-3,6,-6,1,-1, 1,-1,3,-3, 3,-3,4,-4, 4,-4,5,-5, 5,-5,8,-8,4,-4, 4,-4,5,5 ,-5,-5,2, 2,-2,-2,0, 0,6, 6,-6,-6,7, 7,-7,-7,10,-10,5, 5,-5,-5,6, 6,-6,-6,7, 7,-7,-7,8, 8,-8,-8,9, 9,-9,-9,3, 3,-3,-3,1, 1,-1,-1,12,-12,6,-6, 6,-6,7,-7, 7,-7,8,-8, 8,-8,9,-9, 9,-9,10,-10,10,-10,11,-11,11,-11,4,-4, 4,-4,2,-2, 2,-2,0, 0}
-	fleetPosDelta2y = {0,0, 0,1, 1,-1,-1,0, 0,2,-2,2,-2, 2,-2,1,-1,-1, 1,0, 0,3, 3,-3,-3,3,-3,-3, 3,2,-2,-2, 2,1,-1,-1, 1,0, 0,4,-4,-4, 4,3,-3, 3,-3,4,-4, 4,-4,4,-4,2,-2, 2,-2,1,-1, 1,-1, 0,  0,5,-5, 5,-5,4,-4, 4,-4,3,-3, 3,-7,2,-2, 2,-2,1,-1, 1,-1,5,-5, 5,-5,5,-5, 5,-5, 0,  0,6, 6,-6,-6,5, 5,-5,-5,4, 4,-4,-4,3, 3,-3,-3, 2,  2,-2, -2, 1,  1,-1, -1,6, 6,-6,-6,6, 6,-6,-6,6,-6}
-	--						Template, 					strength
-	playerShipStrength = {	["MP52 Hornet"] =			7,
-							["Piranha"] = 				16,
-							["Flavia P.Falcon"] =		13,
-							["Phobos M3P"] =			19,
-							["Atlantis"] =				52,
-							["Player Cruiser"] =		40,
-							["Player Missile Cr."] =	45,
-							["Player Fighter"] =		7,
-							["Benedict"] =				10,
-							["Kiriya"] =				10,
-							["Striker"] =				8,
-							["ZX-Lindworm"] =			8,
-							["Repulse"] =				14,
-							["Ender"] =					100,
-							["Nautilus"] =				12,
-							["Hathcock"] =				30,
-							["Maverick"] =				45,
-							["Crucible"] =				45,
-							["Proto-Atlantis"] =		40,
-							["Surkov"] =				35,
-							["Stricken"] =				40,
-							["Atlantis II"] =			60,
-							["Destroyer III"] =			25,
-							["Redhook"] =				18	}
-	--						Template				maximum cargo space
-	playerShipCargo = 	{	["MP52 Hornet"] =			3,
-							["Piranha"] = 				8,
-							["Flavia P.Falcon"] =		15,
-							["Phobos M3P"] =			10,
-							["Atlantis"] =				6,
-							["Player Cruiser"] =		6,
-							["Player Missile Cr."] =	8,
-							["Player Fighter"] =		3,
-							["Benedict"] =				9,
-							["Kiriya"] =				9,
-							["Striker"] =				4,
-							["ZX-Lindworm"] =			3,
-							["Repulse"] =				12,
-							["Ender"] =					20,
-							["Nautilus"] =				7,
-							["Hathcock"] =				6,
-							["Maverick"] =				5,
-							["Crucible"] =				5,
-							["Proto-Atlantis"] =		4,
-							["Surkov"] =				6,
-							["Stricken"] =				4,
-							["Atlantis II"] =			5,
-							["Destroyer III"] =			7,
-							["Redhook"] =				8	}
-	--Player ship name lists to supplant standard randomized call sign generation
-	playerShipNamesForMP52Hornet = {"Dragonfly","Scarab","Mantis","Yellow Jacket","Jimminy","Flik","Thorny","Buzz"}
-	playerShipNamesForPiranha = {"Razor","Biter","Ripper","Voracious","Carnivorous","Characid","Vulture","Predator"}
-	playerShipNamesForFlaviaPFalcon = {"Ladyhawke","Hunter","Seeker","Gyrefalcon","Kestrel","Magpie","Bandit","Buccaneer"}
-	playerShipNamesForPhobosM3P = {"Blinder","Shadow","Distortion","Diemos","Ganymede","Castillo","Thebe","Retrograde"}
-	playerShipNamesForAtlantis = {"Excaliber","Thrasher","Punisher","Vorpal","Protang","Drummond","Parchim","Coronado"}
-	playerShipNamesForCruiser = {"Excelsior","Velociraptor","Thunder","Kona","Encounter","Perth","Aspern","Panther"}
-	playerShipNamesForMissileCruiser = {"Projectus","Hurlmeister","Flinger","Ovod","Amatola","Nakhimov","Antigone"}
-	playerShipNamesForFighter = {"Buzzer","Flitter","Zippiticus","Hopper","Molt","Stinger","Stripe"}
-	playerShipNamesForBenedict = {"Elizabeth","Ford","Vikramaditya","Liaoning","Avenger","Naruebet","Washington","Lincoln","Garibaldi","Eisenhower"}
-	playerShipNamesForKiriya = {"Cavour","Reagan","Gaulle","Paulo","Truman","Stennis","Kuznetsov","Roosevelt","Vinson","Old Salt"}
-	playerShipNamesForStriker = {"Sparrow","Sizzle","Squawk","Crow","Phoenix","Snowbird","Hawk"}
-	playerShipNamesForLindworm = {"Seagull","Catapult","Blowhard","Flapper","Nixie","Pixie","Tinkerbell"}
-	playerShipNamesForRepulse = {"Fiddler","Brinks","Loomis","Mowag","Patria","Pandur","Terrex","Komatsu","Eitan"}
-	playerShipNamesForEnder = {"Mongo","Godzilla","Leviathan","Kraken","Jupiter","Saturn"}
-	playerShipNamesForNautilus = {"October", "Abdiel", "Manxman", "Newcon", "Nusret", "Pluton", "Amiral", "Amur", "Heinkel", "Dornier"}
-	playerShipNamesForHathcock = {"Hayha", "Waldron", "Plunkett", "Mawhinney", "Furlong", "Zaytsev", "Pavlichenko", "Pegahmagabow", "Fett", "Hawkeye", "Hanzo"}
-	playerShipNamesForProtoAtlantis = {"Narsil", "Blade", "Decapitator", "Trisect", "Sabre"}
-	playerShipNamesForMaverick = {"Angel", "Thunderbird", "Roaster", "Magnifier", "Hedge"}
-	playerShipNamesForCrucible = {"Sling", "Stark", "Torrid", "Kicker", "Flummox"}
-	playerShipNamesForSurkov = {"Sting", "Sneak", "Bingo", "Thrill", "Vivisect"}
-	playerShipNamesForStricken = {"Blazon", "Streaker", "Pinto", "Spear", "Javelin"}
-	playerShipNamesForAtlantisII = {"Spyder", "Shelob", "Tarantula", "Aragog", "Charlotte"}
-	playerShipNamesForRedhook = {"Headhunter", "Thud", "Troll", "Scalper", "Shark"}
-	playerShipNamesForDestroyerIII = {"Trebuchet", "Pitcher", "Mutant", "Gronk", "Methuselah"}
-	playerShipNamesForLeftovers = {"Foregone","Righteous","Masher"}
-	commonGoods = {"food","medicine","nickel","platinum","gold","dilithium","tritanium","luxury","cobalt","impulse","warp","shield","tractor","repulsor","beam","optic","robotic","filament","transporter","sensor","communication","autodoc","lifter","android","nanites","software","circuit","battery"}
-	componentGoods = {"impulse","warp","shield","tractor","repulsor","beam","optic","robotic","filament","transporter","sensor","communication","autodoc","lifter","android","nanites","software","circuit","battery"}
-	mineralGoods = {"nickel","platinum","gold","dilithium","tritanium","cobalt"}
-	characterNames = {"Frank Brown",
-					  "Joyce Miller",
-					  "Harry Jones",
-					  "Emma Davis",
-					  "Zhang Wei Chen",
-					  "Yu Yan Li",
-					  "Li Wei Wang",
-					  "Li Na Zhao",
-					  "Sai Laghari",
-					  "Anaya Khatri",
-					  "Vihaan Reddy",
-					  "Trisha Varma",
-					  "Henry Gunawan",
-					  "Putri Febrian",
-					  "Stanley Hartono",
-					  "Citra Mulyadi",
-					  "Bashir Pitafi",
-					  "Hania Kohli",
-					  "Gohar Lehri",
-					  "Sohelia Lau",
-					  "Gabriel Santos",
-					  "Ana Melo",
-					  "Lucas Barbosa",
-					  "Juliana Rocha",
-					  "Habib Oni",
-					  "Chinara Adebayo",
-					  "Tanimu Ali",
-					  "Naija Bello",
-					  "Shamim Khan",
-					  "Barsha Tripura",
-					  "Sumon Das",
-					  "Farah Munsi",
-					  "Denis Popov",
-					  "Pasha Sokolov",
-					  "Burian Ivanov",
-					  "Radka Vasiliev",
-					  "Jose Hernandez",
-					  "Victoria Garcia",
-					  "Miguel Lopez",
-					  "Renata Rodriguez"}
-	hitZonePermutations = {
-		{"warp","beamweapons","reactor"},
-		{"jumpdrive","beamweapons","reactor"},
-		{"impulse","beamweapons","reactor"},
-		{"warp","missilesystem","reactor"},
-		{"jumpdrive","missilesystem","reactor"},
-		{"impulse","missilesystem","reactor"},
-		{"warp","beamweapons","maneuver"},
-		{"jumpdrive","beamweapons","maneuver"},
-		{"impulse","beamweapons","maneuver"},
-		{"warp","missilesystem","maneuver"},
-		{"jumpdrive","missilesystem","maneuver"},
-		{"impulse","missilesystem","maneuver"},
-		{"warp","beamweapons","frontshield"},
-		{"jumpdrive","beamweapons","frontshield"},
-		{"impulse","beamweapons","frontshield"},
-		{"warp","missilesystem","frontshield"},
-		{"jumpdrive","missilesystem","frontshield"},
-		{"impulse","missilesystem","frontshield"},
-		{"warp","beamweapons","rearshield"},
-		{"jumpdrive","beamweapons","rearshield"},
-		{"impulse","beamweapons","rearshield"},
-		{"warp","missilesystem","rearshield"},
-		{"jumpdrive","missilesystem","rearshield"},
-		{"impulse","missilesystem","rearshield"},
-		{"warp","reactor","maneuver"},
-		{"jumpdrive","reactor","maneuver"},
-		{"impulse","reactor","maneuver"},
-		{"warp","reactor","frontshield"},
-		{"jumpdrive","reactor","frontshield"},
-		{"impulse","reactor","frontshield"},
-		{"warp","reactor","rearshield"},
-		{"jumpdrive","reactor","rearshield"},
-		{"impulse","reactor","rearshield"},
-		{"warp","maneuver","frontshield"},
-		{"jumpdrive","maneuver","frontshield"},
-		{"impulse","maneuver","frontshield"},
-		{"warp","maneuver","rearshield"},
-		{"jumpdrive","maneuver","rearshield"},
-		{"impulse","maneuver","rearshield"},
-		{"beamweapons","beamweapons","maneuver"},
-		{"missilesystem","beamweapons","maneuver"},
-		{"beamweapons","beamweapons","frontshield"},
-		{"missilesystem","beamweapons","frontshield"},
-		{"beamweapons","beamweapons","rearshield"},
-		{"missilesystem","beamweapons","rearshield"},
-		{"beamweapons","maneuver","frontshield"},
-		{"missilesystem","maneuver","frontshield"},
-		{"beamweapons","maneuver","rearshield"},
-		{"missilesystem","maneuver","rearshield"},
-		{"reactor","maneuver","frontshield"},
-		{"reactor","maneuver","rearshield"}
-	}
+	init_constants_xansta()
 	--minutes and danger
 	enemyReinforcementSchedule = {
 		{30, 1},
@@ -386,6 +230,7 @@ function setConstants()
 		{15, 3},
 		{20, 4}
 	}
+	--TODO
 	cargoInventoryList = {}
 	table.insert(cargoInventoryList,cargoInventory1)
 	table.insert(cargoInventoryList,cargoInventory2)
@@ -404,7 +249,7 @@ function setConstants()
 	table.insert(get_coolant_function,getCoolant6)
 	table.insert(get_coolant_function,getCoolant7)
 	table.insert(get_coolant_function,getCoolant8)
-	show_player_info = true
+	show_player_info = false 
 	show_only_player_name = true
 	info_choice = 0
 	info_choice_max = 5
@@ -1551,7 +1396,7 @@ function mainGMButtons()
 	clearGMFunctions()
 	local playerShipCount = 0
 	local highestPlayerIndex = 0
-	for pidx=1,8 do
+	for pidx=1,MAX_PLAYER_SHIPS do
 		local p = getPlayerShip(pidx)
 		if p ~= nil then
 			if p:isValid() then
@@ -1603,7 +1448,7 @@ function setShowPlayerInfo()
 		setShowPlayerInfo()
 	end)
 	if show_player_info then
-		for pidx=1,8 do
+		for pidx=1,MAX_PLAYER_SHIPS do
 			local p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				local player_name = p:getCallSign()
@@ -1655,7 +1500,7 @@ function setShowPlayerInfo()
 end
 function showPlayerInfoOnConsole(delta)
 	if show_player_info then
-		for pidx=1,8 do
+		for pidx=1,MAX_PLAYER_SHIPS do
 			local p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				local player_name = p:getCallSign()
@@ -1817,7 +1662,7 @@ function showPlayerInfoOnConsole(delta)
 			end
 		end
 	else	--not show player info
-		for pidx=1,8 do
+		for pidx=1,MAX_PLAYER_SHIPS do
 			local p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				if p.name_helm ~= nil then
@@ -2477,6 +2322,7 @@ function placeAlcaleica()
 			stationAlcaleica.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationAlcaleica.comms_data.trade.medicine = true
+			stationAlcaleica:setFaction("Mining Corporation")
 		end
 	else
 		stationAlcaleica.comms_data.trade.medicine = true
@@ -2534,6 +2380,7 @@ function placeArcher()
 			stationArcher.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationArcher.comms_data.trade.medicine = true
+			stationArcher:setFaction("Mining Corporation")
 		end
 	else
 		stationArcher.comms_data.trade.medicine = true
@@ -2563,6 +2410,7 @@ function placeArchimedes()
 			stationArchimedes.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationArchimedes.comms_data.trade.medicine = true
+			stationArchimedes:setFaction("Mining Corporation")
 		end
 	else
 		stationArchimedes.comms_data.trade.food = true
@@ -2593,6 +2441,7 @@ function placeArmstrong()
 		if random(1,5) <= 1 then
 			stationArmstrong.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		end
+		stationArmstrong:setFaction("Mining Corporation")
 	end
 	return stationArmstrong
 end
@@ -2645,6 +2494,7 @@ function placeBarclay()
 			stationBarclay.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationBarclay.comms_data.trade.medicine = true
+			stationBarclay:setFaction("Mining Corporation")
 		end
 	else
 		stationBarclay.comms_data.trade.medicine = true
@@ -2696,6 +2546,7 @@ function placeBroeck()
 			stationBroeck.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationBroeck.comms_data.trade.medicine = random(1,100) < 53
+			stationBroeck:setFaction("Mining Corporation")
 		end
 	else
 		stationBroeck.comms_data.trade.medicine = random(1,100) < 53
@@ -2725,6 +2576,7 @@ function placeCalifornia()
 			stationCalifornia.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		end
 	end
+	stationCalifornia:setFaction("Mining Corporation")
 	return stationCalifornia
 end
 function placeCalvin()
@@ -2750,6 +2602,7 @@ function placeCalvin()
 		if random(1,5) <= 1 then
 			stationCalvin.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		end
+		stationCalvin:setFaction("Mining Corporation")
 	else
 		stationCalvin.comms_data.trade.food = random(1,100) < 8
 	end
@@ -2780,6 +2633,7 @@ function placeCavor()
 		else
 			if random(1,100) < 50 then
 				stationCavor.comms_data.trade.medicine = true
+				stationCavor:setFaction("Mining Corporation")
 			else
 				stationCavor.comms_data.trade.luxury = true
 			end
@@ -2845,6 +2699,7 @@ function placeCoulomb()
 			stationCoulomb.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationCoulomb.comms_data.trade.medicine = random(1,100) < 27
+			stationCoulomb:setFaction("Mining Corporation")
 		end
 	else
 		stationCoulomb.comms_data.trade.medicine = random(1,100) < 27
@@ -2875,6 +2730,7 @@ function placeCyrus()
 			stationCyrus.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationCyrus.comms_data.trade.medicine = random(1,100) < 34
+			stationCyrus:setFaction("Mining Corporation")
 		end
 	else
 		stationCyrus.comms_data.trade.medicine = random(1,100) < 34
@@ -2936,6 +2792,7 @@ function placeDeer()
 			stationDeer.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationDeer.comms_data.trade.medicine = true
+			stationDeer:setFaction("Mining Corporation")
 		end
 	else
 		stationDeer.comms_data.trade.medicine = true
@@ -2966,6 +2823,7 @@ function placeErickson()
 			stationErickson.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationErickson.comms_data.trade.medicine = true
+			stationErickson:setFaction("Mining Corporation")
 		end
 	else
 		stationErickson.comms_data.trade.medicine = true
@@ -3025,6 +2883,7 @@ function placeFeynman()
 		if random(1,5) <= 1 then
 			stationFeynman.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		end
+		stationFeynman:setFaction("Mining Corporation")
 	else
 		stationFeynman.comms_data.trade.medicine = true
 		stationFeynman.comms_data.trade.food = random(1,100) < 26
@@ -3058,6 +2917,7 @@ function placeGrasberg()
 	else
 		stationGrasberg.comms_data.trade.food = true
 	end
+	stationGrasberg:setFaction("Mining Corporation")
 	local grasbergGoods = random(1,100)
 	if grasbergGoods < 20 then
 		stationGrasberg.comms_data.goods.gold = {quantity = 5, cost = 25}
@@ -3119,6 +2979,7 @@ function placeHeyes()
 		if random(1,5) <= 1 then
 			stationHeyes.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		end
+		stationHeyes:setFaction("Mining Corporation")
 	end
 	return stationHeyes
 end
@@ -3191,6 +3052,7 @@ function placeImpala()
 	else
 		stationImpala.comms_data.trade.food = true
 	end
+	stationImpala:setFaction("Mining Corporation")
 	return stationImpala
 end
 function placeKomov()
@@ -3238,6 +3100,7 @@ function placeKrak()
         trade = {	food = random(1,100) < 50, medicine = true, luxury = random(1,100) < 50 },
 		buy =	{	[randomComponent()] = math.random(40,200)	}
 	}
+	stationKrak:setFaction("Mining Corporation")
 	local posAxisKrak = random(0,360)
 	local posKrak = random(10000,60000)
 	local negKrak = random(10000,60000)
@@ -3295,6 +3158,7 @@ function placeKruk()
         trade = {	food = random(1,100) < 50, medicine = random(1,100) < 50, luxury = true },
 		buy =	{	[randomComponent()] = math.random(40,200)	}
 	}
+	stationKruk:setFaction("Mining Corporation")
 	local posAxisKruk = random(0,360)
 	local posKruk = random(10000,60000)
 	local negKruk = random(10000,60000)
@@ -3417,6 +3281,7 @@ function placeMaiman()
 			stationMaiman.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationMaiman.comms_data.trade.medicine = true
+			stationMaiman:setFaction("Mining Corporation")
 		end
 	else
 		stationMaiman.comms_data.trade.medicine = true
@@ -3446,6 +3311,7 @@ function placeMarconi()
 			stationMarconi.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationMarconi.comms_data.trade.medicine = true
+			stationMarconi:setFaction("Mining Corporation")
 		end
 	else
 		stationMarconi.comms_data.trade.medicine = true
@@ -3578,6 +3444,7 @@ function placeOBrien()
 			stationOBrien.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationOBrien.comms_data.trade.medicine = random(1,100) < 34
+			stationOBrien:setFaction("Mining Corporation")
 		end
 	else
 		stationOBrien.comms_data.trade.medicine = true
@@ -3670,6 +3537,7 @@ function placeOutpost15()
 	else
 		stationOutpost15.comms_data.trade.food = true
 	end
+	stationOutpost15:setFaction("Mining Corporation")
 	placeRandomAsteroidsAroundPoint(15,1,15000,psx,psy)
 	return stationOutpost15
 end
@@ -3710,6 +3578,7 @@ function placeOutpost21()
 		stationOutpost21.comms_data.trade.food = true
 		stationOutpost21.comms_data.trade.medicine = random(1,100) < 50
 	end
+	stationOutpost21:setFaction("Mining Corporation")
 	return stationOutpost21
 end
 function placeOwen()
@@ -3734,6 +3603,7 @@ function placeOwen()
 		if random(1,5) <= 1 then
 			stationOwen.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		end
+		stationOwen:setFaction("Mining Corporation")
 	else
 		stationOwen.comms_data.trade.food = true
 	end
@@ -3762,6 +3632,7 @@ function placePanduit()
 			stationPanduit.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationPanduit.comms_data.trade.medicine = random(1,100) < 33
+			stationPanduit:setFaction("Mining Corporation")
 		end
 	else
 		stationPanduit.comms_data.trade.medicine = random(1,100) < 33
@@ -3822,6 +3693,7 @@ function placeRutherford()
 			stationRutherford.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationRutherford.comms_data.trade.medicine = true
+			stationRutherford:setFaction("Mining Corporation")
 		end
 	else
 		stationRutherford.comms_data.trade.food = true
@@ -3868,6 +3740,7 @@ function placeShawyer()
 			stationShawyer.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationShawyer.comms_data.trade.medicine = true
+			stationShawyer:setFaction("Mining Corporation")
 		end
 	else
 		stationShawyer.comms_data.trade.medicine = true
@@ -3898,6 +3771,7 @@ function placeShree()
 			stationShree.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationShree.comms_data.trade.medicine = true
+			stationShree:setFaction("Mining Corporation")
 		end
 	else
 		stationShree.comms_data.trade.medicine = true
@@ -4015,6 +3889,7 @@ function placeToohie()
 			stationToohie.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationToohie.comms_data.trade.medicine = random(1,100) < 25
+			stationToohie:setFaction("Mining Corporation")
 		end
 	else
 		stationToohie.comms_data.trade.medicine = random(1,100) < 25
@@ -4067,6 +3942,7 @@ function placeVactel()
 		if random(1,5) <= 1 then
 			stationVactel.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		end
+		stationVactel:setFaction("Mining Corporation")
 	end
 	return stationVactel
 end
@@ -4123,6 +3999,7 @@ function placeZefram()
 			stationZefram.comms_data.goods.medicine = {quantity = 5, cost = 5}
 		else
 			stationZefram.comms_data.trade.medicine = random(1,100) < 27
+			stationZefram:setFaction("Mining Corporation")
 		end
 	else
 		stationZefram.comms_data.trade.medicine = random(1,100) < 27
@@ -4237,7 +4114,7 @@ end
 function placeMaverick()
 	--Maverick
 	stationMaverick = SpaceStation():setTemplate(szt()):setFaction(stationFaction):setCommsScript(""):setCommsFunction(commsStation)
-	stationMaverick:setPosition(psx,psy):setCallSign("Maverick"):setDescription("Gambling and resupply")
+	stationMaverick:setPosition(psx,psy):setCallSign("Moverick"):setDescription("Gambling and resupply")
     stationMaverick.comms_data = {
     	friendlyness = random(0,100),
         weapons = 			{Homing = "neutral",					HVLI = "neutral", 						Mine = "neutral",						Nuke = "friend", 						EMP = "friend"},
@@ -4701,7 +4578,9 @@ function setFleets()
 	local f1bx, f1by = enemyFleet1base:getPosition()
 	local enemyFleet1, enemyFleet1Power = spawnEnemyFleet(f1bx, f1by, random(90,130))
 	for _, enemy in ipairs(enemyFleet1) do
-		enemy:orderDefendTarget(enemyFleet1base)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderDefendTarget(enemyFleet1base)
+		end
 	end
 	table.insert(enemyFleetList,enemyFleet1)
 	table.insert(enemyDefensiveFleetList,enemyFleet1)
@@ -4722,7 +4601,9 @@ function setFleets()
 	local f2bx, f2by = enemyFleet2base:getPosition()
 	enemyFleet2, enemyFleet2Power = spawnEnemyFleet(f2bx, f2by, enemyFleet2Power)
 	for _, enemy in ipairs(enemyFleet2) do
-		enemy:orderDefendTarget(enemyFleet2base)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderDefendTarget(enemyFleet2base)
+		end
 	end
 	table.insert(enemyFleetList,enemyFleet2)
 	table.insert(enemyDefensiveFleetList,enemyFleet2)
@@ -4743,7 +4624,9 @@ function setFleets()
 	local f3bx, f3by = enemyFleet3base:getPosition()
 	enemyFleet3, enemyFleet3Power = spawnEnemyFleet(f3bx, f3by, enemyFleet3Power)
 	for _, enemy in ipairs(enemyFleet3) do
-		enemy:orderDefendTarget(enemyFleet3base)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderDefendTarget(enemyFleet3base)
+		end
 	end
 	table.insert(enemyFleetList,enemyFleet3)
 	table.insert(enemyDefensiveFleetList,enemyFleet3)
@@ -4759,7 +4642,9 @@ function setFleets()
 	local f4bx, f4by = enemyFleet4base:getPosition()
 	enemyFleet4, enemyFleet4Power = spawnEnemyFleet(f4bx, f4by, enemyResource/2)
 	for _, enemy in ipairs(enemyFleet4) do
-		enemy:orderDefendTarget(enemyFleet4base)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderDefendTarget(enemyFleet4base)
+		end
 	end
 	table.insert(enemyFleetList,enemyFleet4)
 	table.insert(enemyDefensiveFleetList,enemyFleet4)
@@ -4775,7 +4660,9 @@ function setFleets()
 	local f5bx, f5by = enemyFleet5base:getPosition()
 	enemyFleet5, enemyFleet5Power = spawnEnemyFleet(f5bx, f5by, enemyResource)
 	for _, enemy in ipairs(enemyFleet5) do
-		enemy:orderDefendTarget(enemyFleet5base)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderDefendTarget(enemyFleet5base)
+		end
 	end
 	table.insert(enemyFleetList,enemyFleet5)
 	table.insert(enemyDefensiveFleetList,enemyFleet5)
@@ -4794,7 +4681,10 @@ function setFleets()
 	local fleetName = friendlyFleet1base:getCallSign() .. " defensive fleet"
 	local friendlyFleet1, friendlyFleet1Power = spawnEnemyFleet(f1bx, f1by, random(90,130), 1, "Human Navy", fleetName)
 	for _, enemy in ipairs(friendlyFleet1) do
-		enemy:orderDefendTarget(friendlyFleet1base):setScanned(true)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderDefendTarget(friendlyFleet1base)
+		end
+		enemy:setScanned(true)
 	end
 	table.insert(friendlyFleetList,friendlyFleet1)
 	friendlyDefensiveFleetList[fleetName] = friendlyFleet1
@@ -4814,7 +4704,10 @@ function setFleets()
 	fleetName = friendlyFleet2base:getCallSign() .. " defensive fleet"
 	friendlyFleet2, friendlyFleet2Power = spawnEnemyFleet(f2bx, f2by, friendlyFleet2Power, 1, "Human Navy", fleetName)
 	for _, enemy in ipairs(friendlyFleet2) do
-		enemy:orderDefendTarget(friendlyFleet2base):setScanned(true)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderDefendTarget(friendlyFleet2base)
+		end
+		enemy:setScanned(true)
 	end
 	table.insert(friendlyFleetList,friendlyFleet2)
 	friendlyDefensiveFleetList[fleetName] = friendlyFleet2
@@ -4834,7 +4727,10 @@ function setFleets()
 	fleetName = friendlyFleet3base:getCallSign() .. " defensive fleet"
 	friendlyFleet3, friendlyFleet3Power = spawnEnemyFleet(f3bx, f3by, friendlyFleet3Power, 1, "Human Navy", fleetName)
 	for _, enemy in ipairs(friendlyFleet3) do
-		enemy:orderDefendTarget(friendlyFleet3base):setScanned(true)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderDefendTarget(friendlyFleet3base)
+		end
+		enemy:setScanned(true)
 	end
 	table.insert(friendlyFleetList,friendlyFleet3)
 	friendlyDefensiveFleetList[fleetName] = friendlyFleet3
@@ -4849,7 +4745,10 @@ function setFleets()
 	fleetName = friendlyFleet4base:getCallSign() .. " defensive fleet"
 	friendlyFleet4, friendlyFleet4Power = spawnEnemyFleet(f4bx, f4by, friendlyResource/2, 1, "Human Navy", fleetName)
 	for _, enemy in ipairs(friendlyFleet4) do
-		enemy:orderDefendTarget(friendlyFleet4base):setScanned(true)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderDefendTarget(friendlyFleet4base)
+		end
+		enemy:setScanned(true)
 	end
 	table.insert(friendlyFleetList,friendlyFleet4)
 	friendlyDefensiveFleetList[fleetName] = friendlyFleet4
@@ -4864,7 +4763,10 @@ function setFleets()
 	fleetName = friendlyFleet5base:getCallSign() .. " defensive fleet"
 	friendlyFleet5, friendlyFleet5Power = spawnEnemyFleet(f5bx, f5by, friendlyResource, 1, "Human Navy", fleetName)
 	for _, enemy in ipairs(friendlyFleet5) do
-		enemy:orderDefendTarget(friendlyFleet5base):setScanned(true)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderDefendTarget(friendlyFleet5base)
+		end
+		enemy:setScanned(true)
 	end
 	table.insert(friendlyFleetList,friendlyFleet5)
 	friendlyDefensiveFleetList[fleetName] = friendlyFleet5
@@ -4877,39 +4779,22 @@ function spawnEnemyFleet(xOrigin, yOrigin, power, danger, enemyFaction, fleetNam
 		danger = 1
 	end
 	local enemyStrength = math.max(power * danger * difficulty, 5)
-	local enemyPosition = 0
-	local sp = irandom(400,900)			--random spacing of spawned group
-	local deployConfig = random(1,100)	--randomly choose between squarish formation and hexagonish formation
-	local enemyList = {}
-	local fleetPower = 0
-	local prefix = generateCallSignPrefix(1)
-	while enemyStrength > 0 do
-		local shipTemplateType = irandom(1,#stsl)
-		while stsl[shipTemplateType] > enemyStrength * 1.1 + 5 do
-			shipTemplateType = irandom(1,#stsl)
-		end
-		fleetPower = fleetPower + stsl[shipTemplateType]
-		local ship = CpuShip():setFaction(enemyFaction):setTemplate(stnl[shipTemplateType]):orderRoaming()
+	enemyList, fleetPower = spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction)
+	if enemyFaction == "Kraylor" then
+		rawKraylorShipStrength = rawKraylorShipStrength + fleetPower
+	elseif enemyFaction == "Human Navy" then
+		rawHumanShipStrength = rawHumanShipStrength + fleetPower
+	end
+	for _, ship in ipairs(enemyList) do
 		if enemyFaction == "Kraylor" then
-			rawKraylorShipStrength = rawKraylorShipStrength + stsl[shipTemplateType]
 			ship:onDestruction(enemyVesselDestroyed)
 		elseif enemyFaction == "Human Navy" then
-			rawHumanShipStrength = rawHumanShipStrength + stsl[shipTemplateType]
 			ship:onDestruction(friendlyVesselDestroyed)
 		end
-		enemyPosition = enemyPosition + 1
-		if deployConfig < 50 then
-			ship:setPosition(xOrigin+fleetPosDelta1x[enemyPosition]*sp,yOrigin+fleetPosDelta1y[enemyPosition]*sp)
-		else
-			ship:setPosition(xOrigin+fleetPosDelta2x[enemyPosition]*sp,yOrigin+fleetPosDelta2y[enemyPosition]*sp)
-		end
-		ship:setCommsScript(""):setCommsFunction(commsShip)
+		ship:setCallSign(generateCallSign(nil,enemyFaction))
 		if fleetName ~= nil then
 			ship.fleet = fleetName
 		end
-		table.insert(enemyList, ship)
-		ship:setCallSign(generateCallSign(nil,enemyFaction))
-		enemyStrength = enemyStrength - stsl[shipTemplateType]
 	end
 	fleetPower = math.max(fleetPower/danger/difficulty, 5)
 	return enemyList, fleetPower
@@ -5931,11 +5816,15 @@ function commsStation()
         services = {
             supplydrop = "friend",
             reinforcements = "friend",
-            preorder = "friend"
+            preorder = "friend",
+			fighters = "friend"
         },
         service_cost = {
             supplydrop = math.random(80,120),
-            reinforcements = math.random(125,175)
+            reinforcements = math.random(125,175),
+			fighterInterceptor = math.random(125,175),
+			fighterBomber = math.random(150,200),
+			fighterScout = math.random(175,225)
         },
         reputation_cost_multipliers = {
             friend = 1.0,
@@ -6225,6 +6114,45 @@ function handleDockedState()
 				end)
 			end
 		end
+	end
+	if isAllowedTo(comms_target.comms_data.services.fighters) and comms_source.carrier then
+		addCommsReply("Visit shipyard", function()
+			setCommsMessage("Here you can start fighters that can be taken by your pilots. You do have a fighter pilot waiting, do you?")
+			addCommsReply(string.format("Purchase unmanned MP52 Hornet Interceptor for %i reputation", getServiceCost("fighterInterceptor")), function()
+				if not comms_source:takeReputationPoints(getServiceCost("fighterInterceptor")) then
+					setCommsMessage("Insufficient reputation")
+				else
+					local ship = PlayerSpaceship():setTemplate("MP52 Hornet"):setFactionId(comms_source:getFactionId())
+					setPlayers()
+					ship:setPosition(comms_target:getPosition())
+					setCommsMessage("We have dispatched " .. ship:getCallSign() .. " to be manned by one of your pilots")
+				end
+				addCommsReply("Back", commsStation)
+			end)
+			addCommsReply(string.format("Purchase unmanned ZX-Lindworm Bomber for %i reputation", getServiceCost("fighterBomber")), function()
+				if not comms_source:takeReputationPoints(getServiceCost("fighterBomber")) then
+					setCommsMessage("Insufficient reputation")
+				else
+					local ship = PlayerSpaceship():setTemplate("ZX-Lindworm"):setFactionId(comms_source:getFactionId())
+					setPlayers()
+					ship:setPosition(comms_target:getPosition())
+					setCommsMessage("We have dispatched " .. ship:getCallSign() .. " to be manned by one of your pilots")
+				end
+				addCommsReply("Back", commsStation)
+			end)
+			addCommsReply(string.format("Purchase unmanned Adder MK7 Scout for %i reputation", getServiceCost("fighterScout")), function()
+				if not comms_source:takeReputationPoints(getServiceCost("fighterScout")) then
+					setCommsMessage("Insufficient reputation")
+				else
+					local ship = PlayerSpaceship():setTemplate("Adder MK7"):setFactionId(comms_source:getFactionId())
+					setPlayers()
+					ship:setPosition(comms_target:getPosition())
+					setCommsMessage("We have dispatched " .. ship:getCallSign() .. " to be manned by one of your pilots")
+				end
+				addCommsReply("Back", commsStation)
+			end)
+			addCommsReply("Back", commsStation)
+		end)
 	end
 	addCommsReply("Visit cartography office", function()
 		if comms_target.cartographer_description == nil then
@@ -8320,7 +8248,7 @@ function revertCheck(delta)
 end
 function checkContinuum(delta)
 	local continuum_count = 0
-	for pidx=1,8 do
+	for pidx=1,MAX_PLAYER_SHIPS do
 		local p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			if p.continuum_target then
@@ -8657,7 +8585,7 @@ function closestPlayerTo(obj)
 	if obj ~= nil and obj:isValid() then
 		local closestDistance = 9999999
 		local closestPlayer = nil
-		for pidx=1,8 do
+		for pidx=1,MAX_PLAYER_SHIPS do
 			local p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				local currentDistance = distance(p,obj)
@@ -8705,42 +8633,27 @@ function spawnEnemies(xOrigin, yOrigin, danger, enemyFaction, enemyStrength)
 	if enemyStrength == nil then
 		enemyStrength = math.max(danger * difficulty * playerPower(),5)
 	end
-	local enemyPosition = 0
-	local sp = irandom(400,900)			--random spacing of spawned group
-	local deployConfig = random(1,100)	--randomly choose between squarish formation and hexagonish formation
-	local enemyList = {}
+	enemyList, fleetPower = spawn_enemies_faction(xOrigin, yOrigin, enemyStrength, enemyFaction)
 	local prefix = generateCallSignPrefix(1)
-	-- Reminder: stsl and stnl are ship template score and name list
-	while enemyStrength > 0 do
-		local shipTemplateType = irandom(1,#stsl)
-		while stsl[shipTemplateType] > enemyStrength * 1.1 + 5 do
-			shipTemplateType = irandom(1,#stsl)
-		end		
-		local ship = CpuShip():setFaction(enemyFaction):setTemplate(stnl[shipTemplateType]):orderRoaming()
+	if enemyFaction == "Kraylor" then
+		rawKraylorShipStrength = rawKraylorShipStrength + fleetPower
+	elseif enemyFaction == "Human Navy" then
+		rawHumanShipStrength = rawHumanShipStrength + fleetPower
+	end
+	for _, ship in ipairs(enemyList) do
+		ship:setCallSign(generateCallSign(nil,enemyFaction))
 		if enemyFaction == "Kraylor" then
-			rawKraylorShipStrength = rawKraylorShipStrength + stsl[shipTemplateType]
 			ship:onDestruction(enemyVesselDestroyed)
 		elseif enemyFaction == "Human Navy" then
-			rawHumanShipStrength = rawHumanShipStrength + stsl[shipTemplateType]
 			ship:onDestruction(friendlyVesselDestroyed)
 		end
-		enemyPosition = enemyPosition + 1
-		if deployConfig < 50 then
-			ship:setPosition(xOrigin+fleetPosDelta1x[enemyPosition]*sp,yOrigin+fleetPosDelta1y[enemyPosition]*sp)
-		else
-			ship:setPosition(xOrigin+fleetPosDelta2x[enemyPosition]*sp,yOrigin+fleetPosDelta2y[enemyPosition]*sp)
-		end
-		ship:setCommsScript(""):setCommsFunction(commsShip)
-		table.insert(enemyList, ship)
-		ship:setCallSign(generateCallSign(nil,enemyFaction))
-		enemyStrength = enemyStrength - stsl[shipTemplateType]
 	end
 	return enemyList
 end
 function playerPower()
 --evaluate the players for enemy strength and size spawning purposes
 	local playerShipScore = 0
-	for p5idx=1,8 do
+	for p5idx=1,MAX_PLAYER_SHIPS do
 		local p5obj = getPlayerShip(p5idx)
 		if p5obj ~= nil and p5obj:isValid() then
 			if p5obj.shipScore == nil then
@@ -8755,7 +8668,7 @@ end
 function setPlayers()
 --set up players with name, goods, cargo space, reputation and either a warp drive or a jump drive if applicable
 	concurrentPlayerCount = 0
-	for p1idx=1,8 do
+	for p1idx=1,MAX_PLAYER_SHIPS do
 		pobj = getPlayerShip(p1idx)
 		if pobj ~= nil and pobj:isValid() then
 			concurrentPlayerCount = concurrentPlayerCount + 1
@@ -8766,235 +8679,8 @@ function setPlayers()
 				pobj:addReputationPoints(500-(difficulty*20))
 				pobj.initialRep = true
 			end
-			if not pobj.nameAssigned then
-				pobj.nameAssigned = true
-				local tempPlayerType = pobj:getTypeName()
-				if tempPlayerType == "MP52 Hornet" then
-					if #playerShipNamesForMP52Hornet > 0 then
-						local ni = math.random(1,#playerShipNamesForMP52Hornet)
-						pobj:setCallSign(playerShipNamesForMP52Hornet[ni])
-						table.remove(playerShipNamesForMP52Hornet,ni)
-					end
-					pobj.shipScore = 7
-					pobj.maxCargo = 3
-					pobj.autoCoolant = false
-					pobj:setWarpDrive(true)
-				elseif tempPlayerType == "Piranha" then
-					if #playerShipNamesForPiranha > 0 then
-						ni = math.random(1,#playerShipNamesForPiranha)
-						pobj:setCallSign(playerShipNamesForPiranha[ni])
-						table.remove(playerShipNamesForPiranha,ni)
-					end
-					pobj.shipScore = 16
-					pobj.maxCargo = 8
-				elseif tempPlayerType == "Flavia P.Falcon" then
-					if #playerShipNamesForFlaviaPFalcon > 0 then
-						ni = math.random(1,#playerShipNamesForFlaviaPFalcon)
-						pobj:setCallSign(playerShipNamesForFlaviaPFalcon[ni])
-						table.remove(playerShipNamesForFlaviaPFalcon,ni)
-					end
-					pobj.shipScore = 13
-					pobj.maxCargo = 15
-				elseif tempPlayerType == "Phobos M3P" then
-					if #playerShipNamesForPhobosM3P > 0 then
-						ni = math.random(1,#playerShipNamesForPhobosM3P)
-						pobj:setCallSign(playerShipNamesForPhobosM3P[ni])
-						table.remove(playerShipNamesForPhobosM3P,ni)
-					end
-					pobj.shipScore = 19
-					pobj.maxCargo = 10
-					pobj:setWarpDrive(true)
-				elseif tempPlayerType == "Atlantis" then
-					if #playerShipNamesForAtlantis > 0 then
-						ni = math.random(1,#playerShipNamesForAtlantis)
-						pobj:setCallSign(playerShipNamesForAtlantis[ni])
-						table.remove(playerShipNamesForAtlantis,ni)
-					end
-					pobj.shipScore = 52
-					pobj.maxCargo = 6
-				elseif tempPlayerType == "Player Cruiser" then
-					if #playerShipNamesForCruiser > 0 then
-						ni = math.random(1,#playerShipNamesForCruiser)
-						pobj:setCallSign(playerShipNamesForCruiser[ni])
-						table.remove(playerShipNamesForCruiser,ni)
-					end
-					pobj.shipScore = 40
-					pobj.maxCargo = 6
-				elseif tempPlayerType == "Player Missile Cr." then
-					if #playerShipNamesForMissileCruiser > 0 then
-						ni = math.random(1,#playerShipNamesForMissileCruiser)
-						pobj:setCallSign(playerShipNamesForMissileCruiser[ni])
-						table.remove(playerShipNamesForMissileCruiser,ni)
-					end
-					pobj.shipScore = 45
-					pobj.maxCargo = 8
-				elseif tempPlayerType == "Player Fighter" then
-					if #playerShipNamesForFighter > 0 then
-						ni = math.random(1,#playerShipNamesForFighter)
-						pobj:setCallSign(playerShipNamesForFighter[ni])
-						table.remove(playerShipNamesForFighter,ni)
-					end
-					pobj.shipScore = 7
-					pobj.maxCargo = 3
-					pobj.autoCoolant = false
-					pobj:setJumpDrive(true)
-					pobj:setJumpDriveRange(3000,40000)
-				elseif tempPlayerType == "Benedict" then
-					if #playerShipNamesForBenedict > 0 then
-						ni = math.random(1,#playerShipNamesForBenedict)
-						pobj:setCallSign(playerShipNamesForBenedict[ni])
-						table.remove(playerShipNamesForBenedict,ni)
-					end
-					pobj.shipScore = 10
-					pobj.maxCargo = 9
-				elseif tempPlayerType == "Kiriya" then
-					if #playerShipNamesForKiriya > 0 then
-						ni = math.random(1,#playerShipNamesForKiriya)
-						pobj:setCallSign(playerShipNamesForKiriya[ni])
-						table.remove(playerShipNamesForKiriya,ni)
-					end
-					pobj.shipScore = 10
-					pobj.maxCargo = 9
-				elseif tempPlayerType == "Striker" then
-					if #playerShipNamesForStriker > 0 then
-						ni = math.random(1,#playerShipNamesForStriker)
-						pobj:setCallSign(playerShipNamesForStriker[ni])
-						table.remove(playerShipNamesForStriker,ni)
-					end
-					if pobj:getImpulseMaxSpeed() == 45 then
-						pobj:setImpulseMaxSpeed(90)
-					end
-					if pobj:getBeamWeaponCycleTime(0) == 6 then
-						local bi = 0
-						repeat
-							local tempArc = pobj:getBeamWeaponArc(bi)
-							local tempDir = pobj:getBeamWeaponDirection(bi)
-							local tempRng = pobj:getBeamWeaponRange(bi)
-							local tempDmg = pobj:getBeamWeaponDamage(bi)
-							pobj:setBeamWeapon(bi,tempArc,tempDir,tempRng,5,tempDmg)
-							bi = bi + 1
-						until(pobj:getBeamWeaponRange(bi) < 1)
-					end
-					pobj.shipScore = 8
-					pobj.maxCargo = 4
-					pobj:setJumpDrive(true)
-					pobj:setJumpDriveRange(3000,40000)
-				elseif tempPlayerType == "ZX-Lindworm" then
-					if #playerShipNamesForLindworm > 0 then
-						ni = math.random(1,#playerShipNamesForLindworm)
-						pobj:setCallSign(playerShipNamesForLindworm[ni])
-						table.remove(playerShipNamesForLindworm,ni)
-					end
-					pobj.shipScore = 8
-					pobj.maxCargo = 3
-					pobj.autoCoolant = false
-					pobj:setWarpDrive(true)
-				elseif tempPlayerType == "Repulse" then
-					if #playerShipNamesForRepulse > 0 then
-						ni = math.random(1,#playerShipNamesForRepulse)
-						pobj:setCallSign(playerShipNamesForRepulse[ni])
-						table.remove(playerShipNamesForRepulse,ni)
-					end
-					pobj.shipScore = 14
-					pobj.maxCargo = 12
-				elseif tempPlayerType == "Ender" then
-					if #playerShipNamesForEnder > 0 then
-						ni = math.random(1,#playerShipNamesForEnder)
-						pobj:setCallSign(playerShipNamesForEnder[ni])
-						table.remove(playerShipNamesForEnder,ni)
-					end
-					pobj.shipScore = 100
-					pobj.maxCargo = 20
-				elseif tempPlayerType == "Nautilus" then
-					if #playerShipNamesForNautilus > 0 then
-						ni = math.random(1,#playerShipNamesForNautilus)
-						pobj:setCallSign(playerShipNamesForNautilus[ni])
-						table.remove(playerShipNamesForNautilus,ni)
-					end
-					pobj.shipScore = 12
-					pobj.maxCargo = 7
-				elseif tempPlayerType == "Hathcock" then
-					if #playerShipNamesForHathcock > 0 then
-						ni = math.random(1,#playerShipNamesForHathcock)
-						pobj:setCallSign(playerShipNamesForHathcock[ni])
-						table.remove(playerShipNamesForHathcock,ni)
-					end
-					pobj.shipScore = 30
-					pobj.maxCargo = 6
-				elseif tempPlayerType == "Proto-Atlantis" then
-					if #playerShipNamesForProtoAtlantis > 0 then
-						ni = math.random(1,#playerShipNamesForProtoAtlantis)
-						pobj:setCallSign(playerShipNamesForProtoAtlantis[ni])
-						table.remove(playerShipNamesForProtoAtlantis,ni)
-					end
-					pobj.shipScore = 40
-					pobj.maxCargo = 4
-				elseif tempPlayerType == "Maverick" then
-					if #playerShipNamesForMaverick > 0 then
-						ni = math.random(1,#playerShipNamesForMaverick)
-						pobj:setCallSign(playerShipNamesForMaverick[ni])
-						table.remove(playerShipNamesForMaverick,ni)
-					end
-					pobj.shipScore = 45
-					pobj.maxCargo = 5
-				elseif tempPlayerType == "Crucible" then
-					if #playerShipNamesForCrucible > 0 then
-						ni = math.random(1,#playerShipNamesForCrucible)
-						pobj:setCallSign(playerShipNamesForCrucible[ni])
-						table.remove(playerShipNamesForCrucible,ni)
-					end
-					pobj.shipScore = 45
-					pobj.maxCargo = 5
-				elseif tempPlayerType == "Atlantis II" then
-					if #playerShipNamesForAtlantisII > 0 then
-						ni = math.random(1,#playerShipNamesForAtlantisII)
-						pobj:setCallSign(playerShipNamesForAtlantisII[ni])
-						table.remove(playerShipNamesForAtlantisII,ni)
-					end
-					pobj.shipScore = 60
-					pobj.maxCargo = 5
-				elseif tempPlayerType == "Surkov" then
-					if #playerShipNamesForSurkov > 0 then
-						ni = math.random(1,#playerShipNamesForSurkov)
-						pobj:setCallSign(playerShipNamesForSurkov[ni])
-						table.remove(playerShipNamesForSurkov,ni)
-					end
-					pobj.shipScore = 35
-					pobj.maxCargo = 6
-				elseif tempPlayerType == "Stricken" then
-					if #playerShipNamesForStricken > 0 then
-						ni = math.random(1,#playerShipNamesForStricken)
-						pobj:setCallSign(playerShipNamesForStricken[ni])
-						table.remove(playerShipNamesForStricken,ni)
-					end
-					pobj.shipScore = 40
-					pobj.maxCargo = 4
-				elseif tempPlayerType == "Redhook" then
-					if #playerShipNamesForRedhook > 0 then
-						ni = math.random(1,#playerShipNamesForRedhook)
-						pobj:setCallSign(playerShipNamesForRedhook[ni])
-						table.remove(playerShipNamesForRedhook,ni)
-					end
-					pobj.shipScore = 18
-					pobj.maxCargo = 8
-				elseif tempPlayerType == "Destroyer III" then
-					if #playerShipNamesForDestroyerIII > 0 then
-						ni = math.random(1,#playerShipNamesForDestroyerIII)
-						pobj:setCallSign(playerShipNamesForDestroyerIII[ni])
-						table.remove(playerShipNamesForDestroyerIII,ni)
-					end
-					pobj.shipScore = 25
-					pobj.maxCargo = 7
-				else
-					if #playerShipNamesForLeftovers > 0 then
-						ni = math.random(1,#playerShipNamesForLeftovers)
-						pobj:setCallSign(playerShipNamesForLeftovers[ni])
-						table.remove(playerShipNamesForLeftovers,ni)
-					end
-					pobj.shipScore = 24
-					pobj.maxCargo = 5
-					pobj:setWarpDrive(true)
-				end
+			if not pobj.modsAssigned then
+				modify_player_ships(pobj)
 				if pobj.cargo == nil then
 					pobj.cargo = pobj.maxCargo
 					pobj.maxRepairCrew = pobj:getRepairCrewCount()
@@ -9029,7 +8715,7 @@ function setPlayers()
 	end
 end
 function expediteDockCheck(delta)
-	for pidx=1,8 do
+	for pidx=1,MAX_PLAYER_SHIPS do
 		local p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			if p.expedite_dock then
@@ -9146,7 +8832,7 @@ function healthCheck(delta)
 	healthCheckTimer = healthCheckTimer - delta
 	if healthCheckTimer < 0 then
 		if healthDiagnostic then print("health check timer expired") end
-		for pidx=1,8 do
+		for pidx=1,MAX_PLAYER_SHIPS do
 			if healthDiagnostic then print("in player loop") end
 			local p = getPlayerShip(pidx)
 			if healthDiagnostic then print("got player ship") end
@@ -9257,7 +8943,7 @@ function healthCheck(delta)
 			local evalFriendly = fpct2*friendlyStationComponentWeight + npct2*neutralStationComponentWeight + fpct*friendlyShipComponentWeight
 			local evalEnemy = epct2*enemyStationComponentWeight + epct*enemyShipComponentWeight
 			local eval_status = string.format("F:%.1f%% E:%.1f%% D:%.1f%%",evalFriendly,evalEnemy,evalFriendly-evalEnemy)
-			for pidx=1,8 do
+			for pidx=1,MAX_PLAYER_SHIPS do
 				local p = getPlayerShip(pidx)
 				if p ~= nil and p:isValid() then
 					if p:hasPlayerAtPosition("Relay") then
@@ -9339,7 +9025,7 @@ function crewFate(p, fatalityChance)
 end
 --      Inventory button and functions for relay/operations 
 function cargoInventory(delta)
-	for pidx=1,8 do
+	for pidx=1,MAX_PLAYER_SHIPS do
 		p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			local cargoHoldEmpty = true
@@ -9355,14 +9041,20 @@ function cargoInventory(delta)
 				if p:hasPlayerAtPosition("Relay") then
 					if p.inventoryButton == nil then
 						local tbi = "inventory" .. p:getCallSign()
-						p:addCustomButton("Relay",tbi,"Inventory",cargoInventoryList[pidx])
+						p:addCustomButton("Relay",tbi,"Inventory", function()
+							cargoInventoryGivenShip(pidx)
+						end)
+						--cargoInventoryList[pidx])
 						p.inventoryButton = true
 					end
 				end
 				if p:hasPlayerAtPosition("Operations") then
 					if p.inventoryButton == nil then
 						local tbi = "inventoryOp" .. p:getCallSign()
-						p:addCustomButton("Operations",tbi,"Inventory",cargoInventoryList[pidx])
+						p:addCustomButton("Operations",tbi,"Inventory", function()
+							cargoInventoryGivenShip(pidx)
+						end)
+						--	cargoInventoryList[pidx])
 						p.inventoryButton = true
 					end
 				end
@@ -9370,7 +9062,8 @@ function cargoInventory(delta)
 		end
 	end
 end
-function cargoInventoryGivenShip(p)
+function cargoInventoryGivenShip(pidx)
+	p = getPlayerShip(pidx)
 	p:addToShipLog(string.format("%s Current cargo:",p:getCallSign()),"Yellow")
 	local cargoHoldEmpty = true
 	if p.goods ~= nil then
@@ -9386,6 +9079,7 @@ function cargoInventoryGivenShip(p)
 	end
 	p:addToShipLog(string.format("Available space: %i",p.cargo),"Yellow")
 end
+-- TODO test above code
 function cargoInventory1()
 	local p = getPlayerShip(1)
 	cargoInventoryGivenShip(p)
@@ -9419,6 +9113,7 @@ function cargoInventory8()
 	cargoInventoryGivenShip(p)
 end
 --      Enable and disable auto-cooling on a ship functions
+--      TODO test
 function autoCoolant(delta)
 	if enableAutoCoolFunctionList == nil then
 		enableAutoCoolFunctionList = {}
@@ -9442,25 +9137,41 @@ function autoCoolant(delta)
 		table.insert(disableAutoCoolFunctionList,disableAutoCool7)
 		table.insert(disableAutoCoolFunctionList,disableAutoCool8)
 	end
-	for pidx=1,8 do
+	for pidx=1,MAX_PLAYER_SHIPS do
 		local p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			if p.autoCoolant ~= nil then
 				if p:hasPlayerAtPosition("Engineering") then
 					if p.autoCoolButton == nil then
 						local tbi = "enableAutoCool" .. p:getCallSign()
-						p:addCustomButton("Engineering",tbi,"Auto cool",enableAutoCoolFunctionList[pidx])
+						p:addCustomButton("Engineering",tbi,"Auto cool", function()
+							p:setAutoCoolant(true)
+							p.autoCoolant = true
+						end)
+								--enableAutoCoolFunctionList[pidx])
 						tbi = "disableAutoCool" .. p:getCallSign()
-						p:addCustomButton("Engineering",tbi,"Manual cool",disableAutoCoolFunctionList[pidx])
+						p:addCustomButton("Engineering",tbi,"Manual cool", function()
+							p:setAutoCoolant(false)
+							p.autoCoolant = false
+						end)
+								--disableAutoCoolFunctionList[pidx])
 						p.autoCoolButton = true
 					end
 				end
 				if p:hasPlayerAtPosition("Engineering+") then
 					if p.autoCoolButton == nil then
 						tbi = "enableAutoCoolPlus" .. p:getCallSign()
-						p:addCustomButton("Engineering+",tbi,"Auto cool",enableAutoCoolFunctionList[pidx])
+						p:addCustomButton("Engineering+",tbi,"Auto cool", function()
+							p:setAutoCoolant(true)
+							p.autoCoolant = true
+						end)
+						--enableAutoCoolFunctionList[pidx])
 						tbi = "disableAutoCoolPlus" .. p:getCallSign()
-						p:addCustomButton("Engineering+",tbi,"Manual cool",disableAutoCoolFunctionList[pidx])
+						p:addCustomButton("Engineering+",tbi,"Manual cool", function()
+							p:setAutoCoolant(false)
+							p.autoCoolant = false
+						end)
+						--disableAutoCoolFunctionList[pidx])
 						p.autoCoolButton = true
 					end
 				end
@@ -9468,6 +9179,7 @@ function autoCoolant(delta)
 		end
 	end
 end
+-- TODO test code above
 function enableAutoCool1()
 	local p = getPlayerShip(1)
 	p:setAutoCoolant(true)
@@ -9550,7 +9262,7 @@ function disableAutoCool8()
 end
 --		Gain or lose coolant from nebula functions
 function coolantNebulae(delta)
-	for pidx=1,8 do
+	for pidx=1,MAX_PLAYER_SHIPS do
 		local p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			local inside_gain_coolant_nebula = false
@@ -9586,12 +9298,18 @@ function coolantNebulae(delta)
 				else
 					if p:hasPlayerAtPosition("Engineering") then
 						p.get_coolant_button = "get_coolant_button"
-						p:addCustomButton("Engineering",p.get_coolant_button,"Get Coolant",get_coolant_function[pidx])
+						p:addCustomButton("Engineering",p.get_coolant_button,"Get Coolant", function ()
+							getCoolantGivenPlayer(p)
+						end)
+						--get_coolant_function[pidx])
 						p.get_coolant = true
 					end
 					if p:hasPlayerAtPosition("Engineering+") then
 						p.get_coolant_button_plus = "get_coolant_button_plus"
-						p:addCustomButton("Engineering+",p.get_coolant_button_plus,"Get Coolant",get_coolant_function[pidx])
+						p:addCustomButton("Engineering+",p.get_coolant_button_plus,"Get Coolant", function ()
+							getCoolantGivenPlayer(p)
+						end)
+						--get_coolant_function[pidx])
 						p.get_coolant = true
 					end
 				end
@@ -9681,6 +9399,7 @@ function getCoolantGivenPlayer(p)
 	end
 	p.coolant_trigger = true
 end
+-- TODO
 function getCoolant1()
 	local p = getPlayerShip(1)
 	getCoolantGivenPlayer(p)
@@ -10062,7 +9781,7 @@ function independentTransportPlot(delta)
 				else
 					name = name .. " Freighter " .. irandom(1, 5)
 				end
-				obj = CpuShip():setTemplate(name):setFaction('Independent'):setCommsScript(""):setCommsFunction(commsShip)
+				obj = CpuShip():setTemplate(name):setFaction(faction_transporter_neutral):setCommsScript(""):setCommsFunction(commsShip)
 				obj.target = target
 				obj.undock_delay = irandom(1,4)
 				obj:orderDock(obj.target)
@@ -10138,7 +9857,7 @@ function friendlyTransportPlot(delta)
 					fSize = irandom(1, 5)
 					name = name .. " Freighter " .. fSize
 				end
-				obj = CpuShip():setTemplate(name):setFaction('Human Navy'):setCommsScript(""):setCommsFunction(commsShip)
+				obj = CpuShip():setTemplate(name):setFaction(faction_transporter_friendly):setCommsScript(""):setCommsFunction(commsShip)
 				obj.target = target
 				obj.undock_delay = irandom(1,4)
 				obj:orderDock(obj.target)
@@ -10153,10 +9872,10 @@ end
 -- Plot 1 peace/treaty/war states
 function treatyHolds(delta)
 	primaryOrders = "Treaty holds. Patrol border. Stay out of blue neutral border zone"
-	for pidx=1,8 do
+	for pidx=1,MAX_PLAYER_SHIPS do
 		local p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() and p.order1 == nil then
-			if p.nameAssigned then
+			if p.modsAssigned then
 				p:addToShipLog(string.format("Greetings captain and crew of %s. The Human/Kraylor treaty has held for a number of years now, but tensions are rising. Your mission: patrol the border area for Kraylor ships. Do not enter the blue neutral border zone. Good luck",p:getCallSign()),"Magenta")
 				p.order1 = "sent"
 			else
@@ -10188,10 +9907,10 @@ function treatyHolds(delta)
 			treatyStressTimer = random(lrr5,urr5)
 		end
 		primaryOrders = "Treaty holds, Kraylors belligerent. Patrol border. Stay out of blue neutral border zone"
-		for pidx=1,8 do
+		for pidx=1,MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
-				if not p.nameAssigned then
+				if not p.modsAssigned then
 					setPlayers()
 				end
 				p:addToShipLog(string.format("%s, The Kraylors threaten to break the treaty. We characterize this behavior as mere sabre rattling. Nevertheless, keep a close watch on the neutral border zone. Until war is actually declared, you are not, I repeat, *not* authorized to enter the neutral border zone",p:getCallSign()),"Magenta")
@@ -10221,10 +9940,10 @@ function treatyStressed(delta)
 			borderZone[i]:setColor(255,0,0)
 		end
 		primaryOrders = "War declared. Destroy any Kraylor vessels. Avoid destruction of Kraylor stations"
-		for pidx=1,8 do
+		for pidx=1,MAX_PLAYER_SHIPS do
 			local p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
-				if not p.nameAssigned then
+				if not p.modsAssigned then
 					setPlayers()
 				end
 				p:addToShipLog(string.format("To: Commanding Officer of %s",p:getCallSign()),"Magenta")
@@ -10253,11 +9972,14 @@ function limitedWar(delta)
 	limitedWarTimer = limitedWarTimer - delta
 	if limitedWarTimer < 0 then
 		primaryOrders = "War continues. Atrocities suspected. Destroy any Kraylor vessels or stations"
-		for pidx=1,8 do
+		for pidx=1,MAX_PLAYER_SHIPS do
 			local p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
-				if not p.nameAssigned then
+				if not p.modsAssigned then
 					setPlayers()
+				end
+				if p:getFaction() == "Black Ops" then
+					p:setFaction("Human Navy")
 				end
 				p:addToShipLog(string.format("To: Commanding Officer of %s",p:getCallSign()),"Magenta")
 				p:addToShipLog("From: Human Navy Headquarters","Magenta")
@@ -10320,7 +10042,7 @@ function evaluateInitialAssets()
 		end
 	end
 	local playerShipNames = {}
-	for pidx=1,8 do
+	for pidx=1,MAX_PLAYER_SHIPS do
 		local p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			table.insert(playerShipNames,p:getCallSign())
@@ -10337,7 +10059,7 @@ function evaluateInitialAssets()
 			print(i .. ": " .. playerShipNames[i])
 		end
 	end
-	for pidx=1,8 do
+	for pidx=1,MAX_PLAYER_SHIPS do
 		local p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			if #playerShipNames > 1 then
@@ -10382,7 +10104,9 @@ function initialAttack(delta)
 	if plot3diagnostic then print("initial attack") end
 	local enemyInitialFleet = spawnEnemies(kraylorCentroidX, kraylorCentroidY, 1.3, "Kraylor")
 	for _, enemy in ipairs(enemyInitialFleet) do
-		enemy:orderFlyTowards(humanCentroidX, humanCentroidY)
+		if enemy:getOrder() == "Roaming" then
+			enemy:orderFlyTowards(humanCentroidX, humanCentroidY)
+		end
 		enemy.initialFleetMember = true
 	end
 	if plot3diagnostic then print("initial fleet created") end
@@ -10438,14 +10162,14 @@ function pincerAttack(delta)
 		rightPincerX, rightPincerY = vectorFromAngle(rightPincerAngle,pincerSize)
 		if plot3diagnostic then print(string.format("Angles: Pincer: %.1f, Left: %.1f, Right: %.1f",pincerAngle,leftPincerAngle,rightPincerAngle)) end
 		local enemyLeftPincerFleet = spawnEnemies(referenceStartX+leftPincerX,referenceStartY+leftPincerY,1.5,"Kraylor")
-		for _, enemy in ipairs(enemyLeftPincerFleet) do
-			enemy:orderRoaming()
-		end
+--		for _, enemy in ipairs(enemyLeftPincerFleet) do
+--			enemy:orderRoaming()
+--		end
 		table.insert(enemyFleetList,enemyLeftPincerFleet)
 		local enemyRightPincerFleet = spawnEnemies(referenceStartX+rightPincerX,referenceStartY+rightPincerY,1.5,"Kraylor")
-		for _, enemy in ipairs(enemyRightPincerFleet) do
-			enemy:orderRoaming()
-		end
+--		for _, enemy in ipairs(enemyRightPincerFleet) do
+--			enemy:orderRoaming()
+--		end
 		table.insert(enemyFleetList,enemyRightPincerFleet)
 		if playWithTimeLimit then
 			vengenceTimer = random(lrr1,urr1)
@@ -10568,7 +10292,7 @@ function setEnemyStationDefenses()
 	end
 end
 function enemyDefenseCheck(delta)
-	for pidx=1,8 do
+	for pidx=1,MAX_PLAYER_SHIPS do
 		local p = getPlayerShip(pidx)
 		if p ~= nil and p:isValid() then
 			for _, enemyStation in ipairs(kraylorStationList) do
@@ -10579,7 +10303,9 @@ function enemyDefenseCheck(delta)
 							esx, esy = enemyStation:getPosition()
 							local ef, efp = spawnFighterFleet(esx, esy, difficulty*4, "Kraylor")
 							for _, enemy in ipairs(ef) do
-								enemy:orderDefendTarget(enemyStation)
+								if enemy:getOrder() == "Roaming" then
+									enemy:orderDefendTarget(enemyStation)
+								end
 							end
 							table.insert(enemyFleetList,ef)
 							enemyStation.defenseDeployed = true
@@ -10641,7 +10367,9 @@ function enemyDefenseCheck(delta)
 							esx, esy = nearestStation:getPosition()
 							local ef, efp = spawnEnemies(esx, esy, 1, "Kraylor")
 							for _, enemy in ipairs(ef) do
-								enemy:orderAttack(p)
+								if enemy:getOrder() == "Roaming" then
+									enemy:orderAttack(p)
+								end
 							end
 							table.insert(enemyFleetList,ef)
 							enemyStation.defenseDeployed = true
@@ -10721,7 +10449,9 @@ function enemyDefenseCheck(delta)
 							esx, esy = enemyStation:getPosition()
 							local ef, efp = spawnDroneFleet(esx, esy, difficulty*6, "Kraylor")
 							for _, enemy in ipairs(ef) do
-								enemy:orderDefendLocation(esx, esy)
+								if enemy:getOrder() == "Roaming" then
+									enemy:orderDefendLocation(esx, esy)
+								end
 							end
 							table.insert(enemyFleetList,ef)
 							enemyStation.defenseDeployed = true
@@ -10740,7 +10470,7 @@ function artifactToPlatform(delta)
 			if enemyDefensePlatformList == nil then
 				enemyDefensePlatformList = {}
 			end
-			twp = CpuShip():setTemplate("Defense platform"):setFaction("Kraylor"):setPosition(apx,apy):orderRoaming()
+			twp = CpuShip():setTemplate("Battlestation"):setFaction("Kraylor"):setPosition(apx,apy):orderRoaming()
 			twp.distance = tap.triggerDistance
 			twp.originX = tap.originX
 			twp.originY = tap.originY
@@ -10785,7 +10515,9 @@ function warpJammerOrbit(delta)
 				if distance(wjx, wjy, tj.originX, tj.originY) > tj.triggerDistance then
 					ef, efp = spawnJammerFleet(esx, esy)
 					for _, enemy in ipairs(ef) do
-						enemy:orderDefendLocation(tj.originX,tj.originY)
+						if enemy:getOrder() == "Roaming" then
+							enemy:orderDefendLocation(tj.originX,tj.originY)
+						end
 					end
 					table.insert(enemyFleetList,ef)
 					tj.orbit = true
@@ -10805,15 +10537,15 @@ function artifactToMinefield(delta)
 			if tam.mineCount == nil then
 				tam.mineCount = 0
 			end
-			if tam.mineCount < 150 then
+			if tam.mineCount < 75 then
 				wang = tam.travelAngle + 360
 				if tam.mineCount == 0 then
 					mdx, mdy = vectorFromAngle(wang,tam.triggerDistance)
 					Mine():setPosition(tam.originX+mdx,tam.originY+mdy)
 				else
-					mdx, mdy = vectorFromAngle(wang+tam.mineCount,tam.triggerDistance)
+					mdx, mdy = vectorFromAngle(wang+2*tam.mineCount,tam.triggerDistance)
 					Mine():setPosition(tam.originX+mdx,tam.originY+mdy)
-					mdx, mdy = vectorFromAngle(wang-tam.mineCount,tam.triggerDistance)
+					mdx, mdy = vectorFromAngle(wang-2*tam.mineCount,tam.triggerDistance)
 					Mine():setPosition(tam.originX+mdx,tam.originY+mdy)
 				end
 				tam.mineCount = tam.mineCount + 1
@@ -10825,9 +10557,8 @@ function artifactToMinefield(delta)
 			tam:setPosition(amx+tDeltax,amy+tDeltay)
 		end
 	end
-	for i=1,#artMineList do
-		tam = artMineList[i]
-		if tam.deleteMe then
+	for i, tam in ipairs(artMineList) do
+		if tam ~=nil and tam.deleteMe then
 			table.remove(artMineList,i)
 			tam:destroy()
 		end
@@ -10836,7 +10567,7 @@ end
 function explosiveTransportCheck(delta)
 	for i=1,#deadlyTransportList do
 		local tdt = deadlyTransportList[i]
-		for pidx=1,8 do
+		for pidx=1,MAX_PLAYER_SHIPS do
 			local p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				local tpx, tpy = p:getPosition()
@@ -10886,7 +10617,7 @@ end
 function enemyDefenseZoneCheck(delta)
 	for i=1,#defensiveZoneList do
 		tz = defensiveZoneList[i]
-		for pidx=1,8 do
+		for pidx=1,MAX_PLAYER_SHIPS do
 			local p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				if tz:isInside(p) then
@@ -10906,63 +10637,54 @@ function enemyDefenseZoneCheck(delta)
 	end
 end
 function spawnDroneFleet(originX, originY, droneCount, faction)
+	-- TODO test
 	if faction == nil then
 		faction = "Kraylor"
 	end
-	local fleetList = {}
-	local deploySpacing = random(300,800)
-	local deployConfig = random(1,100)
-	for i=1,droneCount do
-		ship = CpuShip():setFaction(faction):setTemplate("Ktlitan Drone"):orderRoaming():setCommsScript(""):setCommsFunction(commsShip)
+	local fleetList = script_formation.spawnFormation("Drone", droneCount, originX, originY, faction)
+	local fleetPower = droneCount * 5
+	if faction == "Kraylor" then
+		rawKraylorShipStrength = rawKraylorShipStrength + fleetPower 
+	elseif faction == "Human Navy" then
+		rawHumanShipStrength = rawHumanShipStrength + fleetPower 
+	end
+	for _, ship in ipairs(fleetList) do
 		if faction == "Kraylor" then
-			rawKraylorShipStrength = rawKraylorShipStrength + 4
 			ship:onDestruction(enemyVesselDestroyed)
 		elseif faction == "Human Navy" then
-			rawHumanShipStrength = rawHumanShipStrength + 4
 			ship:onDestruction(friendlyVesselDestroyed)
 		end
-		if deployConfig < 50 then
-			ship:setPosition(originX+fleetPosDelta1x[i]*deploySpacing,originY+fleetPosDelta1y[i]*deploySpacing)
-		else
-			ship:setPosition(originX+fleetPosDelta2x[i]*deploySpacing,originY+fleetPosDelta2y[i]*deploySpacing)
-		end
-		table.insert(fleetList,ship)
 	end
-	return fleetList, droneCount*4
+	return fleetList, fleetPower
 end
 function spawnFighterFleet(originX, originY, fighterCount, faction)
+	-- TODO test
 	if faction == nil then
 		faction = "Kraylor"
 	end
 	--Ship Template Name List
-	local fighterNames  = {"MT52 Hornet","MU52 Hornet","WX-Lindworm","Fighter","Ktlitan Fighter"}
+	local fighterNames  = {"Red Hornet", "Red Lindworm", "Red Adder MK5", "Red Adder MK4"} -- hired criminal ships
+	local templ = fighterNames[math.random(1,#fighterNames)]
 	--Ship Template Score List
-	local fighterScores = {5            ,5            ,7            ,6        ,6}
-	local fleetList = {}
-	local fleetPower = 0
-	local deploySpacing = random(300,800)
-	local deployConfig = random(1,100)
-	for i=1,fighterCount do
-		local shipTemplateType = math.random(1,#fighterNames)
-		fleetPower = fleetPower + fighterScores[shipTemplateType]
-		ship = CpuShip():setFaction(faction):setTemplate(fighterNames[shipTemplateType]):orderRoaming():setCommsScript(""):setCommsFunction(commsShip)
+	local fighterScores = stl["Criminals"]
+	local fleetPower = fighterCount * fighterScores[templ]
+	local fleetList = script_formation.spawnFormation(templ, fighterCount, originX, originY, faction)
+	if faction == "Kraylor" then
+		rawKraylorShipStrength = rawKraylorShipStrength + fleetPower
+	elseif faction == "Human Navy" then
+		rawHumanShipStrength = rawHumanShipStrength + fleetPower
+	end
+	for _, ship in ipairs(fleetList) do
 		if faction == "Kraylor" then
-			rawKraylorShipStrength = rawKraylorShipStrength + fighterScores[shipTemplateType]
 			ship:onDestruction(enemyVesselDestroyed)
 		elseif faction == "Human Navy" then
-			rawHumanShipStrength = rawHumanShipStrength + fighterScores[shipTemplateType]
 			ship:onDestruction(friendlyVesselDestroyed)
 		end
-		if deployConfig < 50 then
-			ship:setPosition(originX+fleetPosDelta1x[i]*deploySpacing,originY+fleetPosDelta1y[i]*deploySpacing)
-		else
-			ship:setPosition(originX+fleetPosDelta2x[i]*deploySpacing,originY+fleetPosDelta2y[i]*deploySpacing)
-		end
-		table.insert(fleetList,ship)
 	end
 	return fleetList, fleetPower
 end
 function spawnJammerFleet(originX, originY)
+	-- TODO test
 	faction = "Kraylor"
 	local shipSpawnCount = 3
 	if difficulty < 1 then
@@ -10971,25 +10693,23 @@ function spawnJammerFleet(originX, originY)
 		shipSpawnCount = 4
 	end
 	--Ship Template Name List
-	local jammerNames  = {"MT52 Hornet","MU52 Hornet","Adder MK5","Adder MK4","WX-Lindworm","Adder MK6","Phobos T3","Phobos M3","Piranha F8","Piranha F12","Fighter","Ktlitan Fighter","Ktlitan Drone","Ktlitan Scout"}
+	local jammerNames  = stln["Criminals"] -- hired criminal ships
+	local templ = jammerNames[math.random(1,#jammerNames)]
 	--Ship Template Score List
-	local jammerScores = {5            ,5            ,7          ,6          ,7            ,8          ,15         ,16         ,15          ,15           ,6        ,6                ,4              ,8              }
-	local fleetList = {}
-	local fleetPower = 0
-	local deploySpacing = random(300,800)
-	local deployConfig = random(1,100)
-	for i=1,shipSpawnCount do
-		local shipTemplateType = math.random(1,#jammerNames)
-		fleetPower = fleetPower + jammerScores[shipTemplateType]
-		ship = CpuShip():setFaction(faction):setTemplate(jammerNames[shipTemplateType]):orderRoaming():setCommsScript(""):setCommsFunction(commsShip)
-		rawKraylorShipStrength = rawKraylorShipStrength + jammerScores[shipTemplateType]
-		ship:onDestruction(enemyVesselDestroyed)
-		if deployConfig < 50 then
-			ship:setPosition(originX+fleetPosDelta1x[i]*deploySpacing,originY+fleetPosDelta1y[i]*deploySpacing)
-		else
-			ship:setPosition(originX+fleetPosDelta2x[i]*deploySpacing,originY+fleetPosDelta2y[i]*deploySpacing)
+	local jammerScores = stl["Criminals"]
+	local fleetPower = shipSpawnCount * jammerScores[templ]
+	local fleetList = script_formation.spawnFormation(templ, shipSpawnCount, originX, originY, faction)
+	if faction == "Kraylor" then
+		rawKraylorShipStrength = rawKraylorShipStrength + fleetPower
+	elseif faction == "Human Navy" then
+		rawHumanShipStrength = rawHumanShipStrength + fleetPower
+	end
+	for _, ship in ipairs(fleetList) do
+		if faction == "Kraylor" then
+			ship:onDestruction(enemyVesselDestroyed)
+		elseif faction == "Human Navy" then
+			ship:onDestruction(friendlyVesselDestroyed)
 		end
-		table.insert(fleetList,ship)
 	end
 	return fleetList, fleetPower
 end
@@ -11029,7 +10749,7 @@ function personalAmbushDestructCheck(delta)
 			if evalEnemy < paTriggerEval then
 				if paDiagnostic then print("met paDestruct criteria") end
 				local candidate = nil
-				for pidx=1,8 do
+				for pidx=1,MAX_PLAYER_SHIPS do
 					p = getPlayerShip(pidx)
 					if p ~= nil and p:isValid() and p.sprung == nil then
 						local nebulaHuntList = p:getObjectsInRange(20000)
@@ -11053,7 +10773,9 @@ function personalAmbushDestructCheck(delta)
 					local efx, efy = candidate:getPosition()
 					enemyAmbushFleet = spawnEnemies(efx,efy,1,"Kraylor")
 					for _, enemy in ipairs(enemyAmbushFleet) do
-						enemy:orderAttack(p)
+						if enemy:getOrder() == "Roaming" then
+							enemy:orderAttack(p)
+						end
 					end
 					table.insert(enemyFleetList,enemyAmbushFleet)
 					p.sprung = true
@@ -11070,7 +10792,7 @@ function personalAmbushTimeCheck(delta)
 	if gameTimeLimit < paTriggerTime then
 		if paDiagnostic then print("paGame Time check passed") end
 		candidate = nil
-		for pidx=1,8 do
+		for pidx=1,MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() and p.sprung == nil then
 				nebulaHuntList = p:getObjectsInRange(20000)
@@ -11093,7 +10815,9 @@ function personalAmbushTimeCheck(delta)
 			efx, efy = candidate:getPosition()
 			enemyAmbushFleet = spawnEnemies(efx,efy,1,"Kraylor")
 			for _, enemy in ipairs(enemyAmbushFleet) do
-				enemy:orderAttack(p)
+				if enemy:getOrder() == "Roaming" then
+					enemy:orderAttack(p)
+				end
 			end
 			table.insert(enemyFleetList,enemyAmbushFleet)
 			p.sprung = true
@@ -11106,63 +10830,75 @@ end
 -- Plot PB player border zone checks
 function playerBorderCheck(delta)
 	if treaty then
-		tbz = nil
-		for pidx=1,8 do
+		for pidx=1,MAX_PLAYER_SHIPS do
+			tbz = nil
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
-				playerOutOfBounds = false
+				p.playerOutOfBounds = false
 				tbz = outerZone
 				if tbz:isInside(p) then
-					playerOutOfBounds = true
-					break
+					--allow 'black ops' jumping over neutral zone
+					for _, faction in ipairs(factions_forbidden_in_enemy_zone) do
+						if p:getFaction() == faction then
+							p.playerOutOfBounds = true
+							break
+						end
+					end
 				end
 				for i=1,#borderZone do
 					tbz = borderZone[i]
 					if tbz:isInside(p) then
-						playerOutOfBounds = true
-						break
+						--allow 'neutrals' in neutral zone
+						for _, faction in ipairs(factions_forbidden_in_neutral_zone) do
+							if p:getFaction() == faction then
+								p.playerOutOfBounds = true
+								break
+							end
+						end
+						if p.playerOutOfBounds then
+							break
+						end
 					end
 				end
-				if playerOutOfBounds then
-					break
-				end
-			end
-		end
-		if tbz ~= nil then
-			if playerOutOfBounds then
-				if tbz.playerDetected == nil then
-					tbz.playerDetected = 1
-				else
-					if tbz.playerDetected >= 10 then
-						missionVictory = false
-						finalTimer = 2
-						plotPB = displayDefeatResults
+				if p.playerOutOfBounds then
+					if p.playerDetected == nil then
+						p.playerDetected = 0
 					else
-						tbz.playerDetected = tbz.playerDetected + 1
+						if p.playerDetected >= 10 then
+							for p2idx=1,MAX_PLAYER_SHIPS do
+								p2 = getPlayerShip(p2idx)
+								if p2 ~=nil and p2:isValid() then
+									p2:addToShipLog(p:getCallSign() .. " violated treaty terms by crossing neutral border zone. " .. p:getCallSign() .. " is treated as criminal now.", "Magenta")
+								end
+							end
+							p:setFaction("Criminals")
+						else
+							p.playerDetected = p.playerDetected + delta
+						end
 					end
-				end
-			else
-				if tbz.playerDetected == nil then
-					tbz.playerDetected = 0
 				else
-					if tbz.playerDetected <= 0 then
-						tbz.playerDetected = 0
+					if p.playerDetected == nil then
+						p.playerDetected = 0
 					else
-						tbz.playerDetected = tbz.playerDetected - 1
+						if p.playerDetected <= 0 then
+							p.playerDetected = 0
+						else
+							p.playerDetected = p.playerDetected - delta
+						end
 					end
 				end
 			end
 		end
 	end
 end
-function displayDefeatResults(delta)
-	finalTimer = finalTimer - delta
-	if finalTimer < 0 then
-		missionCompleteReason = "Player violated treaty terms by crossing neutral border zone"
-		endStatistics()
-		victory("Kraylor")
-	end
-end
+--function displayDefeatResults(delta)
+--	finalTimer = finalTimer - delta
+--	if finalTimer < 0 then
+--
+--		endStatistics()
+--		victory("Kraylor")
+--	end
+--end
 function playerWarCrimeCheck(delta)
 	if not treaty and not targetKraylorStations and initialAssetsEvaluated then
 		local friendlySurvivedCount, friendlySurvivedValue, fpct1, fpct2, enemySurvivedCount, enemySurvivedValue, epct1, epct2, neutralSurvivedCount, neutralSurvivedValue, npct1, npct2 = stationStatus()
@@ -11233,7 +10969,7 @@ function enemyReinforcements(delta)
 				local p = closestPlayerTo(ta)
 				ta:destroy()
 				if p == nil then
-					for pidx=1,8 do
+					for pidx=1,MAX_PLAYER_SHIPS do
 						p = getPlayerShip(pidx)
 						if p ~= nil and p:isValid() then
 							break
@@ -11245,7 +10981,9 @@ function enemyReinforcements(delta)
 					local fpx, fpy = p:getPosition()
 					local tempFleet = spawnEnemies(fpx+dirx,fpy+diry,enemyReinforcementSchedule[1][2],"Kraylor")
 					for _, enemy in ipairs(tempFleet) do
-						enemy:orderAttack(p)
+						if enemy:getOrder() == "Roaming" then
+							enemy:orderAttack(p)
+						end
 					end
 					table.insert(enemyFleetList,tempFleet)
 					table.remove(enemyReinforcementSchedule,1)
@@ -11272,7 +11010,7 @@ function muckAndFlies(delta)
 			return
 		end
 		local victimList = {}
-		for pidx=1,8 do
+		for pidx=1,MAX_PLAYER_SHIPS do
 			p = getPlayerShip(pidx)
 			if p ~= nil and p:isValid() then
 				table.insert(victimList,p)
@@ -11309,7 +11047,10 @@ function muckAndFlies(delta)
 			end
 			local stench = spawnEnemies(px+stx,py+sty,1,"Kraylor",playerShipScore)
 			for i, enemy in ipairs(stench) do
-				enemy:orderAttack(p):setCallSign(string.format("MS%s%i%i",string.char(math.random(65,90)),i,muckFlyCounter))
+				if enemy:getOrder() == "Roaming" then
+					enemy:orderAttack(p)
+				end
+				enemy:setCallSign(string.format("MS%s%i%i",string.char(math.random(65,90)),i,muckFlyCounter))
 			end
 			table.insert(enemyFleetList,stench)
 			if difficulty >= 1 then
@@ -11626,34 +11367,28 @@ function listStatuses()
 	return friendlySurvivedCount, friendlySurvivedValue, fpct1, fpct2, enemySurvivedCount, enemySurvivedValue, epct1, epct2, neutralSurvivedCount, neutralSurvivedValue, npct1, npct2, friendlyShipSurvivedValue, fpct, enemyShipSurvivedValue, epct
 end
 function stationStatus()
-	tp = getPlayerShip(-1)
-	if tp == nil then
-		return nil
-	end
 	local friendlySurvivedCount = 0
 	local friendlySurvivedValue = 0
+	for _, station in ipairs(humanStationList) do
+		if station:isValid() then
+			friendlySurvivedCount = friendlySurvivedCount + 1
+			friendlySurvivedValue = friendlySurvivedValue + station.strength
+		end
+	end
 	local enemySurvivedCount = 0
 	local enemySurvivedValue = 0
+	for _, station in ipairs(kraylorStationList) do
+		if station:isValid() then
+			enemySurvivedCount = enemySurvivedCount + 1
+			enemySurvivedValue = enemySurvivedValue + station.strength
+		end
+	end
 	local neutralSurvivedCount = 0
 	local neutralSurvivedValue = 0
-	for _, station in pairs(stationList) do
-		if tp ~= nil then
-			if station:isFriendly(tp) then
-				if station:isValid() then
-					friendlySurvivedCount = friendlySurvivedCount + 1
-					friendlySurvivedValue = friendlySurvivedValue + station.strength
-				end
-			elseif station:isEnemy(tp) then
-				if station:isValid() then
-					enemySurvivedCount = enemySurvivedCount + 1
-					enemySurvivedValue = enemySurvivedValue + station.strength
-				end
-			else
-				if station:isValid() then
-					neutralSurvivedCount = neutralSurvivedCount + 1
-					neutralSurvivedValue = neutralSurvivedValue + station.strength
-				end
-			end
+	for _, station in ipairs(neutralStationList) do
+		if station:isValid() then
+			neutralSurvivedCount = neutralSurvivedCount + 1
+			neutralSurvivedValue = neutralSurvivedValue + station.strength
 		end
 	end
 	if originalHumanStationCount == nil then

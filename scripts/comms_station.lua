@@ -14,23 +14,27 @@ function mainMenu()
             EMP = "friend"
         },
         weapon_cost = {
-            Homing = 2,
-            HVLI = 2,
-            Mine = 2,
-            Nuke = 15,
-            EMP = 10
+            Homing = math.random(1,4),
+            HVLI = math.random(1,3),
+            Mine = math.random(2,5),
+            Nuke = math.random(12,18),
+            EMP = math.random(7,13)
         },
         services = {
             supplydrop = "friend",
             reinforcements = "friend",
         },
         service_cost = {
-            supplydrop = 100,
+            supplydrop = math.random(80,120),
             reinforcements = 150,
+			reinforcements_factor = math.random(16,24),
+			fighterInterceptor = math.random(125,175),
+			fighterBomber = math.random(150,200),
+			fighterScout = math.random(175,225)
         },
         reputation_cost_multipliers = {
             friend = 1.0,
-            neutral = 2.5
+            neutral = 3.0
         },
         max_weapon_refill_amount = {
             friend = 1.0,
@@ -90,6 +94,52 @@ function handleDockedState()
             handleWeaponRestock("EMP")
         end)
     end
+	local ptype = player:getTypeName()
+	if ptype == "Atlantis" or ptype == "Crucible" or ptype == "Maverick" or ptype == "Benedict" or ptype == "Kiriya" then
+		addCommsReply("Visit shipyard", function()
+			setCommsMessage("Here you can start fighters that can be taken by your pilots. You do have a fighter pilot waiting, do you?")
+			addCommsReply(string.format("Purchase unmanned MP52 Hornet Interceptor for %i reputation", getServiceCost("fighterInterceptor")), function()
+				if not player:takeReputationPoints(getServiceCost("fighterInterceptor")) then
+					setCommsMessage("Insufficient reputation")
+				else
+					local ship = PlayerSpaceship():setTemplate("MP52 Hornet"):setFactionId(player:getFactionId())
+					ship:setAutoCoolant(true)
+					ship:commandSetAutoRepair(true)
+					ship:setPosition(comms_target:getPosition())
+					setCommsMessage("We have dispatched " .. ship:getCallSign() .. " to be manned by one of your pilots")
+					return true
+				end
+				addCommsReply("Back", mainMenu)
+			end)
+			addCommsReply(string.format("Purchase unmanned ZX-Lindworm Bomber for %i reputation", getServiceCost("fighterBomber")), function()
+				if not player:takeReputationPoints(getServiceCost("fighterBomber")) then
+					setCommsMessage("Insufficient reputation")
+				else
+					local ship = PlayerSpaceship():setTemplate("ZX-Lindworm"):setFactionId(player:getFactionId())
+					ship:setAutoCoolant(true)
+					ship:commandSetAutoRepair(true)
+					ship:setPosition(comms_target:getPosition())
+					setCommsMessage("We have dispatched " .. ship:getCallSign() .. " to be manned by one of your pilots")
+					return true
+				end
+				addCommsReply("Back", mainMenu)
+			end)
+			addCommsReply(string.format("Purchase unmanned Adder MK7 Scout for %i reputation", getServiceCost("fighterScout")), function()
+				if not player:takeReputationPoints(getServiceCost("fighterScout")) then
+					setCommsMessage("Insufficient reputation")
+				else
+					local ship = PlayerSpaceship():setTemplate("Adder MK7"):setFactionId(player:getFactionId())
+					ship:setAutoCoolant(true)
+					ship:commandSetAutoRepair(true)
+					ship:setPosition(comms_target:getPosition())
+					setCommsMessage("We have dispatched " .. ship:getCallSign() .. " to be manned by one of your pilots")
+					return true
+				end
+				addCommsReply("Back", mainMenu)
+			end)
+			addCommsReply("Back", mainMenu)
+		end)
+	end
 end
 
 function handleWeaponRestock(weapon)

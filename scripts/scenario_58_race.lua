@@ -9,93 +9,15 @@
 -- Variation[Raiders]: Feisty target drones *plus* enemies chase you while you race
 -- Variation[Hazardous]: Feisty drones and raiders *plus* dangers along the course
 
+require("ee.lua")
 require("utils.lua")
-
--- Create amount of objects of type object_type along arc
--- Center defined by x and y
--- Radius defined by distance
--- Start of arc between 0 and 360 (startArc), end arc: endArcClockwise
--- Use randomize to vary the distance from the center point. Omit to keep distance constant
--- Example:
---   createRandomAlongArc(Asteroid, 100, 500, 3000, 65, 120, 450)
-function createRandomAlongArc(object_type, amount, x, y, distance, startArc, endArcClockwise, randomize)
-	if randomize == nil then randomize = 0 end
-	if amount == nil then amount = 1 end
-	arcLen = endArcClockwise - startArc
-	if startArc > endArcClockwise then
-		endArcClockwise = endArcClockwise + 360
-		arcLen = arcLen + 360
-	end
-	if amount > arcLen then
-		for ndex=1,arcLen do
-			radialPoint = startArc+ndex
-			pointDist = distance + random(-randomize,randomize)
-			object_type():setPosition(x + math.cos(radialPoint / 180 * math.pi) * pointDist, y + math.sin(radialPoint / 180 * math.pi) * pointDist)			
-		end
-		for ndex=1,amount-arcLen do
-			radialPoint = random(startArc,endArcClockwise)
-			pointDist = distance + random(-randomize,randomize)
-			object_type():setPosition(x + math.cos(radialPoint / 180 * math.pi) * pointDist, y + math.sin(radialPoint / 180 * math.pi) * pointDist)			
-		end
-	else
-		for ndex=1,amount do
-			radialPoint = random(startArc,endArcClockwise)
-			pointDist = distance + random(-randomize,randomize)
-			object_type():setPosition(x + math.cos(radialPoint / 180 * math.pi) * pointDist, y + math.sin(radialPoint / 180 * math.pi) * pointDist)
-		end
-	end
-end
+require("xansta_mods.lua")
 --[[-----------------------------------------------------------------
       Initialization 
 -----------------------------------------------------------------]]--
 function init()
-	missile_types = {'Homing', 'Nuke', 'Mine', 'EMP', 'HVLI'}
-	--Player Ship Beams
-	psb = {}
-	psb["MP52 Hornet"] = 2
-	psb["Phobos M3P"] = 2
-	psb["Flavia P.Falcon"] = 2
-	psb["Atlantis"] = 2
-	psb["Player Cruiser"] = 2
-	psb["Player Fighter"] = 2
-	-- 27 types of goods so far
-	goodsList = {	{"food",0},
-					{"medicine",0},
-					{"nickel",0},
-					{"platinum",0},
-					{"gold",0},
-					{"dilithium",0},
-					{"tritanium",0},
-					{"luxury",0},
-					{"cobalt",0},
-					{"impulse",0},
-					{"warp",0},
-					{"shield",0},
-					{"tractor",0},
-					{"repulsor",0},
-					{"beam",0},
-					{"optic",0},
-					{"robotic",0},
-					{"filament",0},
-					{"transporter",0},
-					{"sensor",0},
-					{"communication",0},
-					{"autodoc",0},
-					{"lifter",0},
-					{"android",0},
-					{"nanites",0},
-					{"software",0},
-					{"battery",0}	}
+	init_constants_xansta()
 	diagnostic = true
-	playerShipNamesForMP52Hornet = {"Dragonfly","Scarab","Mantis","Yellow Jacket","Jimminy","Flik","Thorny"}
-	playerShipNamesForPiranha = {"Razor's Edge","Biter","Ripper","Voracious","Carnivorous","Characid","Vulture","Predator"}
-	playerShipNamesForFlaviaPFalcon = {"Ladyhawke","Hunter","Seeker","Gyrefalcon","Kestrel","Magpie","Bandit","Buccaneer"}
-	playerShipNamesForPhobosM3P = {"Blinder","Shadow","Distortion","Diemos","Ganymede","Castillo","Thebe","Retrograde"}
-	playerShipNamesForAtlantis = {"Excaliber","Thrasher","Punisher","Vorpal","Protang","Drummond","Parchim","Coronado"}
-	playerShipNamesForCruiser = {"Excelsior","Velociraptor","Thunder","Kona","Encounter","Perth","Aspern","Panther"}
-	playerShipNamesForMissileCruiser = {"Projectus","Hurlmeister","Flinger","Ovod","Amatola","Nakhimov","Antigone"}
-	playerShipNamesForFighter = {"Buzzer","Flitter","Zippiticus","Hopper","Molt"}
-	playerShipNamesForLeftovers = {"Forgone","Righteous","Masher"}
 	goods = {}
 	raceStartDelay = 600		-- should be 600 for a 10 minute prep period
 	racePoint1x = -4000
@@ -939,7 +861,7 @@ function commsStation()
         }
     })
     comms_data = comms_target.comms_data
-	for p3idx=1,8 do
+	for p3idx=1, MAX_PLAYER_SHIPS do
 		p3obj = getPlayerShip(p3idx)
 		if p3obj ~= nil and p3obj:isValid() then
 			if p3obj:isCommsOpening() then
@@ -1559,7 +1481,7 @@ function handleUndockedState()
 			if raceStartDelay <= 0 then
 				addCommsReply("Show player goals in race", function()
 					dMsg = "Player goals in race:"
-					for p12idx=1,8 do
+					for p12idx=1, MAX_PLAYER_SHIPS do
 						p12 = getPlayerShip(p12idx)
 						if p12 ~= nil and p12:isValid() then
 							dMsg = dMsg .. string.format("\nPlayer %i: %s goal: %i",p12idx,p12:getCallSign(),p12.goal)
@@ -1655,7 +1577,7 @@ function commsShip()
 		goods[comms_target] = {goodsList[irandom(1,#goodsList)][1], 1, random(20,80)}
 	end
 	comms_data = comms_target.comms_data
-	for p4idx=1,8 do
+	for p4idx=1, MAX_PLAYER_SHIPS do
 		p4obj = getPlayerShip(p4idx)
 		if p4obj ~= nil and p4obj:isValid() then
 			if p4obj:isCommsOpening() then
@@ -1667,7 +1589,7 @@ function commsShip()
 		return friendlyComms(comms_data)
 	end
 	if player:isEnemy(comms_target) and comms_target:isFriendOrFoeIdentifiedBy(player) then
-		return enemyComms(comms_data)
+		return enemy_comms(comms_data)
 	end
 	return neutralComms(comms_data)
 end
@@ -1736,43 +1658,9 @@ function friendlyComms(comms_data)
 	return true
 end
 
-function enemyComms(comms_data)
+function enemy_comms(comms_data)
 	if comms_target.owner == nil then
-		if comms_data.friendlyness > 50 then
-			faction = comms_target:getFaction()
-			taunt_option = "We will see to your destruction!"
-			taunt_success_reply = "Your bloodline will end here!"
-			taunt_failed_reply = "Your feeble threats are meaningless."
-			if faction == "Kraylor" then
-				setCommsMessage("Ktzzzsss.\nYou will DIEEee weaklingsss!");
-			elseif faction == "Arlenians" then
-				setCommsMessage("We wish you no harm, but will harm you if we must.\nEnd of transmission.");
-			elseif faction == "Exuari" then
-				setCommsMessage("Stay out of our way, or your death will amuse us extremely!");
-			elseif faction == "Ghosts" then
-				setCommsMessage("One zero one.\nNo binary communication detected.\nSwitching to universal speech.\nGenerating appropriate response for target from human language archives.\n:Do not cross us:\nCommunication halted.");
-				taunt_option = "EXECUTE: SELFDESTRUCT"
-				taunt_success_reply = "Rogue command received. Targeting source."
-				taunt_failed_reply = "External command ignored."
-			elseif faction == "Ktlitans" then
-				setCommsMessage("The hive suffers no threats. Opposition to any of us is opposition to us all.\nStand down or prepare to donate your corpses toward our nutrition.");
-				taunt_option = "<Transmit 'The Itsy-Bitsy Spider' on all wavelengths>"
-				taunt_success_reply = "We do not need permission to pluck apart such an insignificant threat."
-				taunt_failed_reply = "The hive has greater priorities than exterminating pests."
-			else
-				setCommsMessage("Mind your own business!");
-			end
-			comms_data.friendlyness = comms_data.friendlyness - random(0, 10)
-			addCommsReply(taunt_option, function()
-				if random(0, 100) < 30 then
-					comms_target:orderAttack(player)
-					setCommsMessage(taunt_success_reply);
-				else
-					setCommsMessage(taunt_failed_reply);
-				end
-			end)
-			return true
-		end
+		return enemyComms(comms_data)
 	else
 		setCommsMessage("I belong to " .. comms_target.owner)
 		addCommsReply("Back", commsShip)
@@ -2065,126 +1953,14 @@ end
 function update(delta)
 	if delta == 0 then
 		--game paused
-		for pidx=1,8 do
+		for pidx=1, MAX_PLAYER_SHIPS do
 			player = getPlayerShip(pidx)
 			if player ~= nil and player:isValid() then
-				if not player.nameAssigned then
-					player.nameAssigned = true
-					tempPlayerType = player:getTypeName()
-					if tempPlayerType == "MP52 Hornet" then
-						if #playerShipNamesForMP52Hornet > 0 then
-							ni = math.random(1,#playerShipNamesForMP52Hornet)
-							player:setCallSign(playerShipNamesForMP52Hornet[ni])
-							table.remove(playerShipNamesForMP52Hornet,ni)
-						end
-						player.shipScore = 7
-						player.maxCargo = 3
-						player.cargo = 2
-						player:setWarpDrive(true)
-						goods[player] = goodsList
-						player:addReputationPoints(5)
-						incrementPlayerGoods("food")
-					elseif tempPlayerType == "Piranha" then
-						if #playerShipNamesForPiranha > 0 then
-							ni = math.random(1,#playerShipNamesForPiranha)
-							player:setCallSign(playerShipNamesForPiranha[ni])
-							table.remove(playerShipNamesForPiranha,ni)
-						end
-						player.shipScore = 16
-						player.maxCargo = 8
-						player.cargo = 7
-						goods[player] = goodsList
-						player:addReputationPoints(5)
-						incrementPlayerGoods("food")
-					elseif tempPlayerType == "Flavia P.Falcon" then
-						if #playerShipNamesForFlaviaPFalcon > 0 then
-							ni = math.random(1,#playerShipNamesForFlaviaPFalcon)
-							player:setCallSign(playerShipNamesForFlaviaPFalcon[ni])
-							table.remove(playerShipNamesForFlaviaPFalcon,ni)
-						end
-						player.shipScore = 15
-						player.maxCargo = 15
-						player.cargo = 14
-						goods[player] = goodsList
-						player:addReputationPoints(5)
-						incrementPlayerGoods("food")
-					elseif tempPlayerType == "Phobos M3P" then
-						if #playerShipNamesForPhobosM3P > 0 then
-							ni = math.random(1,#playerShipNamesForPhobosM3P)
-							player:setCallSign(playerShipNamesForPhobosM3P[ni])
-							table.remove(playerShipNamesForPhobosM3P,ni)
-						end
-						player.shipScore = 19
-						player.maxCargo = 10
-						player.cargo = 9
-						player:setWarpDrive(true)
-						goods[player] = goodsList
-						player:addReputationPoints(5)
-						incrementPlayerGoods("food")
-					elseif tempPlayerType == "Atlantis" then
-						if #playerShipNamesForAtlantis > 0 then
-							ni = math.random(1,#playerShipNamesForAtlantis)
-							player:setCallSign(playerShipNamesForAtlantis[ni])
-							table.remove(playerShipNamesForAtlantis,ni)
-						end
-						player.shipScore = 52
-						player.maxCargo = 6
-						player.cargo = 5
-						goods[player] = goodsList
-						player:addReputationPoints(5)
-						incrementPlayerGoods("food")
-					elseif tempPlayerType == "Player Cruiser" then
-						if #playerShipNamesForCruiser > 0 then
-							ni = math.random(1,#playerShipNamesForCruiser)
-							player:setCallSign(playerShipNamesForCruiser[ni])
-							table.remove(playerShipNamesForCruiser,ni)
-						end
-						player.shipScore = 40
-						player.maxCargo = 6
-						player.cargo = 5
-						goods[player] = goodsList
-						player:addReputationPoints(5)
-						incrementPlayerGoods("food")
-					elseif tempPlayerType == "Player Missile Cr." then
-						if #playerShipNamesForMissileCruiser > 0 then
-							ni = math.random(1,#playerShipNamesForMissileCruiser)
-							player:setCallSign(playerShipNamesForMissileCruiser[ni])
-							table.remove(playerShipNamesForMissileCruiser,ni)
-						end
-						player.shipScore = 45
-						player.maxCargo = 8
-						player.cargo = 7
-						goods[player] = goodsList
-						player:addReputationPoints(5)
-						incrementPlayerGoods("food")
-					elseif tempPlayerType == "Player Fighter" then
-						if #playerShipNamesForFighter > 0 then
-							ni = math.random(1,#playerShipNamesForFighter)
-							player:setCallSign(playerShipNamesForFighter[ni])
-							table.remove(playerShipNamesForFighter,ni)
-						end
-						player.shipScore = 7
-						player.maxCargo = 3
-						player.cargo = 2
-						player:setJumpDrive(true)
-						player:setJumpDriveRange(3000,40000)
-						goods[player] = goodsList
-						player:addReputationPoints(5)
-						incrementPlayerGoods("food")
-					else
-						if #playerShipNamesForLeftovers > 0 then
-							ni = math.random(1,#playerShipNamesForLeftovers)
-							player:setCallSign(playerShipNamesForLeftovers[ni])
-							table.remove(playerShipNamesForLeftovers,ni)
-						end
-						player.shipScore = 24
-						player.maxCargo = 5
-						player.cargo = 4
-						player:setWarpDrive(true)
-						goods[player] = goodsList
-						player:addReputationPoints(5)
-						incrementPlayerGoods("food")
-					end
+				if not player.modsAssigned then
+					modify_player_ships(player)
+					player:addReputationPoints(5)
+					goods[player] = goodsList
+					incrementPlayerGoods("food")
 				end
 			end
 		end
@@ -2198,7 +1974,7 @@ function update(delta)
 	if raceInstructionMessage ~= "sent" then
 		raceInstructionMessage = "sent"
 		primaryOrders = string.format("Start race on time at waypoint 1\nRace Length: %f units",raceLength)
-		for p1idx=1,8 do
+		for p1idx=1, MAX_PLAYER_SHIPS do
 			p1 = getPlayerShip(p1idx)
 			if p1 ~= nil and p1:isValid() then
 				p1:addToShipLog("Race starts in 10 minutes. Be at waypoint 1 on time or forfeit","Magenta")
@@ -2211,7 +1987,7 @@ function update(delta)
 		raceStartDelay = raceStartDelay - delta
 		stationTimer:setCallSign(string.format("%.2f",raceStartDelay))
 		if stationsBuilt == "done" then
-			for p2idx=1,8 do
+			for p2idx=1, MAX_PLAYER_SHIPS do
 				p2 = getPlayerShip(p2idx)
 				if p2 ~= nil and p2:isValid() then
 					if p2:getWaypointCount() < 1 then
@@ -2237,7 +2013,7 @@ function update(delta)
 			startLineCheck = "done"
 			raceTimer = 0
 			primaryOrders = "Complete race. Win if possible."
-			for p4idx=1,8 do
+			for p4idx=1, MAX_PLAYER_SHIPS do
 				p4 = getPlayerShip(p4idx)
 				if p4 ~= nil and p4:isValid() then
 					if distance(p4,racePoint1x,racePoint1y) < 5000 then
@@ -2253,7 +2029,7 @@ function update(delta)
 				end
 			end
 			droneList = {}
-			for p4idx=1,8 do	--make some target drones
+			for p4idx=1, MAX_PLAYER_SHIPS do	--make some target drones
 				p4 = getPlayerShip(p4idx)
 				if p4 ~= nil and p4:isValid() and p4.participant then
 					tdid = p4:getCallSign()
@@ -2287,7 +2063,7 @@ function update(delta)
 					moveHazardPacMines(pacMine850,850)
 				end
 			end
-			for p5idx=1,8 do
+			for p5idx=1, MAX_PLAYER_SHIPS do
 				p5 = getPlayerShip(p5idx)
 				if p5 ~= nil and p5:isValid() and p5.participant and p5.laps < 3 then
 					p5.laptimer = p5.laptimer + delta
@@ -2364,7 +2140,7 @@ function update(delta)
 			end
 			unfinishedRacers = 0
 			playerCount = 0
-			for p7idx=1,8 do
+			for p7idx=1, MAX_PLAYER_SHIPS do
 				p7 = getPlayerShip(p7idx)
 				if p7 ~= nil and p7:isValid() and p7.participant then
 					playerCount = playerCount + 1
@@ -2414,7 +2190,7 @@ end
 
 function calculateTimeRank()
 	playerList = {}
-	for p6idx=1,8 do
+	for p6idx=1, MAX_PLAYER_SHIPS do
 		p6 = getPlayerShip(p6idx)
 		if p6 ~= nil and p6:isValid() and p6.participant then
 			table.insert(playerList,p6)

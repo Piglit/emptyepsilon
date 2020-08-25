@@ -2,16 +2,51 @@
 -- Description: You command the Technician Cruiser Apollo, a repair ship on the border of dangerous space.
 --- The Apollo is outfitted with minimal weapons as there is a cease-fire between the Human Navy and the neighboring Kraylor.
 ---- You are tasked with discovering the cause of damage on one of your deep space telescopes.
----
---- This scenario is played with exactly one player ship: the Atlantis Apollo.
 -- Type: Mission
 -- Author: Visjammer
+-- Modded by Pithlit
+
+function createKraylorGunship()
+    local gunships = {
+        "Rockbreaker",
+        "Rockbreaker Merchant",
+        "Rockbreaker Murderer",
+        "Rockbreaker Mercenary",
+        "Rockbreaker Marauder",
+        "Rockbreaker Military"
+    }
+    return CpuShip():setFaction("Kraylor"):setTemplate(gunships[math.random(#gunships)])
+end
+
+function createKraylorDestroyer(level)
+    local destroyers = {
+        "Deathbringer",
+        "Painbringer",
+        "Doombringer",
+    }
+    if level == nil then
+        level = math.random(#destroyers)
+    end
+    return CpuShip():setFaction("Kraylor"):setTemplate(destroyers[level])
+end
+
+function createKraylorFighter()
+    return CpuShip():setFaction("Kraylor"):setTemplate("Drone")
+end
+
+function createHumanFighter()
+    return CpuShip():setFaction("Human Navy"):setTemplate("MT52 Hornet")
+end
+
+require("utils.lua")
+-- For this scenario, utils.lua provides:
+--   distance(obj1, obj2)
+--     Returns the distance between two objects.
 
 -- Init is run when the scenario is started. Create your initial world
 function init()
     -- Create the main ship for the players.
-    Player = PlayerSpaceship():setFaction("Human Navy"):setTemplate("Atlantis"):setPosition(12400, 18200):setCallSign("Apollo"):addReputationPoints(250.0)
-    allowNewPlayerShips(false)
+    Player = PlayerSpaceship():setFaction("Human Navy"):setTemplate("Phobos M3P"):setPosition(12400, 18200):setCallSign("Apollo"):addReputationPoints(250.0)
 
     -- Modify the default cruiser into a technical cruiser, which has less weapon power then the normal player cruiser.
     Player:setTypeName("Technician Cruiser")
@@ -22,12 +57,13 @@ function init()
     Player:setWeaponTubeDirection(0, 0)
     Player:setWeaponStorageMax("Nuke", 0)
     Player:setWeaponStorageMax("Mine", 0)
+    Player:setJumpDrive(true)
 
-    --Create a "Technical Officer" entity hidden in sector Z81 to talk to Relay and prompt the Captain to give the order to return to Central Command. The position of this ship in relation to the Station Nirvana was intended to serve as a sort of timer for the inspection job.
+    allowNewPlayerShips(false)
+
+    --Create a "Technical Officer" entity hidden in sector Z81 to talk to Relay and prompt the Captain to give the order to return to Central Command.
     Technical_Officer = CpuShip():setFaction("Human Navy"):setTemplate("Flavia"):setCallSign("Technical Officer"):setPosition(1530000, 411000):orderIdle()
     Technical_Officer:setCommsScript("") -- Disable the comms script for the Technical Officer station (though really, they should never find it all the way out in sector Z81).
-    --Create a station called "Nirvana" for "Technical Officer" to approach. Surplus to requirements now but a good example of the crazy stuff a newbie might try.
-    Nirvana = SpaceStation():setTemplate("Small Station"):setFaction("Human Navy"):setPosition(1530000, 412000):setCallSign("Nirvana")
 
     EOS_Station = SpaceStation():setTemplate("Small Station"):setFaction("Human Navy"):setPosition(60500, 42100):setCallSign("E.O.S Scope")
     EOS_Station:setCommsScript("") -- Disable the comms script for the EOS Scope station.
@@ -48,14 +84,14 @@ function init()
     SpaceStation():setTemplate("Medium Station"):setFaction("Human Navy"):setCallSign("DS2"):setPosition(-27987, 41095)
     ---------------------------------------------------------------------------
 
-    Human_m1 = CpuShip():setFaction("Human Navy"):setTemplate("MT52 Hornet"):setCallSign("HM1"):setScanned(true):setPosition(31875, 38653):orderDefendLocation(31875, 38653)
-    Human_m2 = CpuShip():setFaction("Human Navy"):setTemplate("MT52 Hornet"):setCallSign("HM2"):setScanned(true):setPosition(37493, 37185):orderDefendLocation(37493, 37185)
-    Human_m3 = CpuShip():setFaction("Human Navy"):setTemplate("MT52 Hornet"):setCallSign("HM3"):setScanned(true):setPosition(35519, 42854):orderDefendLocation(35519, 42854)
+    Human_m1 = createHumanFighter():setCallSign("HM1"):setScanned(true):setPosition(31875, 38653):orderDefendLocation(31875, 38653)
+    Human_m2 = createHumanFighter():setCallSign("HM2"):setScanned(true):setPosition(37493, 37185):orderDefendLocation(37493, 37185)
+    Human_m3 = createHumanFighter():setCallSign("HM3"):setScanned(true):setPosition(35519, 42854):orderDefendLocation(35519, 42854)
 
     --Nebula that hide the enemy station.
-    Nebula():setPosition(52300, 42200)
-    Nebula():setPosition(51300, 34200)
-    Nebula():setPosition(48700, 30050)
+    Nebula():setPosition( 52300, 42200)
+    Nebula():setPosition( 51300, 34200)
+    Nebula():setPosition( 48700, 30050)
 
     --Random-ass nebulae
     Nebula():setPosition(49362, -18062)
@@ -73,32 +109,32 @@ function init()
 
     --Create 50 Asteroids
     for asteroid_counter = 1, 20 do
-        Asteroid():setPosition(random(-10000, 20000), random(-22000, -15000))
-        VisualAsteroid():setPosition(random(-10000, 20000), random(-22000, -15000))
+        Asteroid():setPosition( random(-10000, 20000), random(-22000, -15000))
+        VisualAsteroid():setPosition( random(-10000, 20000), random(-22000, -15000))
 
-        Asteroid():setPosition(random(12000, 40000), random(-25000, -18000))
-        VisualAsteroid():setPosition(random(12000, 40000), random(-25000, -18000))
+        Asteroid():setPosition( random( 12000, 40000), random(-25000, -18000))
+        VisualAsteroid():setPosition( random(12000, 40000), random(-25000, -18000))
 
-        Asteroid():setPosition(random(35000, 55000), random(-27000, -20000))
-        VisualAsteroid():setPosition(random(35000, 55000), random(-27000, -20000))
+        Asteroid():setPosition( random( 35000, 55000), random(-27000, -20000))
+        VisualAsteroid():setPosition( random( 35000, 55000), random(-27000, -20000))
     end
 
     --Kraylor Endline ships protecting Eline until something happens
-    kraylor_e1 = CpuShip():setFaction("Kraylor"):setTemplate("Phobos T3"):setPosition(80200, 39900):setCallSign("K-EC1"):orderStandGround()
-    kraylor_e2 = CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setPosition(78200, 38000):setCallSign("K-EC2"):orderStandGround()
-    kraylor_e3 = CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setPosition(78000, 37100):setCallSign("K-EF1"):orderStandGround()
-    kraylor_e4 = CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setPosition(80200, 37900):setCallSign("K-EF2"):orderStandGround()
+    kraylor_e1 = createKraylorGunship():setPosition(80200, 39900):setCallSign("K-EC1"):orderStandGround()
+    kraylor_e2 = createKraylorFighter():setPosition(78200, 38000):setCallSign("K-EC2"):orderStandGround()
+    kraylor_e3 = createKraylorFighter():setPosition(78000, 37100):setCallSign("K-EF1"):orderStandGround()
+    kraylor_e4 = createKraylorFighter():setPosition(80200, 37900):setCallSign("K-EF2"):orderStandGround()
 
     --Kraylor ships primed to attack Galileo
-    kraylor_g1 = CpuShip():setFaction("Kraylor"):setTemplate("Phobos T3"):setScanned(true):setCallSign("K-Strike1"):setPosition(6273, -55399):orderIdle()
-    kraylor_g2 = CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setScanned(true):setCallSign("K-Fi2"):setPosition(10922, -51749):orderIdle()
-    kraylor_g3 = CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setScanned(true):setCallSign("K-Fi3"):setPosition(13948, -52838):orderIdle()
+    kraylor_g1 = createKraylorGunship():setScanned(true):setCallSign("K-Strike1"):setPosition(6273, -55399):orderIdle()
+    kraylor_g2 = createKraylorFighter():setScanned(true):setCallSign("K-Fi2"):setPosition(10922, -51749):orderIdle()
+    kraylor_g3 = createKraylorFighter():setScanned(true):setCallSign("K-Fi3"):setPosition(13948, -52838):orderIdle()
 
     --Kraylor Midline ships protecting Mline
-    kraylor_m1 = CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setCallSign("K-MF1"):setPosition(103710, 31493):orderStandGround()
-    kraylor_m2 = CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setCallSign("K-MF2"):setPosition(97993, 22149):orderStandGround()
-    kraylor_m3 = CpuShip():setFaction("Kraylor"):setTemplate("Atlantis X23"):setCallSign("K-MDFD"):setPosition(106363, 25218):orderStandGround()
-    kraylor_m4 = CpuShip():setFaction("Kraylor"):setTemplate("Phobos T3"):setCallSign("K-MC001"):setPosition(104829, 21454):orderStandGround()
+    kraylor_m1 = createKraylorFighter():setCallSign("K-MF1"):setPosition(103710, 31493):orderStandGround()
+    kraylor_m2 = createKraylorFighter():setCallSign("K-MF2"):setPosition(97993, 22149):orderStandGround()
+    kraylor_m3 = createKraylorDestroyer(1):setCallSign("K-MDFD"):setPosition(106363, 25218):orderStandGround()
+    kraylor_m4 = createKraylorGunship():setCallSign("K-MC001"):setPosition(104829, 21454):orderStandGround()
 
     ------------------------------------------------------------------------------------
     --Kraylor Nebula, that crazy maze with bad guys in it
@@ -176,29 +212,26 @@ function init()
     Mine():setPosition(82218, -51242)
     Mine():setPosition(91704, -56874)
     Mine():setPosition(102374, -58356)
-    CpuShip():setFaction("Kraylor"):setTemplate("Phobos T3"):setCallSign("K-SCN1"):setPosition(90940, -32988):orderDefendLocation(90940, -32988)
-    CpuShip():setFaction("Kraylor"):setTemplate("Phobos T3"):setCallSign("K-SCN2"):setPosition(95243, -29693):orderDefendLocation(95243, -29693)
-    CpuShip():setFaction("Kraylor"):setTemplate("Atlantis X23"):setCallSign("K-GDN1"):setPosition(105057, -46060):orderDefendLocation(105057, -46060)
-    CpuShip():setFaction("Kraylor"):setTemplate("Atlantis X23"):setCallSign("K-GDN2"):setPosition(102474, -42231):orderDefendLocation(102474, -42231)
-    CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setCallSign("K-EGF1"):setPosition(87826, -3182):orderDefendLocation(87826, -3182)
+    kraylor_r1 = createKraylorGunship():setCallSign("K-SCN1"):setPosition(90940, -32988):orderDefendLocation(90940, -32988)
+    kraylor_r2 = createKraylorGunship():setCallSign("K-SCN2"):setPosition(95243, -29693):orderDefendLocation(95243, -29693)
+    kraylor_r3 = createKraylorDestroyer(1):setCallSign("K-GDN1"):setPosition(105057, -46060):orderDefendLocation(105057, -46060)
+    kraylor_r4 = createKraylorDestroyer(2):setCallSign("K-GDN2"):setPosition(102474, -42231):orderDefendLocation(102474, -42231)
+    kraylor_r5 = createKraylorFighter():setCallSign("K-EGF1"):setPosition(87826, -3182):orderDefendLocation(87826, -3182)
     Kraylor_hole = WormHole():setPosition(109190, -39762):setTargetPosition(-61730, 29490)
     ---------------------------------------------------------------------------
     ---------------------------------------------------------------------------
 
+
+
     --Central Command sends us to investigate the issues with E.O.S. Scope --Expanded text to attempt to explain why Apollo is shuttling this data around physically
-    Central_Command:sendCommsMessage(
-        Player,
-        _(
-            [[Apollo, Come in.
+    Central_Command:sendCommsMessage(Player, _([[Apollo, Come in.
 Our Edge-of-space telescope has been experiencing malfunctions over the course of the past few days. We expect the cause to be a mechanical failure, but we want you to take a look.
 
 The E.O.S Scope is right on the border of Kraylor space, so make sure to maintain contact and keep up long-range scans.
 
 Dock with the E.O.S Scope and investigate the damage, then return to Central Command to report your findings. Transmission of this report via standard communications channels is considered too dangerous given the already delicate nature of our treaty with the Kraylor.
 
-Reopen communications if you have any questions.]]
-        )
-    )
+Reopen communications if you have any questions.]]))
 
     Central_Command.mission_state = 1
     kraylor_threat = 0
@@ -209,6 +242,64 @@ Reopen communications if you have any questions.]]
     inspection_complete = 0
     tech_databanks = 0
     tech_stranded = 0
+
+end
+
+function goto_war_early()
+    --start end game not; bno upgrades for the player.
+    Central_Command:sendCommsMessage(Player, [[Apollo, you've incited a war! What a disaster... ]])
+    kraylor_g1:orderRoaming()
+    kraylor_g2:orderRoaming()
+    kraylor_g3:orderRoaming()
+
+    kraylor_e1:orderRoaming()
+    kraylor_e2:orderRoaming()
+    kraylor_e3:orderRoaming()
+    kraylor_e4:orderRoaming()
+
+    kraylor_m1:orderRoaming()
+    kraylor_m2:orderRoaming()
+    kraylor_m3:orderRoaming()
+    kraylor_m4:orderRoaming()
+
+    kraylor_r1:orderRoaming()
+    kraylor_r2:orderRoaming()
+    kraylor_r3:orderRoaming()
+    kraylor_r4:orderRoaming()
+    kraylor_r5:orderRoaming()
+
+    --Let's get crazy up in here
+    k01 = createKraylorGunship():setCallSign("BR21"):setPosition(-50654, 32238):orderRoaming()
+    k02 = createKraylorGunship():setCallSign("UT64"):setPosition(-48368, 27476):orderRoaming()
+    k03 = createKraylorGunship():setCallSign("NC13"):setPosition(-34082, 40047):orderRoaming()
+    k04 = createKraylorFighter():setCallSign("CV45"):setPosition(-59606, 18904):orderRoaming()
+    k05 = createKraylorFighter():setCallSign("TI25"):setPosition(-43796, 43857):orderRoaming()
+    k06 = createKraylorFighter():setCallSign("IN16"):setPosition(-43796, 52428):orderRoaming()
+    k07 = CpuShip():setFaction("Kraylor"):setTemplate("Spinebreaker"):setCallSign("VA27"):setPosition(-58082, 31285):orderRoaming()
+    k08 = CpuShip():setFaction("Kraylor"):setTemplate("Spinebreaker"):setCallSign("CN78"):setPosition(-26082, 22333):orderRoaming()
+    k09 = createKraylorDestroyer(2):setCallSign("AL92"):setPosition(-42273, 12238):orderRoaming()
+    k10 = createKraylorDestroyer(3):setCallSign("OH30"):setPosition(-26844, 48809):orderRoaming()
+    k11 = createKraylorFighter():setCallSign("SS11"):setPosition(-45320, 9381):orderRoaming()
+    k12 = createKraylorFighter():setCallSign("CS61"):setPosition(-40558, 8809):orderRoaming()
+    k13 = createKraylorFighter():setCallSign("JL33"):setPosition(-27796, 52428):orderRoaming()
+    k14 = createKraylorFighter():setCallSign("SQ50"):setPosition(-24368, 46143):orderRoaming()
+    createHumanFighter():setScanned(true):setCallSign("BN53"):setPosition(-40654, 47095):orderRoaming()
+    createHumanFighter():setScanned(true):setCallSign("VK68"):setPosition(-37796, 56619):orderRoaming()
+    createHumanFighter():setScanned(true):setCallSign("XD37"):setPosition(-29987, 55476):orderRoaming()
+    createHumanFighter():setScanned(true):setCallSign("CC31"):setPosition(-45796, 26143):orderRoaming()
+    createHumanFighter():setScanned(true):setCallSign("CM29"):setPosition(-51892, 24047):orderRoaming()
+    createHumanFighter():setScanned(true):setCallSign("SO40"):setPosition(-2939, 40619):orderRoaming()
+    createHumanFighter():setScanned(true):setCallSign("VS41"):setPosition(2966, 45000):orderRoaming()
+    --createHumanFighter():setScanned(true):setCallSign("BR42"):setPosition(-12796, 16809):orderRoaming()
+    --createHumanFighter():setScanned(true):setCallSign("UTI43"):setPosition(-10463, 7476):orderRoaming()
+    CpuShip():setFaction("Human Navy"):setScanned(true):setTemplate("Phobos T3"):setCallSign("CI44"):setPosition(-10368, 13571):orderRoaming()
+    CpuShip():setFaction("Human Navy"):setScanned(true):setTemplate("Phobos Y2"):setCallSign("NI15"):setPosition(-10368, 50143):orderRoaming()
+
+    Human_m1:orderRoaming()
+    Human_m2:orderRoaming()
+    Human_m3:orderRoaming()
+
+    Central_Command.mission_state = 12
 end
 
 function update(delta)
@@ -221,19 +312,21 @@ function update(delta)
         victory("Kraylor")
     end
 
-    if not EOS_Station:isValid() then
+    if not EOS_Station:isValid() and not Central_Command.mission_state == 12 then
         victory("Kraylor")
     end
 
-    if not Science_Galileo:isValid() then
+    if not Science_Galileo:isValid() and not Central_Command.mission_state == 12 then
         victory("Kraylor")
     end
+
+
 
     if Central_Command.mission_state == 1 then
+
         --If K-Endline is destroyed at this stage Kraylor win
         if not Kraylor_Eline:isValid() then
-            Central_Command:sendCommsMessage(Player, _([[Apollo, you've incited a war! What a disaster...]]))
-            victory("Kraylor")
+            goto_war_early()
         end
 
         --If the players get too close to K-Endline the station sends them a warning message
@@ -258,32 +351,27 @@ Do not confront them; we're not trying to start a war.]]))
         if distance(Player, EOS_Station) < 5000 then
             if command_warning == 1 then
                 if kraylor_threat == 0 then
-                    Kraylor_Eline:sendCommsMessage(
-                        Player,
-                        _(
-                            [[Attention Human Naval Vessel:
+            Kraylor_Eline:sendCommsMessage(Player, _([[Attention Human Naval Vessel:
 
 We have noted your expansion toward Kraylor Endline Territory. Know that even the slightest act of aggression will be met with a forceful purging of all Human ships and stations from our sector of space.
 
-Do what maintanence you must while you are here, but know also that we consider your telescopic station to be a potential threat.]]
-                        )
-                    )
+Do what maintanence you must while you are here, but know also that we consider your telescopic station to be a potential threat.]]))
 
-                    Central_Command.mission_state = 2
-                    kraylor_threat = 1
+            Central_Command.mission_state = 2
+            kraylor_threat = 1
                 end
             end
         end
     end
 
-    inspection_progress = inspection_progress + delta
-    --print(inspection_progress)  -- for Debugging
+inspection_progress = inspection_progress + delta
+--print(inspection_progress)  -- for Debugging
 
     --When the Apollo is docked with EOS_Station a message is received from the Technical Officer advising that his team is beginning their inspection
     if Central_Command.mission_state == 2 then
         if Player:isDocked(EOS_Station) and inspection_init == 0 then
-            globalMessage("Away Team in transit.")
-            Technical_Officer:sendCommsMessage(Player, _([[We're beginning an inspection of the EOS Scope facility now.
+    globalMessage("Away Team in transit.")
+    Technical_Officer:sendCommsMessage(Player, _([[We're beginning an inspection of the EOS Scope facility now.
 
 This shouldn't take long.]]))
             inspection_init = 1 --inspection has begun (Timer event is pretty fool-proof but better to have a flag preventing "Job Done" somehow triggering before inspection starts)
@@ -291,7 +379,8 @@ This shouldn't take long.]]))
         end
     end
 
-    if Central_Command.mission_state == 2 then
+
+    if Central_Command.mission_state == 2 then 
         if Player:isDocked(EOS_Station) and inspection_init == 1 then
             if inspection_progress > 30 then
                 if tech_databanks == 0 then
@@ -299,7 +388,7 @@ This shouldn't take long.]]))
 
 We'll retrieve what we can.]]))
                     tech_databanks = 1
-                end
+                end 
             end
         end
     end
@@ -313,7 +402,7 @@ We'll retrieve what we can.]]))
                         if tech_stranded == 0 then -- Without this the Technical Officer will always be harrassing the Apollo for pick-up once this event has triggered
                             Technical_Officer:sendCommsMessage(Player, _([[Is something wrong Apollo?
 
-We're still in the facility.
+We're still in the facility. 
 
 Please dock so we can come aboard.]]))
                             tech_stranded = 1
@@ -327,39 +416,32 @@ Please dock so we can come aboard.]]))
     --"Job Done" message to prompt the Captain to give the order to Undock and head back to Central Command after a pseudo-random time period.
     if Central_Command.mission_state == 2 then
         if Player:isDocked(EOS_Station) then --If the ship is not docked, the Tech Officer will complain.
-            if inspection_init == 1 and inspection_complete == 0 then
+            if inspection_init == 1 and inspection_complete == 0 then 
                 if inspection_progress > 50 then
-                    globalMessage("Away Team have returned.")
-                    Technical_Officer:sendCommsMessage(
-                        Player,
-                        _([[Our inspection of the scope facility is complete. We were able to retrieve much of the data recorded over the past few days, though proper analysis will require an expert.
+    globalMessage("Away Team have returned.")
+    Technical_Officer:sendCommsMessage(Player, _([[Our inspection of the scope facility is complete. We were able to retrieve much of the data recorded over the past few days, though proper analysis will require an expert.
 
-We should hurry back to Central Command with    this so they can begin work.]])
-                    )
+We should hurry back to Central Command with    this so they can begin work.]]))
 
-                    inspection_complete = 1 -- flag preventing continuous triggering of "Job Done" comms
+            inspection_complete = 1 -- flag preventing continuous triggering of "Job Done" comms
                 end
             end
         end
     end
 
+
+
     --Report back to Central Command
     if Central_Command.mission_state == 2 then
         --If K-Endline is destroyed at this stage Kraylor win
         if not Kraylor_Eline:isValid() then
-            Central_Command:sendCommsMessage(Player, _([[Apollo, you've incited a war! What a disaster...]]))
-            victory("Kraylor")
+            goto_war_early()
         end
 
         if Player:isDocked(Central_Command) then
-            Central_Command:sendCommsMessage(
-                Player,
-                _(
-                    [[It appears the damage was mechanical, but Kraylor ships in the area have been spotted in surveillance data you recovered from E.O.S Scope. It's possible this was sabotage.
+            Central_Command:sendCommsMessage(Player, _([[It appears the damage was mechanical, but Kraylor ships in the area have been spotted in surveillance data you recovered from E.O.S Scope. It's possible this was sabotage.
 
-Whatever the case, we need you to rendezvous with science station Galileo in sector C5. We've contracted with this Arlenian station to interperet and analyze the data retrieved from our various Scope stations.]]
-                )
-            )
+Whatever the case, we need you to rendezvous with science station Galileo in sector C5. We've contracted with this Arlenian station to interperet and analyze the data retrieved from our various Scope stations.]]))
 
             Central_Command.mission_state = 3
         end
@@ -369,8 +451,7 @@ Whatever the case, we need you to rendezvous with science station Galileo in sec
     if Central_Command.mission_state == 3 then
         --If K-Endline is destroyed at this stage Kraylor win
         if not Kraylor_Eline:isValid() then
-            Central_Command:sendCommsMessage(Player, _([[Apollo, you've incited a war! What a disaster...]]))
-            victory("Kraylor")
+            goto_war_early()
         end
 
         if distance(Player, Science_Galileo) < 30000 then
@@ -390,19 +471,13 @@ Kraylor ships are in our vicinity, we have reason to believe they intend to atta
     if Central_Command.mission_state == 4 then
         --If K-Endline is destroyed at this stage Kraylor win
         if not Kraylor_Eline:isValid() then
-            Central_Command:sendCommsMessage(Player, _([[Apollo, you've incited a war! What a disaster...]]))
-            victory("Kraylor")
+            goto_war_early()
         end
 
         if not kraylor_g1:isValid() and not kraylor_g2:isValid() and not kraylor_g3:isValid() then
-            Science_Galileo:sendCommsMessage(
-                Player,
-                _(
-                    [[We don't know why Kraylor ships were attacking us. We had just recieved word that your ship was on its way with data from the Edge-of-space telescopic station when they began interrupting transmissions.
+            Science_Galileo:sendCommsMessage(Player, _([[We don't know why Kraylor ships were attacking us. We had just recieved word that your ship was on its way with data from the Edge-of-space telescopic station when they began interrupting transmissions.
 
-Thank you for defending our station. Please    dock with us and we'll be able to analyze the data from E.O.S Scope.]]
-                )
-            )
+Thank you for defending our station. Please    dock with us and we'll be able to analyze the data from E.O.S Scope.]]))
 
             Central_Command.mission_state = 5
         end
@@ -411,14 +486,11 @@ Thank you for defending our station. Please    dock with us and we'll be able to
     --Dock with Galileo station
     if Central_Command.mission_state == 5 then
         if Player:isDocked(Science_Galileo) then
-            Central_Command:sendCommsMessage(
-                Player,
-                _([[Apollo, come in!
+            Central_Command:sendCommsMessage(Player, _([[Apollo, come in!
 
 Leave the E.O.S data with Galileo for now, we've confirmed reports that Kraylor are brazen enough to attack our E.O.S Scope directly! All available ships should converge on E.O.S territory in sector H8!
 
-That means you, Apollo!]])
-            )
+That means you, Apollo!]]))
 
             kraylor_e1:orderRoaming()
             kraylor_e2:orderRoaming()
@@ -477,16 +549,11 @@ We have no choice but to declare war. Move into Kraylor territory and retaliate 
             --Time for some sweet upgrades!
             if not Kraylor_Eline:isValid() then
                 if not kraylor_m1:isValid() and not kraylor_m2:isValid() and not kraylor_m3:isValid() and not kraylor_m4:isValid() then
-                    Central_Command:sendCommsMessage(
-                        Player,
-                        _(
-                            [[Apollo, come in.
+                    Central_Command:sendCommsMessage(Player, _([[Apollo, come in.
 
 Our cease-fire with the Kraylor is at a bitter end, and aggression will only rise from here. It is imperative that our ships be equipped with all counter-measures necessary to keep them safe.
 
-Dock with the E.O.S Scope. We are re-fitting your ship in preparation for times of war.]]
-                        )
-                    )
+Dock with the E.O.S Scope. We are re-fitting your ship in preparation for times of war.]]))
 
                     Human_m1:orderDefendLocation(31875, 38653)
                     Human_m2:orderDefendLocation(37493, 37185)
@@ -540,16 +607,11 @@ Our cease-fire with the Kraylor is at a bitter end. Destroy the remaining Kraylo
     if Central_Command.mission_state == 7 then
         if not Kraylor_Eline:isValid() then
             if not kraylor_m1:isValid() and not kraylor_m2:isValid() and not kraylor_m3:isValid() and not kraylor_m4:isValid() then
-                Central_Command:sendCommsMessage(
-                    Player,
-                    _(
-                        [[Apollo, come in.
+                Central_Command:sendCommsMessage(Player, _([[Apollo, come in.
 
 Our cease-fire with the Kraylor is at a bitter end, and aggression will only rise from here. It is imperative that our ships be equipped with all counter-measures necessary to keep them safe.
 
-Dock with the E.O.S Scope. We are re-fitting your ship in preparation for times of war.]]
-                    )
-                )
+Dock with the E.O.S Scope. We are re-fitting your ship in preparation for times of war.]]))
 
                 Human_m1:orderDefendLocation(31875, 38653)
                 Human_m2:orderDefendLocation(37493, 37185)
@@ -604,14 +666,11 @@ Our cease-fire with the Kraylor is at a bitter end. Destroy the remaining Kraylo
 
         --Time for some sweet upgrades!
         if not kraylor_m1:isValid() and not kraylor_m2:isValid() and not kraylor_m3:isValid() and not kraylor_m4:isValid() then
-            Central_Command:sendCommsMessage(
-                Player,
-                _([[Apollo, come in.
+            Central_Command:sendCommsMessage(Player, _([[Apollo, come in.
 
 Kraylor aggression will only rise from here. It is imperative that our ships be equipped with all counter-measures necessary to keep them safe.
 
-Dock with the E.O.S Scope. We are re-fitting your ship in preparation for times of war.]])
-            )
+Dock with the E.O.S Scope. We are re-fitting your ship in preparation for times of war.]]))
 
             Human_m1:orderDefendLocation(31875, 38653)
             Human_m2:orderDefendLocation(37493, 37185)
@@ -628,8 +687,8 @@ Dock with the E.O.S Scope. We are re-fitting your ship in preparation for times 
             Player:setTypeName("Wartime Technician")
             --                    # Arc, Dir, Range, CycleTime, Dmg
             Player:setBeamWeapon(0, 100, -20, 1000.0, 6.0, 10)
-            Player:setBeamWeapon(1, 100, 20, 1000.0, 6.0, 10)
-            Player:setBeamWeapon(2, 90, 180, 1000.0, 6.0, 10)
+            Player:setBeamWeapon(1, 100,  20, 1000.0, 6.0, 10)
+            Player:setBeamWeapon(2,  90, 180, 1000.0, 6.0, 10)
             Player:setWeaponTubeCount(3)
             Player:setWeaponTubeDirection(0, 0):weaponTubeDisallowMissle(0, "Mine")
             Player:setWeaponTubeDirection(1, 0):weaponTubeDisallowMissle(1, "Mine")
@@ -644,16 +703,11 @@ Dock with the E.O.S Scope. We are re-fitting your ship in preparation for times 
             Player:setWeaponStorage("Mine", 8)
             Player:setWeaponStorage("EMP", 6)
 
-            Central_Command:sendCommsMessage(
-                Player,
-                _(
-                    [[Science station Galileo has returned with their analysis of the E.O.S Scope data.
+            Central_Command:sendCommsMessage(Player, _([[Science station Galileo has returned with their analysis of the E.O.S Scope data.
 
 Edge-of-space sensors picked up on sparse signals from the super-nebula in Kraylor space that indicate they have some kind of wormhole. Intelligence suggests they intend to use it to infiltrate Human space and attack us where we are defenseless!
 
-When your ship is finished being outfitted for war move up to the nebula, but be cautious. There may be traps.]]
-                )
-            )
+When your ship is finished being outfitted for war move up to the nebula, but be cautious. There may be traps.]]))
 
             Central_Command.mission_state = 10
         end
@@ -662,40 +716,37 @@ When your ship is finished being outfitted for war move up to the nebula, but be
     --Get to the wormhole!
     if Central_Command.mission_state == 10 then
         if distance(Player, Kraylor_hole) < 10000 then
-            Central_Command:sendCommsMessage(
-                Player,
-                _([[Apollo come in!
+            Central_Command:sendCommsMessage(Player, _([[Apollo come in!
 
-Reports are coming in from core Human space that a massive Kraylor strike force is attacking! Get through that wormhole and attack from within their ranks to hold them off. We'll send all our available ships to converge there.]])
-            )
+Reports are coming in from core Human space that a massive Kraylor strike force is attacking! Get through that wormhole and attack from within their ranks to hold them off. We'll send all our available ships to converge there.]]))
 
             --------------------------------------------------------------------------------------
             --Let's get crazy up in here
-            k01 = CpuShip():setFaction("Kraylor"):setTemplate("Phobos T3"):setCallSign("BR21"):setPosition(-50654, 32238):orderRoaming()
-            k02 = CpuShip():setFaction("Kraylor"):setTemplate("Phobos T3"):setCallSign("UT64"):setPosition(-48368, 27476):orderRoaming()
-            k03 = CpuShip():setFaction("Kraylor"):setTemplate("Phobos T3"):setCallSign("NC13"):setPosition(-34082, 40047):orderRoaming()
-            k04 = CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setCallSign("CV45"):setPosition(-59606, 18904):orderRoaming()
-            k05 = CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setCallSign("TI25"):setPosition(-43796, 43857):orderRoaming()
-            k06 = CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setCallSign("IN16"):setPosition(-43796, 52428):orderRoaming()
-            k07 = CpuShip():setFaction("Kraylor"):setTemplate("Piranha F12"):setCallSign("VA27"):setPosition(-58082, 31285):orderRoaming()
-            k08 = CpuShip():setFaction("Kraylor"):setTemplate("Piranha F12"):setCallSign("CN78"):setPosition(-26082, 22333):orderRoaming()
-            k09 = CpuShip():setFaction("Kraylor"):setTemplate("Atlantis X23"):setCallSign("AL92"):setPosition(-42273, 12238):orderRoaming()
-            k10 = CpuShip():setFaction("Kraylor"):setTemplate("Starhammer II"):setCallSign("OH30"):setPosition(-26844, 48809):orderRoaming()
-            k11 = CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setCallSign("SS11"):setPosition(-45320, 9381):orderRoaming()
-            k12 = CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setCallSign("CS61"):setPosition(-40558, 8809):orderRoaming()
-            k13 = CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setCallSign("JL33"):setPosition(-27796, 52428):orderRoaming()
-            k14 = CpuShip():setFaction("Kraylor"):setTemplate("MT52 Hornet"):setCallSign("SQ50"):setPosition(-24368, 46143):orderRoaming()
-            CpuShip():setFaction("Human Navy"):setScanned(true):setTemplate("MT52 Hornet"):setCallSign("BN53"):setPosition(-40654, 47095):orderRoaming()
-            CpuShip():setFaction("Human Navy"):setScanned(true):setTemplate("MT52 Hornet"):setCallSign("VK68"):setPosition(-37796, 56619):orderRoaming()
-            CpuShip():setFaction("Human Navy"):setScanned(true):setTemplate("MT52 Hornet"):setCallSign("XD37"):setPosition(-29987, 55476):orderRoaming()
-            CpuShip():setFaction("Human Navy"):setScanned(true):setTemplate("MT52 Hornet"):setCallSign("CC31"):setPosition(-45796, 26143):orderRoaming()
-            CpuShip():setFaction("Human Navy"):setScanned(true):setTemplate("MT52 Hornet"):setCallSign("CM29"):setPosition(-51892, 24047):orderRoaming()
-            CpuShip():setFaction("Human Navy"):setScanned(true):setTemplate("MT52 Hornet"):setCallSign("SO40"):setPosition(-2939, 40619):orderRoaming()
-            CpuShip():setFaction("Human Navy"):setScanned(true):setTemplate("MT52 Hornet"):setCallSign("VS41"):setPosition(2966, 45000):orderRoaming()
-            --CpuShip():setFaction("Human Navy"):setScanned(true):setTemplate("MT52 Hornet"):setCallSign("BR42"):setPosition(-12796, 16809):orderRoaming()
-            --CpuShip():setFaction("Human Navy"):setScanned(true):setTemplate("MT52 Hornet"):setCallSign("UTI43"):setPosition(-10463, 7476):orderRoaming()
+            k01 = createKraylorGunship():setCallSign("BR21"):setPosition(-50654, 32238):orderRoaming()
+            k02 = createKraylorGunship():setCallSign("UT64"):setPosition(-48368, 27476):orderRoaming()
+            k03 = createKraylorGunship():setCallSign("NC13"):setPosition(-34082, 40047):orderRoaming()
+            k04 = createKraylorFighter():setCallSign("CV45"):setPosition(-59606, 18904):orderRoaming()
+            k05 = createKraylorFighter():setCallSign("TI25"):setPosition(-43796, 43857):orderRoaming()
+            k06 = createKraylorFighter():setCallSign("IN16"):setPosition(-43796, 52428):orderRoaming()
+            k07 = CpuShip():setFaction("Kraylor"):setTemplate("Spinebreaker"):setCallSign("VA27"):setPosition(-58082, 31285):orderRoaming()
+            k08 = CpuShip():setFaction("Kraylor"):setTemplate("Spinebreaker"):setCallSign("CN78"):setPosition(-26082, 22333):orderRoaming()
+            k09 = createKraylorDestroyer(2):setCallSign("AL92"):setPosition(-42273, 12238):orderRoaming()
+            k10 = createKraylorDestroyer(3):setCallSign("OH30"):setPosition(-26844, 48809):orderRoaming()
+            k11 = createKraylorFighter():setCallSign("SS11"):setPosition(-45320, 9381):orderRoaming()
+            k12 = createKraylorFighter():setCallSign("CS61"):setPosition(-40558, 8809):orderRoaming()
+            k13 = createKraylorFighter():setCallSign("JL33"):setPosition(-27796, 52428):orderRoaming()
+            k14 = createKraylorFighter():setCallSign("SQ50"):setPosition(-24368, 46143):orderRoaming()
+            createHumanFighter():setScanned(true):setCallSign("BN53"):setPosition(-40654, 47095):orderRoaming()
+            createHumanFighter():setScanned(true):setCallSign("VK68"):setPosition(-37796, 56619):orderRoaming()
+            createHumanFighter():setScanned(true):setCallSign("XD37"):setPosition(-29987, 55476):orderRoaming()
+            createHumanFighter():setScanned(true):setCallSign("CC31"):setPosition(-45796, 26143):orderRoaming()
+            createHumanFighter():setScanned(true):setCallSign("CM29"):setPosition(-51892, 24047):orderRoaming()
+            createHumanFighter():setScanned(true):setCallSign("SO40"):setPosition(-2939, 40619):orderRoaming()
+            createHumanFighter():setScanned(true):setCallSign("VS41"):setPosition(2966, 45000):orderRoaming()
+            --createHumanFighter():setScanned(true):setCallSign("BR42"):setPosition(-12796, 16809):orderRoaming()
+            --createHumanFighter():setScanned(true):setCallSign("UTI43"):setPosition(-10463, 7476):orderRoaming()
             CpuShip():setFaction("Human Navy"):setScanned(true):setTemplate("Phobos T3"):setCallSign("CI44"):setPosition(-10368, 13571):orderRoaming()
-            CpuShip():setFaction("Human Navy"):setScanned(true):setTemplate("Phobos T3"):setCallSign("NI15"):setPosition(-10368, 50143):orderRoaming()
+            CpuShip():setFaction("Human Navy"):setScanned(true):setTemplate("Phobos Y2"):setCallSign("NI15"):setPosition(-10368, 50143):orderRoaming()
 
             Human_m1:orderRoaming()
             Human_m2:orderRoaming()
@@ -706,18 +757,17 @@ Reports are coming in from core Human space that a massive Kraylor strike force 
     end
 
     if Central_Command.mission_state == 11 then
-        if
-            not k01:isValid() and not k02:isValid() and not k03:isValid() and not k04:isValid() and not k05:isValid() and not k06:isValid() and not k07:isValid() and not k08:isValid() and not k09:isValid() and not k10:isValid() and not k11:isValid() and not k12:isValid() and not k13:isValid() and
-                not k14:isValid()
-         then
+        if not k01:isValid() and not k02:isValid() and not k03:isValid() and not k04:isValid() and not k05:isValid() and not k06:isValid() and not k07:isValid() and not k08:isValid() and not k09:isValid() and not k10:isValid() and not k11:isValid() and not k12:isValid() and not k13:isValid() and not k14:isValid() then
+            victory("Human Navy")
+        end
+    end
+
+    if Central_Command.mission_state == 12 then
+        --player started war
+        if not k01:isValid() and not k02:isValid() and not k03:isValid() and not k04:isValid() and not k05:isValid() and not k06:isValid() and not k07:isValid() and not k08:isValid() and not k09:isValid() and not k10:isValid() and not k11:isValid() and not k12:isValid() and not k13:isValid() and not k14:isValid() and not kraylor_m1:isValid() and not kraylor_m2:isValid() and not kraylor_m3:isValid() and not kraylor_m4:isValid() and not Kraylor_Eline:isValid() and not Kraylor_Mline:isValid() and not kraylor_e1:isValid() and not kraylor_e2:isValid() and not kraylor_e3:isValid() and not kraylor_e4:isValid() and not kraylor_g1:isValid() and not kraylor_g2:isValid() and not kraylor_g3:isValid() and not kraylor_r1:isValid() and not kraylor_r2:isValid() and not kraylor_r3:isValid() and not kraylor_r4:isValid() and not kraylor_r5:isValid()then
             victory("Human Navy")
         end
     end
 end
 
-function distance(obj1, obj2)
-    x1, y1 = obj1:getPosition()
-    x2, y2 = obj2:getPosition()
-    xd, yd = (x1 - x2), (y1 - y2)
-    return math.sqrt(xd * xd + yd * yd)
-end
+
