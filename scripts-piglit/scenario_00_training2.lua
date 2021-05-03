@@ -52,7 +52,7 @@ function init()
 
     enemiesIndex = 1
     enemyList = {}
-    
+
     instr1 = false
     timer = 0
     finishedTimer = 5
@@ -60,14 +60,14 @@ function init()
 
     station = SpaceStation():setTemplate('Small Station'):setCallSign("Maintainance Dock"):setRotation(random(0, 360)):setFaction("Human Navy"):setPosition(-800, 1200)
     wingman = CpuShip():setTemplate("Nirvana R5M"):setCallSign("Wingman"):setFaction("Human Navy"):setPosition(-800, -1700):setHeading(250):setScannedByFaction("Human Navy", true):orderDefendTarget(station)
-    
+
     bonus = CpuShip():setTemplate("Flavia Express"):setCallSign("Bonus"):setFaction("Criminals"):setShieldsMax(200, 200):setShields(200, 200):setPosition(rr+2000, -rr-2000):setHeading(225):orderFlyTowardsBlind(-rr, rr)
-    
+
     createObjectsOnLine(rr/2, rr/4, rr/4, rr/2, 1000, Mine, 2)
     createRandomAlongArc(Asteroid, 100, 0, 0, rr-2000, 180, 270, 1000)
     createRandomAlongArc(VisualAsteroid, 100, 0, 0, rr-2000, 180, 270, 1000)
     placeRandomAroundPoint(Nebula, 4, 10000, 10000, rr*0.75, -rr*0.75)
-    
+
     spwanNextWave()
     instructions()
 end
@@ -76,7 +76,7 @@ function spwanNextWave()
     if enemiesIndex > #enemies then
         return false
     end
-    
+
     local enemyTempl = enemies[enemiesIndex]
     local name = enemiesNames[enemiesIndex]
     local pos = spawnPositions[enemiesIndex]
@@ -94,7 +94,7 @@ function spwanNextWave()
     enemiesIndex = enemiesIndex + 1
     return true
 end
-    
+
 function instructions()
     if wingman:isValid() then
         if enemiesIndex == 2 then
@@ -178,7 +178,7 @@ function update(delta)
             instructions()
         end
     end
-    
+
     if bonusSpawned and bonus:isValid() and distance(bonus, -rr, rr) < 100 then
         bonus:setWarpDrive(true)
         bonus:orderFlyTowardsBlind(-1000*rr, 1000*rr)
