@@ -1,12 +1,57 @@
---this file contains human npc ships. Playerships are found in shipTemplates_Player.
---Every ship hull comes in several colors:
+-- Human ships
 
--- White: owned and outfited by Human Navy. Players default color (adjustable in shipTemplates_Player)
--- Yellow: Workers (stationary or unordered)
--- Blue: Travellers (convoys and escorts)
--- Red: criminals (enemy)
--- Green: Ghosts (enemy)
--- Grey: old default ships. (friendly)
+--[[
+
+Description
+-----------
+This file defines some ships of a similar optical style with the background of several human factions.
+
+Appearance
+----------
+The models from msgamedev.pack (AdlerLongRangeScout, ... , WespeScout) are used here, since there are various ship types with different colors each. So every human faction can have a different color scheme but still the same ships.
+
+Colors
+------
+* White: owned and outfited by Human Navy. Players default color (adjustable in shipTemplates_Player)
+* Yellow: Workers (stationary or unordered)
+* Blue: Travellers (convoys and escorts)
+* Red: criminals (enemy)
+* Green: Ghosts (enemy)
+* Grey: old default ships. (friendly)
+
+Ship Classes
+------------
+Some ship models use fixed beam or tube positions for their first beam/tube slots. The size of each ship is also determined by the models radius.
+
+* Fighters:
+	* Hornet(Interceptor, fighter, WespeScout, radius: 30, beams: 2, tubes: 0)
+	* Lindwurm(Bomber, fighter, LindwurmFighter, radius: 30, beams: 0, tubes: 3)
+	* Adder(Scout, fighter, AdlerLongRangeScout, radius: 30, beams: 3, tubes: 1)
+* Frigates:
+	* Storm(heavy attil, nonplayer, MissileCorvette, radius: 80, beams: 0 , tubes: 0)
+	* Nirvana/Hathcock(Beam cruiser/sniper, frontal, LaserCorvette, radius: 80, beams: 0, tubes: 0)
+	* Flavia/Repulse (Transport, rear fire, LightCorvette, radius: 80, beams: 0, tubes: 0)
+	* Nautilus (player only, MineLayerCorvette, radius: 80, beams: 0, tubes: 0)
+	* Piranha(Missile, no beam, HeavyCorvette, radius: 80, beams: 0, tubes: 0)
+	* Phobos(light Cruiser, MultiGunCorvette, radius: 80, beams: 0, tubes: 0)
+* Dreadnoughts:
+	* Atlantis(Destroyer, AtlasHeavyFighter/AtlasDestroyer, radius: 80/160, beams: 2, tubes: 3/5)
+
+
+
+--LC light cruiser, allrounder
+--MC missile cruiser broadside, no beam, defense against surprise attacks/surrounded - combine with BS
+--BC beam cruiser anti fighter, defense against fighters/close combat - combine with MC
+--TRN transport, maybe armed
+--JCR jump carrier
+--CRV corvette, destroyer - offensive allround 
+--HMC heavy missile cruiser frontal assault, +beam, offensive
+--stalker? nuker? enemies!
+
+
+
+--]]
+
 
 color_default= "Grey"  --default/old equipment
 -- Human light beam:  arc 90, rng 1200, cycle 8, dmg 6 = 0.75 dps  (used on light cruiser and transport)
@@ -54,60 +99,10 @@ color_civil2 = "Blue"  --get civil equipment. Blues like to travel in column for
 --
 
 
---AdlerLongRangeScout
---radius: 30, beams: 3, tubes: 1
---Adder(Scout, fighter)
---
---AtlasHeavyFighter/AtlasDestroyer
---radius: 80/160, beams: 2, tubes: 3/5
---Atlantis(Destroyer)
---
---LindwurmFighter
---radius: 30, beams: 0, tubes: 3
---Lindwurm(Bomber, fighter)
---
---WespeScout
---radius: 30, beams: 2, tubes: 0
---Hornet(Interceptor, fighter)
---
---MissileCorvette
---radius: 80, beams: 0 , tubes: 0
---Storm(heavy attil, nonplayer)
---
---LaserCorvette
---radius: 80, beams: 0, tubes: 0
---Nirvana/Hathcock(Beam cruiser/sniper, frontal)
---
---LightCorvette
---radius: 80, beams: 0, tubes: 0
---Flavia (Transport, rear fire), Repulse(rear fire)
---
---MineLayerCorvette
---radius: 80, beams: 0, tubes: 0
---Nautilus (player only)
---
---HeavyCorvette
---radius: 80, beams: 0, tubes: 0
---Piranha(Missile, no beam)
---
---MultiGunCorvette
---radius: 80, beams: 0, tubes: 0
---Phobos(light Cruiser)
---
-
-
 
 --9 ships, 10 models; just rematch!
 
 
---LC light cruiser, allrounder
---MC missile cruiser broadside, no beam, defense against surprise attacks/surrounded - combine with BS
---BC beam cruiser anti fighter, defense against fighters/close combat - combine with MC
---TRN transport, maybe armed
---JCR jump carrier
---CRV corvette, destroyer - offensive allround 
---HMC heavy missile cruiser frontal assault, +beam, offensive
---stalker? nuker? enemies!
 
 --[[Fighter--]]
 model_hornet = "WespeFighter"
