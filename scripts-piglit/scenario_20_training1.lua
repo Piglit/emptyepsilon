@@ -1,6 +1,6 @@
 -- Name: Training: Cruiser
 -- Type: Mission
--- Description: "Here's your chance to beat up some helpless opponents." - Commander Saberhagen
+-- Description: Basic Training Cource
 ---
 --- Objective: Destroy all enemy ships in the area.
 ---
@@ -84,9 +84,9 @@ function update(delta)
     for i, enemy in ipairs(enemyList) do
         if not enemy:isValid() then
             table.remove(enemyList, i)
-	    -- Note: table.remove() inside iteration causes the next element to be skipped.
-	    -- This means in each update-cycle max half of the elements are removed.
-	    -- It does not matter here, since update is called regulary.
+        -- Note: table.remove() inside iteration causes the next element to be skipped.
+        -- This means in each update-cycle max half of the elements are removed.
+        -- It does not matter here, since update is called regulary.
         end
     end
     if #enemyList == 0 then
