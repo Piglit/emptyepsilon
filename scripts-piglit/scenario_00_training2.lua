@@ -2,7 +2,7 @@
 -- Type: Mission
 -- Description: Combat Training Course
 ---
---- Objective: Destroy all enemy ships in the area.
+--- Objective: Defend your mothership and destroy all enemies in the area.
 ---
 --- Description:
 --- In this training you will face different armed oppenents that you must destroy one by one. The difficulty will start low and will increase slowly with every destroyed enemy.
@@ -26,9 +26,9 @@ function init()
     player:addReputationPoints(140.0)
 
     enemies = {
+        "Red Adder MK4",
         "Yellow Hornet",
         "Blue Lindworm",
-        "Red Adder MK4",
         "Phobos M3",
         "Nirvana Thunder Child",
         "Solar Storm",
@@ -58,12 +58,15 @@ function init()
     finishedTimer = 5
     finishedFlag = false
 
-    station = SpaceStation():setTemplate('Small Station'):setCallSign("Maintainance Dock"):setRotation(random(0, 360)):setFaction("Human Navy"):setPosition(-800, 1200)
-    wingman = CpuShip():setTemplate("Nirvana R5M"):setCallSign("Wingman"):setFaction("Human Navy"):setPosition(-800, -1700):setHeading(250):setScannedByFaction("Human Navy", true):orderDefendTarget(station)
+    dread = CpuShip():setTemplate("Starhammer II"):setCallSign("Liberator"):setFaction("Human Navy"):setPosition(-800, -1700):setHeading(250):setScannedByFaction("Human Navy", true):orderDefendTarget(station):setDockClass("Frigate")
 
     bonus = CpuShip():setTemplate("Flavia Express"):setCallSign("Bonus"):setFaction("Criminals"):setShieldsMax(200, 200):setShields(200, 200):setPosition(rr+2000, -rr-2000):setHeading(225):orderFlyTowardsBlind(-rr, rr)
 
-    createObjectsOnLine(rr/2, rr/4, rr/4, rr/2, 1000, Mine, 2)
+	station = SpaceStation():setTemplate("Medium Station"):setCallSign("Omicron"):setFaction("Criminals"):setPosition(2*rr, 0)
+
+	dread:orderFlyTowards(station)
+
+    createObjectsOnLine(1.5*rr, rr/4, 2*rr, -rr/4, 1000, Mine, 2)
     createRandomAlongArc(Asteroid, 100, 0, 0, rr-2000, 180, 270, 1000)
     createRandomAlongArc(VisualAsteroid, 100, 0, 0, rr-2000, 180, 270, 1000)
     placeRandomAroundPoint(Nebula, 4, 10000, 10000, rr*0.75, -rr*0.75)
@@ -80,7 +83,7 @@ function spwanNextWave()
     local enemyTempl = enemies[enemiesIndex]
     local name = enemiesNames[enemiesIndex]
     local pos = spawnPositions[enemiesIndex]
-    local posx, posy = player:getPosition()
+    local posx, posy = dread:getPosition()
     posx = posx + pos[1]
     posy = posy + pos[2]
 
@@ -96,36 +99,30 @@ function spwanNextWave()
 end
 
 function instructions()
-    if wingman:isValid() then
+    if dread:isValid() then
         if enemiesIndex == 2 then
-            wingman:sendCommsMessage(player, [[This is Commander Saberhagen.
+            dread:sendCommsMessage(player, [[This is Commander Saberhagen onboard the Liberator.
 
 In this combat training you will practise your abilities with a Hathcock battlecruiser.
 The Hathcock is a ship for those who seek close combat. Rely on her beams and the high turn rate.
 
-You will fight against small groups of enemies.
-Whenever you destroy an opponent, the next one will appear just in sensor range.
-Each group will be more difficult then the previous one.
+We will face several small groups of enemies that will target the Liberator. 
+Each group will be more difficult then the previous one. Your goal is to keep yourself and the Liberator alive.
 
 Engage with your warp drive, when you are ready.
 
 Commander Saberhagen out.]])
-        elseif enemiesIndex == 4 and station:isValid() then
-            wingman:sendCommsMessage(player, [[This is Commander Saberhagen.
+        elseif enemiesIndex == 4 and dread:isValid() then
+            dread:sendCommsMessage(player, [[This is Commander Saberhagen.
 
-Do not forget to restore your energy at the Maintainance Dock.
-If you need repairs, that station will also be of some help.
-
-You may have noticed that every destroyed energy raises your reputation. When your reputation is high enough, make sure to call for reinforcements at the Maintainance Dock.
-
-The Human Navy is only stong when working together!
+You can dock at the Liberator if you need to restore your energy or if you need repairs.
 
 Commander Saberhagen out.
 ]])
         elseif enemiesIndex == 5 then
-            wingman:sendCommsMessage(player, [[This is Commander Saberhagen.
+            dread:sendCommsMessage(player, [[This is Commander Saberhagen.
 
-Remember to use all of your capabilities to your advantage: Hacking, shield and beam frequencies, the database, energy management, your wingman etc.
+Remember to use all of your capabilities to your advantage: Hacking, shield and beam frequencies, the database, energy management etc.
 
 Commander Saberhagen out.
 ]])
