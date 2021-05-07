@@ -13,6 +13,38 @@
 
 require("utils.lua")
 
+
+--- Ship creation functions
+function createExuariWeakInterceptor()
+	return CpuShip():setFaction("Exuari"):setTemplate("Dagger"):setBeamWeapon(0, 0, 0, 0, 0.1, 0.1)
+end
+
+function createExuariWeakBomber()
+	return CpuShip():setFaction("Exuari"):setTemplate("Gunner"):setWeaponTubeCount(0):setWeaponStorageMax("HVLI", 0):setWeaponStorage("HVLI", 0):setBeamWeapon(0, 0, 0, 0, 0.1, 0.1)
+end
+
+function createExuariInterceptor()
+	return CpuShip():setFaction("Exuari"):setTemplate("Dagger")
+end
+
+function createExuariBomber()
+	return CpuShip():setFaction("Exuari"):setTemplate("Gunner"):setBeamWeapon(0, 0, 0, 0, 0.1, 0.1)
+end
+
+function createExuariTransport()
+	return CpuShip():setFaction("Exuari"):setTemplate("Personnel Freighter 1"):setTypeName("Exuari transport")
+end
+
+function createExuariFreighter()
+	return CpuShip():setFaction("Exuari"):setTemplate("Goods Freighter 5"):setTypeName("Exuari freighter")
+end
+
+function createExuariShuttle()
+	return CpuShip():setFaction("Exuari"):setTemplate("Racer"):setTypeName("Exuari shuttle"):setWarpDrive(false):setBeamWeapon(0, 0, 355, 0, 0.1, 0.1):setBeamWeapon(1, 0, 355, 0, 0.1, 0.1)
+end
+
+
+-- init
 function init()
     enemyList = {}
     timer = 0
@@ -21,20 +53,20 @@ function init()
     instr1 = false
 
     bonusAvail = true
-    bonus = CpuShip():setFaction("Exuari"):setTemplate("Racer"):setCallSign("bonus"):setPosition(-2341, -17052):orderFlyTowardsBlind(-80000, -40000):setTypeName("Exuari shuttle"):setWarpDrive(false):setBeamWeapon(0, 0, 355, 0, 0.1, 0.1):setBeamWeapon(1, 0, 355, 0, 0.1, 0.1):setHeading(-60)
+    bonus = createExuariShuttle():setCallSign("bonus"):setPosition(-2341, -17052):orderFlyTowardsBlind(-80000, -40000):setHeading(-60)
 
-    table.insert(enemyList, CpuShip():setFaction("Exuari"):setTemplate("Dagger"):setCallSign("Fgt1"):setPosition(2341, -5191):setBeamWeapon(0, 0, 0, 0, 0.1, 0.1):setHeading(60))
-    table.insert(enemyList, CpuShip():setFaction("Exuari"):setTemplate("Dagger"):setCallSign("Fgt2"):setPosition(2933, -6555):setBeamWeapon(0, 0, 0, 0, 0.1, 0.1):setHeading(60))
-    table.insert(enemyList, CpuShip():setFaction("Exuari"):setTemplate("Gunner"):setCallSign("B2"):setPosition(-8866, -9002):orderDefendLocation(-9798, -9869):setWeaponTubeCount(0):setWeaponStorageMax("HVLI", 0):setWeaponStorage("HVLI", 0):setBeamWeapon(0, 0, 0, 0, 0.1, 0.1):setHeading(60))
-    table.insert(enemyList, CpuShip():setFaction("Exuari"):setTemplate("Gunner"):setCallSign("B1"):setPosition(-12407, -9067):orderDefendLocation(-11433, -9887):setWeaponTubeCount(0):setWeaponStorageMax("HVLI", 0):setWeaponStorage("HVLI", 0):setBeamWeapon(0, 0, 0, 0, 0.1, 0.1):setHeading(60))
-    table.insert(enemyList, CpuShip():setFaction("Exuari"):setTemplate("Dagger"):setCallSign("A1"):setPosition(-24113, -12830):orderDefendLocation(-25570, -13055):setHeading(60))
-    table.insert(enemyList, CpuShip():setFaction("Exuari"):setTemplate("Dagger"):setCallSign("A2"):setPosition(-26813, -12025):orderDefendLocation(-26425, -13447):setHeading(60))
-    table.insert(enemyList, CpuShip():setFaction("Exuari"):setTemplate("Gunner"):setCallSign("BR2"):setPosition(-39545, -16424):orderStandGround():setBeamWeapon(0, 0, 0, 0, 0.1, 0.1):setHeading(60))
-    table.insert(enemyList, CpuShip():setFaction("Exuari"):setTemplate("Gunner"):setCallSign("BR1"):setPosition(-41365, -15584):orderStandGround():setBeamWeapon(0, 0, 0, 0, 0.1, 0.1):setHeading(60))
-    table.insert(enemyList, CpuShip():setFaction("Exuari"):setTemplate("Personnel Freighter 1"):setCallSign("Omega1"):setPosition(-34120, -6629):setTypeName("Exuari transport"):setHeading(60))
-    table.insert(enemyList, CpuShip():setFaction("Exuari"):setTemplate("Personnel Freighter 1"):setCallSign("Omega2"):setPosition(-31698, -4868):setTypeName("Exuari transport"):setHeading(60))
-    table.insert(enemyList, CpuShip():setFaction("Exuari"):setTemplate("Personnel Freighter 1"):setCallSign("Omega3"):setPosition(-29270, -2853):setTypeName("Exuari transport"):setHeading(60))
-    table.insert(enemyList, CpuShip():setFaction("Exuari"):setTemplate("Goods Freighter 5"):setCallSign("FTR1"):setPosition(2787, -1822):orderFlyTowards(-42873, -13865):setTypeName("Exuari freighter"):setHeading(-60))
+    table.insert(enemyList, createExuariWeakInterceptor():setCallSign("Fgt1"):setPosition(2341, -5191):setHeading(60))
+    table.insert(enemyList, createExuariWeakInterceptor():setCallSign("Fgt2"):setPosition(2933, -6555):setHeading(60))
+    table.insert(enemyList, createExuariWeakBomber():setCallSign("B2"):setPosition(-8866, -9002):orderDefendLocation(-9798, -9869):setHeading(60))
+    table.insert(enemyList, createExuariWeakBomber():setCallSign("B1"):setPosition(-12407, -9067):orderDefendLocation(-11433, -9887):setHeading(60))
+    table.insert(enemyList, createExuariInterceptor():setCallSign("A1"):setPosition(-24113, -12830):orderDefendLocation(-25570, -13055):setHeading(60))
+    table.insert(enemyList, createExuariInterceptor():setCallSign("A2"):setPosition(-26813, -12025):orderDefendLocation(-26425, -13447):setHeading(60))
+    table.insert(enemyList, createExuariBomber():setCallSign("BR2"):setPosition(-39545, -16424):orderStandGround():setHeading(60))
+    table.insert(enemyList, createExuariBomber():setCallSign("BR1"):setPosition(-41365, -15584):orderStandGround():setHeading(60))
+    table.insert(enemyList, createExuariTransport():setCallSign("Omega1"):setPosition(-34120, -6629):setHeading(60))
+    table.insert(enemyList, createExuariTransport():setCallSign("Omega2"):setPosition(-31698, -4868):setHeading(60))
+    table.insert(enemyList, createExuariTransport():setCallSign("Omega3"):setPosition(-29270, -2853):setHeading(60))
+    table.insert(enemyList, createExuariFreighter():setCallSign("FTR1"):setPosition(2787, -1822):orderFlyTowards(-42873, -13865):setHeading(-60))
 
     player = PlayerSpaceship():setTemplate("Phobos M3P"):setPosition(18, -48):setCallSign("Rookie 1"):setJumpDrive(false):setLongRangeRadarRange(20000)
     command = CpuShip():setFaction("Human Navy"):setTemplate("Phobos M3"):setCallSign("Command"):setPosition(-100000, -100000):orderIdle()
