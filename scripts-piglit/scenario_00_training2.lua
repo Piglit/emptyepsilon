@@ -18,89 +18,114 @@
 require "utils.lua"
 require "script_formation.lua"
 
+--- Ship creation functions
+function createExuariFighterSquad(amount, posx, posy)
+    local enemyList = script_formation.spawnFormation("Dagger", amount, posx, posy, "Exuari", "Alpha-")
+    return enemyList
+end
+
+function createExuariInterceptorSquad(amount, posx, posy)
+    local enemyList = script_formation.spawnFormation("Blade", amount, posx, posy, "Exuari", "Beta-")
+    return enemyList
+end
+
+function createExuariBomberSquad(amount, posx, posy)
+    local enemyList = script_formation.spawnFormation("Gunner", amount, posx, posy, "Exuari", "Gamma-")
+    return enemyList
+end
+
+function createExuariStrikerSquad(amount, posx, posy)
+    local enemyList = script_formation.spawnFormation("Strike", amount, posx, posy, "Exuari", "Delta-")
+    return enemyList
+end
+
+function createExuariDefense()
+    return CpuShip():setFaction("Exuari"):setTemplate("Warden")
+end
+
+function createExuariMothership()
+    return CpuShip():setFaction("Exuari"):setTemplate("Ryder")
+end
+
+function createHumanMothership()
+    local ship = CpuShip():setFaction("Human Navy"):setTemplate("Jump Carrier"):setScannedByFaction("Human Navy", true)
+    ship:setTypeName("Steamroller"):setJumpDrive(false):setJumpDrive(false)
+    ship:setHullMax(200):setHull(200):setShieldsMax(100,100):setShields(100,100)
+    ship:setWeaponTubeCount(2):setTubeLoadTime(0, 10.0):setTubeLoadTime(1, 10.0):setWeaponStorage("HVLI", 20)
+    ship:setBeamWeapon(0, 90, -10, 2000, 8, 11):setBeamWeapon(1, 90, 10, 2000, 8, 11)
+    return ship
+end
+
 function init()
     allowNewPlayerShips(false)
+    gu = 5000   -- grid unit for enemy spawns
 
-    player = PlayerSpaceship():setTemplate("Hathcock"):setCallSign("Rookie 1"):setFaction("Human Navy"):setPosition(0, 0):setHeading(90)
-    rr = player:getLongRangeRadarRange()
-    player:addReputationPoints(140.0)
+    player = PlayerSpaceship():setTemplate("Hathcock"):setCallSign("Rookie 1"):setFaction("Human Navy"):setPosition(gu/4, -gu/4):setHeading(90):setLongRangeRadarRange(5*gu):addReputationPoints(140.0)
 
-    enemies = {
-        "Red Adder MK4",
-        "Yellow Hornet",
-        "Blue Lindworm",
-        "Phobos M3",
-        "Nirvana Thunder Child",
-        "Solar Storm",
-    }
-    spawnPositions = {
-        {rr, 0},
-        {0, rr},
-        {-rr, 0},
-        {0, -rr},
-        {rr*0.7, rr*0.7},
-        {-rr*0.7, rr*0.7},
-    }
-    enemiesNames = {
-        "Alpha-",
-        "Beta-",
-        "Gamma-",
-        "Rho-",
-        "Sigma-",
-        "Tau-",
-    }
+    bossposx = 10*gu
+    bossposy = 0
+    boss = createExuariMothership():setCallSign("Omega"):setPosition(bossposx, bossposy):orderDefendLocation(bossposx, bossposy)
+    guard = createExuariDefense():setCallSign("Omicron"):setPosition(bossposx, bossposy+1000):orderDefendTarget(boss)
 
-    enemiesIndex = 1
+    dread = createHumanMothership():setCallSign("Liberator"):setPosition(-gu/4, gu/4):setHeading(90):orderAttack(boss)
+
+    enemyWaveIndex = 1
     enemyList = {}
+    nextWaveDreadPos = 0
 
     instr1 = false
     timer = 0
     finishedTimer = 5
     finishedFlag = false
 
-    dread = CpuShip():setTemplate("Starhammer II"):setCallSign("Liberator"):setFaction("Human Navy"):setPosition(-800, -1700):setHeading(250):setScannedByFaction("Human Navy", true):orderDefendTarget(station):setDockClass("Frigate")
 
-    bonus = CpuShip():setTemplate("Flavia Express"):setCallSign("Bonus"):setFaction("Criminals"):setShieldsMax(200, 200):setShields(200, 200):setPosition(rr+2000, -rr-2000):setHeading(225):orderFlyTowardsBlind(-rr, rr)
+--    bonus = CpuShip():setTemplate("Flavia Express"):setCallSign("Bonus"):setFaction("Criminals"):setShieldsMax(200, 200):setShields(200, 200):setPosition(rr+2000, -rr-2000):setHeading(225):orderFlyTowardsBlind(-rr, rr)
 
-	station = SpaceStation():setTemplate("Medium Station"):setCallSign("Omicron"):setFaction("Criminals"):setPosition(2*rr, 0)
-
-	dread:orderFlyTowards(station)
-
-    createObjectsOnLine(1.5*rr, rr/4, 2*rr, -rr/4, 1000, Mine, 2)
-    createRandomAlongArc(Asteroid, 100, 0, 0, rr-2000, 180, 270, 1000)
-    createRandomAlongArc(VisualAsteroid, 100, 0, 0, rr-2000, 180, 270, 1000)
-    placeRandomAroundPoint(Nebula, 4, 10000, 10000, rr*0.75, -rr*0.75)
+    createRandomAlongArc(Asteroid, 100, 2*gu, -1*gu, gu, 60, 220, 100)
+    createRandomAlongArc(VisualAsteroid, 100, 2*gu, -1*gu, gu, 400, 270, 200)
+    placeRandomAroundPoint(Nebula, 4, gu, 2*gu, 3.5*gu, 1.5*gu)
+    placeRandomAroundPoint(Nebula, 4, gu, 3*gu, 6*gu, -2.5*gu)
+    createRandomAlongArc(Asteroid, 100, 7*gu, 2*gu, 1.5*gu, 180, 270, 200)
+    createRandomAlongArc(VisualAsteroid, 100, 7*gu, 2*gu, 1.5*gu, 180, 270, 1000)
+    createObjectsOnLine(8*gu, -gu, 8*gu, gu, 1000, Mine, 2)
 
     spwanNextWave()
     instructions()
 end
 
 function spwanNextWave()
-    if enemiesIndex > #enemies then
-        return false
-    end
-
-    local enemyTempl = enemies[enemiesIndex]
-    local name = enemiesNames[enemiesIndex]
-    local pos = spawnPositions[enemiesIndex]
-    local posx, posy = dread:getPosition()
-    posx = posx + pos[1]
-    posy = posy + pos[2]
 
     local amount
     if getScenarioVariation() == "Test Formations" then
-        amount = enemiesIndex + 1
+        amount = enemyWaveIndex
     else
-        amount = enemiesIndex % 4 + 1
+        amount = enemyWaveIndex % 4 + 1
     end
-    enemyList = script_formation.spawnFormation(enemyTempl, amount, posx, posy, "Criminals", name)
-    enemiesIndex = enemiesIndex + 1
+
+    if enemyWaveIndex == 1 then
+        enemyList = createExuariFighterSquad(amount, 2*gu, -1*gu)
+        enemyList[1]:orderRoaming()
+    elseif enemyWaveIndex == 2 then
+        enemyList = createExuariInterceptorSquad(amount, 3.5*gu, 1.5*gu)
+        enemyList[1]:orderAttack(player)
+    elseif enemyWaveIndex == 3 then
+        enemyList = createExuariBomberSquad(amount, 6*gu, -2.5*gu)
+        enemyList[1]:orderAttack(dread)
+    elseif enemyWaveIndex == 4 then
+        enemyList = createExuariStrikerSquad(amount, 7*gu, 2*gu)
+        enemyList[1]:orderAttack(dread)
+    else
+        return false
+    end
+
+    enemyWaveIndex = enemyWaveIndex + 1
+    nextWaveDreadPos = nextWaveDreadPos + 2*gu
     return true
 end
 
 function instructions()
     if dread:isValid() then
-        if enemiesIndex == 2 then
+        if enemyWaveIndex == 2 then
             dread:sendCommsMessage(player, [[This is Commander Saberhagen onboard the Liberator.
 
 In this combat training you will practise your abilities with a Hathcock battlecruiser.
@@ -112,14 +137,14 @@ Each group will be more difficult then the previous one. Your goal is to keep yo
 Engage with your warp drive, when you are ready.
 
 Commander Saberhagen out.]])
-        elseif enemiesIndex == 4 and dread:isValid() then
+        elseif enemyWaveIndex == 4 and dread:isValid() then
             dread:sendCommsMessage(player, [[This is Commander Saberhagen.
 
 You can dock at the Liberator if you need to restore your energy or if you need repairs.
 
 Commander Saberhagen out.
 ]])
-        elseif enemiesIndex == 5 then
+        elseif enemyWaveIndex == 5 then
             dread:sendCommsMessage(player, [[This is Commander Saberhagen.
 
 Remember to use all of your capabilities to your advantage: Hacking, shield and beam frequencies, the database, energy management etc.
@@ -162,13 +187,14 @@ function update(delta)
     for i, enemy in ipairs(enemyList) do
         if not enemy:isValid() then
             table.remove(enemyList, i)
-			-- Note: table.remove() inside iteration causes the next element to be skipped.
-			-- This means in each update-cycle max half of the elements are removed.
-			-- It does not matter here, since update is called regulary.
+            -- Note: table.remove() inside iteration causes the next element to be skipped.
+            -- This means in each update-cycle max half of the elements are removed.
+            -- It does not matter here, since update is called regulary.
         end
     end
 
-    if #enemyList == 0 or getScenarioVariation() == "Test Formations" then
+    dreadPosx, dreadPosy = dread:getPosition()
+    if #enemyList == 0 or (dreadPosx ~= nil and dreadPosx > nextWaveDreadPos) or getScenarioVariation() == "Test Formations" then
         if not spwanNextWave() then
             finished(delta)
         else
@@ -176,9 +202,9 @@ function update(delta)
         end
     end
 
-    if bonusSpawned and bonus:isValid() and distance(bonus, -rr, rr) < 100 then
-        bonus:setWarpDrive(true)
-        bonus:orderFlyTowardsBlind(-1000*rr, 1000*rr)
-    end
+--    if bonusSpawned and bonus:isValid() and distance(bonus, -rr, rr) < 100 then
+--        bonus:setWarpDrive(true)
+--        bonus:orderFlyTowardsBlind(-1000*rr, 1000*rr)
+--    end
 end
 
