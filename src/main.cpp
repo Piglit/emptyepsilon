@@ -142,7 +142,7 @@ int main(int argc, char** argv)
             new GameServerProxy(password, listenPort, proxyName);
         else
             new GameServerProxy(host, port, password, listenPort, proxyName);
-        game_proxy->setShutdownOnDisconnect(true);
+        //game_proxy->setShutdownOnDisconnect(true);
         engine->runMainLoop();
         return 0;
     }

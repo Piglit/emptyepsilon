@@ -51,7 +51,7 @@ ScenarioSelectionScreen::ScenarioSelectionScreen()
 
     // Left column contents.
     // Scenario section.
-    (new GuiLabel(left_panel, "SCENARIO_LABEL", tr("Scenario"), 30))->addBackground()->setSize(GuiElement::GuiSizeMax, 50);
+    (new GuiLabel(left_panel, "SCENARIO_LABEL", tr("Mission"), 30))->addBackground()->setSize(GuiElement::GuiSizeMax, 50);
     // List each scenario derived from scenario_*.lua files in Resources.
     GuiListbox* scenario_list = new GuiListbox(left_panel, "SCENARIO_LIST", [this](int index, string value) {
         selectScenario(value);
@@ -86,7 +86,7 @@ ScenarioSelectionScreen::ScenarioSelectionScreen()
 
     // If this is a proxied multi-ship mission, add ship type selection.
     // TODO positioning
-    GuiElement* ship_container = new GuiElement(container, "");
+    GuiElement* ship_container = new GuiElement(right_container, "");
     ship_container = new GuiAutoLayout(right_panel, "SHIP_CONTAINER", GuiAutoLayout::LayoutVerticalTopToBottom);
     ship_container->setSize(GuiElement::GuiSizeMax, GuiElement::GuiSizeMax);
 
@@ -112,13 +112,14 @@ ScenarioSelectionScreen::ScenarioSelectionScreen()
         //gameGlobalInfo->ship = ship_names_list.at(index);
         //ship_description->setText(ship_descriptions_list.at(index));
     });
-    ship_selection->setSize(GuiElement::GuiSizeMax, GuiElement::GuiSizeMax)->hide();
+    ship_selection->setSize(GuiElement::GuiSizeMax, GuiElement::GuiSizeMax);
 
     panel = new GuiPanel(ship_container, "SHIP_DESCRIPTION_BOX");
     panel->setSize(GuiElement::GuiSizeMax, 150);
     GuiScrollText* ship_description = new GuiScrollText(panel, "SHIP_DESCRIPTION", "");
     ship_description->setTextSize(24)->setMargins(15)->setSize(GuiElement::GuiSizeMax, GuiElement::GuiSizeMax)->hide();
 
+    ship_container->hide();
     // Buttons beneath the columns.
     // Close server button.
     (new GuiButton(left_container, "BACK", tr("Back"), [this]() {
@@ -135,7 +136,7 @@ ScenarioSelectionScreen::ScenarioSelectionScreen()
     // Join server via proxy button.
     (new GuiButton(right_container, "JOIN_SERVER", tr("Join scenario"), [this]() {
         //joinScenario(); TODO
-    }))->setPosition(0, -50, ABottomCenter)->setSize(300, 50);
+    }))->setPosition(0, -50, ABottomCenter)->setSize(300, 50)->hide();
 
 
     // We select the same mission as we had previously selected

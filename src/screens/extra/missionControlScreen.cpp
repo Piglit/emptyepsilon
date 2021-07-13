@@ -10,32 +10,29 @@
 
 MissionControlScreen::MissionControlScreen()
 {
-    GuiAutoLayout* mission_control_layout = new GuiAutoLayout(this, "MISSION_CONTROL_LAYOUT", GuiAutoLayout::LayoutHorizontalRightToLeft);
-    mission_control_layout->setPosition(50, 120)->setSize(GuiElement::GuiSizeMax, GuiElement::GuiSizeMax);
+    new GuiOverlay(this, "", colorConfig.background);
     (new GuiOverlay(this, "", sf::Color::White))->setTextureTiled("gui/BackgroundCrosses");
-    log_text = new GuiAdvancedScrollText(mission_control_layout, "SHIP_LOG");
-    log_text->enableAutoScrollDown();
-    log_text->setSize(GuiElement::GuiSizeMax, GuiElement::GuiSizeMax);
 
-    pause_button = new GuiToggleButton(this, "PAUSE_BUTTON", tr("button", "Pause"), [this](bool value) {
-        if (!value)
-            engine->setGameSpeed(1.0f);
-        else
-            engine->setGameSpeed(0.0f);
-    });
-    pause_button->setValue(engine->getGameSpeed() == 0.0f)->setPosition(20, 20, ATopLeft)->setSize(250, 50);
+    GuiAutoLayout* container = new GuiAutoLayout(this, "MISSION_CONTROL_LAYOUT", GuiAutoLayout::LayoutVerticalColumns);
+    container->setSize(GuiElement::GuiSizeMax, GuiElement::GuiSizeMax);
 
-    info_layout = new GuiAutoLayout(this, "INFO_LAYOUT", GuiAutoLayout::LayoutVerticalTopToBottom);
-    info_layout->setPosition(-20, 20, ATopRight)->setSize(300, GuiElement::GuiSizeMax);
+    GuiElement* left_container = new GuiElement(container, "");
+    GuiElement* right_container = new GuiElement(container, "");
 
-    info_clock = new GuiKeyValueDisplay(info_layout, "INFO_CLOCK", 0.5, tr("Clock"), "");
-    info_clock->setSize(GuiElement::GuiSizeMax, 30);
+    // server info and controls
+    info_layout = new GuiAutoLayout(left_container, "INFO_LAYOUT", GuiAutoLayout::LayoutVerticalTopToBottom);
+    info_layout->setPosition(0, 20, ATopLeft)->setSize(550, GuiElement::GuiSizeMax);
+
+    (new GuiLabel(info_layout, "SERVER_INFO_LABEL", tr("Server info"), 30))->addBackground()->setSize(GuiElement::GuiSizeMax, 50);
+
+    GuiElement* right_panel = new GuiAutoLayout(right_container, "", GuiAutoLayout::LayoutVerticalTopToBottom);
+    right_panel->setPosition(0, 20, ATopCenter)->setSize(550, GuiElement::GuiSizeMax);
 
     // Server name row.
     GuiElement* row = new GuiAutoLayout(info_layout, "", GuiAutoLayout::LayoutHorizontalLeftToRight);
     row->setSize(GuiElement::GuiSizeMax, 50);
     (new GuiLabel(row, "NAME_LABEL", tr("Server name: "), 30))->setAlignment(ACenterRight)->setSize(250, GuiElement::GuiSizeMax);
-    (new GuiTextEntry(row, "SERVER_NAME", game_server->getServerName()))->callback([](string text){game_server->setServerName(text);})->setSize(GuiElement::GuiSizeMax, GuiElement::GuiSizeMax);
+    (new GuiLabel(row, "SERVER_NAME", game_server->getServerName(), 30))->setAlignment(ACenterLeft)->setSize(GuiElement::GuiSizeMax, GuiElement::GuiSizeMax);
 
     // Server IP row.
     row = new GuiAutoLayout(info_layout, "", GuiAutoLayout::LayoutHorizontalLeftToRight);
@@ -43,9 +40,31 @@ MissionControlScreen::MissionControlScreen()
     (new GuiLabel(row, "IP_LABEL", tr("Server IP: "), 30))->setAlignment(ACenterRight)->setSize(250, GuiElement::GuiSizeMax);
     (new GuiLabel(row, "IP", sf::IpAddress::getLocalAddress().toString(), 30))->setAlignment(ACenterLeft)->setSize(GuiElement::GuiSizeMax, GuiElement::GuiSizeMax);
 
+    // Clock
+    row = new GuiAutoLayout(info_layout, "", GuiAutoLayout::LayoutHorizontalLeftToRight);
+    row->setSize(GuiElement::GuiSizeMax, 50);
+    (new GuiLabel(row, "CLOCK_LABEL", tr("Mission clock: "), 30))->setAlignment(ACenterRight)->setSize(250, GuiElement::GuiSizeMax);
+    info_clock = new GuiLabel(row, "CLOCK", "0", 30);
+    info_clock->setSize(GuiElement::GuiSizeMax, GuiElement::GuiSizeMax);
+
+    // Buttons
+    pause_button = new GuiToggleButton(info_layout, "PAUSE_BUTTON", tr("button", "Pause"), [this](bool value) {
+        if (!value)
+            engine->setGameSpeed(1.0f);
+        else
+            engine->setGameSpeed(0.0f);
+    });
+    pause_button->setValue(engine->getGameSpeed() == 0.0f)->setPosition(20, 20, ATopCenter)->setSize(250, 50);
+
+    (new GuiButton(info_layout, "QUIT", tr("Quit Mission"), [this]() {
+        destroy();
+        new ScenarioSelectionScreen();
+    }))->setPosition(20, 20, ATopCenter)->setSize(250, 50);
 
 
-    gm_script_options = new GuiListbox(this, "GM_SCRIPT_OPTIONS", [this](int index, string value)
+    gm_script_label = new GuiLabel(right_panel, "SERVER_GM_LABEL", tr("Mission control"), 30);
+    gm_script_label->addBackground()->setSize(GuiElement::GuiSizeMax, 50);
+    gm_script_options = new GuiListbox(right_panel, "GM_SCRIPT_OPTIONS", [this](int index, string value)
     {
         gm_script_options->setSelectionIndex(-1);
         int n = 0;
@@ -59,17 +78,26 @@ MissionControlScreen::MissionControlScreen()
             n++;
         }
     });
-    gm_script_options->setPosition(20, 130, ATopLeft)->setSize(250, 500);
-
+    gm_script_options->setPosition(0, 20, ACenterRight)->setSize(GuiElement::GuiSizeMax, GuiElement::GuiSizeMax);
+    if (gameGlobalInfo->gm_callback_functions.empty())
+    {
+        gm_script_options->hide();
+        gm_script_label->hide();
+    }
+/*
+    log_text = new GuiAdvancedScrollText(mission_control_layout, "SHIP_LOG");
+    log_text->enableAutoScrollDown();
+    log_text->setSize(GuiElement::GuiSizeMax, GuiElement::GuiSizeMax);
+*/
 }
 
 void MissionControlScreen::update(float delta)
 {
     // Update mission clock
-    info_clock->setValue(string(gameGlobalInfo->elapsed_time, 0));
+    info_clock->setText(string(gameGlobalInfo->elapsed_time, 0));
 
-	// Update pause button
-	pause_button->setValue(engine->getGameSpeed() == 0.0f);
+    // Update pause button
+    pause_button->setValue(engine->getGameSpeed() == 0.0f);
 
     bool gm_functions_changed = gm_script_options->entryCount() != int(gameGlobalInfo->gm_callback_functions.size());
     auto it = gameGlobalInfo->gm_callback_functions.begin();
@@ -88,7 +116,7 @@ void MissionControlScreen::update(float delta)
         }
     }
 
-	// upate log
+    // upate log
     if (my_spaceship)
     {
 

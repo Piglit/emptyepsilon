@@ -24,7 +24,8 @@ private:
 
     GuiToggleButton* pause_button;
     GuiAutoLayout* info_layout;
-    GuiKeyValueDisplay* info_clock;
+    GuiLabel* info_clock;
+    GuiLabel* gm_script_label;
     GuiListbox* gm_script_options;
 public:
     MissionControlScreen();
