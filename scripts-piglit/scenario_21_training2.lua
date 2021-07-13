@@ -57,30 +57,20 @@ function createHumanMothership()
 end
 
 function init()
-    allowNewPlayerShips(false)
     gu = 5000   -- grid unit for enemy spawns
 
-    player = PlayerSpaceship():setTemplate("Hathcock"):setCallSign("Rookie 1"):setFaction("Human Navy"):setPosition(gu/4, -gu/4):setHeading(90):setLongRangeRadarRange(5*gu):addReputationPoints(140.0)
-
+    -- boss and guard
     bossposx = 10*gu
     bossposy = 0
     boss = createExuariMothership():setCallSign("Omega"):setPosition(bossposx, bossposy):orderDefendLocation(bossposx, bossposy)
     guard = createExuariDefense():setCallSign("Omicron"):setPosition(bossposx, bossposy+1000):orderDefendTarget(boss)
 
+    -- player and ally
+    allowNewPlayerShips(false)
+    player = PlayerSpaceship():setTemplate("Hathcock"):setCallSign("Rookie 1"):setFaction("Human Navy"):setPosition(gu/4, -gu/4):setHeading(90):setLongRangeRadarRange(5*gu):addReputationPoints(140.0)
     dread = createHumanMothership():setCallSign("Liberator"):setPosition(-gu/4, gu/4):setHeading(90):orderAttack(boss)
-
-    enemyWaveIndex = 1
-    enemyList = {}
-    nextWaveDreadPos = 0
-
-    instr1 = false
-    timer = 0
-    finishedTimer = 5
-    finishedFlag = false
-
-
---    bonus = CpuShip():setTemplate("Flavia Express"):setCallSign("Bonus"):setFaction("Criminals"):setShieldsMax(200, 200):setShields(200, 200):setPosition(rr+2000, -rr-2000):setHeading(225):orderFlyTowardsBlind(-rr, rr)
-
+ 
+    -- terrain
     createRandomAlongArc(Asteroid, 100, 2*gu, -1*gu, gu, 60, 220, 100)
     createRandomAlongArc(VisualAsteroid, 100, 2*gu, -1*gu, gu, 400, 270, 200)
     placeRandomAroundPoint(Nebula, 4, gu, 2*gu, 3.5*gu, 1.5*gu)
@@ -89,6 +79,18 @@ function init()
     createRandomAlongArc(VisualAsteroid, 100, 7*gu, 2*gu, 1.5*gu, 180, 270, 1000)
     createObjectsOnLine(8*gu, -gu, 8*gu, gu, 1000, Mine, 2)
 
+    -- scenario script details
+    enemyWaveIndex = 1
+    enemyList = {}
+    nextWaveDreadPos = 0
+    plot = "waves" 
+
+    instr1 = false
+    timer = 0
+    finishedTimer = 5
+    finishedFlag = false
+
+    -- start action
     spwanNextWave()
     instructions()
 end
@@ -114,12 +116,21 @@ function spwanNextWave()
     elseif enemyWaveIndex == 4 then
         enemyList = createExuariStrikerSquad(amount, 7*gu, 2*gu)
         enemyList[1]:orderAttack(dread)
+    elseif enemyWaveIndex == 5 then
+        -- only boss may be left
+        enemyList = {boss, guard}
+        if dread:isValid() then
+            dread:setWeaponStorage("HVLI", 20)  -- restore full fire power, in case some was fired upon fighters
+        end
     else
-        return false
+		if #enemyList == 0 then
+			return false
+		end
     end
 
     enemyWaveIndex = enemyWaveIndex + 1
     nextWaveDreadPos = nextWaveDreadPos + 2*gu
+    dread:orderAttack(boss)
     return true
 end
 
@@ -131,27 +142,47 @@ function instructions()
 In this combat training you will practise your abilities with a Hathcock battlecruiser.
 The Hathcock is a ship for those who seek close combat. Rely on her beams and the high turn rate.
 
-We will face several small groups of enemies that will target the Liberator. 
-Each group will be more difficult then the previous one. Your goal is to keep yourself and the Liberator alive.
+The Liberator is pursuing an Exuari carrier ship in this sector.
+Your goal is to keep yourself and the Liberator alive until the carrier and it's guards are destroyed.
 
-Engage with your warp drive, when you are ready.
+We will face several small groups of enemies that will target you or the Liberator.
+Each group will be more difficult then the previous one.
 
 Commander Saberhagen out.]])
-        elseif enemyWaveIndex == 4 and dread:isValid() then
+        elseif enemyWaveIndex == 3 and dread:isValid() then
             dread:sendCommsMessage(player, [[This is Commander Saberhagen.
 
 You can dock at the Liberator if you need to restore your energy or if you need repairs.
+
+If you run into more trouble than you can handle, feel free to contact us for help.
+
+Commander Saberhagen out.
+]])
+
+        elseif enemyWaveIndex == 4 then
+            dread:sendCommsMessage(player, [[This is Commander Saberhagen.
+
+Remember to use all of your capabilities to your advantage: warp drive, hacking, shield and beam frequencies, the database, energy management etc.
 
 Commander Saberhagen out.
 ]])
         elseif enemyWaveIndex == 5 then
             dread:sendCommsMessage(player, [[This is Commander Saberhagen.
 
-Remember to use all of your capabilities to your advantage: Hacking, shield and beam frequencies, the database, energy management etc.
+We need you to find a way for the Liberator to get across that mine-field ahead.
 
 Commander Saberhagen out.
 ]])
+        elseif enemyWaveIndex == 6 then
+            dread:sendCommsMessage(player, [[This is Commander Saberhagen.
+
+The final battle lies ahead of us. Try to distract the enemy guard frigate while the Liberator attacks the carrier.
+
+Commander Saberhagen out.
+]])
+
         end
+
     end
 end
 
@@ -166,13 +197,17 @@ function finished(delta)
     end
     if finishedFlag == false then
         finishedFlag = true
-        local bonusString = "escaped."
-        if not bonus:isValid() then
-            bonusString = "destroyed."
+        local bonusString = "has survived."
+        if not dread:isValid() then
+            bonusString = "was destroyed."
         end
         globalMessage([[Mission Complete.
 Your Time: ]]..formatTime(timer)..[[
-Bonus target ]]..bonusString..[[
+
+Liberator ]]..bonusString..[[
+
+
+
 
 If you feel ready for combat and you liked the ship, play 'the mining outpost'.
 If you want to try another ship, play another training mission.]])
@@ -193,18 +228,26 @@ function update(delta)
         end
     end
 
-    dreadPosx, dreadPosy = dread:getPosition()
-    if #enemyList == 0 or (dreadPosx ~= nil and dreadPosx > nextWaveDreadPos) or getScenarioVariation() == "Test Formations" then
+    continue = false
+    if dread:isValid() then
+        dreadPosx, dreadPosy = dread:getPosition()
+        if dreadPosx > nextWaveDreadPos then
+            continue = true
+        end
+    end
+    if #enemyList == 0 then
+        continue = true
+    end
+    if getScenarioVariation() == "Test Formations" then
+        continue = true
+    end
+
+    if continue then
         if not spwanNextWave() then
             finished(delta)
         else
             instructions()
         end
     end
-
---    if bonusSpawned and bonus:isValid() and distance(bonus, -rr, rr) < 100 then
---        bonus:setWarpDrive(true)
---        bonus:orderFlyTowardsBlind(-1000*rr, 1000*rr)
---    end
 end
 
