@@ -56,6 +56,10 @@ function createHumanMothership()
     return ship
 end
 
+function createPlayerShip()
+	return PlayerSpaceship():setTemplate("Hathcock"):setFaction("Human Navy")
+end
+
 function init()
     gu = 5000   -- grid unit for enemy spawns
 
@@ -67,7 +71,8 @@ function init()
 
     -- player and ally
     allowNewPlayerShips(false)
-    player = PlayerSpaceship():setTemplate("Hathcock"):setCallSign("Rookie 1"):setFaction("Human Navy"):setPosition(gu/4, -gu/4):setHeading(90):setLongRangeRadarRange(5*gu):addReputationPoints(140.0)
+    player = createPlayerShip()
+	player:setCallSign("Rookie 1"):setPosition(gu/4, -gu/4):setHeading(90):setLongRangeRadarRange(5*gu):addReputationPoints(140.0)
     dread = createHumanMothership():setCallSign("Liberator"):setPosition(-gu/4, gu/4):setHeading(90):orderAttack(boss)
  
     -- terrain
