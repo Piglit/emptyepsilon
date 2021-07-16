@@ -10,9 +10,9 @@
 --- Your ship is a Hathcock Battle Cruiser - a warp-driven cruiser with great beam power and few missiles.
 ---
 --- This is a short mission for inexperienced players who prefer close combat.
--- Variation[Test Formations]: All enemies (and more stonger ones) are present at the beginning of the scenario. This is for testing formations.
+-- Variation[Hard]: All enemies (and more stonger ones) are present at the beginning of the scenario.
 
--- secondary design goal: Test and example for script_formation
+-- secondary design goal: Test and example for script_formation (Hard variation)
 
 
 require "utils.lua"
@@ -76,11 +76,11 @@ function init()
     dread = createHumanMothership():setCallSign("Liberator"):setPosition(-gu/4, gu/4):setHeading(90):orderAttack(boss)
  
     -- terrain
-    createRandomAlongArc(Asteroid, 100, 2*gu, -1*gu, gu, 60, 220, 100)
-    createRandomAlongArc(VisualAsteroid, 100, 2*gu, -1*gu, gu, 400, 270, 200)
+    createRandomAlongArc(Asteroid, 100, 2*gu, -1*gu, gu, 60, 220, 200)
+    createRandomAlongArc(VisualAsteroid, 100, 2*gu, -1*gu, gu, 400, 270, 400)
     placeRandomAroundPoint(Nebula, 4, gu, 2*gu, 3.5*gu, 1.5*gu)
     placeRandomAroundPoint(Nebula, 4, gu, 3*gu, 6*gu, -2.5*gu)
-    createRandomAlongArc(Asteroid, 100, 7*gu, 2*gu, 1.5*gu, 180, 270, 200)
+    createRandomAlongArc(Asteroid, 80, 7*gu, 2*gu, 1.5*gu, 180, 270, 400)
     createRandomAlongArc(VisualAsteroid, 100, 7*gu, 2*gu, 1.5*gu, 180, 270, 1000)
     createObjectsOnLine(8*gu, -gu, 8*gu, gu, 1000, Mine, 2)
 
@@ -103,7 +103,7 @@ end
 function spwanNextWave()
 
     local amount
-    if getScenarioVariation() == "Test Formations" then
+    if getScenarioVariation() == "Hard" then
         amount = enemyWaveIndex
     else
         amount = enemyWaveIndex % 4 + 1
@@ -121,16 +121,21 @@ function spwanNextWave()
     elseif enemyWaveIndex == 4 then
         enemyList = createExuariStrikerSquad(amount, 7*gu, 2*gu)
         enemyList[1]:orderAttack(dread)
+        if getScenarioVariation() == "Hard" then
+            enemyList[2]:orderAttack(player)
+        end
     elseif enemyWaveIndex == 5 then
         -- only boss may be left
         enemyList = {boss, guard}
         if dread:isValid() then
             dread:setWeaponStorage("HVLI", 20)  -- restore full fire power, in case some was fired upon fighters
         end
-    else
+    elseif enemyWaveIndex == 6 then
 		if #enemyList == 0 then
 			return false
 		end
+    else
+        return true
     end
 
     enemyWaveIndex = enemyWaveIndex + 1
@@ -141,7 +146,13 @@ end
 
 function instructions()
     if dread:isValid() then
-        if enemyWaveIndex == 2 then
+        if getScenarioVariation() == "Hard" then
+            dread:sendCommsMessage(player, [[This is Commander Saberhagen onboard the Liberator.
+
+Your goal is to keep yourself and the Liberator alive until the enemy carrier and it's guards are destroyed. You chose the hard mode, so prepare for some resistance.
+
+Commander Saberhagen out.]])
+        elseif enemyWaveIndex == 2 then
             dread:sendCommsMessage(player, [[This is Commander Saberhagen onboard the Liberator.
 
 In this combat training you will practise your abilities with a Hathcock battlecruiser.
@@ -193,9 +204,6 @@ end
 
 
 function finished(delta)
-    if getScenarioVariation() == "Test Formations" then
-        return
-    end
     finishedTimer = finishedTimer - delta
     if finishedTimer < 0 then
         victory("Human Navy")
@@ -243,7 +251,7 @@ function update(delta)
     if #enemyList == 0 then
         continue = true
     end
-    if getScenarioVariation() == "Test Formations" then
+    if getScenarioVariation() == "Hard" then
         continue = true
     end
 

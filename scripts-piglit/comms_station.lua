@@ -6,7 +6,7 @@ function mainMenu()
     end
     mergeTables(comms_target.comms_data, {
         friendlyness = random(0.0, 100.0),
-		surrender_hull_threshold = 50,
+		surrender_hull_threshold = math.random(40,80),
         weapons = {
             Homing = "neutral",
             HVLI = "neutral",
